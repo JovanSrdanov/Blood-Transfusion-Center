@@ -26,4 +26,5 @@ public class RegisteredUser extends Person {
     private String jmbg;
     private Gender gender;
 
+
 }
