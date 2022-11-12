@@ -4,6 +4,7 @@ import groupJASS.ISA_2022.Model.RegisteredUser;
 import groupJASS.ISA_2022.Repository.RegisteredUserRepository;
 import groupJASS.ISA_2022.Service.Interfaces.IRegisteredUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+@Primary
 public class RegisteredUserService implements IRegisteredUserService {
 
     private final RegisteredUserRepository _registeredUserRepository;
