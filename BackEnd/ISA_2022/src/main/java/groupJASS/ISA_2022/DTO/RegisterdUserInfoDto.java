@@ -19,7 +19,7 @@ public class RegisterdUserInfoDto {
     private Address address;
 
 
-    public RegisteredUserDTO(RegisteredUser registeredUser)
+    public RegisterdUserInfoDto(RegisteredUser registeredUser)
     {
         this.id = registeredUser.getId();
         this.name = registeredUser.getName();
