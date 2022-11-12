@@ -1,5 +1,6 @@
 package groupJASS.ISA_2022.Controller;
 
+import groupJASS.ISA_2022.DTO.AssignBloodCenterDTO;
 import groupJASS.ISA_2022.DTO.BloodAdminRegistrationDTO;
 import groupJASS.ISA_2022.Model.BloodAdmin;
 import groupJASS.ISA_2022.Model.BloodUser;
@@ -10,10 +11,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.webjars.NotFoundException;
 
 import java.util.UUID;
 
@@ -53,5 +52,22 @@ public class BloodAdminController {
         {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
+    }
+
+    @PatchMapping
+    public ResponseEntity assignBloodCenter(@RequestBody AssignBloodCenterDTO dto)
+    {
+       try{
+            _bloodAdminService.assignBloodCenter(dto.getBloodAdminId(), dto.getBloodCenterId());
+           return  new ResponseEntity<>(HttpStatus.OK);
+       }
+       catch (NotFoundException e)
+       {
+            return  new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
+       }
+       catch (Exception e)
+       {
+           return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+       }
     }
 }

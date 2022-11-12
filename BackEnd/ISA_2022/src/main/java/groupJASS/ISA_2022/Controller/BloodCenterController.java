@@ -27,11 +27,11 @@ public class BloodCenterController {
     }
 
     @PostMapping
-    public ResponseEntity<BloodCenter> registerBloodCenter(@RequestBody BloodCenterRegistrationDTO dto)
+    public ResponseEntity<Void> registerBloodCenter(@RequestBody BloodCenterRegistrationDTO dto)
     {
        try{
-           var res =_bloodCenterService.save(_mapper.map(dto, BloodCenter.class));
-           return new ResponseEntity<>(res,HttpStatus.CREATED);
+           _bloodCenterService.save(_mapper.map(dto, BloodCenter.class));
+           return new ResponseEntity<>(HttpStatus.CREATED);
        }
        catch (Exception e)
        {
