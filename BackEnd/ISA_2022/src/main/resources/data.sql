@@ -229,3 +229,85 @@ INSERT INTO "address" ("id", "street", "number", "city", "country", "latitude", 
 VALUES ('39a97171-0f1a-40c9-a996-88f4d7299b3b', 'Hansons', '7412', 'Wang Hin', 'Thailand', '14.9792432', '104.2163411');
 INSERT INTO "address" ("id", "street", "number", "city", "country", "latitude", "longitude")
 VALUES ('fa14be66-eb70-48d3-b50c-afc8421e1b8d', 'Kim', '54', 'Qiling', 'China', '24.086165', '115.451043');
+
+
+INSERT INTO "registered_user" ("id", "email", "name", "phone_number", "surname", "gender", "institution", "jmbg",
+                               "address_id")
+VALUES ('45259d7f-12d2-4f02-8a8a-ff96427537e5', 'mbalden0@123-reg.co.uk', 'Michaella', '254-277-1252', 'Balden', '0',
+        'Wikivu', '758-05-9618', 'b5116b25-413c-4c35-8283-c07b0fe14b4e');
+INSERT INTO "registered_user" ("id", "email", "name", "phone_number", "surname", "gender", "institution", "jmbg",
+                               "address_id")
+VALUES ('bf38e8d8-17fb-4fbf-b1a3-eaaf6ea178f4', 'nedmondson1@lulu.com', 'Noel', '351-851-5246', 'Edmondson', '0',
+        'Kanoodle', '759-86-1552', 'a9290273-cc26-4397-8c93-7c6467b77d86');
+INSERT INTO "registered_user" ("id", "email", "name", "phone_number", "surname", "gender", "institution", "jmbg",
+                               "address_id")
+VALUES ('efdc1208-05c1-4d8f-86fa-16ab7102dadc', 'achatten2@blogger.com', 'Alice', '930-929-0583', 'Chatten', '1',
+        'Meembee', '376-03-6535', '9111d27b-e3f8-411b-bd57-4c68b19bcfdc');
+INSERT INTO "registered_user" ("id", "email", "name", "phone_number", "surname", "gender", "institution", "jmbg",
+                               "address_id")
+VALUES ('fe3e37f2-a783-4d95-8604-13339e337f84', 'amccahey3@ask.com', 'Addi', '390-531-6735', 'Mc Cahey', '1', 'Oyope',
+        '273-71-6103', 'ee49fc8b-99fc-4c53-8d0b-ad49bf00cf6d');
+INSERT INTO "registered_user" ("id", "email", "name", "phone_number", "surname", "gender", "institution", "jmbg",
+                               "address_id")
+VALUES ('24d7c5e9-7db4-4f65-b09a-93643099b01c', 'rlaunchbury4@ted.com', 'Roda', '868-522-4495', 'Launchbury', '0',
+        'Jaxworks', '414-53-8760', 'e8bbe3ba-8b1a-4d9b-a0a4-6276bb49de3c');
+INSERT INTO "registered_user" ("id", "email", "name", "phone_number", "surname", "gender", "institution", "jmbg",
+                               "address_id")
+VALUES ('549856f3-30bc-464d-ae5f-ada001d47836', 'gstitt5@opensource.org', 'Gaultiero', '562-685-1996', 'Stitt', '0',
+        'Yoveo', '375-92-5381', '3f479a63-cb14-43ee-bd65-ba09a47c1bed');
+INSERT INTO "registered_user" ("id", "email", "name", "phone_number", "surname", "gender", "institution", "jmbg",
+                               "address_id")
+VALUES ('4db1c413-65e2-4261-80cc-4faa249e2c21', 'bcummungs6@ft.com', 'Bridie', '400-611-1860', 'Cummungs', '1',
+        'Zoombeat', '741-09-0477', 'c6fe6f84-fb60-4f5d-a846-40aaf08cdf28');
+INSERT INTO "registered_user" ("id", "email", "name", "phone_number", "surname", "gender", "institution", "jmbg",
+                               "address_id")
+VALUES ('f82484c0-e5ed-48de-9533-e22f527394f7', 'etubridy7@addthis.com', 'Eddie', '419-810-6396', 'Tubridy', '1',
+        'Avavee', '368-47-1286', 'c381719b-0a38-44b9-b14a-f1199d2c5c3a');
+INSERT INTO "registered_user" ("id", "email", "name", "phone_number", "surname", "gender", "institution", "jmbg",
+                               "address_id")
+VALUES ('0fb68335-8a49-44dd-a724-3c6974ddb196', 'sothen8@1688.com', 'Sammy', '839-106-2110', 'Othen', '0', 'Dynabox',
+        '721-77-6837', '31f50de2-cfee-4f5b-8970-7f1a709d425a');
+INSERT INTO "registered_user" ("id", "email", "name", "phone_number", "surname", "gender", "institution", "jmbg",
+                               "address_id")
+VALUES ('729ff487-9152-48d3-acaf-3f0e6fc7d5c2', 'mmelwall9@webs.com', 'Myrlene', '729-184-1890', 'Melwall', '1',
+        'Meezzy', '397-99-5000', 'adb83ea9-0ce7-4447-b39c-acbba6c0b265');
+INSERT INTO "registered_user" ("id", "email", "name", "phone_number", "surname", "gender", "institution", "jmbg",
+                               "address_id")
+VALUES ('222544fe-307e-4d55-b2cf-aa92f7be0733', 'dboundya@meetup.com', 'Desmund', '423-339-8171', 'Boundy', '1',
+        'Avamm', '747-24-0875', 'c6fe6f84-fb60-4f5d-a846-40aaf08cdf28');
+INSERT INTO "registered_user" ("id", "email", "name", "phone_number", "surname", "gender", "institution", "jmbg",
+                               "address_id")
+VALUES ('569702f0-efdf-49f2-919a-54dd3f519d3a', 'nmckeanb@sbwire.com', 'Nicol', '861-873-5613', 'McKean', '0', 'Npath',
+        '847-77-9444', '32026f2d-0584-45fb-883d-07fd5c460fbd');
+INSERT INTO "registered_user" ("id", "email", "name", "phone_number", "surname", "gender", "institution", "jmbg",
+                               "address_id")
+VALUES ('09af89fe-095d-485d-addd-304163ba90f9', 'fcassec@aboutads.info', 'Fanni', '437-184-4826', 'Casse', '0',
+        'Edgeblab', '620-55-0427', '1dfd3610-4ee7-4787-9f79-0694abd84f86');
+INSERT INTO "registered_user" ("id", "email", "name", "phone_number", "surname", "gender", "institution", "jmbg",
+                               "address_id")
+VALUES ('11210a21-24a7-4eea-be6c-cdf773891d96', 'rpitfordd@yahoo.co.jp', 'Rosabella', '365-833-8705', 'Pitford', '0',
+        'Eabox', '660-50-8720', '5f1eda5d-24b9-45f6-835e-3d6756a094ed');
+INSERT INTO "registered_user" ("id", "email", "name", "phone_number", "surname", "gender", "institution", "jmbg",
+                               "address_id")
+VALUES ('dd6b8df1-5084-4e95-838a-5e96af427073', 'cbydawaye@ucoz.com', 'Carmelle', '894-495-1918', 'Bydaway', '1',
+        'Tagpad', '213-76-8675', 'fa14be66-eb70-48d3-b50c-afc8421e1b8d');
+INSERT INTO "registered_user" ("id", "email", "name", "phone_number", "surname", "gender", "institution", "jmbg",
+                               "address_id")
+VALUES ('c873c013-54fe-4f31-9cc8-f9200f147856', 'ngirardif@sphinn.com', 'Neils', '216-236-7212', 'Girardi', '1',
+        'Quatz', '167-98-3690', '22ecd78f-222d-4af2-a95c-4d52ff831dd4');
+INSERT INTO "registered_user" ("id", "email", "name", "phone_number", "surname", "gender", "institution", "jmbg",
+                               "address_id")
+VALUES ('62d9eac2-ca31-4837-8411-fbebb70e1a91', 'jiddisong@ebay.com', 'Jard', '299-541-4579', 'Iddison', '0', 'Omba',
+        '108-70-6997', 'bd628d88-566a-41a2-941d-7a7e326db135');
+INSERT INTO "registered_user" ("id", "email", "name", "phone_number", "surname", "gender", "institution", "jmbg",
+                               "address_id")
+VALUES ('e166c1d3-aecd-411d-a0ff-dd1856f4b4c9', 'lskeinh@accuweather.com', 'Lurleen', '460-150-8614', 'Skein', '1',
+        'Kimia', '789-93-2663', '69dbac13-5b5e-46fc-ae2a-8f9cf86a98b7');
+INSERT INTO "registered_user" ("id", "email", "name", "phone_number", "surname", "gender", "institution", "jmbg",
+                               "address_id")
+VALUES ('17b7adc0-9c0b-4be8-afed-7aef7053baaa', 'aoldami@simplemachines.org', 'Aguistin', '858-355-2719', 'Oldam', '0',
+        'Tagfeed', '500-19-5950', '4e2e372c-45c3-46aa-abfd-9f021495ea94');
+INSERT INTO "registered_user" ("id", "email", "name", "phone_number", "surname", "gender", "institution", "jmbg",
+                               "address_id")
+VALUES ('2a8197ee-ccfe-4cd5-8c74-bc3c9c92e51f', 'kmardej@eventbrite.com', 'Korry', '719-211-8518', 'Marde', '1',
+        'Fivespan', '271-98-6232', 'a93790de-51c6-4104-a1b4-fe77317c783f');
