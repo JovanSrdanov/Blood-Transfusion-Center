@@ -29,6 +29,9 @@ public class BloodCenter {
     @Column(nullable = false)
     private String description;
 
+    @Column(nullable = false)
+    private double rating;
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name="blood_center_id")
     private Set<Appointment> appointments = new HashSet<>();

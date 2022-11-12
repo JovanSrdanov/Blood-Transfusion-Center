@@ -3,10 +3,16 @@ package groupJASS.ISA_2022.DTO;
 import groupJASS.ISA_2022.Model.Address;
 import groupJASS.ISA_2022.Model.Gender;
 import groupJASS.ISA_2022.Model.RegisteredUser;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.Hibernate;
 
 import java.util.UUID;
 
+@NoArgsConstructor
+@Getter
+@Setter
 public class RegisterdUserInfoDto {
     private UUID id;
     private String name;

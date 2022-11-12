@@ -2,9 +2,15 @@ package groupJASS.ISA_2022.DTO;
 
 import groupJASS.ISA_2022.Model.Address;
 import groupJASS.ISA_2022.Model.Gender;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.UUID;
 
+@NoArgsConstructor
+@Getter
+@Setter
 public class UpdateRegisterdUserInfoDto {
     private UUID id;
     private String name;
