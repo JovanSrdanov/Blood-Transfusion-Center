@@ -31,10 +31,10 @@ public class BloodCenter {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name="blood_center_id")
-    private Set<Appointment> appointments = new HashSet<Appointment>();
+    private Set<Appointment> appointments = new HashSet<>();
 
     @OneToMany(mappedBy = "bloodCenter")
-    private Set<BloodAdmin> staff = new HashSet<BloodAdmin>();
+    private Set<BloodAdmin> staff = new HashSet<>();
 }
 
 

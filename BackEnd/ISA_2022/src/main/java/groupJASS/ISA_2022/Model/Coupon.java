@@ -5,33 +5,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.UUID;
-
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class BloodUser {
+public class Coupon {
     @Id
     private UUID id;
 
-    @Column(nullable = false)
-    private String username;
+    private String description;
 
-    @Column(nullable = false)
-    private String password;
-
-    @Column(nullable = false)
-    private Role role;
-
-    @Column(nullable = false)
-    private UUID personId;
-
-    private int points;
-
-
+    private int discount;
 }
