@@ -22,14 +22,14 @@ import java.util.UUID;
 public class BloodAdminController {
 
     private final IBloodUserService _bloodUserService;
-    private final ModelMapper _modelMapper;
+    private final ModelMapper _mapper;
     private final IBloodAdminService _bloodAdminService;
 
     @Autowired
     public BloodAdminController(IBloodUserService bloodUserService, ModelMapper modelMapper, IBloodAdminService bloodAdminService)
     {
         _bloodUserService = bloodUserService;
-        _modelMapper = modelMapper;
+        _mapper = modelMapper;
         _bloodAdminService = bloodAdminService;
     }
 
@@ -38,10 +38,10 @@ public class BloodAdminController {
     {
         try{
             //TODO: Convert this to transaction
-            BloodAdmin bloodAdmin = _modelMapper.map(dto, BloodAdmin.class);
+            BloodAdmin bloodAdmin = _mapper.map(dto, BloodAdmin.class);
             UUID bloodAdminId = _bloodAdminService.save(bloodAdmin).getId();
 
-            BloodUser bloodUser = _modelMapper.map(dto, BloodUser.class);
+            BloodUser bloodUser = _mapper.map(dto, BloodUser.class);
             bloodUser.setRole(Role.MEDICAL_ADMIN);
             bloodUser.setPersonId(bloodAdminId);
 
