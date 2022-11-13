@@ -22,7 +22,7 @@ public class BloodCenter {
     @Column(nullable = false)
     private String name;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
 
