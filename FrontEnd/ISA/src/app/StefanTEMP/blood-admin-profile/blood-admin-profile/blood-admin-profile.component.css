@@ -5,4 +5,40 @@
 
 table {
   text-align: left;
+  color: white;
+}
+
+.tableInfo {
+  width: 80%;
+  height: 80%;
+}
+
+.tableText {
+  font-size: large;
+}
+
+.rowInfo {
+  width: 60%;
+}
+
+.header {
+  margin-top: 2%;
+  margin-bottom: 2%;
+  font-size: xx-large;
+  font-weight: bolder;
+  color: white;
+}
+
+.fields {
+  font-weight: bold;
+}
+
+.importantText {
+  font-size: x-large;
+  font-weight: bold;
+  padding: 1%;
+}
+
+mat-grid-tile {
+  background-color: rgb(33, 38, 40);
 }

@@ -1,128 +1,199 @@
 <div class="grid">
-  <h1>Personal info</h1>
-  <form>
-    <table>
-      <tr>
-        <td>Name:</td>
-        <td>
-          <input
-            type="text"
-            name="name"
-            placeholder="TEMP NAME"
-            disabled="isEnabled"
-          />
-        </td>
-      </tr>
-      <tr>
-        <td>Surname:</td>
-        <td>
-          <input
-            type="text"
-            name="surname"
-            placeholder="TEMP SURNAME"
-            disabled="isEnabled"
-          />
-        </td>
-      </tr>
-      <tr>
-        <td>Email:</td>
-        <td>
-          <input
-            type="text"
-            name="email"
-            placeholder="TEMP EMAIL"
-            disabled="isEnabled"
-          />
-        </td>
-      </tr>
-      <tr>
-        <td>Phone:</td>
-        <td>
-          <input
-            type="text"
-            name="Phone"
-            placeholder="TEMP PHONE"
-            disabled="isEnabled"
-          />
-        </td>
-      </tr>
-      <tr>
-        <td colspan="2"><button mat-raised-button>Change</button></td>
-      </tr>
-    </table>
-  </form>
-  <h1>Blood center info</h1>
-  <form>
-    <table>
-      <tr>
-        <td>Name:</td>
-        <td>
-          <input
-            type="text"
-            name="CenterName"
-            placeholder="TEMP CENTER NAME"
-            disabled="isEnabled"
-          />
-        </td>
-      </tr>
-      <tr>
-        <td>Address:</td>
-        <td>
-          <input
-            type="text"
-            name="CenterAddress"
-            placeholder="TEMP CENTER ADDRESS"
-            disabled="isEnabled"
-          />
-        </td>
-      </tr>
-      <tr>
-        <td>Description:</td>
-        <td>
-          <input
-            type="text"
-            name="CenterDescription"
-            placeholder="TEMP CENTER DESCRIPTION"
-            disabled="isEnabled"
-          />
-        </td>
-      </tr>
-      <tr>
-        <td>Score:</td>
-        <td>
-          <input
-            type="text"
-            name="CenterScore"
-            placeholder="TEMP CENTER SCORE"
-            disabled="isEnabled"
-          />
-        </td>
-      </tr>
-      <tr>
-        <td>Appointment reservation slots:</td>
-        <td>
-          <input
-            type="text"
-            name="CenterSlots"
-            placeholder="TEMP CENTER SLOTS"
-            disabled="isEnabled"
-          />
-        </td>
-      </tr>
-      <tr>
-        <td>Administrators</td>
-        <td>
-          <input
-            type="text"
-            name="CenterAdmins"
-            placeholder="TEMP CENTER ADMINS"
-            disabled="isEnabled"
-          />
-        </td>
-      </tr>
-      <tr>
-        <td colspan="2"><button mat-raised-button>Change</button></td>
-      </tr>
-    </table>
-  </form>
+  <div class="header">Profile</div>
+  <!--******************PERSONAL***********************-->
+  <mat-grid-list cols="2" rowHeight="1:1">
+    <mat-grid-tile>
+      <div>
+        <div class="header">Personal info</div>
+        <div>
+          <form>
+            <table>
+              <tr>
+                <td>Name:</td>
+                <td>
+                  <input
+                    type="text"
+                    name="name"
+                    [(ngModel)]="staffInfo.name"
+                    placeholder="TEMP NAME"
+                    [disabled]="isPreventChangeAdmin"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>Surname:</td>
+                <td>
+                  <input
+                    type="text"
+                    name="surname"
+                    [(ngModel)]="staffInfo.surname"
+                    placeholder="TEMP SURNAME"
+                    [disabled]="isPreventChangeAdmin"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>Email:</td>
+                <td>
+                  <input
+                    type="text"
+                    name="email"
+                    [(ngModel)]="staffInfo.email"
+                    placeholder="TEMP EMAIL"
+                    [disabled]="isPreventChangeAdmin"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>Phone:</td>
+                <td>
+                  <input
+                    type="text"
+                    name="Phone"
+                    [(ngModel)]="staffInfo.phoneNumber"
+                    placeholder="TEMP PHONE"
+                    [disabled]="isPreventChangeAdmin"
+                  />
+                </td>
+              </tr>
+              <tr *ngIf="isPreventChangeAdmin">
+                <td colspan="2">
+                  <button mat-raised-button (click)="enableChangeAdmin($event)">
+                    Change
+                  </button>
+                </td>
+              </tr>
+              <tr *ngIf="!isPreventChangeAdmin">
+                <td>
+                  <button
+                    mat-raised-button
+                    (click)="confirmChangeAdmin($event)"
+                  >
+                    Confirm
+                  </button>
+                </td>
+                <td>
+                  <button mat-raised-button (click)="cancelChangeAdmin($event)">
+                    Cancel
+                  </button>
+                </td>
+              </tr>
+            </table>
+          </form>
+        </div>
+      </div>
+    </mat-grid-tile>
+    <!--******************PERSONAL***********************-->
+    <mat-grid-tile>
+      <div>
+        <div class="header">Blood center info</div>
+        <div>
+          <form>
+            <table>
+              <tr>
+                <td>Name:</td>
+                <td>
+                  <input
+                    type="text"
+                    name="CenterName"
+                    [(ngModel)]="centerInfo.name"
+                    placeholder="TEMP CENTER NAME"
+                    [disabled]="isPreventChangeCenter"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>Address:</td>
+                <td>
+                  <input
+                    type="text"
+                    name="CenterAddress"
+                    [(ngModel)]="centerInfo.address"
+                    placeholder="TEMP CENTER ADDRESS"
+                    [disabled]="isPreventChangeCenter"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>Description:</td>
+                <td>
+                  <input
+                    type="text"
+                    name="CenterDescription"
+                    [(ngModel)]="centerInfo.description"
+                    placeholder="TEMP CENTER DESCRIPTION"
+                    [disabled]="isPreventChangeCenter"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>Score:</td>
+                <td>
+                  <input
+                    type="text"
+                    name="CenterScore"
+                    [(ngModel)]="centerInfo.score"
+                    placeholder="TEMP CENTER SCORE"
+                    [disabled]="isPreventChangeCenter"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>Appointment reservation slots:</td>
+                <td>
+                  <input
+                    type="text"
+                    name="CenterSlots"
+                    [(ngModel)]="centerInfo.appointments"
+                    placeholder="TEMP CENTER SLOTS"
+                    [disabled]="isPreventChangeCenter"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>Administrators</td>
+                <td>
+                  <input
+                    type="text"
+                    name="CenterAdmins"
+                    [(ngModel)]="centerInfo.administrators"
+                    placeholder="TEMP CENTER ADMINS"
+                    [disabled]="isPreventChangeCenter"
+                  />
+                </td>
+              </tr>
+              <tr *ngIf="isPreventChangeCenter">
+                <td colspan="2">
+                  <button
+                    mat-raised-button
+                    (click)="enableChangeCenter($event)"
+                  >
+                    Change
+                  </button>
+                </td>
+              </tr>
+              <tr *ngIf="!isPreventChangeCenter">
+                <td>
+                  <button
+                    mat-raised-button
+                    (click)="confirmChangeCenter($event)"
+                  >
+                    Confirm
+                  </button>
+                </td>
+                <td>
+                  <button
+                    mat-raised-button
+                    (click)="cancelChangeCenter($event)"
+                  >
+                    Cancel
+                  </button>
+                </td>
+              </tr>
+            </table>
+          </form>
+        </div>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
 </div>
