@@ -63,11 +63,4 @@ public class BloodCenterController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-
-    @GetMapping
-    public ResponseEntity<Iterable<BloodCenter>> getAllBloodCenters()
-    {
-        Iterable<BloodCenter> bloodCenters =  _bloodCenterService.findAll();
-        return new ResponseEntity<>(bloodCenters, HttpStatus.OK);
-    }
 }

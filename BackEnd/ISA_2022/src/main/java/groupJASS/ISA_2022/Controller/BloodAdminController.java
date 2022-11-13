@@ -93,7 +93,7 @@ public class BloodAdminController {
        }
     }
 
-    @GetMapping
+    @GetMapping(path ="unemployed")
     public ResponseEntity<Iterable<BloodAdmin>> getUnemployedBloodAdmins(){
        Iterable<BloodAdmin>  bloodAdmins = _bloodAdminService.getUnemployedBloodAdmins();
        return new ResponseEntity<>(bloodAdmins, HttpStatus.OK);

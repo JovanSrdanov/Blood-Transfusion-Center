@@ -2,6 +2,7 @@ package groupJASS.ISA_2022.Controller;
 
 import groupJASS.ISA_2022.DTO.RegisterNonRegisteredUserDTO;
 import groupJASS.ISA_2022.DTO.RegisterdUserInfoDto;
+import groupJASS.ISA_2022.Exceptions.BadRequestException;
 import groupJASS.ISA_2022.Model.Address;
 import groupJASS.ISA_2022.Model.BloodUser;
 import groupJASS.ISA_2022.Model.RegisteredUser;
@@ -50,7 +51,11 @@ public class RegisteredUserController {
 
     @PostMapping
     public ResponseEntity<RegisteredUser> save(@RequestBody RegisteredUser entity) {
-        return new ResponseEntity<>(this._registeredUserService.save(entity), HttpStatus.CREATED);
+        try {
+            return new ResponseEntity<>(this._registeredUserService.save(entity), HttpStatus.CREATED);
+        } catch (BadRequestException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping("register")
