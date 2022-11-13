@@ -14,28 +14,49 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.webjars.NotFoundException;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("blood-admin")
 public class BloodAdminController {
-
     private final IBloodUserService _bloodUserService;
     private final ModelMapper _mapper;
     private final IBloodAdminService _bloodAdminService;
 
     @Autowired
-    public BloodAdminController(IBloodUserService bloodUserService, ModelMapper modelMapper, IBloodAdminService bloodAdminService)
-    {
+    public BloodAdminController(IBloodUserService bloodUserService, ModelMapper mapper, IBloodAdminService bloodAdminService) {
         _bloodUserService = bloodUserService;
-        _mapper = modelMapper;
+        _mapper = mapper;
         _bloodAdminService = bloodAdminService;
     }
 
-    @PostMapping(consumes = "application/json" )
-    public ResponseEntity<Void> registerBloodAdmin(@RequestBody BloodAdminRegistrationDTO dto)
-    {
-        try{
+    @GetMapping
+    public ResponseEntity<List<BloodAdmin>> findAll() {
+        var res = (List<BloodAdmin>) _bloodAdminService.findAll();
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<BloodAdmin> findById(@PathVariable UUID id) {
+
+        try {
+            var res = _bloodAdminService.findById(id);
+            return new ResponseEntity<>(res, HttpStatus.OK);
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping(value = "/save")
+    public ResponseEntity<BloodAdmin> save(@RequestBody BloodAdmin admin) {
+        var res = _bloodAdminService.save(admin);
+        return new ResponseEntity<>(res, HttpStatus.CREATED);
+    }
+
+    @PostMapping(consumes = "application/json")
+    public ResponseEntity<Void> registerBloodAdmin(@RequestBody BloodAdminRegistrationDTO dto) {
+        try {
             //TODO: Convert this to transaction
             BloodAdmin bloodAdmin = _mapper.map(dto, BloodAdmin.class);
             UUID bloodAdminId = _bloodAdminService.save(bloodAdmin).getId();
@@ -46,28 +67,21 @@ public class BloodAdminController {
 
             _bloodUserService.save(bloodUser);
 
-            return  new ResponseEntity<>(HttpStatus.CREATED);
-        }
-        catch (Exception e)
-        {
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
 
     @PatchMapping
-    public ResponseEntity assignBloodCenter(@RequestBody AssignBloodCenterDTO dto)
-    {
-       try{
+    public ResponseEntity<String> assignBloodCenter(@RequestBody AssignBloodCenterDTO dto) {
+        try {
             _bloodAdminService.assignBloodCenter(dto.getBloodAdminId(), dto.getBloodCenterId());
-           return  new ResponseEntity<>(HttpStatus.OK);
-       }
-       catch (NotFoundException e)
-       {
-            return  new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
-       }
-       catch (Exception e)
-       {
-           return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-       }
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }

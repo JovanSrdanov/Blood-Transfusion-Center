@@ -30,7 +30,8 @@ public class RegisteredUserController {
     private final ModelMapper _modelMapper;
 
     @Autowired
-    public RegisteredUserController(RegisteredUserService registeredUserService, ModelMapper modelMapper, AddressService addressService, BloodUserService bloodUserService) {
+    public RegisteredUserController(RegisteredUserService registeredUserService, ModelMapper modelMapper,
+            AddressService addressService, BloodUserService bloodUserService) {
         this._registeredUserService = registeredUserService;
         this._modelMapper = modelMapper;
         this._addressService = addressService;
@@ -39,7 +40,7 @@ public class RegisteredUserController {
 
     @GetMapping
     public ResponseEntity<List<RegisteredUser>> findAll() {
-        var res = this._registeredUserService.findAll();
+        var res = this._service.findAll();
         var first = res.get(0);
         RegisteredUserDTO regUsDto = new RegisteredUserDTO();
         return new ResponseEntity<>(res, HttpStatus.OK);
@@ -47,24 +48,27 @@ public class RegisteredUserController {
 
     @GetMapping("get-by-id/{id}")
     public ResponseEntity<RegisterdUserInfoDto> findById(@PathVariable UUID id) {
-        RegisteredUser user = this._registeredUserService.findById(id);
+        RegisteredUser user = this._service.findById(id);
         return new ResponseEntity<>(new RegisterdUserInfoDto(user), HttpStatus.OK);
     }
 
-
     @PostMapping
     public ResponseEntity<RegisteredUser> save(@RequestBody RegisteredUser entity) {
-        return new ResponseEntity<>(this._registeredUserService.save(entity), HttpStatus.CREATED);
+        return new ResponseEntity<>(this._service.save(entity), HttpStatus.CREATED);
     }
 
     @PostMapping("register")
-    public ResponseEntity<?> Register(@Valid @RequestBody RegisterNonRegisteredUserDTO dto) throws ConstraintViolationException {
+    public ResponseEntity<?> Register(@Valid @RequestBody RegisterNonRegisteredUserDTO dto)
+            throws ConstraintViolationException {
 
         try {
-           
-            Address address = _addressService.AddresFromUserRegistration(_modelMapper.map(dto.getAddressRegUserDTO(), Address.class));
-            RegisteredUser registeredUser = _registeredUserService.RegisterUser(_modelMapper.map(dto.getNonRegisteredUserInfoDTO(), RegisteredUser.class), address);
-            _bloodUserService.registerRegisteredUser(_modelMapper.map(dto.getBloodUserDTO(), BloodUser.class), registeredUser);
+
+            Address address = _addressService
+                    .AddresFromUserRegistration(_modelMapper.map(dto.getAddressRegUserDTO(), Address.class));
+            RegisteredUser registeredUser = _registeredUserService
+                    .RegisterUser(_modelMapper.map(dto.getNonRegisteredUserInfoDTO(), RegisteredUser.class), address);
+            _bloodUserService.registerRegisteredUser(_modelMapper.map(dto.getBloodUserDTO(), BloodUser.class),
+                    registeredUser);
 
             return new ResponseEntity<>(dto, HttpStatus.CREATED);
 
