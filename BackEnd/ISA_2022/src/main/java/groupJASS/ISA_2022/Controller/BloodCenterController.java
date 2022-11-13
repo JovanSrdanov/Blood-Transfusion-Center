@@ -12,14 +12,19 @@ import org.webjars.NotFoundException;
 
 import java.util.List;
 import java.util.UUID;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("blood-center")
 public class BloodCenterController {
+    private final IBloodCenterService _service;
+    private final ModelMapper _mapper;
+
+    @Autowired
+    public BloodCenterController(IBloodCenterService bloodCenterService, ModelMapper mapper) {
+        _service = bloodCenterService;
+        _mapper = mapper;
+    }
+
     @GetMapping
     public ResponseEntity<List<BloodCenter>> findAll() {
         var res = (List<BloodCenter>) _service.findAll();
@@ -36,31 +41,19 @@ public class BloodCenterController {
         }
     }
 
-    @PostMapping
+    @PostMapping(path = "/save")
     public ResponseEntity<BloodCenter> save(@RequestBody BloodCenter center) {
         var res = _service.save(center);
         return new ResponseEntity<>(res, HttpStatus.CREATED);
-
-    private final IBloodCenterService _bloodCenterService;
-    private final ModelMapper _mapper;
-
-    @Autowired
-    public BloodCenterController(IBloodCenterService bloodCenterService, ModelMapper mapper)
-    {
-       _bloodCenterService = bloodCenterService;
-        _mapper = mapper;
     }
 
     @PostMapping
-    public ResponseEntity<Void> registerBloodCenter(@RequestBody BloodCenterRegistrationDTO dto)
-    {
-       try{
-           _bloodCenterService.save(_mapper.map(dto, BloodCenter.class));
-           return new ResponseEntity<>(HttpStatus.CREATED);
-       }
-       catch (Exception e)
-       {
-           return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-       }
+    public ResponseEntity<Void> registerBloodCenter(@RequestBody BloodCenterRegistrationDTO dto) {
+        try {
+            _service.save(_mapper.map(dto, BloodCenter.class));
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }

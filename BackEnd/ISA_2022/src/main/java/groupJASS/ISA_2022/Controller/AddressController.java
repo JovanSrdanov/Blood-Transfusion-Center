@@ -1,7 +1,7 @@
 package groupJASS.ISA_2022.Controller;
 
 import groupJASS.ISA_2022.Model.Address;
-import groupJASS.ISA_2022.Service.Implementations.AddressService;
+import groupJASS.ISA_2022.Service.Interfaces.IAddresService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,21 +13,21 @@ import java.util.List;
 @RequestMapping("address")
 public class AddressController {
 
-    private final AddressService _addressService;
+    private final IAddresService _service;
 
     @Autowired
-    public AddressController(AddressService addressService) {
-        this._addressService = addressService;
+    public AddressController(IAddresService addressService) {
+        this._service = addressService;
     }
 
     @GetMapping
     public ResponseEntity<List<Address>> findAll() {
-        return new ResponseEntity<>(this._addressService.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>((List<Address>) this._service.findAll(), HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<Address> save(@RequestBody Address entity) {
-        return new ResponseEntity<>(this._addressService.save(entity), HttpStatus.CREATED);
+        return new ResponseEntity<>(this._service.save(entity), HttpStatus.CREATED);
     }
 
 }
