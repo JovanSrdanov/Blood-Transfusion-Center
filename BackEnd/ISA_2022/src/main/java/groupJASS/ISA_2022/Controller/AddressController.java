@@ -1,5 +1,6 @@
 package groupJASS.ISA_2022.Controller;
 
+import groupJASS.ISA_2022.Exceptions.BadRequestException;
 import groupJASS.ISA_2022.Model.Address;
 import groupJASS.ISA_2022.Service.Interfaces.IAddressService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,11 @@ public class AddressController {
 
     @PostMapping
     public ResponseEntity<Address> save(@RequestBody Address entity) {
-        return new ResponseEntity<>(this._addressService.save(entity), HttpStatus.CREATED);
+        try {
+            return new ResponseEntity<>(this._addressService.save(entity), HttpStatus.CREATED);
+        } catch (BadRequestException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
 }

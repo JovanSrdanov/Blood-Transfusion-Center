@@ -16,23 +16,24 @@ import java.util.UUID;
 @Primary
 public class BloodUserService implements IBloodUserService {
 
-    private final BloodUserRepository _blooBloodUserRepository;
+    private final BloodUserRepository _bloodUserRepository;
 
     @Autowired
-    public BloodUserService(BloodUserRepository bloodUserRepository) {
-        _blooBloodUserRepository = bloodUserRepository;
+    public BloodUserService(BloodUserRepository bloodUserRepository)
+    {
+        _bloodUserRepository = bloodUserRepository;
     }
 
     @Override
     public Iterable<BloodUser> findAll() {
-        return _blooBloodUserRepository.findAll();
+        return _bloodUserRepository.findAll();
     }
 
     @Override
     public BloodUser findById(UUID id) {
-        if (_blooBloodUserRepository.findById(id).isPresent()) {
+        if (_bloodUserRepository.findById(id).isPresent()) {
 
-            return _blooBloodUserRepository.findById(id).get();
+            return _bloodUserRepository.findById(id).get();
         }
 
         throw new NotFoundException("User not found");
@@ -43,18 +44,18 @@ public class BloodUserService implements IBloodUserService {
         if (entity.getId() == null) {
             entity.setId(UUID.randomUUID());
         }
-        return _blooBloodUserRepository.save(entity);
+        return _bloodUserRepository.save(entity);
     }
 
     @Override
     public void deleteById(UUID id) {
-        _blooBloodUserRepository.deleteById(id);
+        _bloodUserRepository.deleteById(id);
     }
 
     @Override
     public void registerNewUser(BloodUser bloodUser) {
 
-        if (_blooBloodUserRepository.existsBloodUserByUsername(bloodUser.getUsername())) {
+        if (_bloodUserRepository.existsBloodUserByUsername(bloodUser.getUsername())) {
 
             throw new IllegalArgumentException("User with this username already exists");
         }
