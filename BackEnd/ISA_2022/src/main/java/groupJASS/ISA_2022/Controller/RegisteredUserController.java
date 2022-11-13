@@ -17,18 +17,18 @@ import java.util.UUID;
 @RequestMapping("registered-user")
 public class RegisteredUserController {
 
-    private final RegisteredUserService _registeredUserService;
-    private final ModelMapper _modelMapper;
+    private final RegisteredUserService _service;
+    private final ModelMapper _mapper;
 
     @Autowired
-    public RegisteredUserController(RegisteredUserService registeredUserService, ModelMapper modelMapper ) {
-        this._registeredUserService = registeredUserService;
-        this._modelMapper = modelMapper;
+    public RegisteredUserController(RegisteredUserService registeredUserService, ModelMapper modelMapper) {
+        this._service = registeredUserService;
+        this._mapper = modelMapper;
     }
 
     @GetMapping
     public ResponseEntity<List<RegisteredUser>> findAll() {
-        var res = this._registeredUserService.findAll();
+        var res = this._service.findAll();
         var first = res.get(0);
         RegisteredUserDTO regUsDto = new RegisteredUserDTO();
         return new ResponseEntity<>(res, HttpStatus.OK);
@@ -36,14 +36,14 @@ public class RegisteredUserController {
 
     @GetMapping("get-by-id/{id}")
     public ResponseEntity<RegisterdUserInfoDto> findById(@PathVariable UUID id) {
-        RegisteredUser user = this._registeredUserService.findById(id);
+        RegisteredUser user = this._service.findById(id);
         return new ResponseEntity<>(new RegisterdUserInfoDto(user), HttpStatus.OK);
     }
 
 
     @PostMapping
     public ResponseEntity<RegisteredUser> save(@RequestBody RegisteredUser entity) {
-        return new ResponseEntity<>(this._registeredUserService.save(entity), HttpStatus.CREATED);
+        return new ResponseEntity<>(this._service.save(entity), HttpStatus.CREATED);
     }
 
 }
