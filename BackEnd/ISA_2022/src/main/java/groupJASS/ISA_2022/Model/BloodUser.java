@@ -1,6 +1,9 @@
 package groupJASS.ISA_2022.Model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,8 +30,5 @@ public class BloodUser {
 
     @Column(nullable = false)
     private UUID personId;
-
-    private int points;
-
 
 }

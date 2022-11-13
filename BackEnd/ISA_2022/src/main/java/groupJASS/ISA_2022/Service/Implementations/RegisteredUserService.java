@@ -1,5 +1,6 @@
 package groupJASS.ISA_2022.Service.Implementations;
 
+import groupJASS.ISA_2022.Model.Address;
 import groupJASS.ISA_2022.Model.RegisteredUser;
 import groupJASS.ISA_2022.Repository.RegisteredUserRepository;
 import groupJASS.ISA_2022.Service.Interfaces.IRegisteredUserService;
@@ -49,5 +50,21 @@ public class RegisteredUserService implements IRegisteredUserService {
     @Override
     public void deleteById(UUID id) {
         _registeredUserRepository.deleteById(id);
+    }
+
+    @Override
+    public RegisteredUser RegisterUser(RegisteredUser map, Address address) {
+        if (_registeredUserRepository.existsBloodUserByJmbg(map.getJmbg())) {
+
+            throw new IllegalArgumentException("RegisterUser with this jmbg already exists");
+        }
+        if (_registeredUserRepository.existsBloodUserByEmail(map.getEmail())) {
+
+            throw new IllegalArgumentException("RegisterUser with this email already exists");
+        }
+        map.setAddress(address);
+        map.setActivated(false);
+        map.setPoints(0);
+        return save(map);
     }
 }

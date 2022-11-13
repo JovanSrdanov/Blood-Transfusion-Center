@@ -23,7 +23,5 @@ public abstract class Person {
     @Column(nullable = false)
     private String surname;
     @Column(nullable = false)
-    private String email;
-    @Column(nullable = false)
     private String phoneNumber;
 }
