@@ -16,25 +16,27 @@ import java.util.UUID;
 @RestController
 @RequestMapping("blood-center")
 public class BloodCenterController {
-    private final IBloodCenterService _service;
+    private final IBloodCenterService _bloodCenterService;
+
+
     private final ModelMapper _mapper;
 
     @Autowired
     public BloodCenterController(IBloodCenterService bloodCenterService, ModelMapper mapper) {
-        _service = bloodCenterService;
+        _bloodCenterService = bloodCenterService;
         _mapper = mapper;
     }
 
     @GetMapping
     public ResponseEntity<List<BloodCenter>> findAll() {
-        var res = (List<BloodCenter>) _service.findAll();
+        var res = (List<BloodCenter>) _bloodCenterService.findAll();
         return new ResponseEntity<List<BloodCenter>>(res, HttpStatus.OK);
     }
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<BloodCenter> findById(@PathVariable("id") UUID id) {
         try {
-            var center = _service.findById(id);
+            var center = _bloodCenterService.findById(id);
             return new ResponseEntity<>(center, HttpStatus.OK);
         } catch (NotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -43,14 +45,14 @@ public class BloodCenterController {
 
     @PostMapping(path = "/save")
     public ResponseEntity<BloodCenter> save(@RequestBody BloodCenter center) {
-        var res = _service.save(center);
+        var res = _bloodCenterService.save(center);
         return new ResponseEntity<>(res, HttpStatus.CREATED);
     }
 
     @PostMapping
     public ResponseEntity<Void> registerBloodCenter(@RequestBody BloodCenterRegistrationDTO dto) {
         try {
-            _service.save(_mapper.map(dto, BloodCenter.class));
+            _bloodCenterService.save(_mapper.map(dto, BloodCenter.class));
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
