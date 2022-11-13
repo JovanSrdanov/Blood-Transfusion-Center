@@ -1,0 +1,12 @@
+.mat-toolbar {
+  background: rgb(33, 38, 40);
+  color: #fff;
+}
+
+.navbar {
+  justify-content: space-between;
+}
+
+span {
+  padding-right: 1rem;
+}
