@@ -2,13 +2,12 @@ package groupJASS.ISA_2022.Controller;
 
 import groupJASS.ISA_2022.DTO.RegisterNonRegisteredUserDTO;
 import groupJASS.ISA_2022.DTO.RegisterdUserInfoDto;
-import groupJASS.ISA_2022.DTO.RegisteredUserDTO;
 import groupJASS.ISA_2022.Model.Address;
 import groupJASS.ISA_2022.Model.BloodUser;
 import groupJASS.ISA_2022.Model.RegisteredUser;
-import groupJASS.ISA_2022.Service.Implementations.AddressService;
-import groupJASS.ISA_2022.Service.Implementations.BloodUserService;
-import groupJASS.ISA_2022.Service.Implementations.RegisteredUserService;
+import groupJASS.ISA_2022.Service.Interfaces.IAddressService;
+import groupJASS.ISA_2022.Service.Interfaces.IBloodUserService;
+import groupJASS.ISA_2022.Service.Interfaces.IRegisteredUserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,14 +23,14 @@ import java.util.UUID;
 @RequestMapping("registered-user")
 public class RegisteredUserController {
 
-    private final RegisteredUserService _registeredUserService;
-    private final AddressService _addressService;
-    private final BloodUserService _bloodUserService;
+    private final IRegisteredUserService _registeredUserService;
+    private final IAddressService _addressService;
+    private final IBloodUserService _bloodUserService;
     private final ModelMapper _modelMapper;
 
     @Autowired
-    public RegisteredUserController(RegisteredUserService registeredUserService, ModelMapper modelMapper,
-            AddressService addressService, BloodUserService bloodUserService) {
+    public RegisteredUserController(IRegisteredUserService registeredUserService, ModelMapper modelMapper,
+                                    IAddressService addressService, IBloodUserService bloodUserService) {
         this._registeredUserService = registeredUserService;
         this._modelMapper = modelMapper;
         this._addressService = addressService;
@@ -40,21 +39,18 @@ public class RegisteredUserController {
 
     @GetMapping
     public ResponseEntity<List<RegisteredUser>> findAll() {
-        var res = this._service.findAll();
-        var first = res.get(0);
-        RegisteredUserDTO regUsDto = new RegisteredUserDTO();
-        return new ResponseEntity<>(res, HttpStatus.OK);
+        return new ResponseEntity<>((List<RegisteredUser>) this._registeredUserService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("get-by-id/{id}")
     public ResponseEntity<RegisterdUserInfoDto> findById(@PathVariable UUID id) {
-        RegisteredUser user = this._service.findById(id);
+        RegisteredUser user = this._registeredUserService.findById(id);
         return new ResponseEntity<>(new RegisterdUserInfoDto(user), HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<RegisteredUser> save(@RequestBody RegisteredUser entity) {
-        return new ResponseEntity<>(this._service.save(entity), HttpStatus.CREATED);
+        return new ResponseEntity<>(this._registeredUserService.save(entity), HttpStatus.CREATED);
     }
 
     @PostMapping("register")
