@@ -14,22 +14,23 @@ import java.util.UUID;
 @Primary
 public class BloodCenterService implements IBloodCenterService {
 
-    private final BloodCenterRepository _repository;
+    private final BloodCenterRepository _bloodCenterRepository;
 
     @Autowired
-    public BloodCenterService(BloodCenterRepository bloodCenterRepository) {
-        _repository = bloodCenterRepository;
+    public BloodCenterService(BloodCenterRepository bloodCenterRepository)
+    {
+        _bloodCenterRepository = bloodCenterRepository;
     }
-
     @Override
     public Iterable<BloodCenter> findAll() {
-        return _repository.findAll();
+        return _bloodCenterRepository.findAll();
     }
+
 
     @Override
     public BloodCenter findById(UUID id) throws NotFoundException {
-        if (_repository.findById(id).isPresent()) {
-            return _repository.findById(id).get();
+        if (_bloodCenterRepository.findById(id).isPresent()) {
+            return _bloodCenterRepository.findById(id).get();
         }
         throw new NotFoundException("Blood center not found");
     }
@@ -41,11 +42,11 @@ public class BloodCenterService implements IBloodCenterService {
             entity.setId(UUID.randomUUID());
         }
 
-        return _repository.save(entity);
+        return _bloodCenterRepository.save(entity);
     }
 
     @Override
     public void deleteById(UUID id) {
-        _repository.deleteById(id);
+        _bloodCenterRepository.deleteById(id);
     }
 }

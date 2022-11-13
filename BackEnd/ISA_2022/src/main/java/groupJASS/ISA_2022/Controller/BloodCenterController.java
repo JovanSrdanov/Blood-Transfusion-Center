@@ -1,6 +1,7 @@
 package groupJASS.ISA_2022.Controller;
 
 import groupJASS.ISA_2022.DTO.BloodCenterRegistrationDTO;
+import groupJASS.ISA_2022.Exceptions.BadRequestException;
 import groupJASS.ISA_2022.Model.BloodCenter;
 import groupJASS.ISA_2022.Service.Interfaces.IBloodCenterService;
 import org.modelmapper.ModelMapper;
@@ -9,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.webjars.NotFoundException;
-
 import java.util.List;
 import java.util.UUID;
 
@@ -30,7 +30,7 @@ public class BloodCenterController {
     @GetMapping
     public ResponseEntity<List<BloodCenter>> findAll() {
         var res = (List<BloodCenter>) _bloodCenterService.findAll();
-        return new ResponseEntity<List<BloodCenter>>(res, HttpStatus.OK);
+        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
     @GetMapping(path = "/{id}")
@@ -45,7 +45,12 @@ public class BloodCenterController {
 
     @PostMapping(path = "/save")
     public ResponseEntity<BloodCenter> save(@RequestBody BloodCenter center) {
-        var res = _bloodCenterService.save(center);
+        BloodCenter res;
+        try {
+            res = _bloodCenterService.save(center);
+        } catch (BadRequestException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<>(res, HttpStatus.CREATED);
     }
 
@@ -57,5 +62,12 @@ public class BloodCenterController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping
+    public ResponseEntity<Iterable<BloodCenter>> getAllBloodCenters()
+    {
+        Iterable<BloodCenter> bloodCenters =  _bloodCenterService.findAll();
+        return new ResponseEntity<>(bloodCenters, HttpStatus.OK);
     }
 }
