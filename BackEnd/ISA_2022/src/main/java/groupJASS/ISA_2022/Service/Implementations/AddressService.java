@@ -54,4 +54,11 @@ public class AddressService implements IAddresService {
         _addressRepository.deleteById(id);
 
     }
+
+    @Override
+    public Address AddresFromUserRegistration(Address map) {
+        map.setLongitude(0);
+        map.setLatitude(0);
+        return save(map);
+    }
 }
