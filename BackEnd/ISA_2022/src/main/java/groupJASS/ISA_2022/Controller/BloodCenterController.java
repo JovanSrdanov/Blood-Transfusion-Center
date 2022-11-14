@@ -66,4 +66,9 @@ public class BloodCenterController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
+    @GetMapping(path = "/sort/{field}")
+    public List<BloodCenter> sortCenter(@PathVariable String field) {
+       return _bloodCenterService.findProductsWithSorting(field);
+    }
 }
