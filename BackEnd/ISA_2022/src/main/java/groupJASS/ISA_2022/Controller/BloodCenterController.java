@@ -1,6 +1,6 @@
 package groupJASS.ISA_2022.Controller;
 
-import groupJASS.ISA_2022.DTO.BloodCenterRegistrationDTO;
+import groupJASS.ISA_2022.DTO.BloodCenter.BloodCenterRegistrationDTO;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
 import groupJASS.ISA_2022.Model.BloodCenter;
 import groupJASS.ISA_2022.Service.Interfaces.IBloodCenterService;
@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.webjars.NotFoundException;
+
+import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
@@ -55,11 +57,12 @@ public class BloodCenterController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> registerBloodCenter(@RequestBody BloodCenterRegistrationDTO dto) {
+    public ResponseEntity<String> registerBloodCenter(@Valid @RequestBody BloodCenterRegistrationDTO dto) {
         try {
             _bloodCenterService.save(_mapper.map(dto, BloodCenter.class));
             return new ResponseEntity<>(HttpStatus.CREATED);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }

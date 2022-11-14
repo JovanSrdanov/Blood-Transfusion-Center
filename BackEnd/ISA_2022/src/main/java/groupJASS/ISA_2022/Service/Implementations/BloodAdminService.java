@@ -1,6 +1,6 @@
 package groupJASS.ISA_2022.Service.Implementations;
 
-import groupJASS.ISA_2022.DTO.BloodAdminRegistrationDTO;
+import groupJASS.ISA_2022.DTO.BloodAdmin.BloodAdminRegistrationDTO;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
 import groupJASS.ISA_2022.Model.BloodAdmin;
 import groupJASS.ISA_2022.Model.BloodCenter;
@@ -13,11 +13,11 @@ import groupJASS.ISA_2022.Service.Interfaces.IBloodAdminService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
 
-import java.sql.SQLException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -91,7 +91,7 @@ public class BloodAdminService implements IBloodAdminService {
     }
 
     @Override
-    @Transactional(rollbackFor = SQLException.class)
+    @Transactional(rollbackFor = DataIntegrityViolationException.class)
     public void register(BloodAdminRegistrationDTO dto) {
         BloodAdmin bloodAdmin = _mapper.map(dto, BloodAdmin.class);
         bloodAdmin.setId(UUID.randomUUID());
