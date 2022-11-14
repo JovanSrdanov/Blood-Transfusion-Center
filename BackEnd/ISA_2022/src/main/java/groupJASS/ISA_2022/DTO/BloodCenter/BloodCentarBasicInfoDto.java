@@ -1,4 +1,4 @@
-package groupJASS.ISA_2022.DTO;
+package groupJASS.ISA_2022.DTO.BloodCenter;
 
 import groupJASS.ISA_2022.Model.Address;
 import lombok.Getter;

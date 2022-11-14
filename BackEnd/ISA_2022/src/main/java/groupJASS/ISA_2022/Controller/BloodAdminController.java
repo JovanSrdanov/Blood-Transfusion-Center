@@ -1,7 +1,7 @@
 package groupJASS.ISA_2022.Controller;
 
 import groupJASS.ISA_2022.DTO.AssignBloodCenterDTO;
-import groupJASS.ISA_2022.DTO.BloodAdminRegistrationDTO;
+import groupJASS.ISA_2022.DTO.BloodAdmin.BloodAdminRegistrationDTO;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
 import groupJASS.ISA_2022.Model.BloodAdmin;
 import groupJASS.ISA_2022.Service.Interfaces.IBloodAdminService;
