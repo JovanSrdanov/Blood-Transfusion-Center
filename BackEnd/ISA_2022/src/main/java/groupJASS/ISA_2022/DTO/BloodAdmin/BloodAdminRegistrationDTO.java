@@ -1,4 +1,4 @@
-package groupJASS.ISA_2022.DTO;
+package groupJASS.ISA_2022.DTO.BloodAdmin;
 
 import groupJASS.ISA_2022.Model.Role;
 import lombok.AllArgsConstructor;

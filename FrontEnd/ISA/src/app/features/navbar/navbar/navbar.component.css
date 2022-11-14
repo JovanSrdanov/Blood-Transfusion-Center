@@ -10,3 +10,8 @@
 span {
   padding-right: 1rem;
 }
+
+.mat-raised-button
+{
+    margin: 0px 10px;
+}
