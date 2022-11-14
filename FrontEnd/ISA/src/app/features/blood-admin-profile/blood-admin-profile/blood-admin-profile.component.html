@@ -6,81 +6,57 @@
     <mat-grid-tile>
       <div>
         <div class="header">Personal info</div>
-        <div>
-          <form>
-            <table>
-              <tr>
-                <td>Name:</td>
-                <td>
-                  <input
-                    type="text"
-                    name="name"
-                    [(ngModel)]="staffInfo.name"
-                    placeholder="TEMP NAME"
-                    [disabled]="isPreventChangeAdmin"
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>Surname:</td>
-                <td>
-                  <input
-                    type="text"
-                    name="surname"
-                    [(ngModel)]="staffInfo.surname"
-                    placeholder="TEMP SURNAME"
-                    [disabled]="isPreventChangeAdmin"
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>Email:</td>
-                <td>
-                  <input
-                    type="text"
-                    name="email"
-                    [(ngModel)]="staffInfo.email"
-                    placeholder="TEMP EMAIL"
-                    [disabled]="isPreventChangeAdmin"
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>Phone:</td>
-                <td>
-                  <input
-                    type="text"
-                    name="Phone"
-                    [(ngModel)]="staffInfo.phoneNumber"
-                    placeholder="TEMP PHONE"
-                    [disabled]="isPreventChangeAdmin"
-                  />
-                </td>
-              </tr>
-              <tr *ngIf="isPreventChangeAdmin">
-                <td colspan="2">
-                  <button mat-raised-button (click)="enableChangeAdmin($event)">
-                    Change
-                  </button>
-                </td>
-              </tr>
-              <tr *ngIf="!isPreventChangeAdmin">
-                <td>
-                  <button
-                    mat-raised-button
-                    (click)="confirmChangeAdmin($event)"
-                  >
-                    Confirm
-                  </button>
-                </td>
-                <td>
-                  <button mat-raised-button (click)="cancelChangeAdmin($event)">
-                    Cancel
-                  </button>
-                </td>
-              </tr>
-            </table>
+        <br />
+        <div class="form">
+          <!-- TEST  -->
+
+          <form [formGroup]="staffForm">
+            <hr />
+            <mat-form-field>
+              <input matInput placeholder="name" formControlName="name" />
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="surname" formControlName="surname" />
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="email" formControlName="email" />
+            </mat-form-field>
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="phone number"
+                formControlName="phoneNumber"
+              />
+            </mat-form-field>
+            <div *ngIf="isPreventChangeAdmin">
+              <button mat-raised-button (click)="enableChangeAdmin($event)">
+                Change
+              </button>
+            </div>
+            <div *ngIf="!isPreventChangeAdmin">
+              <span>
+                <button
+                  class="confirm"
+                  [disabled]="staffForm.invalid"
+                  mat-raised-button
+                  (click)="confirmChangeAdmin($event)"
+                >
+                  Confirm
+                </button>
+              </span>
+              <span>
+                <button
+                  mat-raised-button
+                  (click)="cancelChangeAdmin($event)"
+                  color="warn"
+                >
+                  Cancel
+                </button>
+              </span>
+            </div>
           </form>
+
+          <!-- TEST  -->
         </div>
       </div>
     </mat-grid-tile>

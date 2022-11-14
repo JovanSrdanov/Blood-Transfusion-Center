@@ -42,3 +42,22 @@ table {
 mat-grid-tile {
   background-color: rgb(33, 38, 40);
 }
+
+.confirm {
+  margin-right: 6%;
+}
+
+.form {
+  width: 70%;
+  margin: auto;
+}
+
+input {
+  width: 100%;
+  font-size: larger;
+  color: white;
+}
+
+mat-form-field {
+  padding: 4%;
+}
