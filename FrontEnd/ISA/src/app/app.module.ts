@@ -8,6 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BloodAdminProfileModule } from './features/blood-admin-profile/blood-admin-profile.module';
 import { BloodCenterRegistrationModule } from './features/blood-center-registration/blood-center-registration.module';
 import { HttpClientModule } from '@angular/common/http';
+import { NavbarModule } from './features/navbar/navbar.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,7 +20,8 @@ import { HttpClientModule } from '@angular/common/http';
     LandingPageModule,
     BloodAdminProfileModule,
     BloodCenterRegistrationModule,
-    HttpClientModule
+    HttpClientModule,
+    NavbarModule
   ],
   providers: [],
   bootstrap: [AppComponent],
