@@ -5,6 +5,7 @@ import groupJASS.ISA_2022.DTO.BloodAdmin.BloodAdminRegistrationDTO;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
 import groupJASS.ISA_2022.Model.BloodAdmin;
 import groupJASS.ISA_2022.Service.Interfaces.IBloodAdminService;
+import groupJASS.ISA_2022.Service.Interfaces.IBloodUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -19,10 +20,12 @@ import java.util.UUID;
 @RequestMapping("blood-admin")
 public class BloodAdminController {
     private final IBloodAdminService _bloodAdminService;
+    private final IBloodUserService _bloodUserService;
 
     @Autowired
-    public BloodAdminController(IBloodAdminService bloodAdminService) {
+    public BloodAdminController(IBloodAdminService bloodAdminService, IBloodUserService bloodUserService) {
         _bloodAdminService = bloodAdminService;
+        _bloodUserService = bloodUserService;
     }
 
     @GetMapping
@@ -98,4 +101,17 @@ public class BloodAdminController {
        Iterable<BloodAdmin>  bloodAdmins = _bloodAdminService.getUnemployedBloodAdmins();
        return new ResponseEntity<>(bloodAdmins, HttpStatus.OK);
     }
+
+    @GetMapping(path ="username-available/{username}")
+    public ResponseEntity<Boolean> checkUsernameAvailability(@PathVariable String username){
+        Boolean exists = _bloodUserService.checkUsernameAvailability(username);
+        return new ResponseEntity<>(!exists, HttpStatus.OK);
+    }
+
+    @GetMapping(path ="email-available/{email}")
+    public ResponseEntity<Boolean> checkEmailAvailability(@PathVariable String email){
+        Boolean exists = _bloodAdminService.checkEmailAvailability(email);
+        return new ResponseEntity<>(!exists, HttpStatus.OK);
+    }
+
 }

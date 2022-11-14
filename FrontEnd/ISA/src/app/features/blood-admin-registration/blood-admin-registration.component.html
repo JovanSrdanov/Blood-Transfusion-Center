@@ -1,8 +1,9 @@
 <app-navbar></app-navbar>
 <form [formGroup]="registrationForm">
+    <p *ngIf="!usernameAvailable" class="error-message">Entered username is not available</p>
     <mat-form-field>
         <mat-label>Username</mat-label>
-        <input matInput type="text" formControlName="username">
+        <input matInput type="text" formControlName="username" (blur)="checkUsernameAvailability()">
     </mat-form-field>
     <mat-form-field>
         <mat-label>Password</mat-label>
@@ -20,9 +21,10 @@
         <mat-label>Phone number</mat-label>
         <input matInput type="text" formControlName="phoneNumber">
     </mat-form-field>
+    <p *ngIf="!emailAvailable" class="error-message">Entered email is not available</p>
     <mat-form-field>
         <mat-label>Email</mat-label>
-        <input matInput type="text" formControlName="email">
+        <input matInput type="text" formControlName="email" (blur)="checkEmailAvailability()">
     </mat-form-field>
     <mat-form-field>
         <mat-label>Street</mat-label>
@@ -49,5 +51,5 @@
         <input matInput type="number" formControlName="longitude">
     </mat-form-field>
     <br>
-    <button [disabled]="registrationForm.invalid"  mat-raised-button (click)="register()">Submit</button>
+    <button [disabled]="disableSubmit"  mat-raised-button (click)="register()">Submit</button>
 </form>

@@ -63,6 +63,7 @@ public class BloodAdminService implements IBloodAdminService {
         _bloodAdminRepository.deleteById(id);
     }
 
+    @Override
     public void assignBloodCenter(UUID bloodAdminId, UUID bloodCenterId) throws BadRequestException {
         Optional<BloodAdmin> bloodAdmin = _bloodAdminRepository.findById(bloodAdminId);
         if(bloodAdmin.isEmpty())
@@ -84,6 +85,7 @@ public class BloodAdminService implements IBloodAdminService {
         b.setBloodCenter(bloodCenter.get());
         _bloodAdminRepository.save(b);
     }
+    @Override
     public Iterable<BloodAdmin> getUnemployedBloodAdmins(){
        return _bloodAdminRepository.getUnemployedBloodAdmins();
     }
@@ -106,5 +108,10 @@ public class BloodAdminService implements IBloodAdminService {
         bloodUser.setPersonId(bloodAdminId);
         bloodUser.setId(UUID.randomUUID());
         _bloodUserRepository.save(bloodUser);
+    }
+
+    public boolean checkEmailAvailability(String email)
+    {
+        return _bloodAdminRepository.existsBloodAdminByEmail(email);
     }
 }

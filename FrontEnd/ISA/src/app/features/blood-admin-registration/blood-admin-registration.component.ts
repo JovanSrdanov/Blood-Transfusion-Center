@@ -28,8 +28,16 @@ export class BloodAdminRegistrationComponent implements OnInit {
       longitude : new FormControl<number>(0, Validators.required)
     })
 
+  usernameAvailable: boolean = true;
+  emailAvailable: boolean = true;
+  _disableSubmit: boolean = !this.usernameAvailable || !this.emailAvailable || this.registrationForm.invalid
+
   get form(){
     return this.registrationForm.controls;
+  }
+
+  get disableSubmit():boolean{
+    return  !this.usernameAvailable || !this.emailAvailable || this.registrationForm.invalid;
   }
 
   constructor(private readonly bloodAdminService: BloodAdminService,
@@ -60,6 +68,30 @@ export class BloodAdminRegistrationComponent implements OnInit {
       this.router.navigate(['']);
     })
 
+  }
+
+  checkUsernameAvailability = () =>{
+      this.bloodAdminService.checkUsernameAvailability(this.form.username.value ?? '').subscribe(response =>{
+        if(response){
+          this.usernameAvailable = true;
+        }
+        else
+        {
+          this.usernameAvailable = false;
+        }
+      })
+  }
+
+  checkEmailAvailability = () =>{
+      this.bloodAdminService.checkEmailAvailability(this.form.email.value ?? '').subscribe(response =>{
+        if(response){
+          this.emailAvailable = true;
+        }
+        else
+        {
+          this.emailAvailable = false;
+        }
+      })
   }
 
 }
