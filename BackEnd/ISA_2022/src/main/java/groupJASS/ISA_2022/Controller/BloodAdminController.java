@@ -42,6 +42,16 @@ public class BloodAdminController {
         }
     }
 
+    @GetMapping(path = "/logged-in")
+    public ResponseEntity<BloodAdmin> getLoggedInAdmin() {
+        var res = (List<BloodAdmin>) _bloodAdminService.findAll();
+        if (res.isEmpty()) {
+            return null;
+        } else {
+            return new ResponseEntity<>(res.get(0), HttpStatus.OK);
+        }
+    }
+
     @PostMapping(value = "/save")
     public ResponseEntity<BloodAdmin> save(@RequestBody BloodAdmin admin) {
         BloodAdmin res;
@@ -54,48 +64,36 @@ public class BloodAdminController {
     }
 
 
-    @PostMapping(consumes = "application/json" )
-    public ResponseEntity<String> registerBloodAdmin(@RequestBody BloodAdminRegistrationDTO dto)
-    {
-        try{
+    @PostMapping(consumes = "application/json")
+    public ResponseEntity<String> registerBloodAdmin(@RequestBody BloodAdminRegistrationDTO dto) {
+        try {
 
             _bloodAdminService.register(dto);
-            return  new ResponseEntity<>(HttpStatus.CREATED);
-        }
-        catch (DataIntegrityViolationException e)
-        {
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (DataIntegrityViolationException e) {
             return new ResponseEntity<>("That username already exists", HttpStatus.CONFLICT);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     @PatchMapping
-    public ResponseEntity<String> assignBloodCenter(@RequestBody AssignBloodCenterDTO dto)
-    {
-       try{
+    public ResponseEntity<String> assignBloodCenter(@RequestBody AssignBloodCenterDTO dto) {
+        try {
             _bloodAdminService.assignBloodCenter(dto.getBloodAdminId(), dto.getBloodCenterId());
-           return  new ResponseEntity<>(HttpStatus.OK);
-       }
-       catch (NotFoundException e)
-       {
-            return  new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
-       }
-       catch (BadRequestException e)
-       {
-           return  new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-       }
-       catch (Exception e)
-       {
-           return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-       }
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (BadRequestException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
-    @GetMapping(path ="unemployed")
-    public ResponseEntity<Iterable<BloodAdmin>> getUnemployedBloodAdmins(){
-       Iterable<BloodAdmin>  bloodAdmins = _bloodAdminService.getUnemployedBloodAdmins();
-       return new ResponseEntity<>(bloodAdmins, HttpStatus.OK);
+    @GetMapping(path = "unemployed")
+    public ResponseEntity<Iterable<BloodAdmin>> getUnemployedBloodAdmins() {
+        Iterable<BloodAdmin> bloodAdmins = _bloodAdminService.getUnemployedBloodAdmins();
+        return new ResponseEntity<>(bloodAdmins, HttpStatus.OK);
     }
 }

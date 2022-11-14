@@ -1,5 +1,6 @@
-import { ProfileService } from './../services/profile.service';
+import { ProfileService } from './../../../http-services/staff/profile.service';
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-blood-admin-profile',
@@ -7,6 +8,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./blood-admin-profile.component.css'],
 })
 export class BloodAdminProfileComponent implements OnInit {
+  //FORMA
+  myForm: FormGroup;
+  //FORMA
+
   isPreventChangeAdmin: boolean = true;
   isPreventChangeCenter: boolean = true;
 
@@ -16,7 +21,15 @@ export class BloodAdminProfileComponent implements OnInit {
   centerInfo: any;
   centerInfoCopy: any;
 
-  constructor(private profileService: ProfileService) {}
+  constructor(private profileService: ProfileService, private fb: FormBuilder) {
+    this.myForm = this.fb.group({
+      name: '',
+      surname: '',
+      email: '',
+      phoneNumber: '',
+    });
+    this.myForm.valueChanges.subscribe();
+  }
 
   ngOnInit(): void {
     this.staffInfo = this.profileService.getLoggedInStaffInfo();
