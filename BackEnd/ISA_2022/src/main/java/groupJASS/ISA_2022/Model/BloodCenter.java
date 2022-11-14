@@ -38,6 +38,9 @@ public class BloodCenter {
 
     @OneToMany(mappedBy = "bloodCenter")
     private Set<BloodAdmin> staff = new HashSet<>();
+
+    @Embedded
+    private WorkingHours workingHours;
 }
 
 

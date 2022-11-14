@@ -16,11 +16,6 @@ export class BloodAdminService {
   {
     return this.http.post(this.pathBase, bloodAdmin);
   }
-  /*
-
-    return this._HttpClient.get(`${API_URL}/api/v1/data/logs`, { params: params })
-}
-  */
 
   checkUsernameAvailability = (username:string) =>{
     return this.http.get(this.pathBase + '/username-available/' + username)

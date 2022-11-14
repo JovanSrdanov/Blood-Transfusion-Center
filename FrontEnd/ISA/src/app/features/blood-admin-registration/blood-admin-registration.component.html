@@ -42,14 +42,6 @@
         <mat-label>Country</mat-label>
         <input matInput type="text" formControlName="country">
     </mat-form-field>
-    <mat-form-field>
-        <mat-label>Latitude</mat-label>
-        <input matInput type="number" formControlName="latitude">
-    </mat-form-field>
-    <mat-form-field>
-        <mat-label>Longitude</mat-label>
-        <input matInput type="number" formControlName="longitude">
-    </mat-form-field>
     <br>
     <button [disabled]="disableSubmit"  mat-raised-button (click)="register()">Submit</button>
 </form>

@@ -19,13 +19,11 @@ export class BloodAdminRegistrationComponent implements OnInit {
       name : new FormControl<string>('', [Validators.required]),
       surname : new FormControl<string>('', [Validators.required]),
       phoneNumber : new FormControl<string>('', [Validators.required]),
-      email : new FormControl<string>('', [Validators.required]),
+      email : new FormControl<string>('', [Validators.required, Validators.email]),
       street : new FormControl<string>('', [Validators.required]),
       number : new FormControl<string>('', [Validators.required]),
       city : new FormControl<string>('', [Validators.required]),
-      country : new FormControl<string>('', [Validators.required]),
-      latitude : new FormControl<number>(0, Validators.required),
-      longitude : new FormControl<number>(0, Validators.required)
+      country : new FormControl<string>('', [Validators.required])
     })
 
   usernameAvailable: boolean = true;
@@ -59,9 +57,7 @@ export class BloodAdminRegistrationComponent implements OnInit {
         street: this.form.street.value ?? "",
         number: this.form.number.value ?? "",
         city: this.form.city.value ?? "",
-        country: this.form.country.value ?? "",
-        latitude: this.form.latitude.value ?? 0,
-        longitude: this.form.longitude.value ?? 0
+        country: this.form.country.value ?? ""
       }
     }
     this.bloodAdminService.registerBloodAdmin(bloodAdmin).subscribe(_ => {

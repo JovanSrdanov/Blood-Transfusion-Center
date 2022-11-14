@@ -1,10 +1,14 @@
 package groupJASS.ISA_2022.Service.Implementations;
 
+import groupJASS.ISA_2022.Exceptions.BadRequestException;
+import groupJASS.ISA_2022.Model.Address;
 import groupJASS.ISA_2022.Model.BloodCenter;
+import groupJASS.ISA_2022.Repository.AddressRepository;
 import groupJASS.ISA_2022.Repository.BloodCenterRepository;
 import groupJASS.ISA_2022.Service.Interfaces.IBloodCenterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
@@ -15,11 +19,13 @@ import java.util.UUID;
 public class BloodCenterService implements IBloodCenterService {
 
     private final BloodCenterRepository _bloodCenterRepository;
+    private final AddressRepository _addressRepository;
 
     @Autowired
-    public BloodCenterService(BloodCenterRepository bloodCenterRepository)
+    public BloodCenterService(BloodCenterRepository bloodCenterRepository, AddressRepository addressRepository)
     {
         _bloodCenterRepository = bloodCenterRepository;
+        _addressRepository = addressRepository;
     }
     @Override
     public Iterable<BloodCenter> findAll() {
@@ -36,10 +42,23 @@ public class BloodCenterService implements IBloodCenterService {
     }
 
     @Override
-    public BloodCenter save(BloodCenter entity) {
+    public BloodCenter save(BloodCenter entity) throws BadRequestException {
         if (entity.getId() == null) {
             entity.getAddress().setId(UUID.randomUUID());
             entity.setId(UUID.randomUUID());
+        }
+
+        if(!entity.getWorkingHours().isValid())
+        {
+            throw new BadRequestException("Invalid working hours");
+        }
+
+        Address address = entity.getAddress();
+        //Don't look at this
+        if(_addressRepository.existsAddressByStreetIgnoreCaseAndNumberIgnoreCaseAndCityIgnoreCaseAndCountryIgnoreCase(
+                address.getStreet(), address.getNumber(), address.getCity(), address.getCountry()))
+        {
+            throw new DataIntegrityViolationException("Exact same address already exists");
         }
 
         return _bloodCenterRepository.save(entity);

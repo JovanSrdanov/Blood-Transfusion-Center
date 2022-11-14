@@ -18,4 +18,6 @@ public class BloodCenterRegistrationDTO {
     private AddressDTO address;
     @NotEmpty
     private String description;
+    @Valid
+    private WorkingHoursDTO workingHours;
 }

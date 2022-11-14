@@ -1,4 +1,5 @@
 import { Address } from "../address/address"
+import { AddressNoCoor } from "../address/addressNoCoor"
 
 export interface BloodAdminRegistration{
     username: string,
@@ -6,6 +7,6 @@ export interface BloodAdminRegistration{
     name: string,
     surname: string,
     phoneNumber: string
-    address: Address
+    address: AddressNoCoor
     email: string,
 }
