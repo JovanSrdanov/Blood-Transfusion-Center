@@ -1,7 +1,7 @@
-import { address } from "../address/address";
+import { Address } from "../address/address";
 
 export interface BloodCenterRegistration{
     name: string;
-    address: address;  
+    address: Address;  
     description: string;
 }

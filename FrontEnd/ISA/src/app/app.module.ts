@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NavbarModule } from './features/navbar/navbar.module';
 import { RegisterUserModule } from './features/register-user/register-user.module';
 import {MatSelectModule} from '@angular/material/select';
+import { BloodAdminRegistrationComponent } from './features/blood-admin-registration/blood-admin-registration.component';
 
 @NgModule({
   declarations: [AppComponent],

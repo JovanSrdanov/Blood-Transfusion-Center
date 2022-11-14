@@ -1,11 +1,9 @@
 package groupJASS.ISA_2022.Service.Implementations;
 
+import groupJASS.ISA_2022.DTO.AddressDTO;
 import groupJASS.ISA_2022.DTO.BloodAdmin.BloodAdminRegistrationDTO;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
-import groupJASS.ISA_2022.Model.BloodAdmin;
-import groupJASS.ISA_2022.Model.BloodCenter;
-import groupJASS.ISA_2022.Model.BloodUser;
-import groupJASS.ISA_2022.Model.Role;
+import groupJASS.ISA_2022.Model.*;
 import groupJASS.ISA_2022.Repository.BloodAdminRepository;
 import groupJASS.ISA_2022.Repository.BloodCenterRepository;
 import groupJASS.ISA_2022.Repository.BloodUserRepository;
@@ -93,8 +91,14 @@ public class BloodAdminService implements IBloodAdminService {
     @Override
     @Transactional(rollbackFor = DataIntegrityViolationException.class)
     public void register(BloodAdminRegistrationDTO dto) {
+
+        Address address = _mapper.map(dto.getAddress(), Address.class);
+        address.setId(UUID.randomUUID());
+
         BloodAdmin bloodAdmin = _mapper.map(dto, BloodAdmin.class);
         bloodAdmin.setId(UUID.randomUUID());
+        bloodAdmin.setAddress(address);
+
         UUID bloodAdminId = _bloodAdminRepository.save(bloodAdmin).getId();
 
         BloodUser bloodUser = _mapper.map(dto, BloodUser.class);

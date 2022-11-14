@@ -18,17 +18,16 @@ export class BloodCenterRegistrationComponent implements OnInit {
     number : new FormControl<string>('', [Validators.required]),
     city : new FormControl<string>('', [Validators.required]),
     country : new FormControl<string>('', [Validators.required]),
-    latitude : new FormControl<number>(0, [Validators.required]),
-    longitude : new FormControl<number>(0, [Validators.required])
+    latitude : new FormControl<number>(0),
+    longitude : new FormControl<number>(0)
   })  
 
   constructor(private readonly bloodCenterService: BloodCenterService, private readonly router: Router) { }
 
-  ngOnInit(): void {
-  }
-
   get form(){
     return this.registrationForm.controls;
+  }
+  ngOnInit(): void {
   }
 
   register = () =>

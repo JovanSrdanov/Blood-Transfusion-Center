@@ -64,7 +64,7 @@ public class BloodAdminController {
         }
         catch (DataIntegrityViolationException e)
         {
-            return new ResponseEntity<>("That username already exists", HttpStatus.CONFLICT);
+            return new ResponseEntity<>("Username or email already exist", HttpStatus.CONFLICT);
         }
         catch (Exception e)
         {

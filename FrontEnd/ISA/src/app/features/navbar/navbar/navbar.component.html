@@ -1,6 +1,6 @@
 <div>
-  <mat-toolbar class="navbar"
-    ><div class="name-and-logo">
+  <mat-toolbar class="navbar">
+    <div class="name-and-logo">
       <p>BloodBank</p>
       <img src="../../../../assets/images/favicon.ico" alt="gas" />
     </div>
@@ -16,6 +16,9 @@
       </button>
       <button mat-raised-button (click)="goTo('register-user')">Login</button>
       <button mat-raised-button (click)="goTo('register-user')">Log out</button>
-    </div></mat-toolbar
-  >
+      <button mat-raised-button (click)="goTo('blood-admin')">
+        Blood Admin Registration
+      </button>
+    </div>
+  </mat-toolbar>
 </div>
