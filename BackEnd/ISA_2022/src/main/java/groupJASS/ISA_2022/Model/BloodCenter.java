@@ -1,5 +1,9 @@
 package groupJASS.ISA_2022.Model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerator;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +19,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class BloodCenter {
 
     @Id
@@ -37,7 +42,8 @@ public class BloodCenter {
     @JoinColumn(name = "blood_center_id")
     private Set<Appointment> appointments = new HashSet<>();
 
-    @OneToMany(mappedBy = "bloodCenter", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "bloodCenter")
+    //@JsonManagedReference
     private Set<BloodAdmin> staff = new HashSet<>();
 }
 

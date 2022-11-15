@@ -41,8 +41,8 @@ public class BloodCenterService implements IBloodCenterService {
             entity.getAddress().setId(UUID.randomUUID());
             entity.setId(UUID.randomUUID());
         }
-        var id = entity.getId();
-        entity.setId(id);
+        //var id = entity.getId();
+        //entity.setId(id);
         return _bloodCenterRepository.save(entity);
     }
 

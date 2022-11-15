@@ -53,31 +53,21 @@ public class BloodAdminController {
         if (res.isEmpty()) {
             return null;
         } else {
-            var test = res.get(0);
-            //TEST
-            var center = test.getBloodCenter();
-            if (center != null) {
-                center.setStaff(null);
-                test.setBloodCenter(center);
-            }
-            return new ResponseEntity<>(test, HttpStatus.OK);
+            return new ResponseEntity<>(res.get(0), HttpStatus.OK);
         }
     }
 
     @PutMapping(path = "updateBloodAdmin/{id}")
-    ResponseEntity<?> updateAdmin(@PathVariable("id") String adminId, @Valid @RequestBody BloodAdminProfileDTO dto) {
+    ResponseEntity<?> updateAdmin(@PathVariable("id") UUID adminId, @Valid @RequestBody BloodAdminProfileDTO dto) {
         try {
-            UUID id = UUID.fromString(adminId);
-            BloodAdmin oldAdmin = _bloodAdminService.findById(id);
+            //UUID id = UUID.fromString(adminId);
+            BloodAdmin oldAdmin = _bloodAdminService.findById(adminId);
             BloodAdmin newAdmin = _modelMapper.map(dto, BloodAdmin.class);
-            newAdmin.setId(id);
-            //TEMP
+
+            newAdmin.setId(adminId);
             var tempCenter = oldAdmin.getBloodCenter();
-            if (tempCenter != null) {
-                tempCenter.setStaff(null);
-            }
-            //TEMP
             newAdmin.setBloodCenter(tempCenter);
+
             return new ResponseEntity<>(_bloodAdminService.save(newAdmin), HttpStatus.OK);
         } catch (NotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

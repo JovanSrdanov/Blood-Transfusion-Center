@@ -46,17 +46,16 @@ public class BloodCenterController {
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<?> updateCenter(@PathVariable("id") String centerId, @Valid @RequestBody BloodCenterRegistrationDTO dto) {
+    public ResponseEntity<?> updateCenter(@PathVariable("id") UUID centerId, @Valid @RequestBody BloodCenterRegistrationDTO dto) {
         try {
-            UUID id = UUID.fromString(centerId);
-            BloodCenter oldCenter = _bloodCenterService.findById(id);
+            //UUID id = UUID.fromString(centerId);
+            BloodCenter oldCenter = _bloodCenterService.findById(centerId);
             BloodCenter newCenter = _mapper.map(dto, BloodCenter.class);
-            newCenter.setId(id);
+            newCenter.setId(centerId);
             newCenter.getAddress().setId((oldCenter.getAddress().getId()));
-            //newCenter.setStaff(oldCenter.getStaff());
-            newCenter.setStaff(null);
-            newCenter.setAppointments(oldCenter.getAppointments());
-            newCenter.setRating(10.0);
+            //newCenter.setStaff(null);
+            //newCenter.setAppointments(oldCenter.getAppointments());
+            //newCenter.setRating(10.0);
             return new ResponseEntity<>(_bloodCenterService.save(newCenter), HttpStatus.OK);
         } catch (NotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
