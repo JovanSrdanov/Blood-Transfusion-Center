@@ -45,6 +45,28 @@ public class BloodCenterController {
         }
     }
 
+    @PutMapping(path = "/{id}")
+    public ResponseEntity<?> updateCenter(@PathVariable("id") String centerId, @Valid @RequestBody BloodCenterRegistrationDTO dto) {
+        try {
+            UUID id = UUID.fromString(centerId);
+            BloodCenter oldCenter = _bloodCenterService.findById(id);
+            BloodCenter newCenter = _mapper.map(dto, BloodCenter.class);
+            newCenter.setId(id);
+            newCenter.getAddress().setId((oldCenter.getAddress().getId()));
+            //newCenter.setStaff(oldCenter.getStaff());
+            newCenter.setStaff(null);
+            newCenter.setAppointments(oldCenter.getAppointments());
+            newCenter.setRating(10.0);
+            return new ResponseEntity<>(_bloodCenterService.save(newCenter), HttpStatus.OK);
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        } catch (BadRequestException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @PostMapping(path = "/save")
     public ResponseEntity<BloodCenter> save(@RequestBody BloodCenter center) {
         BloodCenter res;
@@ -61,8 +83,7 @@ public class BloodCenterController {
         try {
             _bloodCenterService.save(_mapper.map(dto, BloodCenter.class));
             return new ResponseEntity<>(HttpStatus.CREATED);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }

@@ -1,6 +1,11 @@
 import { ProfileService } from './../../../http-services/staff/profile.service';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  FormControl,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-blood-admin-profile',
@@ -8,9 +13,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./blood-admin-profile.component.css'],
 })
 export class BloodAdminProfileComponent implements OnInit {
-  //FORMA
   staffForm: FormGroup;
-  //FORMA
+  centerForm: FormGroup;
 
   isPreventChangeAdmin: boolean = true;
   isPreventChangeCenter: boolean = true;
@@ -20,6 +24,7 @@ export class BloodAdminProfileComponent implements OnInit {
   staffInfoCopy: any;
 
   centerInfo: any;
+  centerId: any;
   centerInfoCopy: any;
 
   constructor(private profileService: ProfileService, private fb: FormBuilder) {
@@ -29,7 +34,22 @@ export class BloodAdminProfileComponent implements OnInit {
       email: '',
       phoneNumber: '',
     });
-    this.staffForm.valueChanges.subscribe();
+    const addr = this.fb.group({
+      street: [],
+      number: [],
+      city: [],
+      country: [],
+      latitude: [],
+      longitude: [],
+    });
+    this.centerForm = this.fb.group({
+      name: '',
+      address: addr,
+      description: '',
+      score: 0,
+      appointments: [],
+      staff: [],
+    });
   }
 
   ngOnInit(): void {
@@ -39,10 +59,15 @@ export class BloodAdminProfileComponent implements OnInit {
       this.staffId = this.staffInfo.id;
       this.staffInfoCopy = structuredClone(this.staffInfo);
       this.createFormStaff();
-    });
 
-    this.centerInfo = this.profileService.getStaffCenterInfo();
-    this.centerInfoCopy = structuredClone(this.centerInfo);
+      if (this.staffInfo.bloodCenter != null) {
+        this.centerInfo = this.staffInfo.bloodCenter;
+        this.centerId = this.staffInfo.bloodCenter.id;
+        console.log(this.centerId);
+      }
+      this.centerInfoCopy = structuredClone(this.centerInfo);
+      this.createFormCenter();
+    });
   }
 
   createFormStaff(): void {
@@ -56,8 +81,8 @@ export class BloodAdminProfileComponent implements OnInit {
         [Validators.required],
       ],
       email: [
-        { value: 'test@testmail.com', disabled: true },
-        [Validators.required, Validators.email],
+        { value: 'temp@tempmail.com', disabled: true },
+        [Validators.required],
       ],
       phoneNumber: [
         { value: this.staffInfo.phoneNumber, disabled: true },
@@ -69,12 +94,62 @@ export class BloodAdminProfileComponent implements OnInit {
     });
   }
 
+  createFormCenter(): void {
+    this.centerForm = this.fb.group({
+      name: [
+        { value: this.centerInfo.name, disabled: true },
+        [Validators.required],
+      ],
+      //address: [{ value: addr, disabled: true }, [Validators.required]],
+      address: new FormGroup({
+        street: new FormControl(
+          { value: this.centerInfo.address.street, disabled: true },
+          [Validators.required]
+        ),
+        number: new FormControl(
+          { value: this.centerInfo.address.number, disabled: true },
+          [Validators.required]
+        ),
+        city: new FormControl(
+          { value: this.centerInfo.address.city, disabled: true },
+          [Validators.required]
+        ),
+        country: new FormControl(
+          { value: this.centerInfo.address.country, disabled: true },
+          [Validators.required]
+        ),
+        latitude: new FormControl(
+          { value: this.centerInfo.address.latitude, disabled: true },
+          [Validators.required]
+        ),
+        longitude: new FormControl(
+          {
+            value: this.centerInfo.address.longitude,
+            disabled: true,
+          },
+          [Validators.required]
+        ),
+      }),
+      description: [
+        { value: this.centerInfo.description, disabled: true },
+        [Validators.required],
+      ],
+      score: [{ value: 10, disabled: true }, [Validators.required]],
+      appointments: [{ value: [], disabled: true }],
+      staff: [{ value: [], disabled: true }],
+    });
+    this.centerForm.valueChanges.subscribe((currValue) => {
+      this.centerInfo = currValue;
+    });
+  }
+
   //ADMIN
   enableChangeAdmin(e: Event) {
     e.preventDefault();
-
+    console.log(this.staffInfo);
     this.isPreventChangeAdmin = !this.isPreventChangeAdmin;
     this.staffForm.enable();
+    console.log(this.staffInfo);
   }
   confirmChangeAdmin(event: Event) {
     event.preventDefault();
@@ -108,18 +183,51 @@ export class BloodAdminProfileComponent implements OnInit {
   //CENTAR
   enableChangeCenter(event: Event) {
     event.preventDefault();
+
     this.isPreventChangeCenter = !this.isPreventChangeCenter;
+    this.centerForm.enable();
+
+    this.centerForm.get('score')?.disable();
+    this.centerForm.get('appointments')?.disable();
+    this.centerForm.get('staff')?.disable();
   }
 
   confirmChangeCenter(event: Event) {
     event.preventDefault();
+
+    this.profileService
+      .updateStaffCenterInfo(this.centerId, this.centerInfo)
+      .subscribe((res) => {
+        console.log(res);
+      });
+
     this.centerInfoCopy = structuredClone(this.centerInfo);
+
     this.isPreventChangeCenter = !this.isPreventChangeCenter;
+    this.centerForm.disable();
   }
 
   cancelChangeCenter(event: Event) {
     event.preventDefault();
+
     this.centerInfo = structuredClone(this.centerInfoCopy);
+    this.centerForm.patchValue({
+      name: this.centerInfo.name,
+      address: {
+        street: this.centerInfo.address.street,
+        number: this.centerInfo.address.number,
+        city: this.centerInfo.address.city,
+        country: this.centerInfo.address.country,
+        latitude: this.centerInfo.address.latitude,
+        longitude: this.centerInfo.address.longitude,
+      },
+      description: this.centerInfo.description,
+      score: this.centerInfo.score,
+      appointments: this.centerInfo.appointments,
+      staff: this.centerInfo.staff,
+    });
+
     this.isPreventChangeCenter = !this.isPreventChangeCenter;
+    this.centerForm.disable();
   }
 }

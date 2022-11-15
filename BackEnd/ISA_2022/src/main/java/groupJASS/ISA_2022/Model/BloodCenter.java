@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -33,10 +34,10 @@ public class BloodCenter {
     private double rating;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name="blood_center_id")
+    @JoinColumn(name = "blood_center_id")
     private Set<Appointment> appointments = new HashSet<>();
 
-    @OneToMany(mappedBy = "bloodCenter")
+    @OneToMany(mappedBy = "bloodCenter", fetch = FetchType.LAZY)
     private Set<BloodAdmin> staff = new HashSet<>();
 }
 

@@ -29,6 +29,12 @@ table {
   color: white;
 }
 
+.noCenter {
+  font-size: xx-large;
+  font-weight: bolder;
+  color: red;
+}
+
 .fields {
   font-weight: bold;
 }
@@ -45,6 +51,11 @@ mat-grid-tile {
 
 .confirm {
   margin-right: 6%;
+  font-size: x-large;
+}
+
+button {
+  font-size: x-large;
 }
 
 .form {
@@ -52,12 +63,21 @@ mat-grid-tile {
   margin: auto;
 }
 
+.formCenter {
+  width: 70%;
+  margin: auto;
+}
+
 input {
   width: 100%;
-  font-size: larger;
+  font-size: x-large;
   color: white;
 }
 
 mat-form-field {
-  padding: 4%;
+  padding: 2%;
+}
+
+h3 {
+  color: white;
 }

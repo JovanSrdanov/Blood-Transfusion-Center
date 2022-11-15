@@ -53,7 +53,14 @@ public class BloodAdminController {
         if (res.isEmpty()) {
             return null;
         } else {
-            return new ResponseEntity<>(res.get(0), HttpStatus.OK);
+            var test = res.get(0);
+            //TEST
+            var center = test.getBloodCenter();
+            if (center != null) {
+                center.setStaff(null);
+                test.setBloodCenter(center);
+            }
+            return new ResponseEntity<>(test, HttpStatus.OK);
         }
     }
 
@@ -64,7 +71,13 @@ public class BloodAdminController {
             BloodAdmin oldAdmin = _bloodAdminService.findById(id);
             BloodAdmin newAdmin = _modelMapper.map(dto, BloodAdmin.class);
             newAdmin.setId(id);
-            newAdmin.setBloodCenter(oldAdmin.getBloodCenter());
+            //TEMP
+            var tempCenter = oldAdmin.getBloodCenter();
+            if (tempCenter != null) {
+                tempCenter.setStaff(null);
+            }
+            //TEMP
+            newAdmin.setBloodCenter(tempCenter);
             return new ResponseEntity<>(_bloodAdminService.save(newAdmin), HttpStatus.OK);
         } catch (NotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
