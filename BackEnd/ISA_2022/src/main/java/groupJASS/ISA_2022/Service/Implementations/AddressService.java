@@ -56,7 +56,7 @@ public class AddressService implements IAddressService {
     }
 
     @Override
-    public Address AddresFromUserRegistration(Address map) {
+    public Address saveAddresFromBloodDonorRegistration(Address map) {
         map.setLongitude(0);
         map.setLatitude(0);
         return save(map);

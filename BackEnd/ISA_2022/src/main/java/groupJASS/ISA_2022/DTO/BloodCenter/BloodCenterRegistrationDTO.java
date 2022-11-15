@@ -1,6 +1,6 @@
 package groupJASS.ISA_2022.DTO.BloodCenter;
 
-import groupJASS.ISA_2022.DTO.AddressDTO;
+import groupJASS.ISA_2022.DTO.Address.AddressDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
