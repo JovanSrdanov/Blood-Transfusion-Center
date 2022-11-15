@@ -65,6 +65,7 @@ public class BloodCenterController {
             BloodCenter newCenter = _mapper.map(dto, BloodCenter.class);
             newCenter.setId(centerId);
             newCenter.getAddress().setId((oldCenter.getAddress().getId()));
+            newCenter.setWorkingHours(oldCenter.getWorkingHours());
             //newCenter.setStaff(null);
             //newCenter.setAppointments(oldCenter.getAppointments());
             //newCenter.setRating(10.0);

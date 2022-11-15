@@ -1,7 +1,6 @@
+import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from './material/material.module';
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
@@ -13,6 +12,7 @@ import { RegisterUserModule } from './features/register-user/register-user.modul
 import { MatSelectModule } from '@angular/material/select';
 import { BloodAdminRegistrationComponent } from './features/blood-admin-registration/blood-admin-registration.component';
 import { AssignBloodCenterComponent } from './features/assign-blood-center/assign-blood-center.component';
+import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
   declarations: [AppComponent, AssignBloodCenterComponent],
@@ -21,7 +21,6 @@ import { AssignBloodCenterComponent } from './features/assign-blood-center/assig
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
-    LandingPageModule,
     FormsModule,
     RegisterUserModule,
     BloodAdminProfileModule,

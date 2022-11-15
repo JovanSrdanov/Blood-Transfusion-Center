@@ -58,6 +58,9 @@ public class BloodAdminController {
         if (res.isEmpty()) {
             return null;
         } else {
+            var admin = res.get(0);
+            var center = admin.getBloodCenter();
+            admin.setBloodCenter(center);
             return new ResponseEntity<>(res.get(0), HttpStatus.OK);
         }
     }
@@ -67,7 +70,7 @@ public class BloodAdminController {
         try {
             //UUID id = UUID.fromString(adminId);
             BloodAdmin oldAdmin = _bloodAdminService.findById(adminId);
-            BloodAdmin newAdmin = _modelMapper.map(dto, BloodAdmin.class);
+            BloodAdmin newAdmin = _mapper.map(dto, BloodAdmin.class);
 
             newAdmin.setId(adminId);
             var tempCenter = oldAdmin.getBloodCenter();
