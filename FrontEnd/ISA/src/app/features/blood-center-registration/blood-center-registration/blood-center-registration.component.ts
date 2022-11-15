@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BloodCenterService } from 'src/app/http-services/blood-center.service';
 import { BloodCenterRegistration } from 'src/app/model/blood-center/blood-center-registration';
-import { HoursValidator } from 'src/app/utilities/hours.validator';
+import { HoursValidator } from 'src/app/utilities/validators/hours.validator';
 import { MinutesValidator } from 'src/app/utilities/validators/minutes.validator';
 
 @Component({

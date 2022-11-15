@@ -5,13 +5,15 @@ import { BloodCenterRegistrationComponent } from './features/blood-center-regist
 import { RegisterUserComponent } from './features/register-user/register-user/register-user.component';
 import { NavbarComponent } from './features/navbar/navbar/navbar.component';
 import { BloodAdminRegistrationComponent } from './features/blood-admin-registration/blood-admin-registration.component';
+import { AssignBloodCenterComponent } from './features/assign-blood-center/assign-blood-center.component';
 
 const routes: Routes = [
   {path:'navbar',component : NavbarComponent},
   { path: 'blood-admin-profile', component: BloodAdminProfileComponent },
   { path: 'blood-center', component: BloodCenterRegistrationComponent },
   { path: 'register-user', component: RegisterUserComponent },
-  { path: 'blood-admin', component: BloodAdminRegistrationComponent }
+  { path: 'blood-admin', component: BloodAdminRegistrationComponent},
+  { path: 'blood-admin/assign-blood-center', component: AssignBloodCenterComponent}
 ];
 
 @NgModule({

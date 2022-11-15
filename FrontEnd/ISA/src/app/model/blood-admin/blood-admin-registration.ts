@@ -1,5 +1,4 @@
-import { Address } from "../address/address"
-import { AddressNoCoor } from "../address/addressNoCoor"
+import { AddressNoCoor } from "../address/address-no-coor"
 
 export interface BloodAdminRegistration{
     username: string,
