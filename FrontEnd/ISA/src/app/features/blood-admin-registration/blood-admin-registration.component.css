@@ -1,0 +1,20 @@
+form{
+    width: 50%;
+    margin: auto;
+}
+
+.mat-form-field
+{
+    width: 70%;
+    margin: auto;
+}
+
+.error-message
+{
+    width: 70%;
+    margin: auto;
+    text-align: left;
+    color: red;;
+}
+
+

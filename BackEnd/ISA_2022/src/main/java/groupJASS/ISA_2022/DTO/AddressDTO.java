@@ -21,8 +21,6 @@ public class AddressDTO {
     private String city;
     @NotEmpty
     private String country;
-    @NotNull
     private double latitude;
-    @NotNull
     private double longitude;
 }

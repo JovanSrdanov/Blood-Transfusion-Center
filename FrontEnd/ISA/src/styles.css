@@ -1,4 +1,5 @@
 body {
+  background: #b22519;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   text-align: center;
 }
@@ -33,4 +34,14 @@ body {
     #784ba0 50%,
     #2b86c5 100%
   );
+}
+html,
+body {
+  height: 100%;
+  font-size: large !important;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }

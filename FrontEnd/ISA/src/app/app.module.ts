@@ -1,4 +1,3 @@
-import { LandingPageModule } from './features/landing-page/landing-page.module';
 import { MaterialModule } from './material/material.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -10,9 +9,13 @@ import { BloodAdminProfileModule } from './features/blood-admin-profile/blood-ad
 import { BloodCenterRegistrationModule } from './features/blood-center-registration/blood-center-registration.module';
 import { HttpClientModule } from '@angular/common/http';
 import { NavbarModule } from './features/navbar/navbar.module';
+import { RegisterUserModule } from './features/register-user/register-user.module';
+import { MatSelectModule } from '@angular/material/select';
+import { BloodAdminRegistrationComponent } from './features/blood-admin-registration/blood-admin-registration.component';
+import { AssignBloodCenterComponent } from './features/assign-blood-center/assign-blood-center.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, AssignBloodCenterComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -20,10 +23,12 @@ import { NavbarModule } from './features/navbar/navbar.module';
     MaterialModule,
     LandingPageModule,
     FormsModule,
+    RegisterUserModule,
     BloodAdminProfileModule,
     BloodCenterRegistrationModule,
     HttpClientModule,
     NavbarModule,
+    MatSelectModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -24,6 +24,8 @@ public class RegisteredUser extends Person {
     private Address address;
     @Column(nullable = false)
     private String institution;
+    @Column(nullable = false)
+    private String occupation;
     @Column(unique = true, nullable = false)
     private String jmbg;
     @Column(nullable = false)
@@ -34,6 +36,15 @@ public class RegisteredUser extends Person {
     private String email;
     @Column(nullable = false)
     private int points;
+
+    public void update(RegisteredUser updated) {
+        this.institution = updated.getInstitution();
+        this.jmbg = updated.getJmbg();
+        this.gender = updated.getGender();
+        this.name = updated.getName();
+        this.surname = updated.getSurname();
+        this.phoneNumber = updated.getPhoneNumber();
+    }
 
 
 }

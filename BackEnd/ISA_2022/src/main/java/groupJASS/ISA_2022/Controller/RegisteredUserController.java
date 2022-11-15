@@ -2,6 +2,7 @@ package groupJASS.ISA_2022.Controller;
 
 import groupJASS.ISA_2022.DTO.RegisterNonRegisteredUserDTO;
 import groupJASS.ISA_2022.DTO.RegisterdUserInfoDto;
+import groupJASS.ISA_2022.DTO.UpdateRegisterdUserInfoDto;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
 import groupJASS.ISA_2022.Model.Address;
 import groupJASS.ISA_2022.Model.BloodUser;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.webjars.NotFoundException;
 
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
@@ -45,8 +47,9 @@ public class RegisteredUserController {
 
     @GetMapping("get-by-id/{id}")
     public ResponseEntity<RegisterdUserInfoDto> findById(@PathVariable UUID id) {
-        RegisteredUser user = this._registeredUserService.findById(id);
-        return new ResponseEntity<>(new RegisterdUserInfoDto(user), HttpStatus.OK);
+        RegisterdUserInfoDto userDto =
+                _modelMapper.map(_registeredUserService.findById(id), RegisterdUserInfoDto.class);
+        return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
 
     @PostMapping
@@ -55,6 +58,20 @@ public class RegisteredUserController {
             return new ResponseEntity<>(this._registeredUserService.save(entity), HttpStatus.CREATED);
         } catch (BadRequestException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PatchMapping("update")
+    public ResponseEntity<RegisteredUser> update(@Valid @RequestBody UpdateRegisterdUserInfoDto updatedUserDto) {
+        RegisteredUser updatedUser = _modelMapper.map(updatedUserDto, RegisteredUser.class);
+
+        try {
+            _addressService.AddresFromUserRegistration(_modelMapper.map(updatedUserDto.getAddress(), Address.class));
+            return new ResponseEntity<>(this._registeredUserService.save(updatedUser), HttpStatus.CREATED);
+        } catch (BadRequestException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 

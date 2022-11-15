@@ -8,3 +8,11 @@ form{
     width: 70%;
     margin: auto;
 }
+
+.error-message
+{
+    width: 70%;
+    margin: auto;
+    text-align: left;
+    color: red;;
+}

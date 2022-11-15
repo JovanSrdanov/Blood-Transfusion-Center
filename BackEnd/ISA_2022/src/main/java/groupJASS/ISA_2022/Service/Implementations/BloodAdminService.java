@@ -1,11 +1,9 @@
 package groupJASS.ISA_2022.Service.Implementations;
 
+import groupJASS.ISA_2022.DTO.AddressDTO;
 import groupJASS.ISA_2022.DTO.BloodAdmin.BloodAdminRegistrationDTO;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
-import groupJASS.ISA_2022.Model.BloodAdmin;
-import groupJASS.ISA_2022.Model.BloodCenter;
-import groupJASS.ISA_2022.Model.BloodUser;
-import groupJASS.ISA_2022.Model.Role;
+import groupJASS.ISA_2022.Model.*;
 import groupJASS.ISA_2022.Repository.BloodAdminRepository;
 import groupJASS.ISA_2022.Repository.BloodCenterRepository;
 import groupJASS.ISA_2022.Repository.BloodUserRepository;
@@ -65,6 +63,7 @@ public class BloodAdminService implements IBloodAdminService {
         _bloodAdminRepository.deleteById(id);
     }
 
+    @Override
     public void assignBloodCenter(UUID bloodAdminId, UUID bloodCenterId) throws BadRequestException {
         Optional<BloodAdmin> bloodAdmin = _bloodAdminRepository.findById(bloodAdminId);
         if (bloodAdmin.isEmpty()) {
@@ -83,21 +82,22 @@ public class BloodAdminService implements IBloodAdminService {
         b.setBloodCenter(bloodCenter.get());
         _bloodAdminRepository.save(b);
     }
-
-    public Iterable<BloodAdmin> getUnemployedBloodAdmins() {
-        return _bloodAdminRepository.getUnemployedBloodAdmins();
+    @Override
+    public Iterable<BloodAdmin> getUnemployedBloodAdmins(){
+       return _bloodAdminRepository.getUnemployedBloodAdmins();
     }
 
     @Override
     @Transactional(rollbackFor = DataIntegrityViolationException.class)
     public void register(BloodAdminRegistrationDTO dto) {
+
+        Address address = _mapper.map(dto.getAddress(), Address.class);
+        address.setId(UUID.randomUUID());
+
         BloodAdmin bloodAdmin = _mapper.map(dto, BloodAdmin.class);
         bloodAdmin.setId(UUID.randomUUID());
-        //TEST
-        //System.out.println(bloodAdmin);
-        //bloodAdmin.setBloodCenter(new BloodCenter());
-        //System.out.println(bloodAdmin);
-        //TEST
+        bloodAdmin.setAddress(address);
+
         UUID bloodAdminId = _bloodAdminRepository.save(bloodAdmin).getId();
 
         BloodUser bloodUser = _mapper.map(dto, BloodUser.class);
@@ -105,5 +105,10 @@ public class BloodAdminService implements IBloodAdminService {
         bloodUser.setPersonId(bloodAdminId);
         bloodUser.setId(UUID.randomUUID());
         _bloodUserRepository.save(bloodUser);
+    }
+
+    public boolean checkEmailAvailability(String email)
+    {
+        return _bloodAdminRepository.existsBloodAdminByEmail(email);
     }
 }

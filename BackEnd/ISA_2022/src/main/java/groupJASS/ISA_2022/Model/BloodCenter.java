@@ -42,9 +42,11 @@ public class BloodCenter {
     @JoinColumn(name = "blood_center_id")
     private Set<Appointment> appointments = new HashSet<>();
 
-    @OneToMany(mappedBy = "bloodCenter")
-    //@JsonManagedReference
+    @OneToMany(mappedBy = "bloodCenter", fetch = FetchType.LAZY)
     private Set<BloodAdmin> staff = new HashSet<>();
+
+    @Embedded
+    private WorkingHours workingHours;
 }
 
 

@@ -10,4 +10,5 @@ import java.util.UUID;
 public interface BloodAdminRepository extends JpaRepository<BloodAdmin, UUID> {
     @Query("select ba from BloodAdmin ba where ba.bloodCenter is null")
     public Iterable<BloodAdmin> getUnemployedBloodAdmins();
+    boolean existsBloodAdminByEmail(String email);
 }

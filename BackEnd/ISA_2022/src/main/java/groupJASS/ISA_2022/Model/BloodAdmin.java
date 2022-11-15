@@ -18,6 +18,12 @@ import javax.persistence.ManyToOne;
 @Setter
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class BloodAdmin extends Person {
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Address address;
+
+    @Column(nullable = false, unique = true)
+    private String email;
+
     @ManyToOne
     //@JsonBackReference
     private BloodCenter bloodCenter;
