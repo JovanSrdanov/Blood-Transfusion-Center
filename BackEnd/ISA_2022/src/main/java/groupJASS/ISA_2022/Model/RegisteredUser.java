@@ -24,6 +24,8 @@ public class RegisteredUser extends Person {
     private Address address;
     @Column(nullable = false)
     private String institution;
+    @Column(nullable = false)
+    private String occupation;
     @Column(unique = true, nullable = false)
     private String jmbg;
     @Column(nullable = false)
