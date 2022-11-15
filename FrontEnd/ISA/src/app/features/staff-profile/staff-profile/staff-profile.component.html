@@ -1,0 +1,150 @@
+<div class="grid">
+  <div class="header">Profile</div>
+  <!--******************PERSONAL***********************-->
+  <mat-grid-list cols="2" rowHeight="1:1">
+    <mat-grid-tile>
+      <div>
+        <div class="header">Personal info</div>
+        <br />
+        <div class="form">
+          <!-- TEST  -->
+
+          <form [formGroup]="staffForm">
+            <hr />
+            <mat-form-field>
+              <input matInput placeholder="name" formControlName="name" />
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="surname" formControlName="surname" />
+            </mat-form-field>
+
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="phone number"
+                formControlName="phoneNumber"
+              />
+            </mat-form-field>
+            <div *ngIf="isPreventChangeStaff">
+              <button mat-raised-button (click)="enableChangeStaff($event)">
+                Change
+              </button>
+            </div>
+            <div *ngIf="!isPreventChangeStaff">
+              <span>
+                <button
+                  class="confirm"
+                  [disabled]="staffForm.invalid"
+                  mat-raised-button
+                  (click)="confirmChangeStaff($event)"
+                >
+                  Confirm
+                </button>
+              </span>
+              <span>
+                <button
+                  mat-raised-button
+                  (click)="cancelChangeStaff($event)"
+                  color="warn"
+                >
+                  Cancel
+                </button>
+              </span>
+            </div>
+          </form>
+
+          <!-- TEST  -->
+        </div>
+      </div>
+    </mat-grid-tile>
+    <!--******************PERSONAL***********************-->
+    <mat-grid-tile>
+      <!-- TEST  -->
+      <div class="formCenter">
+        <div class="header">Blood center info</div>
+        <br />
+        <div class="noCenter" *ngIf="centerInfo == null">
+          Not assigned to a blood center
+        </div>
+        <form [formGroup]="centerForm" *ngIf="centerInfo != null">
+          <hr />
+          <mat-form-field>
+            <input matInput placeholder="name" formControlName="name" />
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="description"
+              formControlName="description"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="score" formControlName="score" />
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="appointments"
+              formControlName="appointments"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="staff" formControlName="staff" />
+          </mat-form-field>
+          <h3>Address</h3>
+          <div formGroupName="address">
+            <mat-form-field>
+              <input matInput placeholder="street" formControlName="street" />
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="number" formControlName="number" />
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="city" formControlName="city" />
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="country" formControlName="country" />
+            </mat-form-field>
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="latitude"
+                formControlName="latitude"
+              />
+            </mat-form-field>
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="longitude"
+                formControlName="longitude"
+              />
+            </mat-form-field>
+          </div>
+          <div *ngIf="isPreventChangeCenter">
+            <button mat-raised-button (click)="enableChangeCenter($event)">
+              Change
+            </button>
+          </div>
+          <div *ngIf="!isPreventChangeCenter">
+            <button
+              class="confirm"
+              [disabled]="centerForm.invalid"
+              mat-raised-button
+              (click)="confirmChangeCenter($event)"
+            >
+              Confirm
+            </button>
+            <button
+              mat-raised-button
+              (click)="cancelChangeCenter($event)"
+              color="warn"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+      <!-- TEST  -->
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

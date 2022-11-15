@@ -21,10 +21,10 @@ public class Appointment {
     private UUID id;
 
     @ManyToMany
-    @JoinTable(name="appointment_staff",
-    joinColumns = @JoinColumn(name = "appointment_id", referencedColumnName = "id"),
-    inverseJoinColumns = @JoinColumn(name="staff_id", referencedColumnName = "id"))
-    private Set<BloodAdmin> staff = new HashSet<BloodAdmin>();
+    @JoinTable(name = "appointment_staff",
+            joinColumns = @JoinColumn(name = "appointment_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "staff_id", referencedColumnName = "id"))
+    private Set<Staff> staff = new HashSet<Staff>();
 
     private LocalDateTime time;
     private int duration;

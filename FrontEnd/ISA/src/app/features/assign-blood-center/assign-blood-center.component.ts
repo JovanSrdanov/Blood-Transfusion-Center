@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { BloodAdminService } from 'src/app/http-services/blood-admin.service';
+import { StaffService } from 'src/app/http-services/staff.service';
 import { BloodCenterService } from 'src/app/http-services/blood-center.service';
-import { BloodAdminBasicInfo } from 'src/app/model/blood-admin/blood-admin-basic-info';
+import { StaffBasicInfo } from 'src/app/model/staff/staff-basic-info';
 import { BloodCenterBasicInfo } from 'src/app/model/blood-center/blood-center-basic-info';
 
 @Component({
@@ -12,16 +12,16 @@ import { BloodCenterBasicInfo } from 'src/app/model/blood-center/blood-center-ba
 export class AssignBloodCenterComponent implements OnInit {
 
   bloodCenters:BloodCenterBasicInfo[] = [];
-  unemployedStaff: BloodAdminBasicInfo[] = [];
+  unemployedStaff: StaffBasicInfo[] = [];
   //Needed because select-list only knows how to do with string lists
   selectedCenterIndex: number = -1;
   selectedStaffIndex: number = -1;
 
-  constructor(private readonly bloodAdminService: BloodAdminService,
+  constructor(private readonly staffService: StaffService,
     private readonly bloodCenterService: BloodCenterService
     ) { }
 
-  
+
   get centersNames()
   {
     let centerNames :string[] =[];
@@ -45,7 +45,7 @@ export class AssignBloodCenterComponent implements OnInit {
       this.bloodCenters = response;
     })
 
-    this.bloodAdminService.getUnemployedBloodAdmins().subscribe((response:BloodAdminBasicInfo[]) => {
+    this.staffService.getUnemployedStaff().subscribe((response:StaffBasicInfo[]) => {
       this.unemployedStaff = response;
     })
   }
@@ -61,16 +61,16 @@ export class AssignBloodCenterComponent implements OnInit {
 
   assign = () =>
   {
-    this.bloodAdminService.assignBloodCenter({
-      bloodAdminId: this.unemployedStaff[this.selectedStaffIndex].id,
+    this.staffService.assignBloodCenter({
+      staffId: this.unemployedStaff[this.selectedStaffIndex].id,
       bloodCenterId: this.bloodCenters[this.selectedCenterIndex].id
     }).subscribe(_ => {
-      this.bloodAdminService.getUnemployedBloodAdmins().subscribe((response:BloodAdminBasicInfo[]) => {
+      this.staffService.getUnemployedStaff().subscribe((response:StaffBasicInfo[]) => {
         this.unemployedStaff = response;
         this.selectedCenterIndex = -1;
         this.selectedStaffIndex = -1;
       })
-    }) 
+    })
   }
 
 }
