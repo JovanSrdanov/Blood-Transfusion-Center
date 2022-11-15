@@ -1,0 +1,28 @@
+.example-form {
+  width: fit-content;
+  background-color: white;
+  margin: auto;
+  margin-top: 2%;
+  padding: 10px;
+  border-radius: 20px;
+  border: 3px solid grey;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+td {
+  padding-right: 8px;
+}
+
+.sections {
+  height: 100%;
+  margin: 15px;
+  padding: 15px;
+  border: 1px solid grey;
+  border-radius: 20px;
+}
+.sections:hover {
+  box-shadow: 0 0 10px;
+}
