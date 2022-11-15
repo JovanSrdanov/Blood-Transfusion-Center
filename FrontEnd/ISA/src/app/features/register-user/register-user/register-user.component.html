@@ -1,0 +1,166 @@
+<div class="example-form">
+  <form [formGroup]="registrationForm">
+    <div class="sections">
+      <table class="example-full-width" cellspacing="0">
+        <tr>
+          <td>
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>E-mail</mat-label>
+              <input matInput formControlName="email" />
+            </mat-form-field>
+          </td>
+        </tr>
+      </table>
+      <table class="example-full-width" cellspacing="0">
+        <tr>
+          <td>
+            <mat-form-field
+              class="example-full-width"
+              appearance="fill"
+              cellspacing="0"
+            >
+              <mat-label>Enter your password</mat-label>
+              <input
+                matInput
+                [type]="hide ? 'password' : 'text'"
+                formControlName="password"
+              />
+              <button
+                mat-icon-button
+                matSuffix
+                (click)="hide = !hide"
+                [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide"
+              >
+                <mat-icon>{{
+                  hide ? "visibility_off" : "visibility"
+                }}</mat-icon>
+              </button>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field
+              class="example-full-width"
+              appearance="fill"
+              cellspacing="0"
+            >
+              <mat-label>Re-enter password</mat-label>
+              <input
+                matInput
+                [type]="hide ? 'password' : 'text'"
+                formControlName="passwordReEnter"
+              />
+              <button
+                mat-icon-button
+                matSuffix
+                (click)="hide = !hide"
+                [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide"
+              >
+                <mat-icon>{{
+                  hide ? "visibility_off" : "visibility"
+                }}</mat-icon>
+              </button>
+            </mat-form-field>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="sections">
+      <table class="example-full-width" cellspacing="0">
+        <tr>
+          <td>
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Name</mat-label>
+              <input matInput formControlName="name" />
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Surname</mat-label>
+              <input matInput formControlName="surname" />
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field appearance="fill">
+              <mat-label>Gender</mat-label>
+              <mat-select [(value)]="selectedGender" disableRipple>
+                <mat-option
+                  [value]="option.value"
+                  *ngFor="let option of genders"
+                  >{{ option.viewValue }}</mat-option
+                >
+              </mat-select>
+            </mat-form-field>
+          </td>
+        </tr>
+      </table>
+      <table class="example-full-width" cellspacing="0">
+        <tr>
+          <td>
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Phone number</mat-label>
+              <input matInput formControlName="phoneNumber" />
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Ocupation</mat-label>
+              <input matInput formControlName="occupation" />
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Institution</mat-label>
+              <input matInput formControlName="institution" />
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>JMBG</mat-label>
+              <input matInput formControlName="jmbg" />
+            </mat-form-field>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="sections">
+      <table class="example-full-width" cellspacing="0">
+        <tr>
+          <td>
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Country</mat-label>
+              <input matInput formControlName="country" />
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>City</mat-label>
+              <input matInput formControlName="city" />
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Steet name</mat-label>
+              <input matInput formControlName="street" />
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Street number</mat-label>
+              <input matInput formControlName="number" />
+            </mat-form-field>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <button (click)="registerUser()" mat-raised-button color="primary">
+      Register
+    </button>
+    <p></p>
+
+    <p>{{ errorMessage }}</p>
+  </form>
+</div>

@@ -7,5 +7,5 @@ import java.util.UUID;
 
 public interface BloodUserRepository extends JpaRepository<BloodUser, UUID> {
 
-    boolean existsBloodUserByUsername(String username);
+ 
 }

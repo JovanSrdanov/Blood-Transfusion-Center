@@ -19,8 +19,7 @@ public class BloodUserService implements IBloodUserService {
     private final BloodUserRepository _bloodUserRepository;
 
     @Autowired
-    public BloodUserService(BloodUserRepository bloodUserRepository)
-    {
+    public BloodUserService(BloodUserRepository bloodUserRepository) {
         _bloodUserRepository = bloodUserRepository;
     }
 
@@ -54,11 +53,12 @@ public class BloodUserService implements IBloodUserService {
 
     @Override
     public void registerNewUser(BloodUser bloodUser) {
-
-        if (_bloodUserRepository.existsBloodUserByUsername(bloodUser.getUsername())) {
-
-            throw new IllegalArgumentException("User with this username already exists");
-        }
+// Todo: email
+        
+//        if (_bloodUserRepository.existsBloodUserByUsername()) {
+//
+//            throw new IllegalArgumentException("User with this username already exists");
+//        }
 
         save(bloodUser);
 
@@ -70,5 +70,10 @@ public class BloodUserService implements IBloodUserService {
         map.setRole(Role.REGISTERED_USER);
         registerNewUser(map);
 
+    }
+
+    @Override
+    public boolean checkUsernameAvailability(String username) {
+        return _bloodUserRepository.existsBloodUserByUsername(username);
     }
 }

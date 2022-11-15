@@ -1,4 +1,3 @@
-<app-navbar></app-navbar>
 <form [formGroup]="registrationForm">
     <mat-form-field>
         <mat-label>Name</mat-label>
@@ -26,12 +25,29 @@
     </mat-form-field>
     <mat-form-field>
         <mat-label>Latitude</mat-label>
-        <input matInput type="text" formControlName="latitude">
+        <input matInput type="number" formControlName="latitude">
     </mat-form-field>
     <mat-form-field>
         <mat-label>Longitude</mat-label>
-        <input matInput type="text" formControlName="longitude">
+        <input matInput type="number" formControlName="longitude">
     </mat-form-field>
+    <mat-form-field>
+        <mat-label>Start hours</mat-label>
+        <input matInput type="number" formControlName="startHours">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Start minutes</mat-label>
+        <input matInput type="number" formControlName="startMinutes">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>End Hours</mat-label>
+        <input matInput type="number" formControlName="endHours">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>End Minutes</mat-label>
+        <input matInput type="number" formControlName="endMinutes">
+    </mat-form-field>
+    <p *ngIf="!addressAvailable" class="error-message">Other blood center is registered at same address</p>
     <br>
-    <button [disabled]="registrationForm.invalid"  mat-raised-button (click)="register()">Submit</button>
+    <button [disabled]="disableSubmit"  mat-raised-button (click)="register()">Submit</button>
 </form>

@@ -10,7 +10,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
-public class BloodCenterBasicInfoDto {
+public class BloodCentarBasicInfoDto {
     private UUID id;
     private String name;
     private Address address;
