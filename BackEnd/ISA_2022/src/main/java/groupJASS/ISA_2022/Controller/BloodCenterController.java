@@ -1,8 +1,10 @@
 package groupJASS.ISA_2022.Controller;
 
+import groupJASS.ISA_2022.DTO.BloodCenter.BloodCenterBasicInfoDto;
 import groupJASS.ISA_2022.DTO.BloodCenter.BloodCenterRegistrationDTO;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
 import groupJASS.ISA_2022.Model.BloodCenter;
+import groupJASS.ISA_2022.ObjectMapperUtils;
 import groupJASS.ISA_2022.Service.Interfaces.IBloodCenterService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,7 +71,11 @@ public class BloodCenterController {
     }
 
     @GetMapping(path = "/sort/{offset}/{size}/{field}/{s}")
-    public Page<BloodCenter> sortCenter(@PathVariable int offset, @PathVariable int size, @PathVariable String field, @PathVariable String s) {
-       return _bloodCenterService.findProductsWithSorting(offset, size, field, s);
+    public List<BloodCenterBasicInfoDto> sortCenter(@PathVariable int offset, @PathVariable int size,
+                                                    @PathVariable String field, @PathVariable String s) {
+
+        Page<BloodCenter> entities = _bloodCenterService.findProductsWithSorting(offset, size, field, s);
+
+        return ObjectMapperUtils.mapAll(entities.getContent(), BloodCenterBasicInfoDto.class);
     }
 }

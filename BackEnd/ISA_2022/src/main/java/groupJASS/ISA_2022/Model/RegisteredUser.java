@@ -35,5 +35,14 @@ public class RegisteredUser extends Person {
     @Column(nullable = false)
     private int points;
 
+    public void update(RegisteredUser updated) {
+        this.institution = updated.getInstitution();
+        this.jmbg = updated.getJmbg();
+        this.gender = updated.getGender();
+        this.name = updated.getName();
+        this.surname = updated.getSurname();
+        this.phoneNumber = updated.getPhoneNumber();
+    }
+
 
 }

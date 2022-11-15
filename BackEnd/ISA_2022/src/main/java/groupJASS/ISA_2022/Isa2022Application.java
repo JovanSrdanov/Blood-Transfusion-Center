@@ -22,6 +22,11 @@ public class Isa2022Application {
         return new ModelMapper();
     }
 
+    /*@Bean
+    public ObjectMapperUtils modelMapper2() {
+        return new ObjectMapperUtils();
+    }*/
+
     @Bean
     public Validator validator() {
         ValidatorFactory validatorFactory = Validation.byDefaultProvider().configure().buildValidatorFactory();

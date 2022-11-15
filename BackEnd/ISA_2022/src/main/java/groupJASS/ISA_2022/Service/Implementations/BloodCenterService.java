@@ -53,6 +53,7 @@ public class BloodCenterService implements IBloodCenterService {
     }
 
     public Page<BloodCenter> findProductsWithSorting(int offset, int pageSize, String field, String s){
-        return  _bloodCenterRepository.searchBy(s, PageRequest.of(offset, pageSize).withSort(Sort.by(Sort.Direction.ASC,field)));
+        return  _bloodCenterRepository.searchBy(s, PageRequest.of(offset, pageSize)
+                .withSort(Sort.by(Sort.Direction.ASC,field)));
     }
 }
