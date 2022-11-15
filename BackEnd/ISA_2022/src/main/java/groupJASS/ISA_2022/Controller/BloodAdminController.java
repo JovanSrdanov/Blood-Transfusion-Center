@@ -1,6 +1,7 @@
 package groupJASS.ISA_2022.Controller;
 
 import groupJASS.ISA_2022.DTO.AssignBloodCenterDTO;
+import groupJASS.ISA_2022.DTO.BloodAdmin.BloodAdminProfileDTO;
 import groupJASS.ISA_2022.DTO.BloodAdmin.BloodAdminBasicInfoDTO;
 import groupJASS.ISA_2022.DTO.BloodAdmin.BloodAdminRegistrationDTO;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
@@ -51,6 +52,40 @@ public class BloodAdminController {
         }
     }
 
+    @GetMapping(path = "/logged-in")
+    public ResponseEntity<BloodAdmin> getLoggedInAdmin() {
+        var res = (List<BloodAdmin>) _bloodAdminService.findAll();
+        if (res.isEmpty()) {
+            return null;
+        } else {
+            var admin = res.get(0);
+            var center = admin.getBloodCenter();
+            admin.setBloodCenter(center);
+            return new ResponseEntity<>(res.get(0), HttpStatus.OK);
+        }
+    }
+
+    @PutMapping(path = "updateBloodAdmin/{id}")
+    ResponseEntity<?> updateAdmin(@PathVariable("id") UUID adminId, @Valid @RequestBody BloodAdminProfileDTO dto) {
+        try {
+            //UUID id = UUID.fromString(adminId);
+            BloodAdmin oldAdmin = _bloodAdminService.findById(adminId);
+            BloodAdmin newAdmin = _mapper.map(dto, BloodAdmin.class);
+
+            newAdmin.setId(adminId);
+            var tempCenter = oldAdmin.getBloodCenter();
+            newAdmin.setBloodCenter(tempCenter);
+
+            return new ResponseEntity<>(_bloodAdminService.save(newAdmin), HttpStatus.OK);
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @PostMapping(value = "/save")
     public ResponseEntity<BloodAdmin> save(@RequestBody BloodAdmin admin) {
         BloodAdmin res;
@@ -82,24 +117,17 @@ public class BloodAdminController {
     }
 
     @PatchMapping
-    public ResponseEntity<String> assignBloodCenter(@RequestBody AssignBloodCenterDTO dto)
-    {
-       try{
+    public ResponseEntity<String> assignBloodCenter(@RequestBody AssignBloodCenterDTO dto) {
+        try {
             _bloodAdminService.assignBloodCenter(dto.getBloodAdminId(), dto.getBloodCenterId());
-           return  new ResponseEntity<>(HttpStatus.OK);
-       }
-       catch (NotFoundException e)
-       {
-            return  new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
-       }
-       catch (BadRequestException e)
-       {
-           return  new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-       }
-       catch (Exception e)
-       {
-           return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-       }
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (BadRequestException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping(path ="unemployed")

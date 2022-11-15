@@ -1,5 +1,7 @@
 package groupJASS.ISA_2022.Model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +14,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class BloodAdmin extends Person {
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Address address;
@@ -20,5 +23,6 @@ public class BloodAdmin extends Person {
     private String email;
 
     @ManyToOne
+    //@JsonBackReference
     private BloodCenter bloodCenter;
 }

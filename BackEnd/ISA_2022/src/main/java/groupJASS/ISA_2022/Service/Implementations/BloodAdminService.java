@@ -30,13 +30,13 @@ public class BloodAdminService implements IBloodAdminService {
 
     @Autowired
     public BloodAdminService(BloodAdminRepository bloodAdminRepository, BloodCenterRepository bloodCenterService,
-                             BloodUserRepository bloodUserRepository, ModelMapper mapper)
-    {
+                             BloodUserRepository bloodUserRepository, ModelMapper mapper) {
         _bloodAdminRepository = bloodAdminRepository;
         bloodCenterRepository = bloodCenterService;
         _bloodUserRepository = bloodUserRepository;
         _mapper = mapper;
     }
+
     @Override
     public Iterable<BloodAdmin> findAll() {
         return _bloodAdminRepository.findAll();
@@ -66,19 +66,16 @@ public class BloodAdminService implements IBloodAdminService {
     @Override
     public void assignBloodCenter(UUID bloodAdminId, UUID bloodCenterId) throws BadRequestException {
         Optional<BloodAdmin> bloodAdmin = _bloodAdminRepository.findById(bloodAdminId);
-        if(bloodAdmin.isEmpty())
-        {
+        if (bloodAdmin.isEmpty()) {
             throw new NotFoundException("Blood admin not found");
         }
 
-        if(bloodAdmin.get().getBloodCenter() != null)
-        {
+        if (bloodAdmin.get().getBloodCenter() != null) {
             throw new BadRequestException("Blood admin already has assigned blood center");
         }
 
         Optional<BloodCenter> bloodCenter = bloodCenterRepository.findById(bloodCenterId);
-        if(bloodCenter.isEmpty())
-        {
+        if (bloodCenter.isEmpty()) {
             throw new NotFoundException("Blood center not found");
         }
         BloodAdmin b = bloodAdmin.get();
