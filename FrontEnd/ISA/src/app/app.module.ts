@@ -1,4 +1,4 @@
-import { LandingPageModule } from './features/landing-page/landing-page.module';
+
 import { MaterialModule } from './material/material.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -17,7 +17,7 @@ import { NavbarModule } from './features/navbar/navbar.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
-    LandingPageModule,
+    NavbarModule,
     BloodAdminProfileModule,
     BloodCenterRegistrationModule,
     HttpClientModule,
