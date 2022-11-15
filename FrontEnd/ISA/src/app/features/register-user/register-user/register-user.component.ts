@@ -33,7 +33,7 @@ export class RegisterUserComponent implements OnInit {
     email: new FormControl<string>('', [Validators.required]),
     phoneNumber: new FormControl<string>('', [Validators.required]),
     institution: new FormControl<string>('', [Validators.required]),
-    ocupation: new FormControl<string>('', [Validators.required]),
+    occupation: new FormControl<string>('', [Validators.required]),
     jmbg: new FormControl<string>('', [Validators.required])
   })
 
@@ -71,7 +71,7 @@ export class RegisterUserComponent implements OnInit {
         country: this.form.country.value ?? "",
       },
       nonRegisteredUserInfoDTO: {
-        ocupation:this.form.name.value ?? "",
+        occupation:this.form.occupation.value ?? "",
         name: this.form.name.value ?? "",
         surname: this.form.surname.value ?? "",
         email: this.form.email.value ?? "",
