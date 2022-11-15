@@ -11,7 +11,6 @@ import java.util.UUID;
 @Getter
 @Setter
 public class AddressUpdateDto {
-    @NotEmpty
     private UUID id;
     @NotEmpty
     private String street;

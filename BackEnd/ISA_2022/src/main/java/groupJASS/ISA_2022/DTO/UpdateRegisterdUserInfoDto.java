@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.UUID;
 
@@ -14,7 +15,6 @@ import java.util.UUID;
 @Getter
 @Setter
 public class UpdateRegisterdUserInfoDto {
-    @NotEmpty
     private UUID id;
     @NotEmpty
     private String name;
@@ -26,7 +26,7 @@ public class UpdateRegisterdUserInfoDto {
     private String institution;
     @Pattern(regexp = "^[0-9]{13}", message = "length must be 13 and it can only contain numbers")
     private String jmbg;
-    @NotEmpty
+    @NotNull
     private Gender gender;
     @Valid
     private AddressUpdateDto address;
