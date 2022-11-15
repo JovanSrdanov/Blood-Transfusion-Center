@@ -1,8 +1,7 @@
 <form [formGroup]="registrationForm">
-    <p *ngIf="!usernameAvailable" class="error-message">Entered username is not available</p>
     <mat-form-field>
-        <mat-label>Username</mat-label>
-        <input matInput type="text" formControlName="username" (blur)="checkUsernameAvailability()">
+        <mat-label>Email</mat-label>
+        <input matInput type="text" formControlName="email" (blur)="checkEmailAvailability()">
     </mat-form-field>
     <mat-form-field>
         <mat-label>Password</mat-label>
@@ -21,10 +20,6 @@
         <input matInput type="text" formControlName="phoneNumber">
     </mat-form-field>
     <p *ngIf="!emailAvailable" class="error-message">Entered email is not available</p>
-    <mat-form-field>
-        <mat-label>Email</mat-label>
-        <input matInput type="text" formControlName="email" (blur)="checkEmailAvailability()">
-    </mat-form-field>
     <mat-form-field>
         <mat-label>Street</mat-label>
         <input matInput type="text" formControlName="street">

@@ -73,7 +73,7 @@ public class BloodAdminController {
         }
         catch (DataIntegrityViolationException e)
         {
-            return new ResponseEntity<>("Username or email already exist", HttpStatus.CONFLICT);
+            return new ResponseEntity<>("Email already exists", HttpStatus.CONFLICT);
         }
         catch (Exception e)
         {
@@ -109,11 +109,6 @@ public class BloodAdminController {
        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
-    @GetMapping(path ="username-available/{username}")
-    public ResponseEntity<Boolean> checkUsernameAvailability(@PathVariable String username){
-        Boolean exists = _bloodUserService.checkUsernameAvailability(username);
-        return new ResponseEntity<>(!exists, HttpStatus.OK);
-    }
 
     @GetMapping(path ="email-available/{email}")
     public ResponseEntity<Boolean> checkEmailAvailability(@PathVariable String email){
