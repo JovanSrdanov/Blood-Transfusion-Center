@@ -1,4 +1,3 @@
-import { LandingPageModule } from './features/landing-page/landing-page.module';
 import { MaterialModule } from './material/material.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -9,6 +8,8 @@ import { BloodAdminProfileModule } from './features/blood-admin-profile/blood-ad
 import { BloodCenterRegistrationModule } from './features/blood-center-registration/blood-center-registration.module';
 import { HttpClientModule } from '@angular/common/http';
 import { NavbarModule } from './features/navbar/navbar.module';
+import { RegisterUserModule } from './features/register-user/register-user.module';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,11 +18,12 @@ import { NavbarModule } from './features/navbar/navbar.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
-    LandingPageModule,
+  RegisterUserModule,
     BloodAdminProfileModule,
     BloodCenterRegistrationModule,
     HttpClientModule,
-    NavbarModule
+    NavbarModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,37 +1,42 @@
-<app-navbar></app-navbar>
 <form [formGroup]="registrationForm">
-    <mat-form-field>
-        <mat-label>Name</mat-label>
-        <input matInput type="text" formControlName="name">
-    </mat-form-field>
-    <mat-form-field>
-        <mat-label>Description</mat-label>
-        <input matInput type="text" formControlName="description">
-    </mat-form-field>
-    <mat-form-field>
-        <mat-label>Street</mat-label>
-        <input matInput type="text" formControlName="street">
-    </mat-form-field>
-    <mat-form-field>
-        <mat-label>Number</mat-label>
-        <input matInput type="text" formControlName="number">
-    </mat-form-field>
-    <mat-form-field>
-        <mat-label>City</mat-label>
-        <input matInput type="text" formControlName="city">
-    </mat-form-field>
-    <mat-form-field>
-        <mat-label>Country</mat-label>
-        <input matInput type="text" formControlName="country">
-    </mat-form-field>
-    <mat-form-field>
-        <mat-label>Latitude</mat-label>
-        <input matInput type="text" formControlName="latitude">
-    </mat-form-field>
-    <mat-form-field>
-        <mat-label>Longitude</mat-label>
-        <input matInput type="text" formControlName="longitude">
-    </mat-form-field>
-    <br>
-    <button [disabled]="registrationForm.invalid"  mat-raised-button (click)="register()">Submit</button>
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input matInput type="text" formControlName="name" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Description</mat-label>
+    <input matInput type="text" formControlName="description" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Street</mat-label>
+    <input matInput type="text" formControlName="street" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Number</mat-label>
+    <input matInput type="text" formControlName="number" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>City</mat-label>
+    <input matInput type="text" formControlName="city" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Country</mat-label>
+    <input matInput type="text" formControlName="country" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Latitude</mat-label>
+    <input matInput type="text" formControlName="latitude" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Longitude</mat-label>
+    <input matInput type="text" formControlName="longitude" />
+  </mat-form-field>
+  <br />
+  <button
+    [disabled]="registrationForm.invalid"
+    mat-raised-button
+    (click)="register()"
+  >
+    Submit
+  </button>
 </form>

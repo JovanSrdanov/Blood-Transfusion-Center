@@ -1,5 +1,5 @@
 body {
-  background: rgb(28, 107, 86);
+  background: #b22519;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   text-align: center;
 }
@@ -7,6 +7,16 @@ body {
 html,
 body {
   height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+  font-size: large !important;
 }
 body {
   margin: 0;
