@@ -71,9 +71,4 @@ public class BloodUserService implements IBloodUserService {
         registerNewUser(map);
 
     }
-
-    @Override
-    public boolean checkUsernameAvailability(String username) {
-        return _bloodUserRepository.existsBloodUserByUsername(username);
-    }
 }

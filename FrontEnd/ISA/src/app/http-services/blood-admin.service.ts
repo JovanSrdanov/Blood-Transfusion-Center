@@ -19,10 +19,6 @@ export class BloodAdminService {
     return this.http.post(this.pathBase, bloodAdmin);
   }
 
-  checkUsernameAvailability = (username:string) =>{
-    return this.http.get(this.pathBase + '/username-available/' + username)
-  }
-
   checkEmailAvailability = (email:string) =>{
     return this.http.get(this.pathBase + '/email-available/' + email)
   }

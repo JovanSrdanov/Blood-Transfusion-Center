@@ -14,7 +14,6 @@ import { BloodAdminRegistrationModule }  from   'src/app/features/blood-admin-re
 export class BloodAdminRegistrationComponent implements OnInit {
 
     registrationForm = new FormGroup({
-      username : new FormControl<string>('', [Validators.required]),
       password : new FormControl<string>('', [Validators.required]),
       name : new FormControl<string>('', [Validators.required]),
       surname : new FormControl<string>('', [Validators.required]),
@@ -26,16 +25,15 @@ export class BloodAdminRegistrationComponent implements OnInit {
       country : new FormControl<string>('', [Validators.required])
     })
 
-  usernameAvailable: boolean = true;
   emailAvailable: boolean = true;
-  _disableSubmit: boolean = !this.usernameAvailable || !this.emailAvailable || this.registrationForm.invalid
+  _disableSubmit: boolean = !this.emailAvailable || this.registrationForm.invalid
 
   get form(){
     return this.registrationForm.controls;
   }
 
   get disableSubmit():boolean{
-    return  !this.usernameAvailable || !this.emailAvailable || this.registrationForm.invalid;
+    return  !this.emailAvailable || this.registrationForm.invalid;
   }
 
   constructor(private readonly bloodAdminService: BloodAdminService,
@@ -47,7 +45,6 @@ export class BloodAdminRegistrationComponent implements OnInit {
   register = () =>
   {
     let bloodAdmin : BloodAdminRegistration = {
-      username: this.form.username.value ?? "",
       password: this.form.password.value ?? "",
       name: this.form.name.value ?? "",
       surname: this.form.surname.value ?? "",
@@ -66,17 +63,6 @@ export class BloodAdminRegistrationComponent implements OnInit {
 
   }
 
-  checkUsernameAvailability = () =>{
-      this.bloodAdminService.checkUsernameAvailability(this.form.username.value ?? '').subscribe(response =>{
-        if(response){
-          this.usernameAvailable = true;
-        }
-        else
-        {
-          this.usernameAvailable = false;
-        }
-      })
-  }
 
   checkEmailAvailability = () =>{
       this.bloodAdminService.checkEmailAvailability(this.form.email.value ?? '').subscribe(response =>{

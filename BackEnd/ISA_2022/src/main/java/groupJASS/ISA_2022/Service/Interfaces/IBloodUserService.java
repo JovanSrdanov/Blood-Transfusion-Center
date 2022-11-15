@@ -7,5 +7,4 @@ public interface IBloodUserService extends ICrudService<BloodUser> {
     void registerNewUser(BloodUser bloodUser);
 
     void registerRegisteredUser(BloodUser map, RegisteredUser registeredUser);
-    public boolean checkUsernameAvailability(String username);
 }

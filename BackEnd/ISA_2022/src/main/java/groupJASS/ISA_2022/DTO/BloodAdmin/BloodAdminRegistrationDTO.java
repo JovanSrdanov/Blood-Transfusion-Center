@@ -19,8 +19,6 @@ import java.util.UUID;
 @Setter
 public class BloodAdminRegistrationDTO {
     @NotEmpty
-    private String username;
-    @NotEmpty
     private String password;
     @NotEmpty
     private String name;
