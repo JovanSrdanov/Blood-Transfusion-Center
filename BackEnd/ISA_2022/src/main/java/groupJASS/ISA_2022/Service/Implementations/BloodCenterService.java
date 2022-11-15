@@ -5,11 +5,12 @@ import groupJASS.ISA_2022.Repository.BloodCenterRepository;
 import groupJASS.ISA_2022.Service.Interfaces.IBloodCenterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -51,7 +52,7 @@ public class BloodCenterService implements IBloodCenterService {
         _bloodCenterRepository.deleteById(id);
     }
 
-    public List<BloodCenter> findProductsWithSorting(String field){
-        return  _bloodCenterRepository.findAll(Sort.by(Sort.Direction.ASC,field));
+    public Page<BloodCenter> findProductsWithSorting(int offset, int pageSize, String field, String s){
+        return  _bloodCenterRepository.searchBy(s, PageRequest.of(offset, pageSize).withSort(Sort.by(Sort.Direction.ASC,field)));
     }
 }

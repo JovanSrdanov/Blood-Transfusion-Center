@@ -6,6 +6,7 @@ import groupJASS.ISA_2022.Model.BloodCenter;
 import groupJASS.ISA_2022.Service.Interfaces.IBloodCenterService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -67,8 +68,8 @@ public class BloodCenterController {
         }
     }
 
-    @GetMapping(path = "/sort/{field}")
-    public List<BloodCenter> sortCenter(@PathVariable String field) {
-       return _bloodCenterService.findProductsWithSorting(field);
+    @GetMapping(path = "/sort/{offset}/{size}/{field}/{s}")
+    public Page<BloodCenter> sortCenter(@PathVariable int offset, @PathVariable int size, @PathVariable String field, @PathVariable String s) {
+       return _bloodCenterService.findProductsWithSorting(offset, size, field, s);
     }
 }
