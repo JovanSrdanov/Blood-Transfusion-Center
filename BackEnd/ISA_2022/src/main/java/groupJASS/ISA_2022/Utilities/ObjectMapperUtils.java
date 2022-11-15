@@ -1,4 +1,4 @@
-package groupJASS.ISA_2022;
+package groupJASS.ISA_2022.Utilities;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;

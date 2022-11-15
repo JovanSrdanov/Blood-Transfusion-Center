@@ -1,18 +1,15 @@
-package groupJASS.ISA_2022.DTO;
+package groupJASS.ISA_2022.DTO.Address;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import java.util.UUID;
-
 
 @NoArgsConstructor
 @Getter
 @Setter
-public class AddressDTO {
+public class AddressBloodDonorDTO {
     @NotEmpty
     private String street;
     @NotEmpty
@@ -21,6 +18,4 @@ public class AddressDTO {
     private String city;
     @NotEmpty
     private String country;
-    private double latitude;
-    private double longitude;
 }

@@ -1,11 +1,10 @@
-package groupJASS.ISA_2022.DTO;
+package groupJASS.ISA_2022.DTO.BloodDonor;
 
 import groupJASS.ISA_2022.Model.Gender;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -13,15 +12,13 @@ import javax.validation.constraints.Pattern;
 @NoArgsConstructor
 @Getter
 @Setter
-public class NonRegisteredUserInfoDTO {
+public class NonRegisteredBloodDonorInfoDTO {
 
     @NotEmpty
     private String name;
     @NotEmpty
     private String surname;
 
-    @Email
-    private String email;
     @NotEmpty
     private String phoneNumber;
     @NotEmpty

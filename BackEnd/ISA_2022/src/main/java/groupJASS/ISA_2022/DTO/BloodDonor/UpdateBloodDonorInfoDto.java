@@ -1,5 +1,6 @@
-package groupJASS.ISA_2022.DTO;
+package groupJASS.ISA_2022.DTO.BloodDonor;
 
+import groupJASS.ISA_2022.DTO.Address.AddressUpdateDto;
 import groupJASS.ISA_2022.Model.Gender;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
-public class UpdateRegisterdUserInfoDto {
+public class UpdateBloodDonorInfoDto {
     private UUID id;
     @NotEmpty
     private String name;

@@ -16,7 +16,7 @@ import javax.persistence.ManyToOne;
 @NoArgsConstructor
 @Getter
 @Setter
-public class RegisteredUser extends Person {
+public class BloodDonor extends Person {
 
     // TODO: ne radi lazy
 
@@ -30,14 +30,12 @@ public class RegisteredUser extends Person {
     private String jmbg;
     @Column(nullable = false)
     private Gender gender;
-    @Column(nullable = false)
-    private boolean isActivated;
-    @Column(nullable = false, unique = true)
-    private String email;
+
+
     @Column(nullable = false)
     private int points;
 
-    public void update(RegisteredUser updated) {
+    public void update(BloodDonor updated) {
         this.institution = updated.getInstitution();
         this.jmbg = updated.getJmbg();
         this.gender = updated.getGender();

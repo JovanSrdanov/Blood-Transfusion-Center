@@ -1,23 +1,18 @@
-package groupJASS.ISA_2022.DTO.BloodAdmin;
+package groupJASS.ISA_2022.DTO.Staff;
 
-import groupJASS.ISA_2022.DTO.AddressDTO;
-import groupJASS.ISA_2022.DTO.AddressRegUserDTO;
-import groupJASS.ISA_2022.Model.Role;
-import lombok.AllArgsConstructor;
+import groupJASS.ISA_2022.DTO.Address.AddressBloodDonorDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import java.util.UUID;
 
 @NoArgsConstructor
 @Getter
 @Setter
-public class BloodAdminRegistrationDTO {
+public class StaffRegistrationDTO {
     @NotEmpty
     private String password;
     @NotEmpty
@@ -28,7 +23,7 @@ public class BloodAdminRegistrationDTO {
     private String phoneNumber;
     //Doesnt have coordinates
     @Valid
-    private AddressRegUserDTO address;
+    private AddressBloodDonorDTO address;
     @Email
     private String email;
 }

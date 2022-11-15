@@ -4,9 +4,9 @@ import groupJASS.ISA_2022.DTO.BloodCenter.BloodCenterBasicInfoDto;
 import groupJASS.ISA_2022.DTO.BloodCenter.BloodCenterRegistrationDTO;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
 import groupJASS.ISA_2022.Model.BloodCenter;
-import groupJASS.ISA_2022.ObjectMapperUtils;
 import groupJASS.ISA_2022.Service.Interfaces.IBloodCenterService;
 import groupJASS.ISA_2022.Utilities.MappingUtilities;
+import groupJASS.ISA_2022.Utilities.ObjectMapperUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -42,7 +42,7 @@ public class BloodCenterController {
 
     @GetMapping(path = "all-basic-info")
     public ResponseEntity<Iterable<BloodCenterBasicInfoDto>> findAllBasicInfo() {
-        var bloodCenters = (List<BloodCenter>)   _bloodCenterService.findAll();
+        var bloodCenters = (List<BloodCenter>) _bloodCenterService.findAll();
         var res = MappingUtilities.mapList(bloodCenters, BloodCenterBasicInfoDto.class, _mapper);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
@@ -95,12 +95,10 @@ public class BloodCenterController {
         try {
             _bloodCenterService.save(_mapper.map(dto, BloodCenter.class));
             return new ResponseEntity<>(HttpStatus.CREATED);
-        }
-        catch (DataIntegrityViolationException e) {
+        } catch (DataIntegrityViolationException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
-        }
-        catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 

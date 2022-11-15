@@ -1,8 +1,6 @@
 package groupJASS.ISA_2022.Model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerator;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -43,7 +41,7 @@ public class BloodCenter {
     private Set<Appointment> appointments = new HashSet<>();
 
     @OneToMany(mappedBy = "bloodCenter", fetch = FetchType.LAZY)
-    private Set<BloodAdmin> staff = new HashSet<>();
+    private Set<Staff> staff = new HashSet<>();
 
     @Embedded
     private WorkingHours workingHours;

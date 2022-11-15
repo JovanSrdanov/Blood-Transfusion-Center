@@ -1,23 +1,21 @@
-package groupJASS.ISA_2022.DTO;
+package groupJASS.ISA_2022.DTO.Staff;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
-import java.util.UUID;
 
 @NoArgsConstructor
 @Getter
 @Setter
-public class AddressUpdateDto {
-    private UUID id;
+public class StaffProfileDTO {
     @NotEmpty
-    private String street;
+    String name;
     @NotEmpty
-    private String number;
+    String surname;
     @NotEmpty
-    private String city;
+    String email;
     @NotEmpty
-    private String country;
+    String phoneNumber;
 }

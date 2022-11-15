@@ -15,10 +15,12 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
-public class BloodUser {
+public class Account {
     @Id
     private UUID id;
 
+    @Column(nullable = false, unique = true)
+    private String email;
 
     @Column(nullable = false)
     private String password;
@@ -28,5 +30,8 @@ public class BloodUser {
 
     @Column(nullable = false)
     private UUID personId;
+
+    @Column(nullable = false)
+    private boolean isActivated;
 
 }

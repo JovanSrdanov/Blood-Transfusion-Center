@@ -1,4 +1,4 @@
-package groupJASS.ISA_2022;
+package groupJASS.ISA_2022.Utilities;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
