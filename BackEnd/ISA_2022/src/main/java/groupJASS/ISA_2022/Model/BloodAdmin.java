@@ -13,6 +13,12 @@ import javax.persistence.*;
 @Getter
 @Setter
 public class BloodAdmin extends Person {
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Address address;
+
+    @Column(nullable = false, unique = true)
+    private String email;
+
     @ManyToOne
     private BloodCenter bloodCenter;
 }
