@@ -5,4 +5,79 @@
 
 table {
   text-align: left;
+  color: white;
+}
+
+.tableInfo {
+  width: 80%;
+  height: 80%;
+}
+
+.tableText {
+  font-size: large;
+}
+
+.rowInfo {
+  width: 60%;
+}
+
+.header {
+  margin-top: 2%;
+  margin-bottom: 2%;
+  font-size: xx-large;
+  font-weight: bolder;
+  color: white;
+}
+
+.noCenter {
+  font-size: xx-large;
+  font-weight: bolder;
+  color: red;
+}
+
+.fields {
+  font-weight: bold;
+}
+
+.importantText {
+  font-size: x-large;
+  font-weight: bold;
+  padding: 1%;
+}
+
+mat-grid-tile {
+  background-color: rgb(33, 38, 40);
+}
+
+.confirm {
+  margin-right: 6%;
+  font-size: x-large;
+}
+
+button {
+  font-size: x-large;
+}
+
+.form {
+  width: 70%;
+  margin: auto;
+}
+
+.formCenter {
+  width: 70%;
+  margin: auto;
+}
+
+input {
+  width: 100%;
+  font-size: x-large;
+  color: white;
+}
+
+mat-form-field {
+  padding: 2%;
+}
+
+h3 {
+  color: white;
 }
