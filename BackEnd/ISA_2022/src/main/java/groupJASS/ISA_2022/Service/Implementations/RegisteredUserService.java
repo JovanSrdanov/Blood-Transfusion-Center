@@ -44,11 +44,21 @@ public class RegisteredUserService implements IRegisteredUserService {
 
     @Override
     public RegisteredUser save(RegisteredUser entity) {
+        RegisteredUser user;
         if (entity.getId() == null) {
             entity.setId(UUID.randomUUID());
+            user = _registeredUserRepository.save(entity);
+        }
+        else {
+            RegisteredUser oldUser = findById(entity.getId());
+            if(oldUser == null) {
+                throw new NotFoundException("Registered user not found");
+            }
+            oldUser.update(entity);
+            user = _registeredUserRepository.save(oldUser);
         }
 
-        return _registeredUserRepository.save(entity);
+        return user;
     }
 
     @Override

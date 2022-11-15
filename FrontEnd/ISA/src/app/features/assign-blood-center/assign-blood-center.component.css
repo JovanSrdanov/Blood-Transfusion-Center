@@ -1,0 +1,9 @@
+mat-grid-list
+{
+    width: 60%;
+    margin: 150px auto; 
+}
+.select-list{
+    border: 1px solid white;
+    overflow:scroll;
+}

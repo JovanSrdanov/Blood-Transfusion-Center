@@ -1,0 +1,20 @@
+  <mat-grid-list cols="2" rowHeight="100px">
+  <mat-grid-tile class="select-list" rowspan="5">
+    <mat-selection-list  [multiple]="false">
+      <mat-list-option (click)="selectCenter(i)" value="{{bloodCenter}}"
+        *ngFor="let bloodCenter of centersNames; let i = index">
+        {{bloodCenter}}
+      </mat-list-option>
+    </mat-selection-list>
+  </mat-grid-tile>
+  <mat-grid-tile class="select-list" rowspan="5">
+    <mat-selection-list [multiple]="false">
+      <mat-list-option (click)="selectStaff(i)" value="{{staff}}" *ngFor="let staff of staffNames; let i = index">
+        {{staff}}
+      </mat-list-option>
+    </mat-selection-list>
+  </mat-grid-tile>
+  <mat-grid-tile   colspan="2">
+    <button [disabled]="indexesInvalid" (click)="assign()" mat-raised-button>Assign</button>
+  </mat-grid-tile>
+</mat-grid-list>

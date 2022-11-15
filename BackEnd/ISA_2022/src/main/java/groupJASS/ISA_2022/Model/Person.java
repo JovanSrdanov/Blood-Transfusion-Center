@@ -17,11 +17,11 @@ import java.util.UUID;
 public abstract class Person {
 
     @Id
-    private UUID id;
+    protected UUID id;
     @Column(nullable = false)
-    private String name;
+    protected String name;
     @Column(nullable = false)
-    private String surname;
+    protected String surname;
     @Column(nullable = false)
-    private String phoneNumber;
+    protected String phoneNumber;
 }
