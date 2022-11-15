@@ -86,7 +86,7 @@ export class BloodAdminProfileComponent implements OnInit {
       ],
       phoneNumber: [
         { value: this.staffInfo.phoneNumber, disabled: true },
-        [Validators.required],
+        [Validators.required, Validators.pattern('^[0-9]{9}$')],
       ],
     });
     this.staffForm.valueChanges.subscribe((currValue) => {
@@ -108,7 +108,7 @@ export class BloodAdminProfileComponent implements OnInit {
         ),
         number: new FormControl(
           { value: this.centerInfo.address.number, disabled: true },
-          [Validators.required]
+          [Validators.required, Validators.pattern('^[0-9]+(/?[0-9]+)?$')]
         ),
         city: new FormControl(
           { value: this.centerInfo.address.city, disabled: true },
@@ -120,14 +120,14 @@ export class BloodAdminProfileComponent implements OnInit {
         ),
         latitude: new FormControl(
           { value: this.centerInfo.address.latitude, disabled: true },
-          [Validators.required]
+          [Validators.required, Validators.pattern('^[+-]?[0-9]+.?[0-9]*$')]
         ),
         longitude: new FormControl(
           {
             value: this.centerInfo.address.longitude,
             disabled: true,
           },
-          [Validators.required]
+          [Validators.required, Validators.pattern('^[+-]?[0-9]+.?[0-9]*$')]
         ),
       }),
       description: [
