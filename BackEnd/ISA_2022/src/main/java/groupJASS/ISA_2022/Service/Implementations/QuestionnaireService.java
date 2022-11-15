@@ -1,11 +1,11 @@
 package groupJASS.ISA_2022.Service.Implementations;
 
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
+import groupJASS.ISA_2022.Model.BloodDonor;
 import groupJASS.ISA_2022.Model.Questionnaire;
-import groupJASS.ISA_2022.Model.RegisteredUser;
 import groupJASS.ISA_2022.Repository.QuestionnaireRepository;
+import groupJASS.ISA_2022.Service.Interfaces.IBloodDonorService;
 import groupJASS.ISA_2022.Service.Interfaces.IQuestionnaireService;
-import groupJASS.ISA_2022.Service.Interfaces.IRegisteredUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -19,12 +19,12 @@ import java.util.UUID;
 public class QuestionnaireService implements IQuestionnaireService {
 
     private final QuestionnaireRepository _questionnaireRepository;
-    private final IRegisteredUserService _registeredUserService;
+    private final IBloodDonorService _bloodDonorService;
 
     @Autowired
-    public QuestionnaireService(QuestionnaireRepository questionnaireRepository, IRegisteredUserService registeredUserService) {
+    public QuestionnaireService(QuestionnaireRepository questionnaireRepository, IBloodDonorService bloodDonorService) {
         this._questionnaireRepository = questionnaireRepository;
-        _registeredUserService = registeredUserService;
+        _bloodDonorService = bloodDonorService;
 
     }
 
@@ -59,7 +59,7 @@ public class QuestionnaireService implements IQuestionnaireService {
 
     @Override
     public Boolean canDonateBlood(UUID bloodDonorId) {
-        var questionare = _registeredUserService.getQuestionnaireFromBloodDonor(bloodDonorId);
+        Questionnaire questionare = _bloodDonorService.getQuestionnaireFromBloodDonor(bloodDonorId);
         return questionare.canDonateBlood();
 
 
@@ -69,9 +69,9 @@ public class QuestionnaireService implements IQuestionnaireService {
     public void fillQuestionare(Questionnaire map, UUID bloodDonorId) throws BadRequestException {
         //Todo: promeni samo ovo i uradi proveru
         var Questionnaire = save(map);
-        var regUser = ((List<RegisteredUser>) _registeredUserService.findAll()).get(0);
+        var regUser = ((List<BloodDonor>) _bloodDonorService.findAll()).get(0);
         regUser.setQuestionnaire(Questionnaire);
-        _registeredUserService.save(regUser);
+        _bloodDonorService.save(regUser);
 
     }
 

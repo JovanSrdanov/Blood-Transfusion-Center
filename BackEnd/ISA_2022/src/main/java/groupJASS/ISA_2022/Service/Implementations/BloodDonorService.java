@@ -2,6 +2,7 @@ package groupJASS.ISA_2022.Service.Implementations;
 
 import groupJASS.ISA_2022.Model.Address;
 import groupJASS.ISA_2022.Model.BloodDonor;
+import groupJASS.ISA_2022.Model.Questionnaire;
 import groupJASS.ISA_2022.Repository.BloodDonorRepository;
 import groupJASS.ISA_2022.Service.Interfaces.IBloodDonorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,8 +71,20 @@ public class BloodDonorService implements IBloodDonorService {
             throw new IllegalArgumentException("RegisterUser with this email already exists");
         }
         map.setAddress(address);
-       
+
         map.setPoints(0);
         return save(map);
+    }
+
+    @Override
+    public Questionnaire getQuestionnaireFromBloodDonor(UUID bloodDonorId) {
+        var BloodDonor = findById(bloodDonorId);
+
+        if (BloodDonor.getQuestionnaire() != null) {
+
+            return BloodDonor.getQuestionnaire();
+        }
+
+        throw new NotFoundException("Blood donor does not have Questionnaire");
     }
 }
