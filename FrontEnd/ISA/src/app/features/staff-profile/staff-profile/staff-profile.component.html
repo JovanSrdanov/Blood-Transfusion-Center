@@ -17,9 +17,7 @@
             <mat-form-field>
               <input matInput placeholder="surname" formControlName="surname" />
             </mat-form-field>
-            <mat-form-field>
-              <input matInput placeholder="email" formControlName="email" />
-            </mat-form-field>
+
             <mat-form-field>
               <input
                 matInput
@@ -27,18 +25,18 @@
                 formControlName="phoneNumber"
               />
             </mat-form-field>
-            <div *ngIf="isPreventChangeAdmin">
-              <button mat-raised-button (click)="enableChangeAdmin($event)">
+            <div *ngIf="isPreventChangeStaff">
+              <button mat-raised-button (click)="enableChangeStaff($event)">
                 Change
               </button>
             </div>
-            <div *ngIf="!isPreventChangeAdmin">
+            <div *ngIf="!isPreventChangeStaff">
               <span>
                 <button
                   class="confirm"
                   [disabled]="staffForm.invalid"
                   mat-raised-button
-                  (click)="confirmChangeAdmin($event)"
+                  (click)="confirmChangeStaff($event)"
                 >
                   Confirm
                 </button>
@@ -46,7 +44,7 @@
               <span>
                 <button
                   mat-raised-button
-                  (click)="cancelChangeAdmin($event)"
+                  (click)="cancelChangeStaff($event)"
                   color="warn"
                 >
                   Cancel

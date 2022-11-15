@@ -4,26 +4,27 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
-import { BloodAdminProfileModule } from './features/blood-admin-profile/blood-admin-profile.module';
+import { StaffProfileModule } from './features/staff-profile/staff-profile';
 import { BloodCenterRegistrationModule } from './features/blood-center-registration/blood-center-registration.module';
 import { HttpClientModule } from '@angular/common/http';
 import { NavbarModule } from './features/navbar/navbar.module';
 import { RegisterUserModule } from './features/register-user/register-user.module';
 import { MatSelectModule } from '@angular/material/select';
-import { BloodAdminRegistrationComponent } from './features/blood-admin-registration/blood-admin-registration.component';
+import { StaffRegistrationModule } from './features/staff-registration/staff-registration.module';
 import { AssignBloodCenterComponent } from './features/assign-blood-center/assign-blood-center.component';
 import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
   declarations: [AppComponent, AssignBloodCenterComponent],
   imports: [
-    BrowserModule,
+  BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
+    StaffRegistrationModule,
     FormsModule,
     RegisterUserModule,
-    BloodAdminProfileModule,
+    StaffProfileModule,
     BloodCenterRegistrationModule,
     HttpClientModule,
     NavbarModule,

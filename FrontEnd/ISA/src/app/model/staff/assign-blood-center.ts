@@ -1,4 +1,4 @@
 export interface AssignBloodCenter{
-bloodAdminId : string;
+staffId : string;
 bloodCenterId: string;
 }

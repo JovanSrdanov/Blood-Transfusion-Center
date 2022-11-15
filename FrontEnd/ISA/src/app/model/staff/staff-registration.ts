@@ -1,6 +1,6 @@
 import { AddressNoCoor } from "../address/address-no-coor"
 
-export interface BloodAdminRegistration{
+export interface StaffRegistration {
     password: string,
     name: string,
     surname: string,

@@ -1,6 +1,6 @@
 import { AddressNoCoor } from "../address/address-no-coor";
 
-export interface BloodAdminBasicInfo{
+export interface StaffBasicInfo {
     id: string;
     name: string;
     surname: string;

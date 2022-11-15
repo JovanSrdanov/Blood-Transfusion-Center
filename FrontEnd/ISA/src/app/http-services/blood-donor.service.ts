@@ -6,9 +6,9 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class RegisterUserService {
+export class BloodDonorService {
 
-  path: string = environment.backendPath + "/registered-user";
+  path: string = environment.backendPath + "/blood-donor";
 
   constructor(private readonly http: HttpClient) { }
 

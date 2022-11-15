@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { BloodAdminService } from 'src/app/http-services/blood-admin.service';
-import { BloodAdminRegistration } from 'src/app/model/blood-admin/blood-admin-registration';
+import { StaffService } from 'src/app/http-services/staff.service';
+import { StaffRegistration } from 'src/app/model/staff/staff-registration';
 //I dont know why I need to import it but it wont work if not
-import { BloodAdminRegistrationModule }  from   'src/app/features/blood-admin-registration/blood-admin-registration.module'
+import { StaffRegistrationModule }  from 'src/app/features/staff-registration/staff-registration.module'
 
 @Component({
   selector: 'app-blood-admin-registration',
-  templateUrl: './blood-admin-registration.component.html',
-  styleUrls: ['./blood-admin-registration.component.css']
+  templateUrl: './staff-registration.component.html',
+  styleUrls: ['./staff-registration.component.css']
 })
-export class BloodAdminRegistrationComponent implements OnInit {
+export class StaffRegistrationComponent implements OnInit {
 
     registrationForm = new FormGroup({
       password : new FormControl<string>('', [Validators.required]),
@@ -36,7 +36,7 @@ export class BloodAdminRegistrationComponent implements OnInit {
     return  !this.emailAvailable || this.registrationForm.invalid;
   }
 
-  constructor(private readonly bloodAdminService: BloodAdminService,
+  constructor(private readonly bloodAdminService: StaffService,
     private readonly router: Router) { }
 
   ngOnInit(): void {
@@ -44,7 +44,7 @@ export class BloodAdminRegistrationComponent implements OnInit {
 
   register = () =>
   {
-    let bloodAdmin : BloodAdminRegistration = {
+    let bloodAdmin : StaffRegistration = {
       password: this.form.password.value ?? "",
       name: this.form.name.value ?? "",
       surname: this.form.surname.value ?? "",
@@ -57,7 +57,7 @@ export class BloodAdminRegistrationComponent implements OnInit {
         country: this.form.country.value ?? ""
       }
     }
-    this.bloodAdminService.registerBloodAdmin(bloodAdmin).subscribe(_ => {
+    this.bloodAdminService.registerStaff(bloodAdmin).subscribe(_ => {
       this.router.navigate(['']);
     })
 

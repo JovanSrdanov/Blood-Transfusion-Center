@@ -9,14 +9,14 @@ import {
 
 @Component({
   selector: 'app-blood-admin-profile',
-  templateUrl: './blood-admin-profile.component.html',
-  styleUrls: ['./blood-admin-profile.component.css'],
+  templateUrl: './staff-profile.component.html',
+  styleUrls: ['./staff-profile.component.css'],
 })
-export class BloodAdminProfileComponent implements OnInit {
+export class StaffProfileComponent implements OnInit {
   staffForm: FormGroup;
   centerForm: FormGroup;
 
-  isPreventChangeAdmin: boolean = true;
+  isPreventChangeStaff: boolean = true;
   isPreventChangeCenter: boolean = true;
 
   staffInfo: any;
@@ -31,7 +31,7 @@ export class BloodAdminProfileComponent implements OnInit {
     this.staffForm = this.fb.group({
       name: '',
       surname: '',
-      email: '',
+
       phoneNumber: '',
     });
     const addr = this.fb.group({
@@ -80,10 +80,7 @@ export class BloodAdminProfileComponent implements OnInit {
         { value: this.staffInfo.surname, disabled: true },
         [Validators.required],
       ],
-      email: [
-        { value: 'temp@tempmail.com', disabled: true },
-        [Validators.required],
-      ],
+
       phoneNumber: [
         { value: this.staffInfo.phoneNumber, disabled: true },
         [Validators.required, Validators.pattern('^[0-9]{9}$')],
@@ -144,14 +141,14 @@ export class BloodAdminProfileComponent implements OnInit {
   }
 
   //ADMIN
-  enableChangeAdmin(e: Event) {
+  enableChangeStaff(e: Event) {
     e.preventDefault();
     console.log(this.staffInfo);
-    this.isPreventChangeAdmin = !this.isPreventChangeAdmin;
+    this.isPreventChangeStaff = !this.isPreventChangeStaff;
     this.staffForm.enable();
     console.log(this.staffInfo);
   }
-  confirmChangeAdmin(event: Event) {
+  confirmChangeStaff(event: Event) {
     event.preventDefault();
 
     this.profileService
@@ -161,22 +158,22 @@ export class BloodAdminProfileComponent implements OnInit {
       });
     this.staffInfoCopy = structuredClone(this.staffInfo);
 
-    this.isPreventChangeAdmin = !this.isPreventChangeAdmin;
+    this.isPreventChangeStaff = !this.isPreventChangeStaff;
     this.staffForm.disable();
   }
 
-  cancelChangeAdmin(event: Event) {
+  cancelChangeStaff(event: Event) {
     event.preventDefault();
 
     this.staffInfo = structuredClone(this.staffInfoCopy);
     this.staffForm.patchValue({
       name: this.staffInfo.name,
       surname: this.staffInfo.surname,
-      email: this.staffInfo.email,
+
       phoneNumber: this.staffInfo.phoneNumber,
     });
 
-    this.isPreventChangeAdmin = !this.isPreventChangeAdmin;
+    this.isPreventChangeStaff = !this.isPreventChangeStaff;
     this.staffForm.disable();
   }
 

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { RegisterUserService } from 'src/app/http-services/register-user.service';
+import { BloodDonorService } from 'src/app/http-services/blood-donor.service';
 import { RegisterNonRegisteredUserDTO } from '../Model/RegisterNonRegisteredUserDTO';
+import {BloodDonor} from "../Model/BloodDonor";
 interface Gender {
   value: number;
   viewValue: string;
@@ -41,7 +42,7 @@ export class RegisterUserComponent implements OnInit {
 
   errorMessage: string = "Fill the form data correctly";
 
-  constructor(private readonly registerUserService: RegisterUserService, private readonly router: Router) { }
+  constructor(private readonly registerUserService: BloodDonorService, private readonly router: Router) { }
 
   ngOnInit(): void { }
 
@@ -61,7 +62,7 @@ export class RegisterUserComponent implements OnInit {
 
     let registerNonRegisteredUserDTO: RegisterNonRegisteredUserDTO = {
       bloodUserDTO: {
-
+        email: this.form.email.value ?? "",
         password: this.form.password.value ?? "",
       },
       addressRegUserDTO: {
@@ -71,10 +72,10 @@ export class RegisterUserComponent implements OnInit {
         country: this.form.country.value ?? "",
       },
       nonRegisteredUserInfoDTO: {
-        occupation:this.form.occupation.value ?? "",
+        occupation: this.form.occupation.value ?? "",
         name: this.form.name.value ?? "",
         surname: this.form.surname.value ?? "",
-        email: this.form.email.value ?? "",
+
         phoneNumber: this.form.phoneNumber.value ?? "",
         institution: this.form.institution.value ?? "",
         gender: this.selectedGender,
@@ -83,10 +84,10 @@ export class RegisterUserComponent implements OnInit {
     };
 
     this.registerUserService.registerUser(registerNonRegisteredUserDTO).subscribe(res => {
-      console.log(res);
-      this.router.navigate(['']);
+        console.log(res);
+        this.router.navigate(['']);
 
-    },
+      },
       err => {
         if (err.status == 409) {
           this.errorMessage = err.error;
@@ -102,11 +103,7 @@ export class RegisterUserComponent implements OnInit {
         this.errorMessage = "Unepected error, try again";
         console.log(err.error);
       }
-
     )
-
-
   }
 
-
-}
+  }
