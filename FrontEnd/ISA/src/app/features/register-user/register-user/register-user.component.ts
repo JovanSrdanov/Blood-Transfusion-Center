@@ -71,7 +71,7 @@ export class RegisterUserComponent implements OnInit {
         country: this.form.country.value ?? "",
       },
       nonRegisteredUserInfoDTO: {
-        ocupation:this.form.name.value ?? "",
+        occupation:this.form.name.value ?? "",
         name: this.form.name.value ?? "",
         surname: this.form.surname.value ?? "",
         email: this.form.email.value ?? "",

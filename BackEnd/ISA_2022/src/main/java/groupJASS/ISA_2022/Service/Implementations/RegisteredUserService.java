@@ -1,7 +1,9 @@
 package groupJASS.ISA_2022.Service.Implementations;
 
 import groupJASS.ISA_2022.Model.Address;
+import groupJASS.ISA_2022.Model.Questionnaire;
 import groupJASS.ISA_2022.Model.RegisteredUser;
+import groupJASS.ISA_2022.Repository.QuestionnaireRepository;
 import groupJASS.ISA_2022.Repository.RegisteredUserRepository;
 import groupJASS.ISA_2022.Service.Interfaces.IRegisteredUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +19,12 @@ import java.util.UUID;
 public class RegisteredUserService implements IRegisteredUserService {
 
     private final RegisteredUserRepository _registeredUserRepository;
+    private final QuestionnaireRepository _questionnaireRepository;
 
     @Autowired
-    public RegisteredUserService(RegisteredUserRepository registeredUserRepository) {
+    public RegisteredUserService(RegisteredUserRepository registeredUserRepository, QuestionnaireRepository questionnaireRepository) {
         _registeredUserRepository = registeredUserRepository;
+        _questionnaireRepository = questionnaireRepository;
     }
 
     @Override
@@ -66,5 +70,18 @@ public class RegisteredUserService implements IRegisteredUserService {
         map.setActivated(false);
         map.setPoints(0);
         return save(map);
+    }
+
+    @Override
+    public Questionnaire getQuestionnaireFromBloodDonor(UUID bloodDonorId) {
+        var BloodDonor = findById(bloodDonorId);
+
+        if (BloodDonor.getQuestionnaire() != null) {
+
+            return BloodDonor.getQuestionnaire();
+        }
+
+        throw new NotFoundException("Blood donor does not have Questionnaire");
+
     }
 }
