@@ -26,6 +26,8 @@ public class NonRegisteredUserInfoDTO {
     private String phoneNumber;
     @NotEmpty
     private String institution;
+    @NotEmpty
+    private String occupation;
 
     @Pattern(regexp = "^[0-9]{13}", message = "length must be 13 and it can only contain numbers")
     private String jmbg;

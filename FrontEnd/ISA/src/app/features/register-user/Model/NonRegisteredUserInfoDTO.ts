@@ -4,6 +4,7 @@ export interface NonRegisteredUserInfoDTO {
   email: string,
   phoneNumber: string,
   institution: string,
+  ocupation: string,
   gender: number
   jmbg:string,
 
