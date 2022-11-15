@@ -1,4 +1,4 @@
-export interface AddressRegUserDTO {
+export interface addressBloodDonorDTO {
     street: string,
     number: string,
     city: string,

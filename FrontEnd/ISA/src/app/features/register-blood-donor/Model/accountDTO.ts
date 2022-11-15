@@ -1,4 +1,4 @@
-export interface BloodDonor {
+export interface accountDTO {
 
   email:string,
   password: string,
