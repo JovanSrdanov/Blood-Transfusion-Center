@@ -1,5 +1,9 @@
 <form [formGroup]="registrationForm">
+<<<<<<< Updated upstream:FrontEnd/ISA/src/app/features/blood-admin-registration/blood-admin-registration.component.html
     <p *ngIf="!usernameAvailable" class="error-message">Entered username is not available</p>
+=======
+    <p *ngIf="!emailAvailable" class="error-message">Entered email is not available</p>
+>>>>>>> Stashed changes:FrontEnd/ISA/src/app/features/staff-registration/staff-registration.component.html
     <mat-form-field>
         <mat-label>Username</mat-label>
         <input matInput type="text" formControlName="username" (blur)="checkUsernameAvailability()">
@@ -20,7 +24,6 @@
         <mat-label>Phone number</mat-label>
         <input matInput type="text" formControlName="phoneNumber">
     </mat-form-field>
-    <p *ngIf="!emailAvailable" class="error-message">Entered email is not available</p>
     <mat-form-field>
         <mat-label>Email</mat-label>
         <input matInput type="text" formControlName="email" (blur)="checkEmailAvailability()">
@@ -42,5 +45,5 @@
         <input matInput type="text" formControlName="country">
     </mat-form-field>
     <br>
-    <button [disabled]="disableSubmit"  mat-raised-button (click)="register()">Submit</button>
+    <button [disabled]="disableSubmit" mat-raised-button (click)="register()">Submit</button>
 </form>
