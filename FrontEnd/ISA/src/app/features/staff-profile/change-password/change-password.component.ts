@@ -16,6 +16,7 @@ import { AbstractControl } from '@angular/forms';
 })
 export class ChangePasswordComponent implements OnInit {
   isPreventChangePassword: boolean = true;
+  isSucc: boolean = false;
 
   changePasswordForm: FormGroup;
 
@@ -93,6 +94,11 @@ export class ChangePasswordComponent implements OnInit {
       })
       .subscribe((res) => {
         console.log(res);
+        //alert('Password successfuly changed');
+        this.isSucc = true;
+        setTimeout(() => {
+          this.isSucc = false;
+        }, 2500);
       });
     this.isPreventChangePassword = true;
   }

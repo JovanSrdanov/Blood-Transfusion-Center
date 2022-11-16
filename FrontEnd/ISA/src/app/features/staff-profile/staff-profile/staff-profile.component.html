@@ -74,6 +74,11 @@
                 </button>
               </span>
             </div>
+            <div>
+              <span *ngIf="isSucc" class="succ"
+                >User profile changed successfuly</span
+              >
+            </div>
           </form>
 
           <!-- TEST  -->
@@ -241,6 +246,11 @@
             >
               Cancel
             </button>
+          </div>
+          <div>
+            <span *ngIf="isSucc" class="succ"
+              >Blood center profile changed successfuly</span
+            >
           </div>
         </form>
       </div>

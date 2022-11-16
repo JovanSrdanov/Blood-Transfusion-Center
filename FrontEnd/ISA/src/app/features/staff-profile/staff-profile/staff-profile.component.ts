@@ -19,6 +19,7 @@ export class StaffProfileComponent implements OnInit {
   isPreventChangeStaff: boolean = true;
   isPreventChangeCenter: boolean = true;
   isPreventChangePassword: boolean = true;
+  isSucc: boolean = false;
 
   staffInfo: any;
   staffId: any;
@@ -185,12 +186,16 @@ export class StaffProfileComponent implements OnInit {
       .updateStaffInfo(this.staffId, this.staffInfo)
       .subscribe((res) => {
         console.log(res);
+        //alert('Profile successfuly changed');
+        this.isSucc = true;
+        setTimeout(() => {
+          this.isSucc = false;
+        }, 2500);
       });
     this.staffInfoCopy = structuredClone(this.staffInfo);
 
     this.isPreventChangeStaff = !this.isPreventChangeStaff;
     this.staffForm.disable();
-    alert('Profile successfuly changed');
   }
 
   cancelChangeStaff(event: Event) {
@@ -231,6 +236,11 @@ export class StaffProfileComponent implements OnInit {
       .updateStaffCenterInfo(this.centerId, this.centerInfo)
       .subscribe((res) => {
         console.log(res);
+        //alert('Blood center profile successfuly changed');
+        this.isSucc = true;
+        setTimeout(() => {
+          this.isSucc = false;
+        }, 2500);
       });
 
     this.centerInfoCopy = structuredClone(this.centerInfo);

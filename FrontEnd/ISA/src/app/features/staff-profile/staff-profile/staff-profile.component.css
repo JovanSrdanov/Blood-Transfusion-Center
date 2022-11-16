@@ -117,3 +117,7 @@ h3 {
 .changePassword {
   margin-top: 10%;
 }
+
+.succ {
+  color: green;
+}
