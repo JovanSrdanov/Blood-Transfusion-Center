@@ -1,3 +1,4 @@
+import { ChangePasswordComponent } from './change-password/change-password.component';
 import { StaffProfileComponent } from './staff-profile/staff-profile.component';
 import { MaterialModule } from '../../material/material.module';
 import { NgModule } from '@angular/core';
@@ -8,7 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
-  declarations: [StaffProfileComponent],
+  declarations: [StaffProfileComponent, ChangePasswordComponent],
   imports: [
     CommonModule,
     MaterialModule,

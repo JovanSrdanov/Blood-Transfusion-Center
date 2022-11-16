@@ -59,14 +59,9 @@
         </div>
         <div>
           <hr class="changePassword" />
-          <button
-            class="changePassword"
-            mat-raised-button
-            *ngIf="isPreventChangePassword"
-            (click)="enableChangePassword($event)"
-          >
-            Change password
-          </button>
+          <app-change-password
+            [loggedInStaffId]="this.staffId"
+          ></app-change-password>
         </div>
       </div>
     </mat-grid-tile>

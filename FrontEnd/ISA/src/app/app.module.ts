@@ -15,23 +15,27 @@ import { AssignBloodCenterComponent } from './features/assign-blood-center/assig
 import { BrowserModule } from '@angular/platform-browser';
 import { QuestionnaireComponent } from './features/questionnaire/questionnaire/questionnaire.component';
 import { QuestionnaireModule } from './features/questionnaire/questionnaire.module';
+import { ChangePasswordComponent } from './features/staff-profile/change-password/change-password.component';
 
 @NgModule({
-  declarations: [AppComponent, AssignBloodCenterComponent, QuestionnaireComponent],
+  declarations: [
+    AppComponent,
+    AssignBloodCenterComponent,
+    QuestionnaireComponent,
+  ],
   imports: [
-  BrowserModule,
+    BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
     StaffRegistrationModule,
     FormsModule,
     RegisterBloodDonorModule,
-    StaffProfileModule,
     BloodCenterRegistrationModule,
     HttpClientModule,
     NavbarModule,
     MatSelectModule,
-    QuestionnaireModule
+    QuestionnaireModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

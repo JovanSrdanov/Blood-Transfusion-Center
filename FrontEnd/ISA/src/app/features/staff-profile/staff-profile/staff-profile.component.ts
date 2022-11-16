@@ -152,7 +152,7 @@ export class StaffProfileComponent implements OnInit {
   //ADMIN
   enableChangeStaff(e: Event) {
     e.preventDefault();
-    console.log(this.staffInfo);
+    console.log(this.staffId);
     this.isPreventChangeStaff = !this.isPreventChangeStaff;
     this.staffForm.enable();
     console.log(this.staffInfo);

@@ -1,6 +1,6 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { environment } from "src/environments/environment";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -25,6 +25,15 @@ export class ProfileService {
     return this.http.put(
       environment.backendPath + '/blood-center/' + centerId,
       centerInfo
+    );
+  }
+
+  changePassword(staffId: any, passwordInfo: any) {
+    console.log(staffId);
+    console.log(passwordInfo);
+    return this.http.patch(
+      environment.backendPath + '/staff/change-password/' + staffId,
+      passwordInfo
     );
   }
 }

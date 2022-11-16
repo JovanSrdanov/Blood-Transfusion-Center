@@ -1,5 +1,7 @@
 package groupJASS.ISA_2022.Service.Implementations;
 
+import groupJASS.ISA_2022.DTO.Account.AccountDTO;
+import groupJASS.ISA_2022.DTO.Account.PasswordDTO;
 import groupJASS.ISA_2022.DTO.BloodCenter.BloodCenterProfileDto;
 import groupJASS.ISA_2022.DTO.Staff.StaffBasicInfoDTO;
 import groupJASS.ISA_2022.DTO.Staff.StaffProfileDTO;
@@ -51,6 +53,21 @@ public class StaffService implements IStaffService {
     public List<StaffProfileDTO> getAllStaff() {
         List<Staff> staff = _staffRepository.findAll();
         return getStaffProfileInfo(staff);
+    }
+
+    @Override
+    public void changePassword(UUID id, PasswordDTO dto) {
+        Account account = _accountRepository.findAccountByPersonId(id);
+        if (account == null) {
+            throw new NotFoundException("Account with that id not found");
+        }
+
+        if (!dto.getNewPassword().equals(dto.getConfirmPassword())) {
+            throw new IllegalArgumentException("New password and confirm password do not match");
+        }
+
+        account.setPassword(dto.getNewPassword());
+        _accountRepository.save(account);
     }
 
     @Override

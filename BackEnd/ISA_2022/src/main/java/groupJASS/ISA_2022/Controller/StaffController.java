@@ -1,5 +1,6 @@
 package groupJASS.ISA_2022.Controller;
 
+import groupJASS.ISA_2022.DTO.Account.PasswordDTO;
 import groupJASS.ISA_2022.DTO.BloodCenter.BloodCenterProfileDto;
 import groupJASS.ISA_2022.DTO.Staff.AssignBloodCenterDTO;
 import groupJASS.ISA_2022.DTO.Staff.StaffBasicInfoDTO;
@@ -11,6 +12,7 @@ import groupJASS.ISA_2022.Model.Staff;
 import groupJASS.ISA_2022.Service.Interfaces.IAccountService;
 import groupJASS.ISA_2022.Service.Interfaces.IAddressService;
 import groupJASS.ISA_2022.Service.Interfaces.IStaffService;
+import org.aspectj.weaver.ast.Not;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -135,6 +137,20 @@ public class StaffController {
         } catch (BadRequestException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PatchMapping(path = "change-password/{id}")
+    public ResponseEntity<?> chagePassword(@PathVariable("id") UUID id, @Valid @RequestBody PasswordDTO dto) {
+        try {
+            _staffService.changePassword(id, dto);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        catch (NotFoundException e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        catch (IllegalArgumentException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }

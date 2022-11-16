@@ -1,5 +1,6 @@
 package groupJASS.ISA_2022.Service.Interfaces;
 
+import groupJASS.ISA_2022.DTO.Account.PasswordDTO;
 import groupJASS.ISA_2022.DTO.Staff.StaffBasicInfoDTO;
 import groupJASS.ISA_2022.DTO.Staff.StaffProfileDTO;
 import groupJASS.ISA_2022.DTO.Staff.StaffRegistrationDTO;
@@ -16,5 +17,6 @@ public interface IStaffService extends ICrudService<Staff> {
     List<StaffBasicInfoDTO> getUnemployedStaff();
     List<StaffProfileDTO> getAllStaff();
 
+    void changePassword(UUID id, PasswordDTO dto);
     void register(StaffRegistrationDTO dto);
 }
