@@ -45,9 +45,16 @@ export class StaffProfileComponent implements OnInit {
       latitude: [],
       longitude: [],
     });
+    const bldam = this.fb.group({
+      A: [],
+      B: [],
+      O: [],
+      AB: [],
+    });
     this.centerForm = this.fb.group({
       name: '',
       address: addr,
+      bloodAmount: bldam,
       description: '',
       score: 0,
       appointments: [],
@@ -136,6 +143,14 @@ export class StaffProfileComponent implements OnInit {
           [Validators.required, Validators.pattern('^[+-]?[0-9]+.?[0-9]*$')]
         ),
       }),
+      bloodAmount: new FormGroup({
+        A: new FormControl({ value: 1, disabled: true }, [Validators.required]),
+        B: new FormControl({ value: 1, disabled: true }, [Validators.required]),
+        O: new FormControl({ value: 1, disabled: true }, [Validators.required]),
+        AB: new FormControl({ value: 1, disabled: true }, [
+          Validators.required,
+        ]),
+      }),
       description: [
         { value: this.centerInfo.description, disabled: true },
         [Validators.required],
@@ -164,6 +179,7 @@ export class StaffProfileComponent implements OnInit {
     this.staffInfo.id = this.staffId;
     this.staffInfo.email = this.staffEmail;
     this.staffInfo.address = this.staffAddress;
+    this.staffInfo.bloodCenter = this.centerInfo;
 
     this.profileService
       .updateStaffInfo(this.staffId, this.staffInfo)
@@ -174,6 +190,7 @@ export class StaffProfileComponent implements OnInit {
 
     this.isPreventChangeStaff = !this.isPreventChangeStaff;
     this.staffForm.disable();
+    alert('Profile successfuly changed');
   }
 
   cancelChangeStaff(event: Event) {
@@ -201,6 +218,10 @@ export class StaffProfileComponent implements OnInit {
     this.centerForm.get('score')?.disable();
     this.centerForm.get('appointments')?.disable();
     this.centerForm.get('staff')?.disable();
+    this.centerForm.get('bloodAmount')?.get('A')?.disable();
+    this.centerForm.get('bloodAmount')?.get('B')?.disable();
+    this.centerForm.get('bloodAmount')?.get('O')?.disable();
+    this.centerForm.get('bloodAmount')?.get('AB')?.disable();
   }
 
   confirmChangeCenter(event: Event) {

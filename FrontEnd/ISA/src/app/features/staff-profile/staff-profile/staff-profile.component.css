@@ -1,5 +1,5 @@
 .grid {
-  width: 80%;
+  width: 90%;
   margin: auto;
 }
 
@@ -59,7 +59,7 @@ button {
 }
 
 .form {
-  width: 70%;
+  width: 100%;
   margin: auto;
 }
 
@@ -70,8 +70,16 @@ button {
 
 input {
   width: 100%;
-  font-size: x-large;
+  font-size: large;
   color: white;
+}
+
+.bloodGroupInput {
+  width: 15%;
+}
+
+.personalInfoFields {
+  width: 40%;
 }
 
 mat-form-field {
