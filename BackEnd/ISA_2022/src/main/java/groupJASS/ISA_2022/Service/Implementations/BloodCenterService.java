@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
 
 import java.util.UUID;
@@ -44,6 +45,7 @@ public class BloodCenterService implements IBloodCenterService {
     }
 
     @Override
+    @Transactional(rollbackFor = DataIntegrityViolationException.class)
     public BloodCenter save(BloodCenter entity) throws BadRequestException {
         if (entity.getId() == null) {
             Address address = entity.getAddress();

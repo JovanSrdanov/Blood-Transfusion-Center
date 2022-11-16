@@ -15,8 +15,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { QuestionnaireModule } from './features/questionnaire/questionnaire.module';
-import { ChangePasswordComponent } from './features/staff-profile/change-password/change-password.component';
 import { AssignBloodCenterModule } from './features/assign-blood-center/assign-blood-center.module';
+import { BloodDonorListModule } from './features/blood-donor-list/blood-donor-list.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -34,7 +34,8 @@ import { AssignBloodCenterModule } from './features/assign-blood-center/assign-b
     NavbarModule,
     MatSelectModule,
     QuestionnaireModule,
-    AssignBloodCenterModule
+    AssignBloodCenterModule,
+    BloodDonorListModule
   ],
   providers: [],
   bootstrap: [AppComponent],
