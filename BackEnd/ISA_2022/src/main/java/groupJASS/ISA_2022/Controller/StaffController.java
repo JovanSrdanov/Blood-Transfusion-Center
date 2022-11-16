@@ -6,8 +6,8 @@ import groupJASS.ISA_2022.DTO.Staff.StaffProfileDTO;
 import groupJASS.ISA_2022.DTO.Staff.StaffRegistrationDTO;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
 import groupJASS.ISA_2022.Model.Staff;
+import groupJASS.ISA_2022.Service.Interfaces.IAccountService;
 import groupJASS.ISA_2022.Service.Interfaces.IStaffService;
-import groupJASS.ISA_2022.Utilities.MappingUtilities;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -25,11 +25,13 @@ import java.util.UUID;
 public class StaffController {
     private final IStaffService _staffService;
     private final ModelMapper _mapper;
+    private final IAccountService _accountService;
 
     @Autowired
-    public StaffController(IStaffService staffService, ModelMapper mapper) {
+    public StaffController(IStaffService staffService, ModelMapper mapper, IAccountService accountService) {
         _staffService = staffService;
         _mapper = mapper;
+        _accountService = accountService;
     }
 
     @GetMapping
@@ -63,7 +65,7 @@ public class StaffController {
     }
 
     @PutMapping(path = "updateBloodAdmin/{id}")
-    ResponseEntity<?> updateAdmin(@PathVariable("id") UUID adminId, @Valid @RequestBody StaffProfileDTO dto) {
+    ResponseEntity<?> updateStaff(@PathVariable("id") UUID adminId, @Valid @RequestBody StaffProfileDTO dto) {
         try {
             //UUID id = UUID.fromString(adminId);
             Staff oldAdmin = _staffService.findById(adminId);
@@ -84,10 +86,10 @@ public class StaffController {
     }
 
     @PostMapping(value = "/save")
-    public ResponseEntity<Staff> save(@RequestBody Staff admin) {
+    public ResponseEntity<Staff> save(@RequestBody Staff staff) {
         Staff res;
         try {
-            res = _staffService.save(admin);
+            res = _staffService.save(staff);
         } catch (BadRequestException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -123,16 +125,15 @@ public class StaffController {
     }
 
     @GetMapping(path = "unemployed")
-    public ResponseEntity<Iterable<StaffBasicInfoDTO>> getUnemployedBloodAdmins() {
-        var bloodAdmins = (List<Staff>) _staffService.getUnemployedBloodAdmins();
-        var res = MappingUtilities.mapList(bloodAdmins, StaffBasicInfoDTO.class, _mapper);
-        return new ResponseEntity<>(res, HttpStatus.OK);
+    public ResponseEntity<Iterable<StaffBasicInfoDTO>> getUnemployedStaff() {
+        var dtos = (List<StaffBasicInfoDTO>) _staffService.getUnemployedStaff();
+        return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
 
 
     @GetMapping(path = "email-available/{email}")
     public ResponseEntity<Boolean> checkEmailAvailability(@PathVariable String email) {
-        Boolean exists = _staffService.checkEmailAvailability(email);
+        Boolean exists = _accountService.checkEmailAvailability(email);
         return new ResponseEntity<>(!exists, HttpStatus.OK);
     }
 

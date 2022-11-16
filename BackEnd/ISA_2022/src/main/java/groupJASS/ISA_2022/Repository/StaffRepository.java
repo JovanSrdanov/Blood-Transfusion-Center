@@ -7,8 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.UUID;
 
 public interface StaffRepository extends JpaRepository<Staff, UUID> {
-    @Query("select ba from Staff ba where ba.bloodCenter is null")
-    Iterable<Staff> getUnemployedBloodAdmins();
-
-    boolean existsBloodAdminByEmail(String email);
+    @Query("select st from Staff st where st.bloodCenter is null")
+    Iterable<Staff> getUnemployedStaff();
 }
