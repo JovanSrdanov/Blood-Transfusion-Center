@@ -7,6 +7,7 @@ import { NavbarComponent } from './features/navbar/navbar/navbar.component';
 import { StaffRegistrationComponent } from './features/staff-registration/staff-registration.component';
 import { AssignBloodCenterComponent } from './features/assign-blood-center/assign-blood-center.component';
 import { StaffProfileComponent } from './features/staff-profile/staff-profile/staff-profile.component';
+import { QuestionnaireComponent } from './features/questionnaire/questionnaire/questionnaire.component';
 
 const routes: Routes = [
   {path:'navbar',component : NavbarComponent},
@@ -14,12 +15,14 @@ const routes: Routes = [
   { path: 'blood-center', component: BloodCenterRegistrationComponent },
   { path: 'register-blood-donor', component: RegisterBloodDonorComponent },
   { path: 'staff-registration', component: StaffRegistrationComponent},
-  { path: 'staff/assign-blood-center', component: AssignBloodCenterComponent}
+  { path: 'staff/assign-blood-center', component: AssignBloodCenterComponent },
+   { path: 'questionnaire', component: QuestionnaireComponent}
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
+
+exports: [RouterModule],
 })
 export class AppRoutingModule {}
 export const routingComponents = [RegisterBloodDonorComponent ,NavbarComponent, StaffProfileComponent, BloodCenterRegistrationComponent];
