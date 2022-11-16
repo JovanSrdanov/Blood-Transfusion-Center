@@ -67,7 +67,7 @@ public class QuestionnaireService implements IQuestionnaireService {
 
     @Override
     public void fillQuestionare(Questionnaire map, UUID bloodDonorId) throws BadRequestException {
-        //Todo: promeni samo ovo i uradi proveru
+        //Todo: promeni samo ovo i uradi proveru find by blooddonor id
         var Questionnaire = save(map);
         var regUser = ((List<BloodDonor>) _bloodDonorService.findAll()).get(0);
         regUser.setQuestionnaire(Questionnaire);
