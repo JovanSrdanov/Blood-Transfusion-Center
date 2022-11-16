@@ -6,7 +6,7 @@
           <td>
             <mat-form-field class="example-full-width" appearance="fill">
               <mat-label>E-mail</mat-label>
-              <input matInput formControlName="email" />
+              <input matInput formControlName="email" email />
             </mat-form-field>
           </td>
         </tr>
@@ -118,7 +118,7 @@
           <td>
             <mat-form-field class="example-full-width" appearance="fill">
               <mat-label>JMBG</mat-label>
-              <input matInput formControlName="jmbg" />
+              <input matInput formControlName="jmbg" pattern="[0-9]{13}" />
             </mat-form-field>
           </td>
         </tr>
@@ -156,7 +156,12 @@
         </tr>
       </table>
     </div>
-    <button (click)="registerUser()" mat-raised-button color="primary">
+    <button
+      [disabled]="registrationForm.invalid"
+      (click)="registerUser()"
+      mat-raised-button
+      color="primary"
+    >
       Register
     </button>
     <p></p>

@@ -5,10 +5,8 @@ import groupJASS.ISA_2022.DTO.BloodDonor.BloodDonorLazyDTO;
 import groupJASS.ISA_2022.DTO.BloodDonor.RegisterBloodDonorDTO;
 import groupJASS.ISA_2022.DTO.BloodDonor.UpdateBloodDonorInfoDto;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
-import groupJASS.ISA_2022.Model.Account;
 import groupJASS.ISA_2022.Model.Address;
 import groupJASS.ISA_2022.Model.BloodDonor;
-import groupJASS.ISA_2022.Service.Interfaces.IAccountService;
 import groupJASS.ISA_2022.Service.Interfaces.IAddressService;
 import groupJASS.ISA_2022.Service.Interfaces.IBloodDonorService;
 import groupJASS.ISA_2022.Utilities.MappingUtilities;
@@ -30,16 +28,16 @@ public class BloodDonorController {
 
     private final IBloodDonorService _bloodDonorService;
     private final IAddressService _addressService;
-    private final IAccountService _accountService;
+
     private final ModelMapper _mapper;
 
     @Autowired
     public BloodDonorController(IBloodDonorService bloodDonorService, ModelMapper modelMapper,
-                                IAddressService addressService, IAccountService bloodUserService) {
+                                IAddressService addressService) {
         this._bloodDonorService = bloodDonorService;
         this._mapper = modelMapper;
         this._addressService = addressService;
-        this._accountService = bloodUserService;
+
     }
 
     @GetMapping
@@ -87,13 +85,8 @@ public class BloodDonorController {
             throws ConstraintViolationException {
 
         try {
+            _bloodDonorService.registerNewBloodDonor(dto);
 
-            Address address = _addressService
-                    .saveAddresFromBloodDonorRegistration(_mapper.map(dto.getAddressBloodDonorDTO(), Address.class));
-            BloodDonor bloodDonor = _bloodDonorService
-                    .RegisterUser(_mapper.map(dto.getNonRegisteredBloodDonorInfoDTO(), BloodDonor.class), address);
-            _accountService.registerRegisteredUser(_mapper.map(dto.getAccountDTO(), Account.class),
-                    bloodDonor);
 
             return new ResponseEntity<>(dto, HttpStatus.CREATED);
 
