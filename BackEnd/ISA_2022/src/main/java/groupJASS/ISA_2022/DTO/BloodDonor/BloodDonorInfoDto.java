@@ -1,5 +1,6 @@
 package groupJASS.ISA_2022.DTO.BloodDonor;
 
+import groupJASS.ISA_2022.DTO.Address.AddressBloodDonorDTO;
 import groupJASS.ISA_2022.Model.Address;
 import groupJASS.ISA_2022.Model.BloodDonor;
 import groupJASS.ISA_2022.Model.Gender;
@@ -15,6 +16,7 @@ import java.util.UUID;
 @Setter
 public class BloodDonorInfoDto {
     private UUID id;
+    private String email;
     private String name;
     private String surname;
 
@@ -22,7 +24,7 @@ public class BloodDonorInfoDto {
     private String institution;
     private String jmbg;
     private Gender gender;
-    private Address address;
+    private AddressBloodDonorDTO address;
 
 
     public BloodDonorInfoDto(BloodDonor bloodDonor) {
@@ -34,6 +36,7 @@ public class BloodDonorInfoDto {
         this.institution = bloodDonor.getInstitution();
         this.jmbg = bloodDonor.getJmbg();
         this.gender = bloodDonor.getGender();
-        this.address = Hibernate.unproxy(bloodDonor.getAddress(), Address.class);
+        //TODO proveri je l puca
+        //this.address = Hibernate.unproxy(bloodDonor.getAddress(), Address.class);
     }
 }

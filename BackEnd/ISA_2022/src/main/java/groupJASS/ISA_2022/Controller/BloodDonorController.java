@@ -96,7 +96,14 @@ public class BloodDonorController {
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
+    }
 
+    @GetMapping("search/{name}/{surname}")
+    public ResponseEntity<List<BloodDonorInfoDto>> searchByNameAndSurname(@PathVariable String name, @PathVariable String surname)
+    {
+        List<BloodDonorInfoDto> bloodDonors = (List<BloodDonorInfoDto>) _bloodDonorService.findBloodDonorByNameAAndSurname(name, surname);
+        var res = MappingUtilities.mapList(bloodDonors, BloodDonorInfoDto.class, _mapper);
+        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
 }

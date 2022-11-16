@@ -22,7 +22,7 @@ const material = [
   ReactiveFormsModule,
   MatCheckboxModule,
   MatChipsModule,
-  MatListModule,
+  MatListModule
 ];
 
 @NgModule({

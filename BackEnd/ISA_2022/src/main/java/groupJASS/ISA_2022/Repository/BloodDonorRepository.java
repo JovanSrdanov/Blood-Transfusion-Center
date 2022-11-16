@@ -12,4 +12,5 @@ public interface BloodDonorRepository extends JpaRepository<BloodDonor, UUID> {
 
     @Query("select bl from BloodDonor bl left join fetch bl.address a  left join fetch bl.questionnaire q")
     List<BloodDonor> findAllWithAddressAndQuestionnaire();
+    Iterable<BloodDonor> findBloodDonorByNameAndSurname(String name, String surname);
 }
