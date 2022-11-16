@@ -16,6 +16,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { QuestionnaireModule } from './features/questionnaire/questionnaire.module';
+import { ChangePasswordComponent } from './features/staff-profile/change-password/change-password.component';
 
 @NgModule({
   declarations: [AppComponent, AssignBloodCenterComponent],
@@ -28,12 +29,11 @@ import { QuestionnaireModule } from './features/questionnaire/questionnaire.modu
     StaffRegistrationModule,
     FormsModule,
     RegisterBloodDonorModule,
-    StaffProfileModule,
     BloodCenterRegistrationModule,
     HttpClientModule,
     NavbarModule,
     MatSelectModule,
-    QuestionnaireModule
+    QuestionnaireModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,6 +1,10 @@
 package groupJASS.ISA_2022.Service.Implementations;
 
+import groupJASS.ISA_2022.DTO.Account.AccountDTO;
+import groupJASS.ISA_2022.DTO.Account.PasswordDTO;
+import groupJASS.ISA_2022.DTO.BloodCenter.BloodCenterProfileDto;
 import groupJASS.ISA_2022.DTO.Staff.StaffBasicInfoDTO;
+import groupJASS.ISA_2022.DTO.Staff.StaffProfileDTO;
 import groupJASS.ISA_2022.DTO.Staff.StaffRegistrationDTO;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
 import groupJASS.ISA_2022.Model.*;
@@ -46,6 +50,60 @@ public class StaffService implements IStaffService {
         return _staffRepository.findAll();
     }
 
+    public List<StaffProfileDTO> getAllStaff() {
+        List<Staff> staff = _staffRepository.findAll();
+        return getStaffProfileInfo(staff);
+    }
+
+    @Override
+    public void changePassword(UUID id, PasswordDTO dto) {
+        Account account = _accountRepository.findAccountByPersonId(id);
+        if (account == null) {
+            throw new NotFoundException("Account with that id not found");
+        }
+
+        if (!dto.getNewPassword().equals(dto.getConfirmPassword())) {
+            throw new IllegalArgumentException("New password and confirm password do not match");
+        }
+
+        account.setPassword(dto.getNewPassword());
+        _accountRepository.save(account);
+    }
+
+    @Override
+    public List<StaffBasicInfoDTO> getUnemployedStaff() {
+        List<Staff> staff = (List<Staff>) _staffRepository.getUnemployedStaff();
+        //Getting emails from account
+        return getStaffBasicInfo(staff);
+    }
+
+    private List<StaffProfileDTO> getStaffProfileInfo(List<Staff> staff) {
+        var dtos = MappingUtilities.mapList(staff, StaffProfileDTO.class, _mapper);
+
+        dtos.stream().map(dto ->
+        {
+            Account account = _accountRepository.findAccountByPersonId(dto.getId());
+            dto.setEmail(account.getEmail());
+            return dto;
+        }).collect(Collectors.toList());
+
+        return dtos;
+    }
+
+    private List<StaffBasicInfoDTO> getStaffBasicInfo(List<Staff> staff) {
+
+        var dtos = MappingUtilities.mapList(staff, StaffBasicInfoDTO.class, _mapper);
+
+        dtos.stream().map(dto ->
+        {
+            Account account = _accountRepository.findAccountByPersonId(dto.getId());
+            dto.setEmail(account.getEmail());
+            return dto;
+        }).collect(Collectors.toList());
+
+        return dtos;
+    }
+
     @Override
     public Staff findById(UUID id) throws NotFoundException {
         if (_staffRepository.findById(id).isPresent()) {
@@ -56,7 +114,10 @@ public class StaffService implements IStaffService {
 
     @Override
     public Staff save(Staff entity) {
-        throw new  NotImplementedException();
+        if (entity.getId() == null) {
+            entity.setId(UUID.randomUUID());
+        }
+        return _staffRepository.save(entity);
     }
 
     @Override
@@ -82,22 +143,6 @@ public class StaffService implements IStaffService {
         Staff b = bloodAdmin.get();
         b.setBloodCenter(bloodCenter.get());
         _staffRepository.save(b);
-    }
-
-    @Override
-    public List<StaffBasicInfoDTO> getUnemployedStaff() {
-        List<Staff> staff = (List<Staff>) _staffRepository.getUnemployedStaff();
-        //Getting emails from account
-        var dtos = MappingUtilities.mapList(staff, StaffBasicInfoDTO.class, _mapper);
-        dtos
-            .stream()
-            .map(dto -> {
-                Account account = _accountRepository.findAccountByPersonId(dto.getId());
-                dto.setEmail(account.getEmail());
-                return dto;
-            })
-            .collect(Collectors.toList());
-        return dtos;
     }
 
     @Override
