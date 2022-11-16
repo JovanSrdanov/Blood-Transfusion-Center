@@ -29,8 +29,6 @@ public class BloodDonor extends Person {
     private String jmbg;
     @Column(nullable = false)
     private Gender gender;
-
-
     @Column(nullable = false)
     private int points;
     @OneToOne(fetch = FetchType.LAZY)

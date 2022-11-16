@@ -1,13 +1,20 @@
 package groupJASS.ISA_2022.Service.Implementations;
 
+import groupJASS.ISA_2022.DTO.BloodDonor.RegisterBloodDonorDTO;
+import groupJASS.ISA_2022.Model.Account;
 import groupJASS.ISA_2022.Model.Address;
 import groupJASS.ISA_2022.Model.BloodDonor;
 import groupJASS.ISA_2022.Model.Questionnaire;
 import groupJASS.ISA_2022.Repository.BloodDonorRepository;
+import groupJASS.ISA_2022.Service.Interfaces.IAccountService;
+import groupJASS.ISA_2022.Service.Interfaces.IAddressService;
 import groupJASS.ISA_2022.Service.Interfaces.IBloodDonorService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
 
 import java.util.List;
@@ -18,10 +25,16 @@ import java.util.UUID;
 public class BloodDonorService implements IBloodDonorService {
 
     private final BloodDonorRepository _bloodDonorRepository;
+    private final IAddressService _addressService;
+    private final IAccountService _accountService;
+    private final ModelMapper _mapper;
 
     @Autowired
-    public BloodDonorService(BloodDonorRepository bloodDonorRepository) {
+    public BloodDonorService(BloodDonorRepository bloodDonorRepository, IAddressService addressService, IAccountService accountService, ModelMapper mapper) {
         _bloodDonorRepository = bloodDonorRepository;
+        _addressService = addressService;
+        _accountService = accountService;
+        _mapper = mapper;
     }
 
     @Override
@@ -91,5 +104,18 @@ public class BloodDonorService implements IBloodDonorService {
     @Override
     public List<BloodDonor> findAllWithAddressAndQuestionnaire() {
         return _bloodDonorRepository.findAllWithAddressAndQuestionnaire();
+    }
+
+    @Override
+    @Transactional(rollbackFor = DataIntegrityViolationException.class)
+    public void registerNewBloodDonor(RegisterBloodDonorDTO dto) {
+
+        Address address = _addressService
+                .saveAddresFromBloodDonorRegistration(_mapper.map(dto.getAddressBloodDonorDTO(), Address.class));
+        BloodDonor bloodDonor =
+                RegisterUser(_mapper.map(dto.getNonRegisteredBloodDonorInfoDTO(), BloodDonor.class), address);
+        _accountService.registerRegisteredUser(_mapper.map(dto.getAccountDTO(), Account.class),
+                bloodDonor);
+
     }
 }
