@@ -13,13 +13,15 @@ import { MatSelectModule } from '@angular/material/select';
 import { StaffRegistrationModule } from './features/staff-registration/staff-registration.module';
 import { AssignBloodCenterComponent } from './features/assign-blood-center/assign-blood-center.component';
 import { BrowserModule } from '@angular/platform-browser';
-import { QuestionnaireComponent } from './features/questionnaire/questionnaire/questionnaire.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+
 import { QuestionnaireModule } from './features/questionnaire/questionnaire.module';
 
 @NgModule({
-  declarations: [AppComponent, AssignBloodCenterComponent, QuestionnaireComponent],
+  declarations: [AppComponent, AssignBloodCenterComponent],
   imports: [
-  BrowserModule,
+    MatCheckboxModule,
+    BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
@@ -36,4 +38,4 @@ import { QuestionnaireModule } from './features/questionnaire/questionnaire.modu
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

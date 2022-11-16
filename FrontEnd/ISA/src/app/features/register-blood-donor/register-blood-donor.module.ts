@@ -19,7 +19,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     RegisterBloodDonorComponent
   ],
   imports: [
-  CommonModule,
+    CommonModule,
     MaterialModule,
     MatFormFieldModule,
     MatInputModule,
@@ -28,13 +28,6 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatIconModule,
     ReactiveFormsModule
   ],
-  exports: [
-    CommonModule,
-    MaterialModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSliderModule
 
-  ],
 })
 export class RegisterBloodDonorModule { }

@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BloodDonorService } from 'src/app/http-services/blood-donor.service';
 import { RegisterNonRegisteredUserDTO } from '../Model/RegisterNonRegisteredUserDTO';
-import {accountDTO} from "../Model/accountDTO";
+
 interface Gender {
   value: number;
   viewValue: string;
@@ -84,10 +84,10 @@ export class RegisterBloodDonorComponent implements OnInit {
     };
 
     this.registerUserService.registerUser(registerNonRegisteredUserDTO).subscribe(res => {
-        console.log(res);
-        this.router.navigate(['']);
+      console.log(res);
+      this.router.navigate(['']);
 
-      },
+    },
       err => {
         if (err.status == 409) {
           this.errorMessage = err.error;
@@ -106,4 +106,4 @@ export class RegisterBloodDonorComponent implements OnInit {
     )
   }
 
-  }
+}

@@ -36,7 +36,7 @@ public class BloodDonorService implements IBloodDonorService {
             return _bloodDonorRepository.findById(id).get();
         }
 
-        throw new NotFoundException("Registered user not found");
+        throw new NotFoundException("Blood donornot found");
     }
 
     @Override
@@ -48,7 +48,7 @@ public class BloodDonorService implements IBloodDonorService {
         } else {
             BloodDonor oldUser = findById(entity.getId());
             if (oldUser == null) {
-                throw new NotFoundException("Registered user not found");
+                throw new NotFoundException("Blood donor not found");
             }
             oldUser.update(entity);
             user = _bloodDonorRepository.save(oldUser);
@@ -68,7 +68,7 @@ public class BloodDonorService implements IBloodDonorService {
 
         if (_bloodDonorRepository.existsBloodUserByJmbg(map.getJmbg())) {
 
-            throw new IllegalArgumentException("RegisterUser with this email already exists");
+            throw new IllegalArgumentException("Blood donor with this jmbg already exists");
         }
         map.setAddress(address);
 
@@ -85,7 +85,7 @@ public class BloodDonorService implements IBloodDonorService {
             return BloodDonor.getQuestionnaire();
         }
 
-        throw new NotFoundException("Blood donor does not have Questionnaire");
+        throw new NotFoundException("Blood donor does not have a questionnaire");
     }
 
     @Override

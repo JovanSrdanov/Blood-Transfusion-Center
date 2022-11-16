@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @AllArgsConstructor
@@ -24,6 +25,7 @@ public class BloodDonor extends Person {
     @Column(nullable = false)
     private String occupation;
     @Column(unique = true, nullable = false)
+    @Pattern(regexp = "^[0-9]{13}", message = "length must be 13 and it can only contain numbers")
     private String jmbg;
     @Column(nullable = false)
     private Gender gender;
