@@ -46,7 +46,14 @@ public class BloodCenterService implements IBloodCenterService {
     @Override
     public BloodCenter save(BloodCenter entity) throws BadRequestException {
         if (entity.getId() == null) {
-            entity.getAddress().setId(UUID.randomUUID());
+            Address address = entity.getAddress();
+            //Don't look at this
+            if(_addressRepository.existsAddressByStreetIgnoreCaseAndNumberIgnoreCaseAndCityIgnoreCaseAndCountryIgnoreCase(
+                    address.getStreet(), address.getNumber(), address.getCity(), address.getCountry()))
+            {
+                throw new DataIntegrityViolationException("Exact same address already exists");
+            }
+            address.setId(UUID.randomUUID());
             entity.setId(UUID.randomUUID());
         }
 
@@ -55,13 +62,6 @@ public class BloodCenterService implements IBloodCenterService {
             throw new BadRequestException("Invalid working hours");
         }
 
-        Address address = entity.getAddress();
-        //Don't look at this
-        if(_addressRepository.existsAddressByStreetIgnoreCaseAndNumberIgnoreCaseAndCityIgnoreCaseAndCountryIgnoreCase(
-                address.getStreet(), address.getNumber(), address.getCity(), address.getCountry()))
-        {
-            throw new DataIntegrityViolationException("Exact same address already exists");
-        }
 
         return _bloodCenterRepository.save(entity);
     }
