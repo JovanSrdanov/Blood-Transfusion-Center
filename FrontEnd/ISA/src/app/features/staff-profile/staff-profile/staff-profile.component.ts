@@ -22,6 +22,8 @@ export class StaffProfileComponent implements OnInit {
 
   staffInfo: any;
   staffId: any;
+  staffEmail: any;
+  staffAddress: any;
   staffInfoCopy: any;
 
   centerInfo: any;
@@ -58,6 +60,8 @@ export class StaffProfileComponent implements OnInit {
       console.log(res);
       this.staffInfo = res;
       this.staffId = this.staffInfo.id;
+      this.staffEmail = this.staffInfo.email;
+      this.staffAddress = this.staffInfo.address;
       this.staffInfoCopy = structuredClone(this.staffInfo);
       this.createFormStaff();
 
@@ -152,9 +156,14 @@ export class StaffProfileComponent implements OnInit {
     this.isPreventChangeStaff = !this.isPreventChangeStaff;
     this.staffForm.enable();
     console.log(this.staffInfo);
+
+    this.staffForm.get('email')?.disable();
   }
   confirmChangeStaff(event: Event) {
     event.preventDefault();
+    this.staffInfo.id = this.staffId;
+    this.staffInfo.email = this.staffEmail;
+    this.staffInfo.address = this.staffAddress;
 
     this.profileService
       .updateStaffInfo(this.staffId, this.staffInfo)

@@ -1,12 +1,15 @@
 package groupJASS.ISA_2022.Controller;
 
+import groupJASS.ISA_2022.DTO.BloodCenter.BloodCenterProfileDto;
 import groupJASS.ISA_2022.DTO.Staff.AssignBloodCenterDTO;
 import groupJASS.ISA_2022.DTO.Staff.StaffBasicInfoDTO;
 import groupJASS.ISA_2022.DTO.Staff.StaffProfileDTO;
 import groupJASS.ISA_2022.DTO.Staff.StaffRegistrationDTO;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
+import groupJASS.ISA_2022.Model.BloodCenter;
 import groupJASS.ISA_2022.Model.Staff;
 import groupJASS.ISA_2022.Service.Interfaces.IAccountService;
+import groupJASS.ISA_2022.Service.Interfaces.IAddressService;
 import groupJASS.ISA_2022.Service.Interfaces.IStaffService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +29,15 @@ public class StaffController {
     private final IStaffService _staffService;
     private final ModelMapper _mapper;
     private final IAccountService _accountService;
+    private final IAddressService _addressService;
 
     @Autowired
-    public StaffController(IStaffService staffService, ModelMapper mapper, IAccountService accountService) {
+    public StaffController(IStaffService staffService, ModelMapper mapper, IAccountService accountService,
+                           IAddressService addressService) {
         _staffService = staffService;
         _mapper = mapper;
         _accountService = accountService;
+        _addressService = addressService;
     }
 
     @GetMapping
@@ -52,31 +58,40 @@ public class StaffController {
     }
 
     @GetMapping(path = "/logged-in")
-    public ResponseEntity<Staff> getLoggedInAdmin() {
-        var res = (List<Staff>) _staffService.findAll();
-        if (res.isEmpty()) {
+    public ResponseEntity<?> getLoggedInStaff() {
+        var res = _staffService.getAllStaff();
+        var allStaff = (List<Staff>)_staffService.findAll();
+        if (res.isEmpty() || allStaff.isEmpty()) {
             return null;
         } else {
-            var admin = res.get(0);
-            var center = admin.getBloodCenter();
-            admin.setBloodCenter(center);
-            return new ResponseEntity<>(res.get(0), HttpStatus.OK);
+            var staffDto = res.get(0);
+            var staff = allStaff.get(0);
+            var center = staff.getBloodCenter();
+
+            if (center != null) {
+                var centerDto = _mapper.map(center, BloodCenterProfileDto.class);
+                staffDto.setBloodCenter(centerDto);
+            }
+
+            return new ResponseEntity<>(staffDto, HttpStatus.OK);
         }
     }
 
     @PutMapping(path = "updateBloodAdmin/{id}")
     ResponseEntity<?> updateStaff(@PathVariable("id") UUID adminId, @Valid @RequestBody StaffProfileDTO dto) {
         try {
-            //UUID id = UUID.fromString(adminId);
-            Staff oldAdmin = _staffService.findById(adminId);
-            Staff newAdmin = _mapper.map(dto, Staff.class);
+            //Staff oldAdmin = _staffService.findById(adminId);
+            Staff staff = _mapper.map(dto, Staff.class);
+            var address = staff.getAddress();
+            _addressService.save(address);
 
-            newAdmin.setId(adminId);
-            var tempCenter = oldAdmin.getBloodCenter();
-            newAdmin.setBloodCenter(tempCenter);
+            //newAdmin.setId(adminId);
+            //var tempCenter = oldAdmin.getBloodCenter();
+            //newAdmin.setBloodCenter(tempCenter);
 
-            return new ResponseEntity<>(_staffService.save(newAdmin), HttpStatus.OK);
-        } catch (NotFoundException e) {
+            return new ResponseEntity<>(_staffService.save(staff), HttpStatus.OK);
+        }
+        catch (NotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
