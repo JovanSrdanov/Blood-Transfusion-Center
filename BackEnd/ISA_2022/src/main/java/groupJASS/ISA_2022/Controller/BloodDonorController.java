@@ -1,6 +1,7 @@
 package groupJASS.ISA_2022.Controller;
 
 import groupJASS.ISA_2022.DTO.BloodDonor.BloodDonorInfoDto;
+import groupJASS.ISA_2022.DTO.BloodDonor.BloodDonorLazyDTO;
 import groupJASS.ISA_2022.DTO.BloodDonor.RegisterBloodDonorDTO;
 import groupJASS.ISA_2022.DTO.BloodDonor.UpdateBloodDonorInfoDto;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
@@ -10,6 +11,7 @@ import groupJASS.ISA_2022.Model.BloodDonor;
 import groupJASS.ISA_2022.Service.Interfaces.IAccountService;
 import groupJASS.ISA_2022.Service.Interfaces.IAddressService;
 import groupJASS.ISA_2022.Service.Interfaces.IBloodDonorService;
+import groupJASS.ISA_2022.Utilities.MappingUtilities;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,8 +43,13 @@ public class BloodDonorController {
     }
 
     @GetMapping
-    public ResponseEntity<List<BloodDonor>> findAll() {
-        return new ResponseEntity<>((List<BloodDonor>) this._bloodDonorService.findAll(), HttpStatus.OK);
+    public ResponseEntity<List<BloodDonor>> findAllWithAddressAndQuestionnaire() {
+        return new ResponseEntity<>(this._bloodDonorService.findAllWithAddressAndQuestionnaire(), HttpStatus.OK);
+    }
+
+    @GetMapping("lazy")
+    public ResponseEntity<List<BloodDonorLazyDTO>> findAllLazy() {
+        return new ResponseEntity<>(MappingUtilities.mapList((List<BloodDonor>) this._bloodDonorService.findAll(), BloodDonorLazyDTO.class, _mapper), HttpStatus.OK);
     }
 
     @GetMapping("get-by-id/{id}")
