@@ -127,7 +127,7 @@ public class BloodDonorService implements IBloodDonorService {
 
     @Override
     public List<BloodDonorInfoDto> findBloodDonorByNameAAndSurname(String name, String surname) {
-        List<BloodDonor> bloodDonors = (List<BloodDonor>) _bloodDonorRepository.findBloodDonorByNameAndSurname(name, surname);
+        List<BloodDonor> bloodDonors = (List<BloodDonor>) _bloodDonorRepository.searchByNameAndSurnameIgnoreCase(name, surname);
         List<BloodDonorInfoDto> dtos = MappingUtilities.mapList(bloodDonors, BloodDonorInfoDto.class, _mapper);
         List<BloodDonorInfoDto> res = dtos
                 .stream()

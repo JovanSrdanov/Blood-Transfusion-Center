@@ -13,4 +13,8 @@ public interface BloodDonorRepository extends JpaRepository<BloodDonor, UUID> {
     @Query("select bl from BloodDonor bl left join fetch bl.address a  left join fetch bl.questionnaire q")
     List<BloodDonor> findAllWithAddressAndQuestionnaire();
     Iterable<BloodDonor> findBloodDonorByNameAndSurname(String name, String surname);
+    @Query("select  bd from BloodDonor bd" +
+            " where upper(bd.name) like CONCAT(upper(coalesce(:name,'%') ) ,'%') and" +
+            "  upper(bd.surname) like CONCAT(upper(coalesce(:surname, '%') ) ,'%') ")
+    Iterable<BloodDonor> searchByNameAndSurnameIgnoreCase(String name, String surname);
 }
