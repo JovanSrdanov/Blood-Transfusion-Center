@@ -16,6 +16,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { QuestionnaireModule } from './features/questionnaire/questionnaire.module';
+import { BloodCenterViewModule } from './features/blood-center-view/blood-center-view.module';
 import { ChangePasswordComponent } from './features/staff-profile/change-password/change-password.component';
 
 @NgModule({
@@ -34,6 +35,7 @@ import { ChangePasswordComponent } from './features/staff-profile/change-passwor
     NavbarModule,
     MatSelectModule,
     QuestionnaireModule,
+    BloodCenterViewModule
   ],
   providers: [],
   bootstrap: [AppComponent],

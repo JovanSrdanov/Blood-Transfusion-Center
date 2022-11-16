@@ -1,6 +1,7 @@
 package groupJASS.ISA_2022.Service.Implementations;
 
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
+import groupJASS.ISA_2022.Exceptions.SortNotFoundException;
 import groupJASS.ISA_2022.Model.Address;
 import groupJASS.ISA_2022.Model.BloodCenter;
 import groupJASS.ISA_2022.Repository.AddressRepository;
@@ -8,10 +9,10 @@ import groupJASS.ISA_2022.Repository.BloodCenterRepository;
 import groupJASS.ISA_2022.Service.Interfaces.IBloodCenterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
@@ -71,8 +72,23 @@ public class BloodCenterService implements IBloodCenterService {
         _bloodCenterRepository.deleteById(id);
     }
 
-    public Page<BloodCenter> findProductsWithSorting(int offset, int pageSize, String field, String s){
-        return  _bloodCenterRepository.searchBy(s, PageRequest.of(offset, pageSize)
-                .withSort(Sort.by(Sort.Direction.ASC,field)));
+    public Page<BloodCenter> findProductsWithSorting(int offset, int pageSize, String field, String sort, String s)
+            throws SortNotFoundException {
+        Page<BloodCenter> page;
+        if(sort.isBlank()) {
+            page = _bloodCenterRepository.searchBy(s, PageRequest.of(offset, pageSize));
+        }
+        else if(sort.equals("asc")) {
+            page = _bloodCenterRepository.searchBy(s, PageRequest.of(offset, pageSize)
+                    .withSort(Sort.by(Sort.Direction.ASC,field)));
+        }
+        else if(sort.equals("desc")) {
+            page = _bloodCenterRepository.searchBy(s, PageRequest.of(offset, pageSize)
+                    .withSort(Sort.by(Sort.Direction.DESC,field)));
+        }
+        else {
+            throw new SortNotFoundException("This sort type doesn't exist");
+        }
+        return page;
     }
 }

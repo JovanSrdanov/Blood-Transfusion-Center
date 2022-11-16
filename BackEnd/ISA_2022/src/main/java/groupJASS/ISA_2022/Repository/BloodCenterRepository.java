@@ -12,6 +12,6 @@ import java.util.UUID;
 public interface BloodCenterRepository extends JpaRepository<BloodCenter, UUID> {
 
     @Query("select bc from BloodCenter bc inner join Address a on bc.address.id = a.id " +
-            "where bc.name like CONCAT('%',:s,'%') or a.city like CONCAT('%',:s,'%')")
+            "where lower(bc.name) like CONCAT('%',lower(:s),'%') or lower(a.city) like CONCAT('%',lower(:s),'%')")
     Page<BloodCenter> searchBy(@Param("s") String s, Pageable pageable);
 }

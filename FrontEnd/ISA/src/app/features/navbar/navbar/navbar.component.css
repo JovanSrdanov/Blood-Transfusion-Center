@@ -27,3 +27,7 @@ span {
 .name-and-logo img {
   height: 30px;
 }
+
+.name-and-logo:hover {
+  cursor: pointer;
+}
