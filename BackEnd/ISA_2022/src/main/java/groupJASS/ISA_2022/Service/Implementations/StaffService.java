@@ -1,5 +1,6 @@
 package groupJASS.ISA_2022.Service.Implementations;
 
+import groupJASS.ISA_2022.DTO.Staff.StaffBasicInfoDTO;
 import groupJASS.ISA_2022.DTO.Staff.StaffRegistrationDTO;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
 import groupJASS.ISA_2022.Model.*;
@@ -7,6 +8,8 @@ import groupJASS.ISA_2022.Repository.AccountRepository;
 import groupJASS.ISA_2022.Repository.BloodCenterRepository;
 import groupJASS.ISA_2022.Repository.StaffRepository;
 import groupJASS.ISA_2022.Service.Interfaces.IStaffService;
+import groupJASS.ISA_2022.Utilities.MappingUtilities;
+import org.apache.commons.lang3.NotImplementedException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -15,8 +18,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Primary
@@ -51,10 +56,7 @@ public class StaffService implements IStaffService {
 
     @Override
     public Staff save(Staff entity) {
-        if (entity.getId() == null) {
-            entity.setId(UUID.randomUUID());
-        }
-        return _staffRepository.save(entity);
+        throw new  NotImplementedException();
     }
 
     @Override
@@ -83,8 +85,19 @@ public class StaffService implements IStaffService {
     }
 
     @Override
-    public Iterable<Staff> getUnemployedBloodAdmins() {
-        return _staffRepository.getUnemployedBloodAdmins();
+    public List<StaffBasicInfoDTO> getUnemployedStaff() {
+        List<Staff> staff = (List<Staff>) _staffRepository.getUnemployedStaff();
+        //Getting emails from account
+        var dtos = MappingUtilities.mapList(staff, StaffBasicInfoDTO.class, _mapper);
+        dtos
+            .stream()
+            .map(dto -> {
+                Account account = _accountRepository.findAccountByPersonId(dto.getId());
+                dto.setEmail(account.getEmail());
+                return dto;
+            })
+            .collect(Collectors.toList());
+        return dtos;
     }
 
     @Override
@@ -105,9 +118,5 @@ public class StaffService implements IStaffService {
         account.setPersonId(stafId);
         account.setId(UUID.randomUUID());
         _accountRepository.save(account);
-    }
-
-    public boolean checkEmailAvailability(String email) {
-        return _staffRepository.existsBloodAdminByEmail(email);
     }
 }

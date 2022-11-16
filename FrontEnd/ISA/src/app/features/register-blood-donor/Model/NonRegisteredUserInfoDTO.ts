@@ -1,4 +1,4 @@
-export interface NonRegisteredUserInfoDTO {
+export interface nonRegisteredBloodDonorInfoDTO {
   name: string,
   surname: string,
   phoneNumber: string,

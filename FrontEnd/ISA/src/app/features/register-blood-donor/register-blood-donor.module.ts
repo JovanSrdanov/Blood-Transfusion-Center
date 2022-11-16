@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RegisterUserComponent } from './register-user/register-user.component';
+import { RegisterBloodDonorComponent } from './register-blood-donor/register-blood-donor.component';
 import { MatInputModule } from '@angular/material/input';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -16,7 +16,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
 
   declarations: [
-    RegisterUserComponent
+    RegisterBloodDonorComponent
   ],
   imports: [
   CommonModule,
@@ -37,4 +37,4 @@ import { ReactiveFormsModule } from '@angular/forms';
 
   ],
 })
-export class RegisterUserModule { }
+export class RegisterBloodDonorModule { }

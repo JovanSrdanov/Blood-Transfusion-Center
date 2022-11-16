@@ -72,4 +72,13 @@ public class AccountService implements IAccountService {
         registerNewUser(map);
 
     }
+    @Override
+    public boolean checkEmailAvailability(String email) {
+        return _accountRepository.existsAccountByEmail(email);
+    }
+    @Override
+    public Account findAccountByPersonId(UUID personId)
+    {
+        return _accountRepository.findAccountByPersonId(personId);
+    }
 }

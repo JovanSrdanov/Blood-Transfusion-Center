@@ -6,10 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
 @AllArgsConstructor
@@ -34,6 +31,8 @@ public class BloodDonor extends Person {
 
     @Column(nullable = false)
     private int points;
+    @OneToOne(fetch = FetchType.EAGER)
+    private Questionnaire questionnaire;
 
     public void update(BloodDonor updated) {
         this.institution = updated.getInstitution();
