@@ -11,13 +11,13 @@ export class ProfileService {
   constructor(private http: HttpClient) {}
 
   getLoggedInStaffInfo() {
-    return this.http.get(environment.backendPath + '/blood-admin/logged-in');
+    return this.http.get(environment.backendPath + '/staff/logged-in');
   }
 
   updateStaffInfo(staffId: any, staffInfo: any) {
     console.log(staffInfo);
     return this.http.put(
-      environment.backendPath + '/blood-admin/updateBloodAdmin/' + staffId,
+      environment.backendPath + '/staff/updateBloodAdmin/' + staffId,
       staffInfo
     );
   }

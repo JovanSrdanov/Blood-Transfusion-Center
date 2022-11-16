@@ -18,6 +18,7 @@ export class StaffProfileComponent implements OnInit {
 
   isPreventChangeStaff: boolean = true;
   isPreventChangeCenter: boolean = true;
+  isPreventChangePassword: boolean = true;
 
   staffInfo: any;
   staffId: any;
@@ -31,7 +32,7 @@ export class StaffProfileComponent implements OnInit {
     this.staffForm = this.fb.group({
       name: '',
       surname: '',
-
+      email: '',
       phoneNumber: '',
     });
     const addr = this.fb.group({
@@ -84,6 +85,10 @@ export class StaffProfileComponent implements OnInit {
       phoneNumber: [
         { value: this.staffInfo.phoneNumber, disabled: true },
         [Validators.required, Validators.pattern('^[0-9]{9}$')],
+      ],
+      email: [
+        { value: this.staffInfo.email, disabled: true },
+        [Validators.required, Validators.email],
       ],
     });
     this.staffForm.valueChanges.subscribe((currValue) => {
@@ -226,5 +231,9 @@ export class StaffProfileComponent implements OnInit {
 
     this.isPreventChangeCenter = !this.isPreventChangeCenter;
     this.centerForm.disable();
+  }
+
+  enableChangePassword(event: Event) {
+    this.isPreventChangePassword = !this.isPreventChangePassword;
   }
 }

@@ -17,7 +17,9 @@
             <mat-form-field>
               <input matInput placeholder="surname" formControlName="surname" />
             </mat-form-field>
-
+            <mat-form-field>
+              <input matInput placeholder="email" formControlName="email" />
+            </mat-form-field>
             <mat-form-field>
               <input
                 matInput
@@ -54,6 +56,17 @@
           </form>
 
           <!-- TEST  -->
+        </div>
+        <div>
+          <hr class="changePassword" />
+          <button
+            class="changePassword"
+            mat-raised-button
+            *ngIf="isPreventChangePassword"
+            (click)="enableChangePassword($event)"
+          >
+            Change password
+          </button>
         </div>
       </div>
     </mat-grid-tile>
