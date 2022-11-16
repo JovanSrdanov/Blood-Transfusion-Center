@@ -66,11 +66,10 @@ public class BloodCenterController {
             newCenter.setId(centerId);
             newCenter.getAddress().setId((oldCenter.getAddress().getId()));
             newCenter.setWorkingHours(oldCenter.getWorkingHours());
-            //newCenter.setStaff(null);
-            //newCenter.setAppointments(oldCenter.getAppointments());
-            //newCenter.setRating(10.0);
+
             return new ResponseEntity<>(_bloodCenterService.save(newCenter), HttpStatus.OK);
-        } catch (NotFoundException e) {
+        }
+        catch (NotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);

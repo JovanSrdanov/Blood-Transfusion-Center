@@ -13,6 +13,8 @@ span {
 
 .mat-raised-button {
   margin: 0px 10px;
+  background-color: rgb(74, 74, 74);
+  color: white;
 }
 
 .name-and-logo {

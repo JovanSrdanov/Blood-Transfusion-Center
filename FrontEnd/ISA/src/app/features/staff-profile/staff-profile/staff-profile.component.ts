@@ -18,9 +18,12 @@ export class StaffProfileComponent implements OnInit {
 
   isPreventChangeStaff: boolean = true;
   isPreventChangeCenter: boolean = true;
+  isPreventChangePassword: boolean = true;
 
   staffInfo: any;
   staffId: any;
+  staffEmail: any;
+  staffAddress: any;
   staffInfoCopy: any;
 
   centerInfo: any;
@@ -31,7 +34,7 @@ export class StaffProfileComponent implements OnInit {
     this.staffForm = this.fb.group({
       name: '',
       surname: '',
-
+      email: '',
       phoneNumber: '',
     });
     const addr = this.fb.group({
@@ -57,6 +60,8 @@ export class StaffProfileComponent implements OnInit {
       console.log(res);
       this.staffInfo = res;
       this.staffId = this.staffInfo.id;
+      this.staffEmail = this.staffInfo.email;
+      this.staffAddress = this.staffInfo.address;
       this.staffInfoCopy = structuredClone(this.staffInfo);
       this.createFormStaff();
 
@@ -84,6 +89,10 @@ export class StaffProfileComponent implements OnInit {
       phoneNumber: [
         { value: this.staffInfo.phoneNumber, disabled: true },
         [Validators.required, Validators.pattern('^[0-9]{9}$')],
+      ],
+      email: [
+        { value: this.staffInfo.email, disabled: true },
+        [Validators.required, Validators.email],
       ],
     });
     this.staffForm.valueChanges.subscribe((currValue) => {
@@ -143,13 +152,18 @@ export class StaffProfileComponent implements OnInit {
   //ADMIN
   enableChangeStaff(e: Event) {
     e.preventDefault();
-    console.log(this.staffInfo);
+    console.log(this.staffId);
     this.isPreventChangeStaff = !this.isPreventChangeStaff;
     this.staffForm.enable();
     console.log(this.staffInfo);
+
+    this.staffForm.get('email')?.disable();
   }
   confirmChangeStaff(event: Event) {
     event.preventDefault();
+    this.staffInfo.id = this.staffId;
+    this.staffInfo.email = this.staffEmail;
+    this.staffInfo.address = this.staffAddress;
 
     this.profileService
       .updateStaffInfo(this.staffId, this.staffInfo)
@@ -226,5 +240,9 @@ export class StaffProfileComponent implements OnInit {
 
     this.isPreventChangeCenter = !this.isPreventChangeCenter;
     this.centerForm.disable();
+  }
+
+  enableChangePassword(event: Event) {
+    this.isPreventChangePassword = !this.isPreventChangePassword;
   }
 }
