@@ -87,4 +87,9 @@ public class BloodDonorService implements IBloodDonorService {
 
         throw new NotFoundException("Blood donor does not have Questionnaire");
     }
+
+    @Override
+    public List<BloodDonor> findAllWithAddressAndQuestionnaire() {
+        return _bloodDonorRepository.findAllWithAddressAndQuestionnaire();
+    }
 }

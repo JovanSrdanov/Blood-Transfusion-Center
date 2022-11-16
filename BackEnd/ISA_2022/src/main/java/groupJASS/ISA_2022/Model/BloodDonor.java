@@ -17,7 +17,7 @@ public class BloodDonor extends Person {
 
     // TODO: ne radi lazy
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Address address;
     @Column(nullable = false)
     private String institution;
@@ -31,7 +31,7 @@ public class BloodDonor extends Person {
 
     @Column(nullable = false)
     private int points;
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     private Questionnaire questionnaire;
 
     public void update(BloodDonor updated) {

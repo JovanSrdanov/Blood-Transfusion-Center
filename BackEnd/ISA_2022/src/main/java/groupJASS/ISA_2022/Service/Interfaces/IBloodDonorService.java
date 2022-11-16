@@ -4,10 +4,13 @@ import groupJASS.ISA_2022.Model.Address;
 import groupJASS.ISA_2022.Model.BloodDonor;
 import groupJASS.ISA_2022.Model.Questionnaire;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface IBloodDonorService extends ICrudService<BloodDonor> {
     BloodDonor RegisterUser(BloodDonor map, Address address);
 
     Questionnaire getQuestionnaireFromBloodDonor(UUID bloodDonorId);
+
+    List<BloodDonor> findAllWithAddressAndQuestionnaire();
 }
