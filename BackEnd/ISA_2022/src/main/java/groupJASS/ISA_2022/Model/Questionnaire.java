@@ -29,14 +29,14 @@ public class Questionnaire {
     @NotNull
     private boolean onTherapy;
     @NotNull
-    private boolean onPMS;
+    private boolean onMC;
     @NotNull
     private boolean recentDentist;
     @NotNull
     private boolean pricingOrSurgicalInterventionsOrBloodTransfusion;
 
     public boolean canDonateBlood() {
-        return (!under50KG && !feelsBad && !skinChanges && !highOrLowPresure && !onTherapy && !onPMS && !recentDentist && !pricingOrSurgicalInterventionsOrBloodTransfusion);
+        return (!under50KG && !feelsBad && !skinChanges && !highOrLowPresure && !onTherapy && !onMC && !recentDentist && !pricingOrSurgicalInterventionsOrBloodTransfusion);
     }
 
 

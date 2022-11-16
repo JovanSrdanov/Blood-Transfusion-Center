@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BloodDonorService } from 'src/app/http-services/blood-donor.service';
 import { RegisterNonRegisteredUserDTO } from '../Model/RegisterNonRegisteredUserDTO';
-import {BloodDonor} from "../Model/BloodDonor";
+import {accountDTO} from "../Model/accountDTO";
 interface Gender {
   value: number;
   viewValue: string;
@@ -11,10 +11,10 @@ interface Gender {
 
 @Component({
   selector: 'app-register-user',
-  templateUrl: './register-user.component.html',
-  styleUrls: ['./register-user.component.css'],
+  templateUrl: './register-blood-donor.component.html',
+  styleUrls: ['./register-blood-donor.component.css'],
 })
-export class RegisterUserComponent implements OnInit {
+export class RegisterBloodDonorComponent implements OnInit {
   hide = true;
   genders: Gender[] = [
     { value: 0, viewValue: 'Male' },
@@ -61,17 +61,17 @@ export class RegisterUserComponent implements OnInit {
 
 
     let registerNonRegisteredUserDTO: RegisterNonRegisteredUserDTO = {
-      bloodUserDTO: {
+      accountDTO: {
         email: this.form.email.value ?? "",
         password: this.form.password.value ?? "",
       },
-      addressRegUserDTO: {
+      addressBloodDonorDTO: {
         number: this.form.number.value ?? "",
         city: this.form.city.value ?? "",
         street: this.form.street.value ?? "",
         country: this.form.country.value ?? "",
       },
-      nonRegisteredUserInfoDTO: {
+      nonRegisteredBloodDonorInfoDTO: {
         occupation: this.form.occupation.value ?? "",
         name: this.form.name.value ?? "",
         surname: this.form.surname.value ?? "",

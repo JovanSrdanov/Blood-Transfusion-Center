@@ -8,14 +8,16 @@ import { StaffProfileModule } from './features/staff-profile/staff-profile';
 import { BloodCenterRegistrationModule } from './features/blood-center-registration/blood-center-registration.module';
 import { HttpClientModule } from '@angular/common/http';
 import { NavbarModule } from './features/navbar/navbar.module';
-import { RegisterUserModule } from './features/register-user/register-user.module';
+import { RegisterBloodDonorModule } from './features/register-blood-donor/register-blood-donor.module';
 import { MatSelectModule } from '@angular/material/select';
 import { StaffRegistrationModule } from './features/staff-registration/staff-registration.module';
 import { AssignBloodCenterComponent } from './features/assign-blood-center/assign-blood-center.component';
 import { BrowserModule } from '@angular/platform-browser';
+import { QuestionnaireComponent } from './features/questionnaire/questionnaire/questionnaire.component';
+import { QuestionnaireModule } from './features/questionnaire/questionnaire.module';
 
 @NgModule({
-  declarations: [AppComponent, AssignBloodCenterComponent],
+  declarations: [AppComponent, AssignBloodCenterComponent, QuestionnaireComponent],
   imports: [
   BrowserModule,
     AppRoutingModule,
@@ -23,12 +25,13 @@ import { BrowserModule } from '@angular/platform-browser';
     MaterialModule,
     StaffRegistrationModule,
     FormsModule,
-    RegisterUserModule,
+    RegisterBloodDonorModule,
     StaffProfileModule,
     BloodCenterRegistrationModule,
     HttpClientModule,
     NavbarModule,
     MatSelectModule,
+    QuestionnaireModule
   ],
   providers: [],
   bootstrap: [AppComponent],

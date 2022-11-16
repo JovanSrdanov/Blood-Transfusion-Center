@@ -21,7 +21,7 @@ public class QuestionnaireDTO {
     @NotNull
     private boolean onTherapy;
     @NotNull
-    private boolean onPMS;
+    private boolean onMC;
     @NotNull
     private boolean recentDentist;
     @NotNull

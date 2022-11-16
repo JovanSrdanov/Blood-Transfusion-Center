@@ -1,0 +1,26 @@
+.example-section {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: 60px;
+}
+
+.example-margin {
+  margin: 0 10px;
+}
+.result {
+  margin: auto;
+  margin-top: 20px;
+  width: fit-content;
+  border: 2px solid gray;
+  border-radius: 20px;
+}
+
+.mat-card-content {
+  border: 2px solid gray;
+  border-radius: 20px;
+}
+
+.mat-card-content:hover {
+  box-shadow: 0 0 15px;
+}
