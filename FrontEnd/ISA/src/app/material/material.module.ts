@@ -10,6 +10,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
+import {MatTableModule} from '@angular/material/table'; 
 
 const material = [
   MatCardModule,
@@ -23,6 +24,7 @@ const material = [
   MatCheckboxModule,
   MatChipsModule,
   MatListModule,
+  MatTableModule
 ];
 
 @NgModule({

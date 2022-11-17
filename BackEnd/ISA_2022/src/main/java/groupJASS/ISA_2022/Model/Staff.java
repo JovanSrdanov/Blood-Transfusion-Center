@@ -21,6 +21,5 @@ public class Staff extends Person {
     private Address address;
 
     @ManyToOne
-    //@JsonBackReference
     private BloodCenter bloodCenter;
 }

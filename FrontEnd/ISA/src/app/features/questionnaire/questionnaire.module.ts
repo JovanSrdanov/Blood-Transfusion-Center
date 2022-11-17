@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { QuestionnaireComponent } from './questionnaire/questionnaire.component';
+import { MaterialModule } from 'src/app/material/material.module';
+import { MatCardModule } from '@angular/material/card';
 
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
-import { QuestionnaireComponent } from './questionnaire/questionnaire.component';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 

@@ -123,7 +123,7 @@ public class StaffController {
         } catch (DataIntegrityViolationException e) {
             return new ResponseEntity<>("Email already exists", HttpStatus.CONFLICT);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 

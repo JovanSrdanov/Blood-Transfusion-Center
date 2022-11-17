@@ -2,6 +2,7 @@ package groupJASS.ISA_2022.Controller;
 
 import groupJASS.ISA_2022.DTO.BloodDonor.BloodDonorInfoDto;
 import groupJASS.ISA_2022.DTO.BloodDonor.BloodDonorLazyDTO;
+import groupJASS.ISA_2022.DTO.BloodDonor.BloodDonorSearchByNameAndSurnameDto;
 import groupJASS.ISA_2022.DTO.BloodDonor.RegisterBloodDonorDTO;
 import groupJASS.ISA_2022.DTO.BloodDonor.UpdateBloodDonorInfoDto;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
@@ -96,7 +97,15 @@ public class BloodDonorController {
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
+    }
 
+    //It is not get because you cant send null parameter inside path variable, and I need that case
+    @PostMapping("search-name-surname")
+    public ResponseEntity<List<BloodDonorInfoDto>> searchByNameAndSurname(@RequestBody BloodDonorSearchByNameAndSurnameDto dto)
+    {
+        List<BloodDonorInfoDto> bloodDonors = (List<BloodDonorInfoDto>) _bloodDonorService.findBloodDonorByNameAAndSurname(dto.getName(), dto.getSurname());
+        var res = MappingUtilities.mapList(bloodDonors, BloodDonorInfoDto.class, _mapper);
+        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
 }

@@ -11,15 +11,15 @@ import { NavbarModule } from './features/navbar/navbar.module';
 import { RegisterBloodDonorModule } from './features/register-blood-donor/register-blood-donor.module';
 import { MatSelectModule } from '@angular/material/select';
 import { StaffRegistrationModule } from './features/staff-registration/staff-registration.module';
-import { AssignBloodCenterComponent } from './features/assign-blood-center/assign-blood-center.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { QuestionnaireModule } from './features/questionnaire/questionnaire.module';
-import { ChangePasswordComponent } from './features/staff-profile/change-password/change-password.component';
+import { AssignBloodCenterModule } from './features/assign-blood-center/assign-blood-center.module';
+import { BloodDonorListModule } from './features/blood-donor-list/blood-donor-list.module';
 
 @NgModule({
-  declarations: [AppComponent, AssignBloodCenterComponent],
+  declarations: [AppComponent],
   imports: [
     MatCheckboxModule,
     BrowserModule,
@@ -34,6 +34,8 @@ import { ChangePasswordComponent } from './features/staff-profile/change-passwor
     NavbarModule,
     MatSelectModule,
     QuestionnaireModule,
+    AssignBloodCenterModule,
+    BloodDonorListModule
   ],
   providers: [],
   bootstrap: [AppComponent],

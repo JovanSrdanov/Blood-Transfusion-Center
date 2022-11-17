@@ -96,7 +96,7 @@ export class StaffProfileComponent implements OnInit {
 
       phoneNumber: [
         { value: this.staffInfo.phoneNumber, disabled: true },
-        [Validators.required, Validators.pattern('^[0-9]{9}$')],
+        [Validators.required],
       ],
       email: [
         { value: this.staffInfo.email, disabled: true },

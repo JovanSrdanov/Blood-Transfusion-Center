@@ -2,13 +2,16 @@ package groupJASS.ISA_2022.Service.Implementations;
 
 import groupJASS.ISA_2022.DTO.BloodDonor.RegisterBloodDonorDTO;
 import groupJASS.ISA_2022.Model.Account;
+import groupJASS.ISA_2022.DTO.BloodDonor.BloodDonorInfoDto;
 import groupJASS.ISA_2022.Model.Address;
 import groupJASS.ISA_2022.Model.BloodDonor;
 import groupJASS.ISA_2022.Model.Questionnaire;
+import groupJASS.ISA_2022.Repository.AccountRepository;
 import groupJASS.ISA_2022.Repository.BloodDonorRepository;
 import groupJASS.ISA_2022.Service.Interfaces.IAccountService;
 import groupJASS.ISA_2022.Service.Interfaces.IAddressService;
 import groupJASS.ISA_2022.Service.Interfaces.IBloodDonorService;
+import groupJASS.ISA_2022.Utilities.MappingUtilities;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -19,6 +22,7 @@ import org.webjars.NotFoundException;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Primary
@@ -28,13 +32,15 @@ public class BloodDonorService implements IBloodDonorService {
     private final IAddressService _addressService;
     private final IAccountService _accountService;
     private final ModelMapper _mapper;
+    private final AccountRepository _accountRepository;
 
     @Autowired
-    public BloodDonorService(BloodDonorRepository bloodDonorRepository, IAddressService addressService, IAccountService accountService, ModelMapper mapper) {
+    public BloodDonorService(BloodDonorRepository bloodDonorRepository, IAddressService addressService, IAccountService accountService, ModelMapper mapper, AccountRepository accountRepository) {
         _bloodDonorRepository = bloodDonorRepository;
         _addressService = addressService;
         _accountService = accountService;
         _mapper = mapper;
+        _accountRepository = accountRepository;
     }
 
     @Override
@@ -117,5 +123,20 @@ public class BloodDonorService implements IBloodDonorService {
         _accountService.registerRegisteredUser(_mapper.map(dto.getAccountDTO(), Account.class),
                 bloodDonor);
 
+    }
+
+    @Override
+    public List<BloodDonorInfoDto> findBloodDonorByNameAAndSurname(String name, String surname) {
+        List<BloodDonor> bloodDonors = (List<BloodDonor>) _bloodDonorRepository.searchByNameAndSurnameIgnoreCase(name, surname);
+        List<BloodDonorInfoDto> dtos = MappingUtilities.mapList(bloodDonors, BloodDonorInfoDto.class, _mapper);
+        List<BloodDonorInfoDto> res = dtos
+                .stream()
+                .map(dto -> {
+                    var email = _accountRepository.findAccountByPersonId(dto.getId()).getEmail();
+                    dto.setEmail(email);
+                    return  dto;
+                })
+                .collect(Collectors.toList());
+        return res;
     }
 }

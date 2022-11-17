@@ -8,6 +8,7 @@ import { StaffRegistrationComponent } from './features/staff-registration/staff-
 import { AssignBloodCenterComponent } from './features/assign-blood-center/assign-blood-center.component';
 import { StaffProfileComponent } from './features/staff-profile/staff-profile/staff-profile.component';
 import { QuestionnaireComponent } from './features/questionnaire/questionnaire/questionnaire.component';
+import { BloodDonorListComponent } from './features/blood-donor-list/blood-donor-list.component';
 
 const routes: Routes = [
   {path:'navbar',component : NavbarComponent},
@@ -16,7 +17,9 @@ const routes: Routes = [
   { path: 'register-blood-donor', component: RegisterBloodDonorComponent },
   { path: 'staff-registration', component: StaffRegistrationComponent},
   { path: 'staff/assign-blood-center', component: AssignBloodCenterComponent },
-   { path: 'questionnaire', component: QuestionnaireComponent}
+  { path: 'questionnaire', component: QuestionnaireComponent},
+  { path: 'blood-donor-list', component: BloodDonorListComponent}
+
 ];
 
 @NgModule({

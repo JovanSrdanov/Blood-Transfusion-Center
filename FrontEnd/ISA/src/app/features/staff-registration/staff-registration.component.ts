@@ -14,7 +14,7 @@ import { StaffRegistrationModule }  from 'src/app/features/staff-registration/st
 export class StaffRegistrationComponent implements OnInit {
 
     registrationForm = new FormGroup({
-      password : new FormControl<string>('', [Validators.required]),
+      password : new FormControl<string>('', [Validators.required, Validators.pattern("^[a-zA-Z0-9]{8,}$")]),
       name : new FormControl<string>('', [Validators.required]),
       surname : new FormControl<string>('', [Validators.required]),
       phoneNumber : new FormControl<string>('', [Validators.required]),
