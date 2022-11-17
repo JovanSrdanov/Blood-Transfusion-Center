@@ -6,11 +6,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MaterialModule } from 'src/app/material/material.module';
+import { LoyaltyTableComponent } from './loyalty-table/loyalty-table.component';
 
 
 @NgModule({
   declarations: [
-    BloodDonorInfoFormComponent
+    BloodDonorInfoFormComponent,
+    LoyaltyTableComponent
   ],
   imports: [
     CommonModule,

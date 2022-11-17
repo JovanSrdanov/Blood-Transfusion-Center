@@ -47,4 +47,10 @@ public class LoyaltyService implements ILoyaltyService {
     public void deleteById(UUID id) {
         _loyaltyRepository.deleteById(id);
     }
+
+
+    @Override
+    public LoyaltyType getLoyaltyByPoints(int points) {
+        return _loyaltyRepository.findFirstByPointsReqLessThanEqualOrderByPointsReqDesc(points);
+    }
 }
