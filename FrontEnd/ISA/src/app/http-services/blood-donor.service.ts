@@ -12,7 +12,7 @@ import { BloodDonorSearchNameSurname } from '../model/blood-donor/blood-donor-se
 export class BloodDonorService {
 
   path: string = environment.backendPath + "/blood-donor";
-  currentId: string = "87bd5c15-f81a-4d86-adc3-f95da5024ad8";
+  currentId: string = "0034aea2-3260-4429-a611-388c607eb48d";
 
   constructor(private readonly http: HttpClient) { }
 
