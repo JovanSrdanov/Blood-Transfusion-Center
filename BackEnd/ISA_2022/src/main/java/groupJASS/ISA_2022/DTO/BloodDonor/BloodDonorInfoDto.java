@@ -1,6 +1,7 @@
 package groupJASS.ISA_2022.DTO.BloodDonor;
 
 import groupJASS.ISA_2022.DTO.Address.AddressUpdateDto;
+import groupJASS.ISA_2022.DTO.Address.AddressBloodDonorDTO;
 import groupJASS.ISA_2022.Model.Address;
 import groupJASS.ISA_2022.Model.BloodDonor;
 import groupJASS.ISA_2022.Model.Gender;
@@ -20,7 +21,8 @@ import java.util.UUID;
 @Getter
 @Setter
 public class BloodDonorInfoDto {
-    private UUID id;
+    private UUID id; 
+    private String email;
     @NotEmpty
     private String name;
     @NotEmpty
@@ -38,7 +40,6 @@ public class BloodDonorInfoDto {
     @Valid
     private AddressUpdateDto address;
     private int points;
-    private String email;
 
 
     public BloodDonorInfoDto(BloodDonor bloodDonor, String email) {

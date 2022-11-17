@@ -4,6 +4,7 @@ import { RegisterNonRegisteredUserDTO } from '../features/register-blood-donor/M
 import { environment } from 'src/environments/environment';
 import { BloodDonorInfo } from '../model/blood-donor/blood-donor-info';
 import { Observable } from 'rxjs';
+import { BloodDonorSearchNameSurname } from '../model/blood-donor/blood-donor-search-name-surname';
 
 @Injectable({
   providedIn: 'root'
@@ -28,4 +29,8 @@ export class BloodDonorService {
       return this.http.patch<BloodDonorInfo>(this.path + "/update", currentDonor);
     }
 
+    searchByNameAndUsername = (dto:BloodDonorSearchNameSurname) =>
+    {
+      return this.http.post<BloodDonorInfo[]>(this.path + '/search-name-surname', dto);
+    }
 }

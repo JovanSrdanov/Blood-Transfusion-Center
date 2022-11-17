@@ -11,23 +11,44 @@
 
           <form [formGroup]="staffForm">
             <hr />
-            <mat-form-field>
+            <mat-form-field class="personalInfoFields">
               <input matInput placeholder="name" formControlName="name" />
             </mat-form-field>
-            <mat-form-field>
+            <mat-form-field class="personalInfoFields">
               <input matInput placeholder="surname" formControlName="surname" />
             </mat-form-field>
-            <mat-form-field>
+            <mat-form-field class="personalInfoFields">
               <input matInput placeholder="email" formControlName="email" />
             </mat-form-field>
-            <mat-form-field>
+            <mat-form-field class="personalInfoFields">
               <input
                 matInput
                 placeholder="phone number"
                 formControlName="phoneNumber"
               />
+              <div
+                *ngIf="
+                  staffForm.get('phoneNumber')?.invalid &&
+                  staffForm.get('phoneNumber')?.errors &&
+                  (staffForm.get('phoneNumber')?.dirty ||
+                    staffForm.get('phoneNumber')?.touched)
+                "
+              >
+                <small
+                  class="text-danger"
+                  style="color: red"
+                  *ngIf="staffForm.get('phoneNumber')?.hasError('required')"
+                  >This field is required</small
+                >
+                <small
+                  class="text-danger"
+                  style="color: red"
+                  *ngIf="staffForm.get('phoneNumber')?.hasError('pattern')"
+                  >Phone number can only contain 9 digits (0-9)</small
+                >
+              </div>
             </mat-form-field>
-            <div *ngIf="isPreventChangeStaff">
+            <div *ngIf="isPreventChangeStaff && isPreventChangeCenter">
               <button mat-raised-button (click)="enableChangeStaff($event)">
                 Change
               </button>
@@ -52,6 +73,11 @@
                   Cancel
                 </button>
               </span>
+            </div>
+            <div>
+              <span *ngIf="isSucc" class="succ"
+                >User profile changed successfuly</span
+              >
             </div>
           </form>
 
@@ -106,6 +132,40 @@
             </mat-form-field>
             <mat-form-field>
               <input matInput placeholder="number" formControlName="number" />
+              <div
+                *ngIf="
+                  centerForm.get('address')?.get('number')?.invalid &&
+                  centerForm.get('address')?.get('number')?.errors &&
+                  (centerForm.get('address')?.get('number')?.dirty ||
+                    centerForm.get('address')?.get('number')?.touched)
+                "
+              >
+                <small
+                  class="text-danger"
+                  style="color: red"
+                  *ngIf="
+                    centerForm
+                      .get('address')
+                      ?.get('number')
+                      ?.hasError('required')
+                  "
+                >
+                  This field is required
+                </small>
+                <small
+                  class="text-danger"
+                  style="color: red"
+                  *ngIf="
+                    centerForm
+                      .get('address')
+                      ?.get('number')
+                      ?.hasError('pattern')
+                  "
+                >
+                  Street number can only contain a single number or 2 numbers
+                  separated by "/"
+                </small>
+              </div>
             </mat-form-field>
             <mat-form-field>
               <input matInput placeholder="city" formControlName="city" />
@@ -116,6 +176,7 @@
             <mat-form-field>
               <input
                 matInput
+                type="number"
                 placeholder="latitude"
                 formControlName="latitude"
               />
@@ -123,12 +184,48 @@
             <mat-form-field>
               <input
                 matInput
+                type="number"
                 placeholder="longitude"
                 formControlName="longitude"
               />
             </mat-form-field>
           </div>
-          <div *ngIf="isPreventChangeCenter">
+          <h3>Blood Amount</h3>
+          <div formGroupName="bloodAmount">
+            <mat-form-field class="bloodGroupInput">
+              <input
+                matInput
+                type="number"
+                placeholder="A"
+                formControlName="A"
+              />
+            </mat-form-field>
+            <mat-form-field class="bloodGroupInput">
+              <input
+                matInput
+                type="number"
+                placeholder="B"
+                formControlName="B"
+              />
+            </mat-form-field>
+            <mat-form-field class="bloodGroupInput">
+              <input
+                matInput
+                type="number"
+                placeholder="O"
+                formControlName="O"
+              />
+            </mat-form-field>
+            <mat-form-field class="bloodGroupInput">
+              <input
+                matInput
+                type="number"
+                placeholder="AB"
+                formControlName="AB"
+              />
+            </mat-form-field>
+          </div>
+          <div *ngIf="isPreventChangeCenter && isPreventChangeStaff">
             <button mat-raised-button (click)="enableChangeCenter($event)">
               Change
             </button>
@@ -149,6 +246,11 @@
             >
               Cancel
             </button>
+          </div>
+          <div>
+            <span *ngIf="isSucc" class="succ"
+              >Blood center profile changed successfuly</span
+            >
           </div>
         </form>
       </div>

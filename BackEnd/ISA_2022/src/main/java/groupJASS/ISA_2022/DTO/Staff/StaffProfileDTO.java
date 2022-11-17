@@ -9,6 +9,7 @@ import lombok.Setter;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -22,7 +23,7 @@ public class StaffProfileDTO {
     String surname;
     @Email
     String email;
-    @NotEmpty
+    @Pattern(regexp = "^[0-9]{9}$", message = "Phone number can only contain 9 digits (0-9)")
     String phoneNumber;
     @Valid
     private AddressBloodDonorDTO address;

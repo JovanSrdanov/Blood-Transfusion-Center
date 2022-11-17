@@ -1,4 +1,4 @@
-import { Address } from "../address/address";
+import { AddressNoCoor } from "../address/address-no-coor";
 
 export interface BloodDonorInfo {
     "id": string,
@@ -9,7 +9,7 @@ export interface BloodDonorInfo {
     "jmbg": string,
     "gender": string,
     "occupation": string,
-    "address": Address,
+    "address": AddressNoCoor,
     "points": number,
     "email": string
 }

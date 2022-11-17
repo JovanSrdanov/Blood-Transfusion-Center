@@ -8,12 +8,14 @@ import lombok.Setter;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 
 @NoArgsConstructor
 @Getter
 @Setter
 public class StaffRegistrationDTO {
     @NotEmpty
+    @Pattern(regexp = "^[a-zA-Z0-9]{8,}", message = "Length of the password must be 8 characters and it can only contain upppercase letters, lowercase letters and digits (0-9)")
     private String password;
     @NotEmpty
     private String name;

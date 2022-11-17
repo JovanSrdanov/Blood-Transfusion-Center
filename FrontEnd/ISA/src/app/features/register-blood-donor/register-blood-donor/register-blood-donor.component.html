@@ -24,6 +24,7 @@
                 matInput
                 [type]="hide ? 'password' : 'text'"
                 formControlName="password"
+                pattern="[a-zA-Z0-9]{8,}"
               />
               <button
                 mat-icon-button
@@ -49,6 +50,7 @@
                 matInput
                 [type]="hide ? 'password' : 'text'"
                 formControlName="passwordReEnter"
+                pattern="[a-zA-Z0-9]{8,}"
               />
               <button
                 mat-icon-button

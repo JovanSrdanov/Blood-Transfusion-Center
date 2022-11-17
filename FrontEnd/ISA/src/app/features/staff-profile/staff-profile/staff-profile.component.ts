@@ -19,6 +19,7 @@ export class StaffProfileComponent implements OnInit {
   isPreventChangeStaff: boolean = true;
   isPreventChangeCenter: boolean = true;
   isPreventChangePassword: boolean = true;
+  isSucc: boolean = false;
 
   staffInfo: any;
   staffId: any;
@@ -45,9 +46,16 @@ export class StaffProfileComponent implements OnInit {
       latitude: [],
       longitude: [],
     });
+    const bldam = this.fb.group({
+      A: [],
+      B: [],
+      O: [],
+      AB: [],
+    });
     this.centerForm = this.fb.group({
       name: '',
       address: addr,
+      bloodAmount: bldam,
       description: '',
       score: 0,
       appointments: [],
@@ -88,7 +96,7 @@ export class StaffProfileComponent implements OnInit {
 
       phoneNumber: [
         { value: this.staffInfo.phoneNumber, disabled: true },
-        [Validators.required, Validators.pattern('^[0-9]{9}$')],
+        [Validators.required],
       ],
       email: [
         { value: this.staffInfo.email, disabled: true },
@@ -136,6 +144,14 @@ export class StaffProfileComponent implements OnInit {
           [Validators.required, Validators.pattern('^[+-]?[0-9]+.?[0-9]*$')]
         ),
       }),
+      bloodAmount: new FormGroup({
+        A: new FormControl({ value: 1, disabled: true }, [Validators.required]),
+        B: new FormControl({ value: 1, disabled: true }, [Validators.required]),
+        O: new FormControl({ value: 1, disabled: true }, [Validators.required]),
+        AB: new FormControl({ value: 1, disabled: true }, [
+          Validators.required,
+        ]),
+      }),
       description: [
         { value: this.centerInfo.description, disabled: true },
         [Validators.required],
@@ -164,11 +180,17 @@ export class StaffProfileComponent implements OnInit {
     this.staffInfo.id = this.staffId;
     this.staffInfo.email = this.staffEmail;
     this.staffInfo.address = this.staffAddress;
+    this.staffInfo.bloodCenter = this.centerInfo;
 
     this.profileService
       .updateStaffInfo(this.staffId, this.staffInfo)
       .subscribe((res) => {
         console.log(res);
+        //alert('Profile successfuly changed');
+        this.isSucc = true;
+        setTimeout(() => {
+          this.isSucc = false;
+        }, 2500);
       });
     this.staffInfoCopy = structuredClone(this.staffInfo);
 
@@ -201,6 +223,10 @@ export class StaffProfileComponent implements OnInit {
     this.centerForm.get('score')?.disable();
     this.centerForm.get('appointments')?.disable();
     this.centerForm.get('staff')?.disable();
+    this.centerForm.get('bloodAmount')?.get('A')?.disable();
+    this.centerForm.get('bloodAmount')?.get('B')?.disable();
+    this.centerForm.get('bloodAmount')?.get('O')?.disable();
+    this.centerForm.get('bloodAmount')?.get('AB')?.disable();
   }
 
   confirmChangeCenter(event: Event) {
@@ -210,6 +236,11 @@ export class StaffProfileComponent implements OnInit {
       .updateStaffCenterInfo(this.centerId, this.centerInfo)
       .subscribe((res) => {
         console.log(res);
+        //alert('Blood center profile successfuly changed');
+        this.isSucc = true;
+        setTimeout(() => {
+          this.isSucc = false;
+        }, 2500);
       });
 
     this.centerInfoCopy = structuredClone(this.centerInfo);

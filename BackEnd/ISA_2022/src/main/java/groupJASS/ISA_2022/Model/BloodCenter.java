@@ -43,8 +43,15 @@ public class BloodCenter {
     @OneToMany(mappedBy = "bloodCenter", fetch = FetchType.LAZY)
     private Set<Staff> staff = new HashSet<>();
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "blood_center_id")
+    private Set<BloodQuantity> bloodQuantities;
+
     @Embedded
     private WorkingHours workingHours;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "bloodCenter")
+    private Set<Complaint> complaints;
 }
 
 
