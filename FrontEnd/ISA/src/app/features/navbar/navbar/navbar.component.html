@@ -1,6 +1,6 @@
 <div>
   <mat-toolbar class="navbar">
-    <div class="name-and-logo">
+    <div class="name-and-logo" (click)="goTo('blood-center-view')">
       <p>BloodBank</p>
       <img src="../../../../assets/images/favicon.ico" alt="gas" />
     </div>
@@ -21,9 +21,16 @@
       <button mat-raised-button (click)="goTo('staff-registration')">
         Staff Registration
       </button>
+
       <button mat-raised-button (click)="goTo('staff/assign-blood-center')">
         Assign Blood Center
       </button>
+
+      <button mat-raised-button (click)="goTo('blood-donor-info')">
+        Donor Profile
+      </button>
+      
+
       <button mat-raised-button (click)="goTo('blood-donor-list')">
         Blood donor list
       </button>

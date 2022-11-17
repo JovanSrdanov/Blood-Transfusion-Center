@@ -2,7 +2,9 @@ package groupJASS.ISA_2022.Controller;
 
 import groupJASS.ISA_2022.DTO.BloodCenter.BloodCenterBasicInfoDto;
 import groupJASS.ISA_2022.DTO.BloodCenter.BloodCenterRegistrationDTO;
+import groupJASS.ISA_2022.DTO.PageEntityDto;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
+import groupJASS.ISA_2022.Exceptions.SortNotFoundException;
 import groupJASS.ISA_2022.Model.BloodCenter;
 import groupJASS.ISA_2022.Service.Interfaces.IBloodCenterService;
 import groupJASS.ISA_2022.Utilities.MappingUtilities;
@@ -104,12 +106,23 @@ public class BloodCenterController {
         }
     }
 
-    @GetMapping(path = "/sort/{offset}/{size}/{field}/{s}")
-    public List<BloodCenterBasicInfoDto> sortCenter(@PathVariable int offset, @PathVariable int size,
-                                                    @PathVariable String field, @PathVariable String s) {
-
-        Page<BloodCenter> entities = _bloodCenterService.findProductsWithSorting(offset, size, field, s);
-
-        return ObjectMapperUtils.mapAll(entities.getContent(), BloodCenterBasicInfoDto.class);
+    @GetMapping(path = "sort")
+    public ResponseEntity<?> sortCenter(@RequestParam(name = "page") int page,
+                                                    @RequestParam(name = "field") String field,
+                                                    @RequestParam(name = "sort") String sort,
+                                                    @RequestParam(name = "s") String s) {
+        int size = 5;
+        try {
+            Page<BloodCenter> entities = _bloodCenterService.findProductsWithSorting(page, size, field, sort, s.trim());
+            List<BloodCenterBasicInfoDto> content = ObjectMapperUtils.mapAll(entities.getContent(), BloodCenterBasicInfoDto.class);
+            PageEntityDto<List<BloodCenterBasicInfoDto>> pageDto = new PageEntityDto<>(content, (int)entities.getTotalElements());
+            return new ResponseEntity<>(pageDto, HttpStatus.OK);
+        }
+        catch (SortNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
+        catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 }

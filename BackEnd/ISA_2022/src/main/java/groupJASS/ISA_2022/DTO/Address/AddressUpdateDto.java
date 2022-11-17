@@ -20,4 +20,6 @@ public class AddressUpdateDto {
     private String city;
     @NotEmpty
     private String country;
+    private double latitude;
+    private double longitude;
 }

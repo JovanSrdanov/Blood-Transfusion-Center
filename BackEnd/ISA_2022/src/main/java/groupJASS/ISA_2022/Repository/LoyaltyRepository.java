@@ -1,6 +1,5 @@
 package groupJASS.ISA_2022.Repository;
 
-import groupJASS.ISA_2022.Model.Address;
 import groupJASS.ISA_2022.Model.LoyaltyType;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,4 +11,6 @@ import java.util.UUID;
 @Primary
 public interface LoyaltyRepository extends JpaRepository<LoyaltyType, UUID> {
 
+
+    LoyaltyType findFirstByPointsReqLessThanEqualOrderByPointsReqDesc(int points);
 }

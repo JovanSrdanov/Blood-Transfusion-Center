@@ -13,8 +13,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { StaffRegistrationModule } from './features/staff-registration/staff-registration.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 import { QuestionnaireModule } from './features/questionnaire/questionnaire.module';
+import { BloodCenterViewModule } from './features/blood-center-view/blood-center-view.module';
+import { BloodDonorInfoModule } from './features/blood-donor-info/blood-donor-info.module';
+import { ChangePasswordComponent } from './features/staff-profile/change-password/change-password.component';
 import { AssignBloodCenterModule } from './features/assign-blood-center/assign-blood-center.module';
 import { BloodDonorListModule } from './features/blood-donor-list/blood-donor-list.module';
 
@@ -34,8 +38,11 @@ import { BloodDonorListModule } from './features/blood-donor-list/blood-donor-li
     NavbarModule,
     MatSelectModule,
     QuestionnaireModule,
+    BloodCenterViewModule,
+    BloodDonorInfoModule,
     AssignBloodCenterModule,
-    BloodDonorListModule
+    BloodDonorListModule,
+    MatFormFieldModule
   ],
   providers: [],
   bootstrap: [AppComponent],

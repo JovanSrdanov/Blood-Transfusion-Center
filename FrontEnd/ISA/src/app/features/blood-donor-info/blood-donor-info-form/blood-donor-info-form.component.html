@@ -1,0 +1,88 @@
+
+<div class="donorInfoDiv">
+    <form [formGroup]="registrationForm">
+        <mat-form-field  appearance="fill" class="unos">
+            <mat-label class="donorLabelInfo">Name</mat-label>
+            <input matInput [formControl]="registrationForm.controls.name" [readonly]="!editable">
+            <mat-error *ngIf="registrationForm.controls.name.invalid">{{getErrorMessage(registrationForm.controls.name)}}</mat-error>
+        </mat-form-field>
+    
+        <mat-form-field  appearance="fill" class="unos">
+            <mat-label class="donorLabelInfo">Surname</mat-label>
+            <input matInput [formControl]="registrationForm.controls.surname" [readonly]="!editable">
+            <mat-error *ngIf="registrationForm.controls.surname.invalid">{{getErrorMessage(registrationForm.controls.surname)}}</mat-error>
+        </mat-form-field>
+    
+        <mat-form-field  appearance="fill" class="unos">
+            <mat-label class="donorLabelInfo">Phone number</mat-label>
+            <input matInput [formControl]="registrationForm.controls.phoneNumber" [readonly]="!editable">
+            <mat-error *ngIf="registrationForm.controls.phoneNumber.invalid">{{getErrorMessage(registrationForm.controls.phoneNumber)}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field  appearance="fill" class="unos">
+            <mat-label class="donorLabelInfo">Country</mat-label>
+            <input matInput [formControl]="registrationForm.controls.country" [readonly]="!editable">
+            <mat-error *ngIf="registrationForm.controls.country.invalid">{{getErrorMessage(registrationForm.controls.country)}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field  appearance="fill" class="unos">
+            <mat-label class="donorLabelInfo">City</mat-label>
+            <input matInput [formControl]="registrationForm.controls.city" [readonly]="!editable">
+            <mat-error *ngIf="registrationForm.controls.city.invalid">{{getErrorMessage(registrationForm.controls.city)}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field  appearance="fill" class="unos">
+            <mat-label class="donorLabelInfo">Street</mat-label>
+            <input matInput [formControl]="registrationForm.controls.street" [readonly]="!editable">
+            <mat-error *ngIf="registrationForm.controls.street.invalid">{{getErrorMessage(registrationForm.controls.street)}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field  appearance="fill" class="unos">
+            <mat-label class="donorLabelInfo">Street number</mat-label>
+            <input matInput [formControl]="registrationForm.controls.streetNumber" [readonly]="!editable">
+            <mat-error *ngIf="registrationForm.controls.streetNumber.invalid">{{getErrorMessage(registrationForm.controls.streetNumber)}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field  appearance="fill" class="unos">
+            <mat-label class="donorLabelInfo">JMBG</mat-label>
+            <input matInput [formControl]="registrationForm.controls.jmbg" [readonly]="!editable">
+            <mat-error *ngIf="registrationForm.controls.jmbg.invalid">{{getErrorMessage(registrationForm.controls.jmbg)}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field  appearance="fill" class="unos">
+            <mat-label class="donorLabelInfo">Institution</mat-label>
+            <input matInput [formControl]="registrationForm.controls.institution" [readonly]="!editable">
+            <mat-error *ngIf="registrationForm.controls.institution.invalid">{{getErrorMessage(registrationForm.controls.institution)}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field  appearance="fill" class="unos">
+            <mat-label class="donorLabelInfo">Occupation</mat-label>
+            <input matInput [formControl]="registrationForm.controls.occupation" [readonly]="!editable">
+            <mat-error *ngIf="registrationForm.controls.occupation.invalid">{{getErrorMessage(registrationForm.controls.occupation)}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field  appearance="fill" class="unos">
+            <mat-label class="donorLabelInfo">Points</mat-label>
+            <input matInput [formControl]="registrationForm.controls.points" readonly>
+            <mat-error *ngIf="registrationForm.controls.points.invalid">{{getErrorMessage(registrationForm.controls.points)}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field  appearance="fill" class="unos">
+            <mat-label class="donorLabelInfo">E-mail</mat-label>
+            <input matInput [formControl]="registrationForm.controls.email" readonly>
+            <mat-error *ngIf="registrationForm.controls.email.invalid">{{getErrorMessage(registrationForm.controls.email)}}</mat-error>
+        </mat-form-field>
+    </form>
+    
+
+    
+</div>
+<button *ngIf="editable" [disabled]="registrationForm.invalid" mat-icon-button color="basic" aria-label="Example icon button with a heart icon" (click)="submitUpdate()">
+    <mat-icon>check icon</mat-icon>
+</button>
+<button mat-icon-button color="basic" aria-label="Example icon button with a heart icon" (click)="enableEdit()">
+    <mat-icon>{{iconType}}</mat-icon>
+</button>
+
+<app-loyalty-table #loyaltyTable [events]="eventsSubject.asObservable()"></app-loyalty-table>
+

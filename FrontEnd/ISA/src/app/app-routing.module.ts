@@ -8,16 +8,20 @@ import { StaffRegistrationComponent } from './features/staff-registration/staff-
 import { AssignBloodCenterComponent } from './features/assign-blood-center/assign-blood-center.component';
 import { StaffProfileComponent } from './features/staff-profile/staff-profile/staff-profile.component';
 import { QuestionnaireComponent } from './features/questionnaire/questionnaire/questionnaire.component';
+import { BloodCenterTableComponent } from './features/blood-center-view/blood-center-table/blood-center-table.component';
+import { BloodDonorInfoFormComponent } from './features/blood-donor-info/blood-donor-info-form/blood-donor-info-form.component';
 import { BloodDonorListComponent } from './features/blood-donor-list/blood-donor-list.component';
 
 const routes: Routes = [
-  {path:'navbar',component : NavbarComponent},
+  {path:'',component : BloodCenterTableComponent},
   { path: 'staff-profile', component: StaffProfileComponent },
   { path: 'blood-center', component: BloodCenterRegistrationComponent },
   { path: 'register-blood-donor', component: RegisterBloodDonorComponent },
   { path: 'staff-registration', component: StaffRegistrationComponent},
   { path: 'staff/assign-blood-center', component: AssignBloodCenterComponent },
-  { path: 'questionnaire', component: QuestionnaireComponent},
+   { path: 'questionnaire', component: QuestionnaireComponent},
+   { path: 'blood-center-view', component: BloodCenterTableComponent},
+   { path: 'blood-donor-info', component: BloodDonorInfoFormComponent},
   { path: 'blood-donor-list', component: BloodDonorListComponent}
 
 ];
@@ -28,4 +32,5 @@ const routes: Routes = [
 exports: [RouterModule],
 })
 export class AppRoutingModule {}
-export const routingComponents = [RegisterBloodDonorComponent ,NavbarComponent, StaffProfileComponent, BloodCenterRegistrationComponent];
+export const routingComponents = [RegisterBloodDonorComponent ,NavbarComponent, 
+  StaffProfileComponent, BloodCenterRegistrationComponent, BloodCenterTableComponent, BloodDonorInfoFormComponent];

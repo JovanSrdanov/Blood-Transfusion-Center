@@ -1,0 +1,11 @@
+.donorInfoDiv {
+    background-color: rgb(33, 38, 40);
+    width: fit-content;
+    margin: auto;
+    color: white;
+    margin-top: 1.3678%;
+}
+
+.donorLabelInfo {
+    color: aqua !important;
+}

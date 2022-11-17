@@ -1,8 +1,9 @@
 package groupJASS.ISA_2022.Service.Implementations;
 
-import groupJASS.ISA_2022.DTO.BloodDonor.RegisterBloodDonorDTO;
-import groupJASS.ISA_2022.Model.Account;
 import groupJASS.ISA_2022.DTO.BloodDonor.BloodDonorInfoDto;
+import groupJASS.ISA_2022.DTO.BloodDonor.RegisterBloodDonorDTO;
+import groupJASS.ISA_2022.Exceptions.BadRequestException;
+import groupJASS.ISA_2022.Model.Account;
 import groupJASS.ISA_2022.Model.Address;
 import groupJASS.ISA_2022.Model.BloodDonor;
 import groupJASS.ISA_2022.Model.Questionnaire;
@@ -55,7 +56,7 @@ public class BloodDonorService implements IBloodDonorService {
             return _bloodDonorRepository.findById(id).get();
         }
 
-        throw new NotFoundException("Blood donornot found");
+        throw new NotFoundException("Blood donor found");
     }
 
     @Override
@@ -92,6 +93,7 @@ public class BloodDonorService implements IBloodDonorService {
         map.setAddress(address);
 
         map.setPoints(0);
+        map.setPenalties(0);
         return save(map);
     }
 
@@ -126,14 +128,28 @@ public class BloodDonorService implements IBloodDonorService {
     }
 
     @Override
+    @Transactional(rollbackFor = DataIntegrityViolationException.class)
+    public BloodDonor updateDonorInfo(Address address, BloodDonor updatedBloodDonor) throws BadRequestException {
+        //TODO ovde provera sa jwt obavezno
+        _addressService.save(address);
+        BloodDonor oldDonor = findById(updatedBloodDonor.getId());
+        oldDonor.update(updatedBloodDonor);
+        return save(oldDonor);
+    }
+
+    @Override
     public List<BloodDonorInfoDto> findBloodDonorByNameAAndSurname(String name, String surname) {
         List<BloodDonor> bloodDonors = (List<BloodDonor>) _bloodDonorRepository.searchByNameAndSurnameIgnoreCase(name, surname);
         List<BloodDonorInfoDto> dtos = MappingUtilities.mapList(bloodDonors, BloodDonorInfoDto.class, _mapper);
         List<BloodDonorInfoDto> res = dtos
                 .stream()
                 .map(dto -> {
-                    var email = _accountRepository.findAccountByPersonId(dto.getId()).getEmail();
-                    dto.setEmail(email);
+                    Account acc = _accountRepository.findAccountByPersonId(dto.getId());
+                    String mail = "mail@mail.com";
+                    if(acc != null) {
+                        mail = acc.getEmail();
+                    }
+                    dto.setEmail(mail);
                     return  dto;
                 })
                 .collect(Collectors.toList());
