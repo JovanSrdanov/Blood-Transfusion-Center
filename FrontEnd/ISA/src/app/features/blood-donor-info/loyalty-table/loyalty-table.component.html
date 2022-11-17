@@ -1,1 +1,18 @@
-<p>loyalty-table works!</p>
+<p class="puc">Loyalty category: {{categoryName}}</p>
+<mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <!-- Position Column -->
+    <ng-container matColumnDef="discount">
+      <mat-header-cell *matHeaderCellDef> Discount </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.discount}}% </mat-cell>
+    </ng-container>
+  
+    <!-- Name Column -->
+    <ng-container matColumnDef="desc">
+      <mat-header-cell *matHeaderCellDef> Desc. </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.description}} </mat-cell>
+    </ng-container>
+  
+   
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>

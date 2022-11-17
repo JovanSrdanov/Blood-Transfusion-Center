@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MaterialModule } from 'src/app/material/material.module';
 import { LoyaltyTableComponent } from './loyalty-table/loyalty-table.component';
+import {MatTableModule} from '@angular/material/table';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import { LoyaltyTableComponent } from './loyalty-table/loyalty-table.component';
     LoyaltyTableComponent
   ],
   imports: [
+    MatTableModule,
     CommonModule,
     MatFormFieldModule,
     FormsModule,

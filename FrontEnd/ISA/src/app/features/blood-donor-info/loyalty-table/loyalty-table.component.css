@@ -1,0 +1,16 @@
+.mat-elevation-z8 {
+    width: 55%;
+    max-height: 500px;
+    overflow: auto;
+    margin: auto;
+    margin-top: 6%;
+  }
+  
+  .mat-column-name {
+    height: 100px;
+  }
+
+  .puc {
+    color: black;
+    margin-top: 3%;
+  }

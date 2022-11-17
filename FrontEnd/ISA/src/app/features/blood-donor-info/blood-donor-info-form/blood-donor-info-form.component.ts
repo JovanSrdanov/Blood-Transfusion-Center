@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subject } from 'rxjs';
 import { BloodDonorService } from 'src/app/http-services/blood-donor.service';
 import { BloodDonorInfo } from 'src/app/model/blood-donor/blood-donor-info';
+import { LoyaltyTableComponent } from '../loyalty-table/loyalty-table.component';
 
 @Component({
   selector: 'app-blood-donor-info-form',
@@ -29,13 +31,14 @@ export class BloodDonorInfoFormComponent implements OnInit {
 
   editable :boolean = false;
   iconType: string = "edit";
+  eventsSubject: Subject<number> = new Subject<number>();
 
   constructor(private readonly bloodDonorService: BloodDonorService) { }
 
   ngOnInit(): void {
     this.bloodDonorService.fetchLoggedinDonor().subscribe((res) => {
       this.currentDonor = res;
-
+      this.eventsSubject.next(res.points);
       this.populatedFields();
     });
   }

@@ -51,6 +51,7 @@ public class LoyaltyService implements ILoyaltyService {
 
     @Override
     public LoyaltyType getLoyaltyByPoints(int points) {
+        if(points < 0) points = 0;
         return _loyaltyRepository.findFirstByPointsReqLessThanEqualOrderByPointsReqDesc(points);
     }
 }
