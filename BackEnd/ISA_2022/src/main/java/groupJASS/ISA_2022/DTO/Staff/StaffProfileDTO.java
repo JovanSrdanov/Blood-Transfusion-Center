@@ -23,7 +23,7 @@ public class StaffProfileDTO {
     String surname;
     @Email
     String email;
-    @Pattern(regexp = "^[0-9]{9}$", message = "Phone number can only contain 9 digits (0-9)")
+    @NotEmpty
     String phoneNumber;
     @Valid
     private AddressBloodDonorDTO address;
