@@ -9,6 +9,7 @@ import { AssignBloodCenterComponent } from './features/assign-blood-center/assig
 import { StaffProfileComponent } from './features/staff-profile/staff-profile/staff-profile.component';
 import { QuestionnaireComponent } from './features/questionnaire/questionnaire/questionnaire.component';
 import { BloodCenterTableComponent } from './features/blood-center-view/blood-center-table/blood-center-table.component';
+import { BloodDonorInfoFormComponent } from './features/blood-donor-info/blood-donor-info-form/blood-donor-info-form.component';
 
 const routes: Routes = [
   {path:'navbar',component : NavbarComponent},
@@ -18,7 +19,8 @@ const routes: Routes = [
   { path: 'staff-registration', component: StaffRegistrationComponent},
   { path: 'staff/assign-blood-center', component: AssignBloodCenterComponent },
    { path: 'questionnaire', component: QuestionnaireComponent},
-   { path: 'blood-center-view', component: BloodCenterTableComponent}
+   { path: 'blood-center-view', component: BloodCenterTableComponent},
+   { path: 'blood-donor-info', component: BloodDonorInfoFormComponent}
    
 ];
 
@@ -28,4 +30,5 @@ const routes: Routes = [
 exports: [RouterModule],
 })
 export class AppRoutingModule {}
-export const routingComponents = [RegisterBloodDonorComponent ,NavbarComponent, StaffProfileComponent, BloodCenterRegistrationComponent, BloodCenterTableComponent];
+export const routingComponents = [RegisterBloodDonorComponent ,NavbarComponent, 
+  StaffProfileComponent, BloodCenterRegistrationComponent, BloodCenterTableComponent, BloodDonorInfoFormComponent];

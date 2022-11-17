@@ -1,6 +1,7 @@
 package groupJASS.ISA_2022.Service.Implementations;
 
 import groupJASS.ISA_2022.DTO.BloodDonor.RegisterBloodDonorDTO;
+import groupJASS.ISA_2022.Exceptions.BadRequestException;
 import groupJASS.ISA_2022.Model.Account;
 import groupJASS.ISA_2022.Model.Address;
 import groupJASS.ISA_2022.Model.BloodDonor;
@@ -49,7 +50,7 @@ public class BloodDonorService implements IBloodDonorService {
             return _bloodDonorRepository.findById(id).get();
         }
 
-        throw new NotFoundException("Blood donornot found");
+        throw new NotFoundException("Blood donor found");
     }
 
     @Override
@@ -118,4 +119,16 @@ public class BloodDonorService implements IBloodDonorService {
                 bloodDonor);
 
     }
+
+    @Override
+    @Transactional(rollbackFor = DataIntegrityViolationException.class)
+    public BloodDonor updateDonorInfo(Address address, BloodDonor updatedBloodDonor) throws BadRequestException {
+        //TODO ovde provera sa jwt obavezno
+        _addressService.save(address);
+        BloodDonor oldDonor = findById(updatedBloodDonor.getId());
+        oldDonor.update(updatedBloodDonor);
+        return save(oldDonor);
+    }
+
+
 }

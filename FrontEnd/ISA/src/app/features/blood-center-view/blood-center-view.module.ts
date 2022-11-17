@@ -7,6 +7,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import { MaterialModule } from 'src/app/material/material.module';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { FormsModule } from '@angular/forms';
     MatSortModule,
     MatTableModule,
     MatInputModule,
-    FormsModule
+    FormsModule,
+    MaterialModule
   ]
 })
 export class BloodCenterViewModule { }

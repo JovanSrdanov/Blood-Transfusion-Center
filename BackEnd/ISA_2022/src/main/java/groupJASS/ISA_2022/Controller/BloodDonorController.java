@@ -3,13 +3,15 @@ package groupJASS.ISA_2022.Controller;
 import groupJASS.ISA_2022.DTO.BloodDonor.BloodDonorInfoDto;
 import groupJASS.ISA_2022.DTO.BloodDonor.BloodDonorLazyDTO;
 import groupJASS.ISA_2022.DTO.BloodDonor.RegisterBloodDonorDTO;
-import groupJASS.ISA_2022.DTO.BloodDonor.UpdateBloodDonorInfoDto;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
+import groupJASS.ISA_2022.Model.Account;
 import groupJASS.ISA_2022.Model.Address;
 import groupJASS.ISA_2022.Model.BloodDonor;
+import groupJASS.ISA_2022.Service.Interfaces.IAccountService;
 import groupJASS.ISA_2022.Service.Interfaces.IAddressService;
 import groupJASS.ISA_2022.Service.Interfaces.IBloodDonorService;
 import groupJASS.ISA_2022.Utilities.MappingUtilities;
+import groupJASS.ISA_2022.Utilities.ObjectMapperUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,14 +31,17 @@ public class BloodDonorController {
     private final IBloodDonorService _bloodDonorService;
     private final IAddressService _addressService;
 
+    private final IAccountService _accountService;
+
     private final ModelMapper _mapper;
 
     @Autowired
     public BloodDonorController(IBloodDonorService bloodDonorService, ModelMapper modelMapper,
-                                IAddressService addressService) {
+                                IAddressService addressService, IAccountService _accountService) {
         this._bloodDonorService = bloodDonorService;
         this._mapper = modelMapper;
         this._addressService = addressService;
+        this._accountService = _accountService;
 
     }
 
@@ -52,8 +57,8 @@ public class BloodDonorController {
 
     @GetMapping("get-by-id/{id}")
     public ResponseEntity<BloodDonorInfoDto> findById(@PathVariable UUID id) {
-        BloodDonorInfoDto userDto =
-                _mapper.map(_bloodDonorService.findById(id), BloodDonorInfoDto.class);
+        Account acc = _accountService.findAccountByPersonId(id);
+        BloodDonorInfoDto userDto = new BloodDonorInfoDto(_bloodDonorService.findById(id), acc.getEmail());
         return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
 
@@ -67,12 +72,15 @@ public class BloodDonorController {
     }
 
     @PatchMapping("update")
-    public ResponseEntity<BloodDonor> update(@Valid @RequestBody UpdateBloodDonorInfoDto updatedUserDto) {
-        BloodDonor updatedUser = _mapper.map(updatedUserDto, BloodDonor.class);
+    public ResponseEntity<BloodDonorInfoDto> update(@Valid @RequestBody BloodDonorInfoDto updatedUserDto) {
+        BloodDonor updatedDonor = _mapper.map(updatedUserDto, BloodDonor.class);
 
         try {
-            _addressService.saveAddresFromBloodDonorRegistration(_mapper.map(updatedUserDto.getAddress(), Address.class));
-            return new ResponseEntity<>(this._bloodDonorService.save(updatedUser), HttpStatus.CREATED);
+            BloodDonor entity = _bloodDonorService.updateDonorInfo(
+                    ObjectMapperUtils.map(updatedUserDto.getAddress(), Address.class), updatedDonor);
+            Account acc = _accountService.findAccountByPersonId(entity.getId());
+            BloodDonorInfoDto dto = new BloodDonorInfoDto(entity, acc.getEmail());
+            return new ResponseEntity<>(dto, HttpStatus.CREATED);
         } catch (BadRequestException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (NotFoundException e) {

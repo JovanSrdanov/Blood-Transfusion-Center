@@ -36,7 +36,7 @@ export class RegisterBloodDonorComponent implements OnInit {
     institution: new FormControl<string>('', [Validators.required]),
     occupation: new FormControl<string>('', [Validators.required]),
     jmbg: new FormControl<string>('', [Validators.required])
-  })
+  });
 
   selectedGender = this.genders[0].value;
 

@@ -41,6 +41,7 @@ public class BloodDonor extends Person {
         this.name = updated.getName();
         this.surname = updated.getSurname();
         this.phoneNumber = updated.getPhoneNumber();
+        this.occupation = updated.getOccupation();
     }
 
 

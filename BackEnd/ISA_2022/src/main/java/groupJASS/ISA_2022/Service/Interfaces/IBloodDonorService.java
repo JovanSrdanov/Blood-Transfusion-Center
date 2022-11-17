@@ -1,6 +1,7 @@
 package groupJASS.ISA_2022.Service.Interfaces;
 
 import groupJASS.ISA_2022.DTO.BloodDonor.RegisterBloodDonorDTO;
+import groupJASS.ISA_2022.Exceptions.BadRequestException;
 import groupJASS.ISA_2022.Model.Address;
 import groupJASS.ISA_2022.Model.BloodDonor;
 import groupJASS.ISA_2022.Model.Questionnaire;
@@ -16,4 +17,6 @@ public interface IBloodDonorService extends ICrudService<BloodDonor> {
     List<BloodDonor> findAllWithAddressAndQuestionnaire();
 
     void registerNewBloodDonor(RegisterBloodDonorDTO dto);
+
+    BloodDonor updateDonorInfo(Address map, BloodDonor updatedUser) throws BadRequestException;
 }
