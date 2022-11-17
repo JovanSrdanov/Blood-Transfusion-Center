@@ -4,6 +4,15 @@
         <mat-label>Email</mat-label>
         <input matInput type="text" formControlName="email" (blur)="checkEmailAvailability()">
     </mat-form-field>
+            <p class="error-message"
+        *ngIf="
+            registrationForm.get('password')?.invalid &&
+            registrationForm.get('password')?.errors &&
+            (registrationForm.get('password')?.dirty ||
+            registrationForm.get('password')?.touched)
+        "
+        >Password must contain at least 8 characters</p>
+
     <mat-form-field>
         <mat-label>Password</mat-label>
         <input matInput type="password" formControlName="password">
