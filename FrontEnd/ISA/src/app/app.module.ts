@@ -41,8 +41,10 @@ import { BloodDonorListModule } from './features/blood-donor-list/blood-donor-li
     BloodCenterViewModule,
     BloodDonorInfoModule,
     AssignBloodCenterModule,
-    BloodDonorListModule
+    BloodDonorListModule,
+    MatFormFieldModule
   ],
   providers: [],
+  bootstrap: [AppComponent],
 })
 export class AppModule { }
