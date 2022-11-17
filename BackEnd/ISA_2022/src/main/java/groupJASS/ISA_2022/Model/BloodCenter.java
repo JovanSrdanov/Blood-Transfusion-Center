@@ -43,7 +43,7 @@ public class BloodCenter {
     @OneToMany(mappedBy = "bloodCenter", fetch = FetchType.LAZY)
     private Set<Staff> staff = new HashSet<>();
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "blood_center_id")
     private Set<BloodQuantity> bloodQuantities;
 
