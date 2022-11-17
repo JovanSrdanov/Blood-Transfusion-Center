@@ -70,12 +70,6 @@ public class StaffService implements IStaffService {
         _accountRepository.save(account);
     }
 
-//    @Override
-//    public List<StaffBasicInfoDTO> getUnemployedStaff() {
-//        List<Staff> staff = (List<Staff>) _staffRepository.getUnemployedStaff();
-//        //Getting emails from account
-//        return getStaffBasicInfo(staff);
-//    }
 
     private List<StaffProfileDTO> getStaffProfileInfo(List<Staff> staff) {
         var dtos = MappingUtilities.mapList(staff, StaffProfileDTO.class, _mapper);
@@ -92,6 +86,11 @@ public class StaffService implements IStaffService {
 
     private List<StaffBasicInfoDTO> getStaffBasicInfo(List<Staff> staff) {
 
+        List<StaffBasicInfoDTO> dtos = attachEmail(staff);
+        return dtos;
+    }
+
+    private List<StaffBasicInfoDTO> attachEmail(List<Staff> staff) {
         var dtos = MappingUtilities.mapList(staff, StaffBasicInfoDTO.class, _mapper);
 
         dtos.stream().map(dto ->
@@ -100,7 +99,6 @@ public class StaffService implements IStaffService {
             dto.setEmail(account.getEmail());
             return dto;
         }).collect(Collectors.toList());
-
         return dtos;
     }
 
@@ -150,15 +148,7 @@ public class StaffService implements IStaffService {
     public List<StaffBasicInfoDTO> getUnemployedStaff() {
         List<Staff> staff = (List<Staff>) _staffRepository.getUnemployedStaff();
         //Getting emails from account
-        var dtos = MappingUtilities.mapList(staff, StaffBasicInfoDTO.class, _mapper);
-        dtos
-            .stream()
-            .map(dto -> {
-                Account account = _accountRepository.findAccountByPersonId(dto.getId());
-                dto.setEmail(account.getEmail());
-                return dto;
-            })
-            .collect(Collectors.toList());
+        List<StaffBasicInfoDTO> dtos = attachEmail(staff);
         return dtos;
     }
 

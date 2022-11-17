@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
+import java.util.Set;
 
 @Entity
 @AllArgsConstructor
@@ -33,6 +34,11 @@ public class BloodDonor extends Person {
     private int points;
     @OneToOne(fetch = FetchType.LAZY)
     private Questionnaire questionnaire;
+
+    @OneToMany(mappedBy = "bloodDonor", fetch = FetchType.LAZY)
+    private Set<Appointment> appointments;
+
+    private int penalties;
 
     public void update(BloodDonor updated) {
         this.institution = updated.getInstitution();
