@@ -75,7 +75,7 @@
               </span>
             </div>
             <div>
-              <span *ngIf="isSucc" class="succ"
+              <span *ngIf="isSucc1" class="succ"
                 >User profile changed successfuly</span
               >
             </div>
@@ -196,32 +196,64 @@
               <input
                 matInput
                 type="number"
-                placeholder="A"
-                formControlName="A"
+                placeholder="A_POS"
+                formControlName="A_POS"
               />
             </mat-form-field>
             <mat-form-field class="bloodGroupInput">
               <input
                 matInput
                 type="number"
-                placeholder="B"
-                formControlName="B"
+                placeholder="A_NEG"
+                formControlName="A_NEG"
               />
             </mat-form-field>
             <mat-form-field class="bloodGroupInput">
               <input
                 matInput
                 type="number"
-                placeholder="O"
-                formControlName="O"
+                placeholder="B_POS"
+                formControlName="B_POS"
               />
             </mat-form-field>
             <mat-form-field class="bloodGroupInput">
               <input
                 matInput
                 type="number"
-                placeholder="AB"
-                formControlName="AB"
+                placeholder="B_NEG"
+                formControlName="B_NEG"
+              />
+            </mat-form-field>
+            <mat-form-field class="bloodGroupInput">
+              <input
+                matInput
+                type="number"
+                placeholder="O_POS"
+                formControlName="O_POS"
+              />
+            </mat-form-field>
+            <mat-form-field class="bloodGroupInput">
+              <input
+                matInput
+                type="number"
+                placeholder="O_NEG"
+                formControlName="O_NEG"
+              />
+            </mat-form-field>
+            <mat-form-field class="bloodGroupInput">
+              <input
+                matInput
+                type="number"
+                placeholder="AB_POS"
+                formControlName="AB_POS"
+              />
+            </mat-form-field>
+            <mat-form-field class="bloodGroupInput">
+              <input
+                matInput
+                type="number"
+                placeholder="AB_NEG"
+                formControlName="AB_NEG"
               />
             </mat-form-field>
           </div>
@@ -248,7 +280,7 @@
             </button>
           </div>
           <div>
-            <span *ngIf="isSucc" class="succ"
+            <span *ngIf="isSucc2" class="succ"
               >Blood center profile changed successfuly</span
             >
           </div>
