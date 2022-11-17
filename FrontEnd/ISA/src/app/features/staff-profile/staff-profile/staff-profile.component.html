@@ -1,0 +1,292 @@
+<div class="grid">
+  <div class="header">Profile</div>
+  <!--******************PERSONAL***********************-->
+  <mat-grid-list cols="2" rowHeight="1:1">
+    <mat-grid-tile>
+      <div>
+        <div class="header">Personal info</div>
+        <br />
+        <div class="form">
+          <!-- TEST  -->
+
+          <form [formGroup]="staffForm">
+            <hr />
+            <mat-form-field class="personalInfoFields">
+              <input matInput placeholder="name" formControlName="name" />
+            </mat-form-field>
+            <mat-form-field class="personalInfoFields">
+              <input matInput placeholder="surname" formControlName="surname" />
+            </mat-form-field>
+            <mat-form-field class="personalInfoFields">
+              <input matInput placeholder="email" formControlName="email" />
+            </mat-form-field>
+            <mat-form-field class="personalInfoFields">
+              <input
+                matInput
+                placeholder="phone number"
+                formControlName="phoneNumber"
+              />
+              <div
+                *ngIf="
+                  staffForm.get('phoneNumber')?.invalid &&
+                  staffForm.get('phoneNumber')?.errors &&
+                  (staffForm.get('phoneNumber')?.dirty ||
+                    staffForm.get('phoneNumber')?.touched)
+                "
+              >
+                <small
+                  class="text-danger"
+                  style="color: red"
+                  *ngIf="staffForm.get('phoneNumber')?.hasError('required')"
+                  >This field is required</small
+                >
+                <small
+                  class="text-danger"
+                  style="color: red"
+                  *ngIf="staffForm.get('phoneNumber')?.hasError('pattern')"
+                  >Phone number can only contain 9 digits (0-9)</small
+                >
+              </div>
+            </mat-form-field>
+            <div *ngIf="isPreventChangeStaff && isPreventChangeCenter">
+              <button mat-raised-button (click)="enableChangeStaff($event)">
+                Change
+              </button>
+            </div>
+            <div *ngIf="!isPreventChangeStaff">
+              <span>
+                <button
+                  class="confirm"
+                  [disabled]="staffForm.invalid"
+                  mat-raised-button
+                  (click)="confirmChangeStaff($event)"
+                >
+                  Confirm
+                </button>
+              </span>
+              <span>
+                <button
+                  mat-raised-button
+                  (click)="cancelChangeStaff($event)"
+                  color="warn"
+                >
+                  Cancel
+                </button>
+              </span>
+            </div>
+            <div>
+              <span *ngIf="isSucc1" class="succ"
+                >User profile changed successfuly</span
+              >
+            </div>
+          </form>
+
+          <!-- TEST  -->
+        </div>
+        <div>
+          <hr class="changePassword" />
+          <app-change-password
+            [loggedInStaffId]="this.staffId"
+          ></app-change-password>
+        </div>
+      </div>
+    </mat-grid-tile>
+    <!--******************PERSONAL***********************-->
+    <mat-grid-tile>
+      <!-- TEST  -->
+      <div class="formCenter">
+        <div class="header">Blood center info</div>
+        <br />
+        <div class="noCenter" *ngIf="centerInfo == null">
+          Not assigned to a blood center
+        </div>
+        <form [formGroup]="centerForm" *ngIf="centerInfo != null">
+          <hr />
+          <mat-form-field>
+            <input matInput placeholder="name" formControlName="name" />
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="description"
+              formControlName="description"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="score" formControlName="score" />
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="appointments"
+              formControlName="appointments"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="staff" formControlName="staff" />
+          </mat-form-field>
+          <h3>Address</h3>
+          <div formGroupName="address">
+            <mat-form-field>
+              <input matInput placeholder="street" formControlName="street" />
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="number" formControlName="number" />
+              <div
+                *ngIf="
+                  centerForm.get('address')?.get('number')?.invalid &&
+                  centerForm.get('address')?.get('number')?.errors &&
+                  (centerForm.get('address')?.get('number')?.dirty ||
+                    centerForm.get('address')?.get('number')?.touched)
+                "
+              >
+                <small
+                  class="text-danger"
+                  style="color: red"
+                  *ngIf="
+                    centerForm
+                      .get('address')
+                      ?.get('number')
+                      ?.hasError('required')
+                  "
+                >
+                  This field is required
+                </small>
+                <small
+                  class="text-danger"
+                  style="color: red"
+                  *ngIf="
+                    centerForm
+                      .get('address')
+                      ?.get('number')
+                      ?.hasError('pattern')
+                  "
+                >
+                  Street number can only contain a single number or 2 numbers
+                  separated by "/"
+                </small>
+              </div>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="city" formControlName="city" />
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="country" formControlName="country" />
+            </mat-form-field>
+            <mat-form-field>
+              <input
+                matInput
+                type="number"
+                placeholder="latitude"
+                formControlName="latitude"
+              />
+            </mat-form-field>
+            <mat-form-field>
+              <input
+                matInput
+                type="number"
+                placeholder="longitude"
+                formControlName="longitude"
+              />
+            </mat-form-field>
+          </div>
+          <h3>Blood Amount</h3>
+          <div formGroupName="bloodAmount">
+            <mat-form-field class="bloodGroupInput">
+              <input
+                matInput
+                type="number"
+                placeholder="A_POS"
+                formControlName="A_POS"
+              />
+            </mat-form-field>
+            <mat-form-field class="bloodGroupInput">
+              <input
+                matInput
+                type="number"
+                placeholder="A_NEG"
+                formControlName="A_NEG"
+              />
+            </mat-form-field>
+            <mat-form-field class="bloodGroupInput">
+              <input
+                matInput
+                type="number"
+                placeholder="B_POS"
+                formControlName="B_POS"
+              />
+            </mat-form-field>
+            <mat-form-field class="bloodGroupInput">
+              <input
+                matInput
+                type="number"
+                placeholder="B_NEG"
+                formControlName="B_NEG"
+              />
+            </mat-form-field>
+            <mat-form-field class="bloodGroupInput">
+              <input
+                matInput
+                type="number"
+                placeholder="O_POS"
+                formControlName="O_POS"
+              />
+            </mat-form-field>
+            <mat-form-field class="bloodGroupInput">
+              <input
+                matInput
+                type="number"
+                placeholder="O_NEG"
+                formControlName="O_NEG"
+              />
+            </mat-form-field>
+            <mat-form-field class="bloodGroupInput">
+              <input
+                matInput
+                type="number"
+                placeholder="AB_POS"
+                formControlName="AB_POS"
+              />
+            </mat-form-field>
+            <mat-form-field class="bloodGroupInput">
+              <input
+                matInput
+                type="number"
+                placeholder="AB_NEG"
+                formControlName="AB_NEG"
+              />
+            </mat-form-field>
+          </div>
+          <div *ngIf="isPreventChangeCenter && isPreventChangeStaff">
+            <button mat-raised-button (click)="enableChangeCenter($event)">
+              Change
+            </button>
+          </div>
+          <div *ngIf="!isPreventChangeCenter">
+            <button
+              class="confirm"
+              [disabled]="centerForm.invalid"
+              mat-raised-button
+              (click)="confirmChangeCenter($event)"
+            >
+              Confirm
+            </button>
+            <button
+              mat-raised-button
+              (click)="cancelChangeCenter($event)"
+              color="warn"
+            >
+              Cancel
+            </button>
+          </div>
+          <div>
+            <span *ngIf="isSucc2" class="succ"
+              >Blood center profile changed successfuly</span
+            >
+          </div>
+        </form>
+      </div>
+      <!-- TEST  -->
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

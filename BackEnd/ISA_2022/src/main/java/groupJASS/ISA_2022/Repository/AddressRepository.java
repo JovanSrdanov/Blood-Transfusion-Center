@@ -10,5 +10,7 @@ import java.util.UUID;
 @Repository
 @Primary
 public interface AddressRepository extends JpaRepository<Address, UUID> {
-
+    //Don't look a this
+    public  boolean existsAddressByStreetIgnoreCaseAndNumberIgnoreCaseAndCityIgnoreCaseAndCountryIgnoreCase(
+ String street, String number, String city, String country);
 }

@@ -1,0 +1,68 @@
+<mat-card class="result">
+  <mat-card-content>
+    <section class="example-section">
+      <mat-checkbox class="example-margin" [(ngModel)]="checkedUnder50KG">
+        I weight less than 50kg
+      </mat-checkbox>
+    </section>
+  </mat-card-content>
+  <mat-card-content>
+    <section class="example-section">
+      <mat-checkbox class="example-margin" [(ngModel)]="checkedFeelsBad">
+        I am sick / I do not feel so good
+      </mat-checkbox>
+    </section>
+  </mat-card-content>
+  <mat-card-content>
+    <section class="example-section">
+      <mat-checkbox class="example-margin" [(ngModel)]="checkedSkinChanges">
+        I have skin infection
+      </mat-checkbox>
+    </section>
+  </mat-card-content>
+  <mat-card-content>
+    <section class="example-section">
+      <mat-checkbox
+        class="example-margin"
+        [(ngModel)]="checkedHighOrLowPresure"
+      >
+        I have high/low blood presure
+      </mat-checkbox>
+    </section>
+  </mat-card-content>
+  <mat-card-content>
+    <section class="example-section">
+      <mat-checkbox class="example-margin" [(ngModel)]="checkedOnTherapy">
+        I had antibiotic therapy in the past seven days
+      </mat-checkbox>
+    </section>
+  </mat-card-content>
+  <mat-card-content>
+    <section class="example-section">
+      <mat-checkbox class="example-margin" [(ngModel)]="checkedOnMC">
+        I am on my menstrual cycle
+      </mat-checkbox>
+    </section>
+  </mat-card-content>
+  <mat-card-content>
+    <section class="example-section">
+      <mat-checkbox class="example-margin" [(ngModel)]="checkedRecentDentist">
+        I have visited the dentist in the last seven days
+      </mat-checkbox>
+    </section>
+  </mat-card-content>
+  <mat-card-content>
+    <section class="example-section">
+      <mat-checkbox
+        class="example-margin"
+        [(ngModel)]="checkedPricingOrSurgicalInterventionsOrBloodTransfusion"
+      >
+        I have had pircings / I have had surgical interventions / I have had
+        blood transfusion in past 6 moths
+      </mat-checkbox>
+    </section>
+  </mat-card-content>
+  <button mat-raised-button color="primary" (click)="submit()">
+    Submit questionnaire
+  </button>
+</mat-card>

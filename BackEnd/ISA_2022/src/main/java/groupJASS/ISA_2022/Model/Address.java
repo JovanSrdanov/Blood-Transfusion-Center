@@ -15,11 +15,11 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
-
-
 public class Address {
+
     @Id
     private UUID id;
+
     @Column(nullable = false)
     private String street;
 
@@ -37,5 +37,6 @@ public class Address {
 
     @Column(nullable = false)
     private double longitude;
+
 
 }
