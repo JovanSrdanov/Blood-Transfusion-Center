@@ -19,7 +19,8 @@ export class StaffProfileComponent implements OnInit {
   isPreventChangeStaff: boolean = true;
   isPreventChangeCenter: boolean = true;
   isPreventChangePassword: boolean = true;
-  isSucc: boolean = false;
+  isSucc1: boolean = false;
+  isSucc2: boolean = false;
 
   staffInfo: any;
   staffId: any;
@@ -47,10 +48,14 @@ export class StaffProfileComponent implements OnInit {
       longitude: [],
     });
     const bldam = this.fb.group({
-      A: [],
-      B: [],
-      O: [],
-      AB: [],
+      A_POS: [],
+      A_NEG: [],
+      B_POS: [],
+      B_NEG: [],
+      O_POS: [],
+      O_NEG: [],
+      AB_POS: [],
+      AB_NEG: [],
     });
     this.centerForm = this.fb.group({
       name: '',
@@ -145,24 +150,94 @@ export class StaffProfileComponent implements OnInit {
         ),
       }),
       bloodAmount: new FormGroup({
-        A: new FormControl({ value: 1, disabled: true }, [Validators.required]),
-        B: new FormControl({ value: 1, disabled: true }, [Validators.required]),
-        O: new FormControl({ value: 1, disabled: true }, [Validators.required]),
-        AB: new FormControl({ value: 1, disabled: true }, [
-          Validators.required,
-        ]),
+        A_POS: new FormControl(
+          {
+            value: this.centerInfo.bloodQuantities[0].quantity,
+            disabled: true,
+          },
+          [Validators.required]
+        ),
+        A_NEG: new FormControl(
+          {
+            value: this.centerInfo.bloodQuantities[1].quantity,
+            disabled: true,
+          },
+          [Validators.required]
+        ),
+        B_POS: new FormControl(
+          {
+            value: this.centerInfo.bloodQuantities[2].quantity,
+            disabled: true,
+          },
+          [Validators.required]
+        ),
+        B_NEG: new FormControl(
+          {
+            value: this.centerInfo.bloodQuantities[3].quantity,
+            disabled: true,
+          },
+          [Validators.required]
+        ),
+        O_POS: new FormControl(
+          {
+            value: this.centerInfo.bloodQuantities[4].quantity,
+            disabled: true,
+          },
+          [Validators.required]
+        ),
+        O_NEG: new FormControl(
+          {
+            value: this.centerInfo.bloodQuantities[5].quantity,
+            disabled: true,
+          },
+          [Validators.required]
+        ),
+        AB_POS: new FormControl(
+          {
+            value: this.centerInfo.bloodQuantities[6].quantity,
+            disabled: true,
+          },
+          [Validators.required]
+        ),
+        AB_NEG: new FormControl(
+          {
+            value: this.centerInfo.bloodQuantities[7].quantity,
+            disabled: true,
+          },
+          [Validators.required]
+        ),
       }),
       description: [
         { value: this.centerInfo.description, disabled: true },
         [Validators.required],
       ],
       score: [{ value: 10, disabled: true }, [Validators.required]],
-      appointments: [{ value: [], disabled: true }],
-      staff: [{ value: [], disabled: true }],
+      appointments: [{ value: this.centerInfo.appointments, disabled: true }],
+      staff: [
+        {
+          value: this.getAllStaffForAppointment(this.centerInfo.staff),
+          disabled: true,
+        },
+      ],
     });
     this.centerForm.valueChanges.subscribe((currValue) => {
       this.centerInfo = currValue;
     });
+  }
+
+  getAllStaffForAppointment(staff: any): string {
+    console.log(staff);
+    let res = '';
+    staff.forEach((value: any) => {
+      if (value != undefined) {
+        res += value.id;
+        res += ' | ';
+      } else {
+        res += value;
+        res += ' | ';
+      }
+    });
+    return res;
   }
 
   //ADMIN
@@ -187,9 +262,9 @@ export class StaffProfileComponent implements OnInit {
       .subscribe((res) => {
         console.log(res);
         //alert('Profile successfuly changed');
-        this.isSucc = true;
+        this.isSucc1 = true;
         setTimeout(() => {
-          this.isSucc = false;
+          this.isSucc1 = false;
         }, 2500);
       });
     this.staffInfoCopy = structuredClone(this.staffInfo);
@@ -223,10 +298,14 @@ export class StaffProfileComponent implements OnInit {
     this.centerForm.get('score')?.disable();
     this.centerForm.get('appointments')?.disable();
     this.centerForm.get('staff')?.disable();
-    this.centerForm.get('bloodAmount')?.get('A')?.disable();
-    this.centerForm.get('bloodAmount')?.get('B')?.disable();
-    this.centerForm.get('bloodAmount')?.get('O')?.disable();
-    this.centerForm.get('bloodAmount')?.get('AB')?.disable();
+    this.centerForm.get('bloodAmount')?.get('A_POS')?.disable();
+    this.centerForm.get('bloodAmount')?.get('A_NEG')?.disable();
+    this.centerForm.get('bloodAmount')?.get('B_POS')?.disable();
+    this.centerForm.get('bloodAmount')?.get('B_NEG')?.disable();
+    this.centerForm.get('bloodAmount')?.get('O_POS')?.disable();
+    this.centerForm.get('bloodAmount')?.get('O_NEG')?.disable();
+    this.centerForm.get('bloodAmount')?.get('AB_POS')?.disable();
+    this.centerForm.get('bloodAmount')?.get('AB_NEG')?.disable();
   }
 
   confirmChangeCenter(event: Event) {
@@ -237,9 +316,9 @@ export class StaffProfileComponent implements OnInit {
       .subscribe((res) => {
         console.log(res);
         //alert('Blood center profile successfuly changed');
-        this.isSucc = true;
+        this.isSucc2 = true;
         setTimeout(() => {
-          this.isSucc = false;
+          this.isSucc2 = false;
         }, 2500);
       });
 

@@ -68,6 +68,9 @@ public class BloodCenterController {
             newCenter.setId(centerId);
             newCenter.getAddress().setId((oldCenter.getAddress().getId()));
             newCenter.setWorkingHours(oldCenter.getWorkingHours());
+            newCenter.setStaff(oldCenter.getStaff());
+            newCenter.setAppointments(oldCenter.getAppointments());
+            newCenter.setBloodQuantities(oldCenter.getBloodQuantities());
 
             return new ResponseEntity<>(_bloodCenterService.save(newCenter), HttpStatus.OK);
         }
