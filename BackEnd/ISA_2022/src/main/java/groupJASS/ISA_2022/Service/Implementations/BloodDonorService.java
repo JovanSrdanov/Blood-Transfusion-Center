@@ -144,8 +144,12 @@ public class BloodDonorService implements IBloodDonorService {
         List<BloodDonorInfoDto> res = dtos
                 .stream()
                 .map(dto -> {
-                    var email = _accountRepository.findAccountByPersonId(dto.getId()).getEmail();
-                    dto.setEmail(email);
+                    Account acc = _accountRepository.findAccountByPersonId(dto.getId());
+                    String mail = "mail@mail.com";
+                    if(acc != null) {
+                        mail = acc.getEmail();
+                    }
+                    dto.setEmail(mail);
                     return  dto;
                 })
                 .collect(Collectors.toList());
