@@ -13,8 +13,7 @@ import { BloodDonorInfoFormComponent } from './features/blood-donor-info/blood-d
 import { BloodDonorListComponent } from './features/blood-donor-list/blood-donor-list.component';
 
 const routes: Routes = [
-  {path:'',component : NavbarComponent},
-  {path:'navbar',component : NavbarComponent},
+  {path:'',component : BloodCenterTableComponent},
   { path: 'staff-profile', component: StaffProfileComponent },
   { path: 'blood-center', component: BloodCenterRegistrationComponent },
   { path: 'register-blood-donor', component: RegisterBloodDonorComponent },
