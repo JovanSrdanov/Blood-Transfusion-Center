@@ -38,6 +38,10 @@ export class LoginPageComponent implements OnInit {
 
   }
 
+  goToRegister = () => {
+    this.router.navigate(["register-blood-donor"])
+  }
+
   login = () => {
     let JwtAuthenticationRequest = {
       email: this.email!,
