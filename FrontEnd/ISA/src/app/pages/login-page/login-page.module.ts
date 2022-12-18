@@ -1,18 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NavbarComponent } from './navbar/navbar.component';
+import { LoginPageComponent } from './login-page.component';
 import { MaterialModule } from 'src/app/material/material.module';
 
 
 
+
 @NgModule({
-  declarations: [
-    NavbarComponent
-  ],
+  declarations: [LoginPageComponent],
   imports: [
     CommonModule,
-    MaterialModule
-  ],
-  exports: [NavbarComponent]
+    MaterialModule,
+
+  ]
 })
-export class NavbarModule { }
+export class LoginPageModule { }

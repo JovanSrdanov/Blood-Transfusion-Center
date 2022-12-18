@@ -14,7 +14,7 @@ export class RoleGuardService implements CanActivate {
 
     const token = localStorage.getItem('jwt');
     if (!token) {
-      this.router.navigate(['login']);
+      this.router.navigate(['staff-profile']);
       return false;
     }
 
@@ -25,7 +25,7 @@ export class RoleGuardService implements CanActivate {
       !this.auth.isAuthenticated() ||
       role !== expectedRole
     ) {
-      this.router.navigate(['login']);
+      this.router.navigate(['staff-profile']);
       return false;
     }
     return true;

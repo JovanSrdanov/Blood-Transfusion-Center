@@ -1,0 +1,26 @@
+<div class="login-form">
+  <p>Login</p>
+  <div class="content" [formGroup]="loginForm">
+    <div class="input-field">
+      <input
+        id="email"
+        formControlName="email"
+        type="text"
+        placeholder="email"
+      />
+    </div>
+    <div class="input-field">
+      <input
+        id="password"
+        formControlName="password"
+        type="password"
+        placeholder="Password"
+      />
+    </div>
+  </div>
+
+  <div class="action">
+    <button id="loginBtn" (click)="login()" class="login">Login</button>
+    <button class="register" routerLink="/register">Register</button>
+  </div>
+</div>

@@ -1,6 +1,6 @@
 package groupJASS.ISA_2022.Controller;
 
-import groupJASS.ISA_2022.DTO.Auth.AccountTokenState;
+import groupJASS.ISA_2022.DTO.Auth.Jwt;
 import groupJASS.ISA_2022.DTO.Auth.JwtAuthenticationRequest;
 import groupJASS.ISA_2022.Model.Account;
 import groupJASS.ISA_2022.Service.Interfaces.IAccountService;
@@ -59,7 +59,7 @@ public class AuthenticationController {
             int expiresIn = tokenUtils.getExpiredIn();
 
             // Vrati token kao odgovor na uspesnu autentifikaciju
-            return ResponseEntity.ok(new AccountTokenState(jwt, expiresIn));
+            return ResponseEntity.ok(new Jwt(jwt));
         } catch (BadCredentialsException | DisabledException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
         } catch (Exception e) {
