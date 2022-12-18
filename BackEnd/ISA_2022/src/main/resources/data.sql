@@ -7,6 +7,9 @@ VALUES ('ROLE_STAFF');
 INSERT INTO ROLE (name)
 VALUES ('ROLE_SYSTEM_ADMIN');
 
+--- Sifra za sve korinsike je password, kad se pravi novi korisnik nek se kopira hesovana sifra sto vec stoji ovde
+--- Hesovana sifra  -  $2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi
+
 
 INSERT INTO "address" ("id", "city", "country", "latitude", "longitude", "number", "street")
 VALUES ('3eb50b45-9d6c-4f42-992d-4a2bb3c2e0b2', 'Olofström', 'Sweden', '56.2462038', '14.6265298', '250', 'Harbort'),

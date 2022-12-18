@@ -6,9 +6,12 @@ import groupJASS.ISA_2022.Model.Account;
 import groupJASS.ISA_2022.Service.Interfaces.IAccountService;
 import groupJASS.ISA_2022.Utilities.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -37,25 +40,34 @@ public class AuthenticationController {
     // Prvi endpoint koji pogadja korisnik kada se loguje.
     // Tada zna samo svoje korisnicko ime i lozinku i to prosledjuje na backend.
     @PostMapping("/login")
-    public ResponseEntity<AccountTokenState> createAuthenticationToken(
+    public ResponseEntity<?> createAuthenticationToken(
             @RequestBody JwtAuthenticationRequest authenticationRequest, HttpServletResponse response) {
-        // Ukoliko kredencijali nisu ispravni, logovanje nece biti uspesno, desice se
-        // AuthenticationException
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                authenticationRequest.getEmail(), authenticationRequest.getPassword()));
 
-        // Ukoliko je autentifikacija uspesna, ubaci korisnika u trenutni security
-        // kontekst
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        try {
+            // Ukoliko kredencijali nisu ispravni, logovanje nece biti uspesno, desice se
+            // AuthenticationException
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                    authenticationRequest.getEmail(), authenticationRequest.getPassword()));
 
-        // Kreiraj token za tog korisnika
-        Account account = (Account) authentication.getPrincipal();
-        String jwt = tokenUtils.generateToken(account.getUsername(), account.getRoles().get(0).getName());
-        int expiresIn = tokenUtils.getExpiredIn();
+            // Ukoliko je autentifikacija uspesna, ubaci korisnika u trenutni security
+            // kontekst
+            SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        // Vrati token kao odgovor na uspesnu autentifikaciju
-        return ResponseEntity.ok(new AccountTokenState(jwt, expiresIn));
+            // Kreiraj token za tog korisnika
+            Account account = (Account) authentication.getPrincipal();
+            String jwt = tokenUtils.generateToken(account.getUsername(), account.getRoles().get(0).getName());
+            int expiresIn = tokenUtils.getExpiredIn();
+
+            // Vrati token kao odgovor na uspesnu autentifikaciju
+            return ResponseEntity.ok(new AccountTokenState(jwt, expiresIn));
+        } catch (BadCredentialsException | DisabledException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+
     }
-
-
 }
+
+

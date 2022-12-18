@@ -25,8 +25,8 @@ public class TokenUtils {
     // Izdavac tokena
     @Value("ISA_PROJEKAT_2022")
     private String APP_NAME;
-    // Period vazenja tokena - 120 minuta
-    @Value("72000000")
+    // Period vazenja tokena - 24 h
+    @Value("86400000")
     private int EXPIRES_IN;
     // Moguce je generisati JWT za razlicite klijente (npr. web i mobilni klijenti nece imati isto trajanje JWT,
     // JWT za mobilne klijente ce trajati duze jer se mozda aplikacija redje koristi na taj nacin)
