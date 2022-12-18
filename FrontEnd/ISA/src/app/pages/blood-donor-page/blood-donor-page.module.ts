@@ -6,6 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { QuestionnaireModule } from 'src/app/features/questionnaire/questionnaire.module';
 import { BloodCenterViewModule } from 'src/app/features/blood-center-view/blood-center-view.module';
 import { BloodDonorInfoModule } from 'src/app/features/blood-donor-info/blood-donor-info.module';
+import { MaterialModule } from 'src/app/material/material.module';
 
 @NgModule({
   declarations: [
@@ -16,8 +17,9 @@ import { BloodDonorInfoModule } from 'src/app/features/blood-donor-info/blood-do
     BrowserModule,
     RouterModule,
     QuestionnaireModule,
-    BloodCenterViewModule
-    , BloodDonorInfoModule
+    BloodCenterViewModule,
+    BloodDonorInfoModule,
+    MaterialModule
 
 
   ]

@@ -95,8 +95,6 @@ public class BloodDonorController {
 
         try {
             _bloodDonorService.registerNewBloodDonor(dto);
-
-
             return new ResponseEntity<>(dto, HttpStatus.CREATED);
 
         } catch (IllegalArgumentException e) {
@@ -109,9 +107,8 @@ public class BloodDonorController {
 
     //It is not get because you cant send null parameter inside path variable, and I need that case
     @PostMapping("search-name-surname")
-    public ResponseEntity<List<BloodDonorInfoDto>> searchByNameAndSurname(@RequestBody BloodDonorSearchByNameAndSurnameDto dto)
-    {
-        List<BloodDonorInfoDto> bloodDonors = (List<BloodDonorInfoDto>) _bloodDonorService.findBloodDonorByNameAAndSurname(dto.getName(), dto.getSurname());
+    public ResponseEntity<List<BloodDonorInfoDto>> searchByNameAndSurname(@RequestBody BloodDonorSearchByNameAndSurnameDto dto) {
+        List<BloodDonorInfoDto> bloodDonors = _bloodDonorService.findBloodDonorByNameAAndSurname(dto.getName(), dto.getSurname());
         var res = MappingUtilities.mapList(bloodDonors, BloodDonorInfoDto.class, _mapper);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }

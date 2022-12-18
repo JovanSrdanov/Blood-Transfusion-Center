@@ -1,10 +1,28 @@
-<ul>
-  <li>
-    <a routerLink="register-blood-center">Register blood center</a>
-  </li>
-  <li><a routerLink="assign-blood-center">Assign blood center</a></li>
-  <li><a routerLink="register-staff">register-staff</a></li>
-  <li><a routerLink="blood-center-view">Blood center view</a></li>
-  <li><button (click)="LogOut()">Log out</button></li>
-</ul>
+<div>
+  <mat-toolbar class="navbar">
+    <div class="name-and-logo" routerLink="blood-center-view">
+      <p>BloodBank</p>
+      <img src="../../../../assets/images/favicon.ico" alt="gas" />
+    </div>
+    <div>
+      <button mat-raised-button routerLink="register-blood-center">
+        Register blood center
+      </button>
+    </div>
+    <div>
+      <button mat-raised-button routerLink="assign-blood-center">
+        Assign blood center
+      </button>
+    </div>
+    <div>
+      <button mat-raised-button routerLink="register-staff">
+        Register staff
+      </button>
+    </div>
+
+    <div>
+      <button mat-raised-button (click)="LogOut()">Log out</button>
+    </div>
+  </mat-toolbar>
+</div>
 <router-outlet></router-outlet>

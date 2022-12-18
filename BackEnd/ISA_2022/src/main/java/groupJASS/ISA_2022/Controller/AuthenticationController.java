@@ -60,8 +60,10 @@ public class AuthenticationController {
 
             // Vrati token kao odgovor na uspesnu autentifikaciju
             return ResponseEntity.ok(new Jwt(jwt));
-        } catch (BadCredentialsException | DisabledException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
+        } catch (DisabledException e) {
+            return new ResponseEntity<>("Account is not activated", HttpStatus.FORBIDDEN);
+        } catch (BadCredentialsException e) {
+            return new ResponseEntity<>("Invalid username or password", HttpStatus.FORBIDDEN);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

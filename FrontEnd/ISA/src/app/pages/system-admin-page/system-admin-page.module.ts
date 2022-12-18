@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { BloodCenterRegistrationModule } from 'src/app/features/blood-center-registration/blood-center-registration.module';
 import { StaffRegistrationModule } from 'src/app/features/staff-registration/staff-registration.module';
 import { AssignBloodCenterModule } from 'src/app/features/assign-blood-center/assign-blood-center.module';
+import { MaterialModule } from 'src/app/material/material.module';
 @NgModule({
   declarations: [
     SystemAdminPageComponent
@@ -14,7 +15,8 @@ import { AssignBloodCenterModule } from 'src/app/features/assign-blood-center/as
     RouterModule,
     BloodCenterRegistrationModule,
     StaffRegistrationModule,
-    AssignBloodCenterModule
+    AssignBloodCenterModule,
+    MaterialModule
   ]
 })
 export class SystemAdminPageModule { }

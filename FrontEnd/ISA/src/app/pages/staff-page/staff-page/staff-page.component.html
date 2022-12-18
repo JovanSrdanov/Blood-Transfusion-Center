@@ -1,7 +1,22 @@
-<ul>
-  <li><a routerLink="blood-donor-list">blood-donor-list</a></li>
-  <li><a routerLink="staff-profile">staff-profile</a></li>
-  <li><button (click)="LogOut()">Log out</button></li>
-</ul>
+<div>
+  <mat-toolbar class="navbar">
+    <div class="name-and-logo">
+      <p>BloodBank</p>
+      <img src="../../../../assets/images/favicon.ico" alt="gas" />
+    </div>
+    <div>
+      <button mat-raised-button routerLink="blood-donor-list">
+        Blood donor list
+      </button>
+    </div>
+    <div>
+      <button mat-raised-button routerLink="staff-profile">Profile page</button>
+    </div>
+
+    <div>
+      <button mat-raised-button (click)="LogOut()">Log out</button>
+    </div>
+  </mat-toolbar>
+</div>
 
 <router-outlet></router-outlet>

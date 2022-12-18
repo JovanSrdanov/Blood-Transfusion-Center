@@ -23,6 +23,7 @@ span {
   margin-top: auto;
   flex-direction: row;
   justify-content: center;
+  text-shadow: 0px 0px 15px white;
 }
 .name-and-logo img {
   height: 30px;
@@ -30,4 +31,5 @@ span {
 
 .name-and-logo:hover {
   cursor: pointer;
+  text-shadow: 0px 0px 25px red;
 }
