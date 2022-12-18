@@ -23,10 +23,10 @@ public class TokenUtils {
     @Value("somesecret")
     public String SECRET;
     // Izdavac tokena
-    @Value("spring-security-example")
+    @Value("ISA_PROJEKAT_2022")
     private String APP_NAME;
-    // Period vazenja tokena - 30 minuta
-    @Value("1800000")
+    // Period vazenja tokena - 120 minuta
+    @Value("72000000")
     private int EXPIRES_IN;
     // Moguce je generisati JWT za razlicite klijente (npr. web i mobilni klijenti nece imati isto trajanje JWT,
     // JWT za mobilne klijente ce trajati duze jer se mozda aplikacija redje koristi na taj nacin)
@@ -47,10 +47,11 @@ public class TokenUtils {
      * @param username Korisničko ime korisnika kojem se token izdaje
      * @return JWT token
      */
-    public String generateToken(String username) {
+    public String generateToken(String username, String role) {
         return Jwts.builder()
                 .setIssuer(APP_NAME)
                 .setSubject(username)
+                .claim("role", role)
                 .setAudience(generateAudience())
                 .setIssuedAt(new Date())
                 .setExpiration(generateExpirationDate())

@@ -1,17 +1,17 @@
 package groupJASS.ISA_2022.DTO.Auth;
 
 // DTO koji enkapsulira generisani JWT i njegovo trajanje koji se vracaju klijentu
-public class UserTokenState {
+public class AccountTokenState {
 
     private String accessToken;
     private Long expiresIn;
 
-    public UserTokenState() {
+    public AccountTokenState() {
         this.accessToken = null;
         this.expiresIn = null;
     }
 
-    public UserTokenState(String accessToken, long expiresIn) {
+    public AccountTokenState(String accessToken, long expiresIn) {
         this.accessToken = accessToken;
         this.expiresIn = expiresIn;
     }

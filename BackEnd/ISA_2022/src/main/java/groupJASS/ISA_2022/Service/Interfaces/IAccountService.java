@@ -9,6 +9,12 @@ public interface IAccountService extends ICrudService<Account> {
     void registerNewUser(Account account);
 
     void registerRegisteredUser(Account map, BloodDonor bloodDonor);
-    public boolean checkEmailAvailability(String email);
-    public Account findAccountByPersonId(UUID personId);
+
+    boolean checkEmailAvailability(String email);
+
+    Account findAccountByPersonId(UUID personId);
+
+    Account findAccountByEmail(String email);
+
+
 }

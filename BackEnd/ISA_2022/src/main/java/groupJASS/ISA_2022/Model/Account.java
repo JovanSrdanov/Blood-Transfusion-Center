@@ -35,7 +35,7 @@ public class Account implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private List<Role> roles;
 
-    @Column(nullable = false)
+    @Column
     private UUID personId;
 
     @Column(nullable = false)

@@ -14,16 +14,16 @@ import org.springframework.stereotype.Service;
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
-    private AccountRepository userRepository;
+    private AccountRepository accountRepository;
 
     // Funkcija koja na osnovu username-a iz baze vraca objekat User-a
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Account user = userRepository.findByEmail(username);
-        if (user == null) {
-            throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));
+        Account account = accountRepository.findByEmail(username);
+        if (account == null) {
+            throw new UsernameNotFoundException(String.format("No account found with username '%s'.", username));
         } else {
-            return user;
+            return account;
         }
     }
 

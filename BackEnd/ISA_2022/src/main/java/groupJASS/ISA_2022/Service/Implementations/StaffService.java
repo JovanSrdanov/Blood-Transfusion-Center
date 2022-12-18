@@ -5,13 +5,11 @@ import groupJASS.ISA_2022.DTO.Staff.StaffBasicInfoDTO;
 import groupJASS.ISA_2022.DTO.Staff.StaffProfileDTO;
 import groupJASS.ISA_2022.DTO.Staff.StaffRegistrationDTO;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
-import groupJASS.ISA_2022.Model.Account;
-import groupJASS.ISA_2022.Model.Address;
-import groupJASS.ISA_2022.Model.BloodCenter;
-import groupJASS.ISA_2022.Model.Staff;
+import groupJASS.ISA_2022.Model.*;
 import groupJASS.ISA_2022.Repository.AccountRepository;
 import groupJASS.ISA_2022.Repository.BloodCenterRepository;
 import groupJASS.ISA_2022.Repository.StaffRepository;
+import groupJASS.ISA_2022.Service.Interfaces.IRoleService;
 import groupJASS.ISA_2022.Service.Interfaces.IStaffService;
 import groupJASS.ISA_2022.Utilities.MappingUtilities;
 import org.modelmapper.ModelMapper;
@@ -35,14 +33,17 @@ public class StaffService implements IStaffService {
     private final BloodCenterRepository _bloodCenterRepository;
     private final AccountRepository _accountRepository;
     private final ModelMapper _mapper;
+    @Autowired
+    private IRoleService _roleService;
 
     @Autowired
     public StaffService(StaffRepository staffRepository, BloodCenterRepository bloodCenterService,
-                        AccountRepository accountRepository, ModelMapper mapper) {
+                        AccountRepository accountRepository, ModelMapper mapper, IRoleService roleService) {
         _staffRepository = staffRepository;
         _bloodCenterRepository = bloodCenterService;
         _accountRepository = accountRepository;
         _mapper = mapper;
+        _roleService = roleService;
     }
 
     @Override
@@ -165,8 +166,8 @@ public class StaffService implements IStaffService {
         UUID stafId = _staffRepository.save(staff).getId();
 
         Account account = _mapper.map(dto, Account.class);
-        //Todo ispravi part 2
-        // account.setRole(Role.STAFF);
+        List<Role> roles = _roleService.findByName("ROLE_STAFF");
+        account.setRoles(roles);
         account.setPersonId(stafId);
         account.setId(UUID.randomUUID());
         _accountRepository.save(account);

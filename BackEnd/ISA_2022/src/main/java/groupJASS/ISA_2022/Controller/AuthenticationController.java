@@ -1,7 +1,7 @@
 package groupJASS.ISA_2022.Controller;
 
+import groupJASS.ISA_2022.DTO.Auth.AccountTokenState;
 import groupJASS.ISA_2022.DTO.Auth.JwtAuthenticationRequest;
-import groupJASS.ISA_2022.DTO.Auth.UserTokenState;
 import groupJASS.ISA_2022.Model.Account;
 import groupJASS.ISA_2022.Service.Interfaces.IAccountService;
 import groupJASS.ISA_2022.Utilities.TokenUtils;
@@ -37,7 +37,7 @@ public class AuthenticationController {
     // Prvi endpoint koji pogadja korisnik kada se loguje.
     // Tada zna samo svoje korisnicko ime i lozinku i to prosledjuje na backend.
     @PostMapping("/login")
-    public ResponseEntity<UserTokenState> createAuthenticationToken(
+    public ResponseEntity<AccountTokenState> createAuthenticationToken(
             @RequestBody JwtAuthenticationRequest authenticationRequest, HttpServletResponse response) {
         // Ukoliko kredencijali nisu ispravni, logovanje nece biti uspesno, desice se
         // AuthenticationException
@@ -49,12 +49,12 @@ public class AuthenticationController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         // Kreiraj token za tog korisnika
-        Account user = (Account) authentication.getPrincipal();
-        String jwt = tokenUtils.generateToken(user.getUsername());
+        Account account = (Account) authentication.getPrincipal();
+        String jwt = tokenUtils.generateToken(account.getUsername(), account.getRoles().get(0).getName());
         int expiresIn = tokenUtils.getExpiredIn();
 
         // Vrati token kao odgovor na uspesnu autentifikaciju
-        return ResponseEntity.ok(new UserTokenState(jwt, expiresIn));
+        return ResponseEntity.ok(new AccountTokenState(jwt, expiresIn));
     }
 
 
