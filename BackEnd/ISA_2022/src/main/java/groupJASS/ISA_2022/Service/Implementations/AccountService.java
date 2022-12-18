@@ -2,11 +2,12 @@ package groupJASS.ISA_2022.Service.Implementations;
 
 import groupJASS.ISA_2022.Model.Account;
 import groupJASS.ISA_2022.Model.BloodDonor;
-import groupJASS.ISA_2022.Model.Role;
 import groupJASS.ISA_2022.Repository.AccountRepository;
 import groupJASS.ISA_2022.Service.Interfaces.IAccountService;
+import groupJASS.ISA_2022.Service.Interfaces.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
@@ -18,10 +19,17 @@ public class AccountService implements IAccountService {
 
     private final AccountRepository _accountRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public AccountService(AccountRepository accountRepository) {
+    private IRoleService _roleService;
+
+    @Autowired
+    public AccountService(AccountRepository accountRepository, IRoleService roleService, PasswordEncoder passwordEncoder1) {
         _accountRepository = accountRepository;
+        _roleService = roleService;
+        passwordEncoder = passwordEncoder1;
     }
 
     @Override
@@ -61,6 +69,7 @@ public class AccountService implements IAccountService {
             throw new IllegalArgumentException("Account with this email already exists");
         }
         account.setActivated(false);
+        account.setPassword(passwordEncoder.encode(account.getPassword()));
         save(account);
 
     }
@@ -68,17 +77,21 @@ public class AccountService implements IAccountService {
     @Override
     public void registerRegisteredUser(Account map, BloodDonor bloodDonor) {
         map.setPersonId(bloodDonor.getId());
-        map.setRole(Role.BLOOD_DONOR);
+        // Todo ispravi
+        //map.setRole(Role.BLOOD_DONOR);
         registerNewUser(map);
 
     }
+
     @Override
     public boolean checkEmailAvailability(String email) {
         return _accountRepository.existsAccountByEmail(email);
     }
+
     @Override
-    public Account findAccountByPersonId(UUID personId)
-    {
+    public Account findAccountByPersonId(UUID personId) {
         return _accountRepository.findAccountByPersonId(personId);
     }
+
+
 }

@@ -1,19 +1,19 @@
 package groupJASS.ISA_2022.Service.Implementations;
 
-import groupJASS.ISA_2022.DTO.Account.AccountDTO;
 import groupJASS.ISA_2022.DTO.Account.PasswordDTO;
-import groupJASS.ISA_2022.DTO.BloodCenter.BloodCenterProfileDto;
 import groupJASS.ISA_2022.DTO.Staff.StaffBasicInfoDTO;
 import groupJASS.ISA_2022.DTO.Staff.StaffProfileDTO;
 import groupJASS.ISA_2022.DTO.Staff.StaffRegistrationDTO;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
-import groupJASS.ISA_2022.Model.*;
+import groupJASS.ISA_2022.Model.Account;
+import groupJASS.ISA_2022.Model.Address;
+import groupJASS.ISA_2022.Model.BloodCenter;
+import groupJASS.ISA_2022.Model.Staff;
 import groupJASS.ISA_2022.Repository.AccountRepository;
 import groupJASS.ISA_2022.Repository.BloodCenterRepository;
 import groupJASS.ISA_2022.Repository.StaffRepository;
 import groupJASS.ISA_2022.Service.Interfaces.IStaffService;
 import groupJASS.ISA_2022.Utilities.MappingUtilities;
-import org.apache.commons.lang3.NotImplementedException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -165,7 +165,8 @@ public class StaffService implements IStaffService {
         UUID stafId = _staffRepository.save(staff).getId();
 
         Account account = _mapper.map(dto, Account.class);
-        account.setRole(Role.STAFF);
+        //Todo ispravi part 2
+        // account.setRole(Role.STAFF);
         account.setPersonId(stafId);
         account.setId(UUID.randomUUID());
         _accountRepository.save(account);
