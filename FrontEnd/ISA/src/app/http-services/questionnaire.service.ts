@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { Questionnaire } from '../features/register-blood-donor/Model/questionnaire';
+import { Questionnaire } from '../pages/registration-page/Model/questionnaire';
 
 @Injectable({
   providedIn: 'root'

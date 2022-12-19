@@ -13,6 +13,6 @@ import { MaterialModule } from 'src/app/material/material.module';
     CommonModule,
     MaterialModule
   ],
-  exports:[NavbarComponent]
+  exports: [NavbarComponent]
 })
 export class NavbarModule { }

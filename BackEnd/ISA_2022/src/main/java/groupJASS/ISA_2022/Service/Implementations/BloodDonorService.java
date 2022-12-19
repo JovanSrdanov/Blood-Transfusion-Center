@@ -17,10 +17,14 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -34,6 +38,8 @@ public class BloodDonorService implements IBloodDonorService {
     private final IAccountService _accountService;
     private final ModelMapper _mapper;
     private final AccountRepository _accountRepository;
+    @Autowired
+    private JavaMailSender javaMailSender;
 
     @Autowired
     public BloodDonorService(BloodDonorRepository bloodDonorRepository, IAddressService addressService, IAccountService accountService, ModelMapper mapper, AccountRepository accountRepository) {
@@ -115,7 +121,7 @@ public class BloodDonorService implements IBloodDonorService {
     }
 
     @Override
-    @Transactional(rollbackFor = DataIntegrityViolationException.class)
+    @Transactional(rollbackFor = Exception.class)
     public void registerNewBloodDonor(RegisterBloodDonorDTO dto) {
 
         Address address = _addressService
@@ -125,6 +131,19 @@ public class BloodDonorService implements IBloodDonorService {
         _accountService.registerRegisteredUser(_mapper.map(dto.getAccountDTO(), Account.class),
                 bloodDonor);
 
+
+    }
+
+    @Async
+    public void sendActvivationToken(RegisterBloodDonorDTO dto) {
+        SimpleMailMessage mail = new SimpleMailMessage();
+        mail.setTo(dto.getAccountDTO().getEmail());
+        mail.setFrom("ISA_BEJBI");
+        mail.setSubject("Account activation " + LocalDate.now());
+        mail.setText("Go to the link to activate your account: ");
+        javaMailSender.send(mail);
+
+        System.out.println("Email poslat!");
     }
 
     @Override
@@ -146,11 +165,11 @@ public class BloodDonorService implements IBloodDonorService {
                 .map(dto -> {
                     Account acc = _accountRepository.findAccountByPersonId(dto.getId());
                     String mail = "mail@mail.com";
-                    if(acc != null) {
+                    if (acc != null) {
                         mail = acc.getEmail();
                     }
                     dto.setEmail(mail);
-                    return  dto;
+                    return dto;
                 })
                 .collect(Collectors.toList());
         return res;

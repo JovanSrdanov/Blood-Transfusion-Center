@@ -19,4 +19,4 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserAnimationsModule,
   ],
 })
-export class StaffProfileModule {}
+export class StaffProfileModule { }

@@ -1,0 +1,22 @@
+<div>
+  <mat-toolbar class="navbar">
+    <div class="name-and-logo">
+      <p>BloodBank</p>
+      <img src="../../../../assets/images/favicon.ico" alt="gas" />
+    </div>
+    <div>
+      <button mat-raised-button routerLink="blood-donor-list">
+        Blood donor list
+      </button>
+    </div>
+    <div>
+      <button mat-raised-button routerLink="staff-profile">Profile page</button>
+    </div>
+
+    <div>
+      <button mat-raised-button (click)="LogOut()">Log out</button>
+    </div>
+  </mat-toolbar>
+</div>
+
+<router-outlet></router-outlet>

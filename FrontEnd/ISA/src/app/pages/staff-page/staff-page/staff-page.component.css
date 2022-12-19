@@ -1,0 +1,34 @@
+.mat-toolbar {
+  background: rgb(33, 38, 40);
+  color: #fff;
+}
+
+.navbar {
+  justify-content: space-between;
+}
+
+span {
+  padding-right: 1rem;
+}
+
+.mat-raised-button {
+  margin: 0px 10px;
+  background-color: rgb(74, 74, 74);
+  color: white;
+}
+
+.name-and-logo {
+  padding: 15px;
+  display: flex;
+  margin-top: auto;
+  flex-direction: row;
+  justify-content: center;
+  text-shadow: 0px 0px 15px white;
+}
+.name-and-logo img {
+  height: 30px;
+}
+
+.name-and-logo:hover {
+  text-shadow: 0px 0px 25px red;
+}

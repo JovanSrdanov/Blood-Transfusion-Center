@@ -1,50 +1,48 @@
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from './routing/app-routing.module';
 import { MaterialModule } from './material/material.module';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
-import { StaffProfileModule } from './features/staff-profile/staff-profile';
-import { BloodCenterRegistrationModule } from './features/blood-center-registration/blood-center-registration.module';
-import { HttpClientModule } from '@angular/common/http';
-import { NavbarModule } from './features/navbar/navbar.module';
-import { RegisterBloodDonorModule } from './features/register-blood-donor/register-blood-donor.module';
-import { MatSelectModule } from '@angular/material/select';
-import { StaffRegistrationModule } from './features/staff-registration/staff-registration.module';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
+import { AuthInterceptor } from './auth/auth.interceptor';
+import { BloodDonorPageModule } from './pages/blood-donor-page/blood-donor-page.module';
+import { StaffPageModule } from './pages/staff-page/staff-page.module';
+import { SystemAdminPageModule } from './pages/system-admin-page/system-admin-page.module';
 import { BrowserModule } from '@angular/platform-browser';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { LoginPageModule } from './pages/login-page/login-page.module';
+import { RegisterBloodDonorModule } from './pages/registration-page/register-blood-donor.module';
 
-import { QuestionnaireModule } from './features/questionnaire/questionnaire.module';
-import { BloodCenterViewModule } from './features/blood-center-view/blood-center-view.module';
-import { BloodDonorInfoModule } from './features/blood-donor-info/blood-donor-info.module';
-import { ChangePasswordComponent } from './features/staff-profile/change-password/change-password.component';
-import { AssignBloodCenterModule } from './features/assign-blood-center/assign-blood-center.module';
-import { BloodDonorListModule } from './features/blood-donor-list/blood-donor-list.module';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    MatCheckboxModule,
+    //Nasi moduli za role
+    BloodDonorPageModule,
+    StaffPageModule,
+    SystemAdminPageModule,
+    LoginPageModule,
+    RegisterBloodDonorModule,
+
+
+    //Pomocni moduli
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
-    StaffRegistrationModule,
-    FormsModule,
-    RegisterBloodDonorModule,
-    BloodCenterRegistrationModule,
     HttpClientModule,
-    NavbarModule,
-    MatSelectModule,
-    QuestionnaireModule,
-    BloodCenterViewModule,
-    BloodDonorInfoModule,
-    AssignBloodCenterModule,
-    BloodDonorListModule,
-    MatFormFieldModule
+
   ],
-  providers: [],
+  providers: [
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+    JwtHelperService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

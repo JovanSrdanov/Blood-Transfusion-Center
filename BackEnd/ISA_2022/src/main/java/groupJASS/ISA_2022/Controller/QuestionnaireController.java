@@ -1,17 +1,22 @@
 package groupJASS.ISA_2022.Controller;
 
 import groupJASS.ISA_2022.DTO.QuestionnaireDTO;
+import groupJASS.ISA_2022.Model.Account;
 import groupJASS.ISA_2022.Model.Questionnaire;
+import groupJASS.ISA_2022.Service.Interfaces.IAccountService;
+import groupJASS.ISA_2022.Service.Interfaces.IBloodDonorService;
 import groupJASS.ISA_2022.Service.Interfaces.IQuestionnaireService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.webjars.NotFoundException;
 
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,13 +25,20 @@ import java.util.UUID;
 public class QuestionnaireController {
 
     private final IQuestionnaireService _questionnaireService;
-
     private final ModelMapper _modelMapper;
+    @Autowired
+    private IBloodDonorService _bloodDonorService;
 
     @Autowired
-    public QuestionnaireController(IQuestionnaireService questionnaireService, ModelMapper mapper) {
+    private IAccountService _accountService;
+
+
+    @Autowired
+    public QuestionnaireController(IQuestionnaireService questionnaireService, ModelMapper mapper, IBloodDonorService bloodDonorService, IAccountService accountService) {
         _questionnaireService = questionnaireService;
         _modelMapper = mapper;
+        _bloodDonorService = bloodDonorService;
+        _accountService = accountService;
     }
 
     @GetMapping
@@ -49,14 +61,13 @@ public class QuestionnaireController {
     }
 
     @PostMapping("fillQuestionare")
-    public ResponseEntity<?> fillQuestionare(@Valid @RequestBody QuestionnaireDTO dto)
+    @PreAuthorize("hasRole('BLOOD_DONOR')")
+    public ResponseEntity<?> fillQuestionare(@Valid @RequestBody QuestionnaireDTO dto, Principal account)
             throws ConstraintViolationException {
-
-        //TODO dodati id blooddonora
+        
         try {
-
-            UUID bloodDonorId = UUID.randomUUID();
-            _questionnaireService.fillQuestionare(_modelMapper.map(dto, Questionnaire.class), bloodDonorId);
+            Account a = _accountService.findAccountByEmail(account.getName());
+            _questionnaireService.fillQuestionare(_modelMapper.map(dto, Questionnaire.class), a.getPersonId());
             return new ResponseEntity<>(dto, HttpStatus.CREATED);
 
         } catch (IllegalArgumentException e) {

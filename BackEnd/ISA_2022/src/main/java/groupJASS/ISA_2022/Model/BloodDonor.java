@@ -16,9 +16,7 @@ import java.util.Set;
 @Getter
 @Setter
 public class BloodDonor extends Person {
-
-    // TODO: ne radi lazy
-
+    
     @ManyToOne(fetch = FetchType.LAZY)
     private Address address;
     @Column(nullable = false)

@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BloodDonorService } from 'src/app/http-services/blood-donor.service';
 import { RegisterNonRegisteredUserDTO } from '../Model/RegisterNonRegisteredUserDTO';
+import { AppRoutingModule } from 'src/app/routing/app-routing.module';
 
 interface Gender {
   value: number;
@@ -104,6 +105,10 @@ export class RegisterBloodDonorComponent implements OnInit {
         console.log(err.error);
       }
     )
+  }
+
+  goToLogin = () => {
+    this.router.navigate(["login"])
   }
 
 }

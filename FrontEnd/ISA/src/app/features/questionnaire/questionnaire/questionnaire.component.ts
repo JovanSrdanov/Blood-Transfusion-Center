@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Questionnaire } from '../../register-blood-donor/Model/questionnaire';
+import { Questionnaire } from 'src/app/pages/registration-page/Model/questionnaire';
 import { QuestionnaireService } from './../../../http-services/questionnaire.service';
 
 @Component({
