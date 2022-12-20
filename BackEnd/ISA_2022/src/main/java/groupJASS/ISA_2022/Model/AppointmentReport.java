@@ -24,5 +24,5 @@ public class AppointmentReport {
 
     @OneToOne
     @JoinColumn
-    private Appointment appointment;
+    private AppointmentSchedulingHistory appointmentSchedulingHistory;
 }

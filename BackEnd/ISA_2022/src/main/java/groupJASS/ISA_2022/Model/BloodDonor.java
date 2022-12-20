@@ -34,7 +34,7 @@ public class BloodDonor extends Person {
     private Questionnaire questionnaire;
 
     @OneToMany(mappedBy = "bloodDonor", fetch = FetchType.LAZY)
-    private Set<Appointment> appointments;
+    private Set<AppointmentSchedulingHistory> appointmentSchedulingHistories;
 
     private int penalties;
 
