@@ -1,10 +1,12 @@
 package groupJASS.ISA_2022.Service.Implementations;
 
+import groupJASS.ISA_2022.DTO.Account.ActivateAccountDTO;
 import groupJASS.ISA_2022.Model.Account;
 import groupJASS.ISA_2022.Model.BloodDonor;
 import groupJASS.ISA_2022.Model.Role;
 import groupJASS.ISA_2022.Repository.AccountRepository;
 import groupJASS.ISA_2022.Service.Interfaces.IAccountService;
+import groupJASS.ISA_2022.Service.Interfaces.IActivateAccountService;
 import groupJASS.ISA_2022.Service.Interfaces.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -20,18 +22,18 @@ import java.util.UUID;
 public class AccountService implements IAccountService {
 
     private final AccountRepository _accountRepository;
-
+    private final IActivateAccountService _activateAccountService;
     @Autowired
     private PasswordEncoder _passwordEncoder;
-
     @Autowired
     private IRoleService _roleService;
 
     @Autowired
-    public AccountService(AccountRepository accountRepository, IRoleService roleService, PasswordEncoder passwordEncoder) {
+    public AccountService(AccountRepository accountRepository, IRoleService roleService, PasswordEncoder passwordEncoder, IActivateAccountService activateAccountService) {
         _accountRepository = accountRepository;
         _roleService = roleService;
         this._passwordEncoder = passwordEncoder;
+        _activateAccountService = activateAccountService;
     }
 
     @Override
@@ -63,7 +65,7 @@ public class AccountService implements IAccountService {
     }
 
     @Override
-    public void registerNewUser(Account account) {
+    public Account registerNewUser(Account account) {
 
 
         if (_accountRepository.existsAccountByEmail(account.getEmail())) {
@@ -72,16 +74,16 @@ public class AccountService implements IAccountService {
         }
         account.setActivated(false);
         account.setPassword(_passwordEncoder.encode(account.getPassword()));
-        save(account);
+        return save(account);
 
     }
 
     @Override
-    public void registerRegisteredUser(Account map, BloodDonor bloodDonor) {
+    public Account registerRegisteredUser(Account map, BloodDonor bloodDonor) {
         map.setPersonId(bloodDonor.getId());
         List<Role> roles = _roleService.findByName("ROLE_BLOOD_DONOR");
         map.setRoles(roles);
-        registerNewUser(map);
+        return registerNewUser(map);
 
     }
 
@@ -98,6 +100,20 @@ public class AccountService implements IAccountService {
     @Override
     public Account findAccountByEmail(String email) {
         return _accountRepository.findByEmail(email);
+    }
+
+    @Override
+    public Account activateAccount(ActivateAccountDTO activateAccountDTO) {
+        if (!_activateAccountService.existsByAccountIdAndAcctivationCode(activateAccountDTO.getAccountId(), activateAccountDTO.getActivationCode())) {
+            throw new NotFoundException("No activation code for this account available");
+        }
+        Account account = findById(activateAccountDTO.getAccountId());
+        if (account.isActivated()) {
+            throw new IllegalArgumentException("Account already activated");
+        }
+        account.setActivated(true);
+        return save(account);
+
     }
 
 

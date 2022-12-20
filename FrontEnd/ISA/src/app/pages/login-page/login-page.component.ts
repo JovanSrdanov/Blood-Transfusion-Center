@@ -6,6 +6,7 @@ import { LoginService } from 'src/app/auth/services/login.service';
 import { BloodCenterService } from 'src/app/http-services/blood-center.service';
 import { BloodCenterBasicInfo } from 'src/app/model/blood-center/blood-center-basic-info';
 
+
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
@@ -31,12 +32,20 @@ export class LoginPageComponent implements OnInit {
     private readonly router: Router,
     private readonly accountService: AccountService,
     private readonly bloodCentreService: BloodCenterService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const params = new URLSearchParams(window.location.search);
-    var token = params.get('token');
-    var id = params.get('id');
+    var token = params.get('activationCode');
+    var accountId = params.get('accountId');
+    if (token !== null && accountId != null) {
+      this.accountService.activateAccount(token, accountId).subscribe((res) => {
+        localStorage.setItem('jwt', res.jwt);
+        this.router.navigate(['blood-donor']);
+
+      });
+    }
+
   }
 
   goToRegister = () => {

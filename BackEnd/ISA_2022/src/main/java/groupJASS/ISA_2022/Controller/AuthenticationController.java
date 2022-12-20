@@ -1,5 +1,6 @@
 package groupJASS.ISA_2022.Controller;
 
+import groupJASS.ISA_2022.DTO.Account.ActivateAccountDTO;
 import groupJASS.ISA_2022.DTO.Auth.Jwt;
 import groupJASS.ISA_2022.DTO.Auth.JwtAuthenticationRequest;
 import groupJASS.ISA_2022.Model.Account;
@@ -64,6 +65,20 @@ public class AuthenticationController {
             return new ResponseEntity<>("Account is not activated", HttpStatus.FORBIDDEN);
         } catch (BadCredentialsException e) {
             return new ResponseEntity<>("Invalid username or password", HttpStatus.FORBIDDEN);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/activate-account")
+    public ResponseEntity<?> activateAccount(@RequestBody ActivateAccountDTO activateAccountDTO) {
+        try {
+
+            Account account = accountService.activateAccount(activateAccountDTO);
+            String jwt = tokenUtils.generateToken(account.getUsername(), account.getRoles().get(0).getName());
+            int expiresIn = tokenUtils.getExpiredIn();
+            return ResponseEntity.ok(new Jwt(jwt));
+
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
