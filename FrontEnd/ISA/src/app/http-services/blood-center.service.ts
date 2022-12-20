@@ -7,27 +7,38 @@ import { BloodCenterRegistration } from '../model/blood-center/blood-center-regi
 import { PageDto } from '../model/PageDto';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BloodCenterService {
+  path: string = environment.backendPath + '/blood-center';
 
-  path: string = environment.backendPath + "/blood-center";
+  constructor(private readonly http: HttpClient) {}
 
-  constructor(private readonly http:HttpClient) { }
+  registerBloodCenter = (bloodCenter: BloodCenterRegistration) => {
+    return this.http.post(this.path, bloodCenter);
+  };
 
-    registerBloodCenter = (bloodCenter: BloodCenterRegistration) =>
-    {
-      return this.http.post(this.path, bloodCenter);
-    }
+  getAllBloodCenters = () => {
+    return this.http.get<BloodCenterBasicInfo[]>(this.path + '/all-basic-info');
+  };
 
-    getAllBloodCenters = () =>{
-      return this.http.get<BloodCenterBasicInfo[]>(this.path + '/all-basic-info');
-    }
-
-    getPagableBloodCenters(page: number, search: string, sortType: any, field: string):
-     Observable<PageDto<BloodCenterBasicInfo[]>> {
-      //alert("sortType: " + sortType + "  sortField: " + field + " search:" + search)
-      return this.http.get<PageDto<BloodCenterBasicInfo[]>>
-      (this.path + "/sort?page=" + page + "&field=" + field + "&sort=" + sortType + "&s=" + search);
-    }
+  getPagableBloodCenters(
+    page: number,
+    search: string,
+    sortType: any,
+    field: string
+  ): Observable<PageDto<BloodCenterBasicInfo[]>> {
+    //alert("sortType: " + sortType + "  sortField: " + field + " search:" + search)
+    return this.http.get<PageDto<BloodCenterBasicInfo[]>>(
+      this.path +
+        '/sort?page=' +
+        page +
+        '&field=' +
+        field +
+        '&sort=' +
+        sortType +
+        '&s=' +
+        search
+    );
+  }
 }

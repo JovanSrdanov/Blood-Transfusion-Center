@@ -5,23 +5,17 @@ import { QuestionnaireComponent } from '../features/questionnaire/questionnaire/
 import { RouterModule, Routes } from '@angular/router';
 import { BloodDonorInfoFormComponent } from '../features/blood-donor-info/blood-donor-info-form/blood-donor-info-form.component';
 
-
 const routes: Routes = [
   { path: 'questionnaire', component: QuestionnaireComponent },
   { path: 'blood-center-view', component: BloodCenterTableComponent },
   { path: 'blood-donor-info', component: BloodDonorInfoFormComponent },
-  { path: '', redirectTo: "blood-center-view", pathMatch: "full" },
-  { path: '**', redirectTo: "blood-center-view", pathMatch: "full" },
+  { path: '', redirectTo: 'blood-center-view', pathMatch: 'full' },
+  { path: '**', redirectTo: 'blood-center-view', pathMatch: 'full' },
 ];
 
 @NgModule({
   declarations: [],
-  imports: [
-    RouterModule.forChild(routes),
-
-  ],
-  exports: [RouterModule]
-
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
 })
-export class BloodDonorRoutingModule { }
-
+export class BloodDonorRoutingModule {}
