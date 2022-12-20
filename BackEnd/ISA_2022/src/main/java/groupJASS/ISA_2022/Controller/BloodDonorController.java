@@ -94,8 +94,9 @@ public class BloodDonorController {
             throws ConstraintViolationException {
 
         try {
+
             _bloodDonorService.registerNewBloodDonor(dto);
-            _bloodDonorService.sendActvivationToken(dto);
+          
             return new ResponseEntity<>(dto, HttpStatus.CREATED);
 
         } catch (IllegalArgumentException e) {
@@ -107,6 +108,7 @@ public class BloodDonorController {
     }
 
     //It is not get because you cant send null parameter inside path variable, and I need that case
+    //TODO Search only donors who visited certain center
     @PostMapping("search-name-surname")
     public ResponseEntity<List<BloodDonorInfoDto>> searchByNameAndSurname(@RequestBody BloodDonorSearchByNameAndSurnameDto dto) {
         List<BloodDonorInfoDto> bloodDonors = _bloodDonorService.findBloodDonorByNameAAndSurname(dto.getName(), dto.getSurname());

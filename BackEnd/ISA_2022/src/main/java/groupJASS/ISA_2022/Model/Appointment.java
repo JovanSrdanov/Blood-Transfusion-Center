@@ -26,16 +26,6 @@ public class Appointment {
             inverseJoinColumns = @JoinColumn(name = "staff_id", referencedColumnName = "id"))
     private Set<Staff> staff = new HashSet<Staff>();
 
-    @Column(nullable = false)
-    private LocalDateTime time;
-    @Column(nullable = false)
-    private int duration;
-
-    @ManyToOne
-    @JoinColumn(name = "blood_donor_id")
-    private  BloodDonor bloodDonor;
-
-    @OneToOne(mappedBy = "appointment")
-    private AppointmentReport appointmentReport;
-
+    @Embedded
+    DateRange time;
 }

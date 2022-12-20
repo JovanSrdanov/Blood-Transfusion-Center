@@ -1,10 +1,8 @@
 package groupJASS.ISA_2022.Model;
 
-import jdk.jfr.Enabled;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -14,7 +12,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-public class AppointmentSchedulingConfirmation {
+public class AppointmentSchedulingHistory {
     @Id
     private UUID id;
 
@@ -30,4 +28,11 @@ public class AppointmentSchedulingConfirmation {
     @OneToOne
     @JoinColumn(name = "appointment_id")
     private Appointment appointment;
+
+    @ManyToOne
+    @JoinColumn(name = "blood_donor_id")
+    private  BloodDonor bloodDonor;
+
+    @OneToOne(mappedBy = "appointmentSchedulingHistory")
+    private AppointmentReport appointmentReport;
 }
