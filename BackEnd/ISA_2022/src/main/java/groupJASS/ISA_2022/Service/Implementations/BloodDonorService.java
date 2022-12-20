@@ -20,11 +20,14 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -173,5 +176,14 @@ public class BloodDonorService implements IBloodDonorService {
                 })
                 .collect(Collectors.toList());
         return res;
+    }
+
+    @Scheduled(cron = "${resetPenalties.cron}")
+    @Transactional(rollbackFor = DataIntegrityViolationException.class)
+    public void fixedDelayJobWithInitialDelay() {
+        System.out.println("Delete penalties:");
+        System.out.println("Start time: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        _bloodDonorRepository.resetPenalties();
+        System.out.println("End time time: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
     }
 }
