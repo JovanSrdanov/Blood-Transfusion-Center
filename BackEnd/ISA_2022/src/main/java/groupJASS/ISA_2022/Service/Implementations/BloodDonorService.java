@@ -3,13 +3,11 @@ package groupJASS.ISA_2022.Service.Implementations;
 import groupJASS.ISA_2022.DTO.BloodDonor.BloodDonorInfoDto;
 import groupJASS.ISA_2022.DTO.BloodDonor.RegisterBloodDonorDTO;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
-import groupJASS.ISA_2022.Model.Account;
-import groupJASS.ISA_2022.Model.Address;
-import groupJASS.ISA_2022.Model.BloodDonor;
-import groupJASS.ISA_2022.Model.Questionnaire;
+import groupJASS.ISA_2022.Model.*;
 import groupJASS.ISA_2022.Repository.AccountRepository;
 import groupJASS.ISA_2022.Repository.BloodDonorRepository;
 import groupJASS.ISA_2022.Service.Interfaces.IAccountService;
+import groupJASS.ISA_2022.Service.Interfaces.IActivateAccountService;
 import groupJASS.ISA_2022.Service.Interfaces.IAddressService;
 import groupJASS.ISA_2022.Service.Interfaces.IBloodDonorService;
 import groupJASS.ISA_2022.Utilities.MappingUtilities;
@@ -20,11 +18,14 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -38,16 +39,20 @@ public class BloodDonorService implements IBloodDonorService {
     private final IAccountService _accountService;
     private final ModelMapper _mapper;
     private final AccountRepository _accountRepository;
+    private final IActivateAccountService _activateAccountService;
     @Autowired
     private JavaMailSender javaMailSender;
 
     @Autowired
-    public BloodDonorService(BloodDonorRepository bloodDonorRepository, IAddressService addressService, IAccountService accountService, ModelMapper mapper, AccountRepository accountRepository) {
+    public BloodDonorService(BloodDonorRepository bloodDonorRepository, IAddressService addressService,
+                             IAccountService accountService, ModelMapper mapper,
+                             AccountRepository accountRepository, IActivateAccountService activateAccountService) {
         _bloodDonorRepository = bloodDonorRepository;
         _addressService = addressService;
         _accountService = accountService;
         _mapper = mapper;
         _accountRepository = accountRepository;
+        _activateAccountService = activateAccountService;
     }
 
     @Override
@@ -121,28 +126,35 @@ public class BloodDonorService implements IBloodDonorService {
     }
 
     @Override
+    @Async
     @Transactional(rollbackFor = Exception.class)
-    public void registerNewBloodDonor(RegisterBloodDonorDTO dto) {
+    public void registerNewBloodDonor(RegisterBloodDonorDTO dto) throws BadRequestException {
+        Account account = saveAllBloodDonorInformation(dto);
+        sendActvivationToken(_activateAccountService.save(new ActivateAccount(UUID.randomUUID(), account.getEmail(), UUID.randomUUID(), account.getId())));
+    }
 
+    private Account saveAllBloodDonorInformation(RegisterBloodDonorDTO dto) {
         Address address = _addressService
                 .saveAddresFromBloodDonorRegistration(_mapper.map(dto.getAddressBloodDonorDTO(), Address.class));
         BloodDonor bloodDonor =
                 RegisterUser(_mapper.map(dto.getNonRegisteredBloodDonorInfoDTO(), BloodDonor.class), address);
-        _accountService.registerRegisteredUser(_mapper.map(dto.getAccountDTO(), Account.class),
+        return _accountService.registerRegisteredUser(_mapper.map(dto.getAccountDTO(), Account.class),
                 bloodDonor);
 
 
     }
 
     @Async
-    public void sendActvivationToken(RegisterBloodDonorDTO dto) {
-        SimpleMailMessage mail = new SimpleMailMessage();
-        mail.setTo(dto.getAccountDTO().getEmail());
-        mail.setFrom("ISA_BEJBI");
-        mail.setSubject("Account activation " + LocalDate.now());
-        mail.setText("Go to the link to activate your account: ");
-        javaMailSender.send(mail);
+    public void sendActvivationToken(ActivateAccount activateAccount) {
 
+        var url = "http://localhost:1212/login?activationCode=" + activateAccount.getActivationCode() + "&accountId=" + activateAccount.getAccountId();
+        System.out.println("Email se salje!");
+        SimpleMailMessage mail = new SimpleMailMessage();
+        mail.setTo(activateAccount.getEmail());
+        mail.setFrom("ISA_BEJBI");
+        mail.setSubject("Account activation: " + LocalDate.now());
+        mail.setText("Go to the link to activate your account: " + url);
+        javaMailSender.send(mail);
         System.out.println("Email poslat!");
     }
 
@@ -173,5 +185,14 @@ public class BloodDonorService implements IBloodDonorService {
                 })
                 .collect(Collectors.toList());
         return res;
+    }
+
+    @Scheduled(cron = "${resetPenalties.cron}")
+    @Transactional(rollbackFor = DataIntegrityViolationException.class)
+    public void fixedDelayJobWithInitialDelay() {
+        System.out.println("Delete penalties:");
+        System.out.println("Start time: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        _bloodDonorRepository.resetPenalties();
+        System.out.println("End time time: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
     }
 }

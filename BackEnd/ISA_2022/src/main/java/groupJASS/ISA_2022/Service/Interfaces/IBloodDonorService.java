@@ -17,9 +17,7 @@ public interface IBloodDonorService extends ICrudService<BloodDonor> {
 
     List<BloodDonor> findAllWithAddressAndQuestionnaire();
 
-    void registerNewBloodDonor(RegisterBloodDonorDTO dto);
-
-    void sendActvivationToken(RegisterBloodDonorDTO dto);
+    void registerNewBloodDonor(RegisterBloodDonorDTO dto) throws BadRequestException;
 
     BloodDonor updateDonorInfo(Address map, BloodDonor updatedUser) throws BadRequestException;
 
