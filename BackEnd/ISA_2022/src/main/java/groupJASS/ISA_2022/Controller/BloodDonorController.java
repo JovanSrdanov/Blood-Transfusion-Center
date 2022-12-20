@@ -94,8 +94,9 @@ public class BloodDonorController {
             throws ConstraintViolationException {
 
         try {
+
             _bloodDonorService.registerNewBloodDonor(dto);
-            _bloodDonorService.sendActvivationToken(dto);
+          
             return new ResponseEntity<>(dto, HttpStatus.CREATED);
 
         } catch (IllegalArgumentException e) {
