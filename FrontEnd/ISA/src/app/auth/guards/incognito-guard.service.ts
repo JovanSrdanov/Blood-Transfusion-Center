@@ -20,7 +20,6 @@ export class IncognitoGuard implements CanActivate {
   private redirectToMainPage = () => {
     var roleLandingPages = new Map<string, string>([
       ['ROLE_BLOOD_DONOR', 'blood-donor'],
-      ['ROLE_SYSTEM_ADMIN_NO_PASSWORD', 'staff-change-password'],
       ['ROLE_STAFF', 'staff'],
       ['ROLE_SYSTEM_ADMIN', 'system-admin'],
 

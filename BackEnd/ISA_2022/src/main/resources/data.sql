@@ -1,13 +1,11 @@
 INSERT INTO ROLE (name)
 VALUES ('ROLE_BLOOD_DONOR');
 INSERT INTO ROLE (name)
-VALUES ('ROLE_SYSTEM_ADMIN_NO_PASSWORD');
-INSERT INTO ROLE (name)
 VALUES ('ROLE_STAFF');
 INSERT INTO ROLE (name)
 VALUES ('ROLE_SYSTEM_ADMIN');
 
---- Sifra za sve korinsike je password, kad se pravi novi korisnik nek se kopira hesovana sifra sto vec stoji ovde
+--- Sifra za sve korinsike je "password", kad se pravi novi korisnik nek se kopira hesovana sifra sto vec stoji ovde
 --- Hesovana sifra  -  $2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi
 
 
@@ -178,7 +176,7 @@ VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec1', 'blooddonor@gmail.com', 'true',
         '07ce2e8b-d34b-4156-9dd4-f29ec4311675');
 
 INSERT INTO "account" ("id", "email", "is_activated", "password", "person_id")
-VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec2', 'staffnopass@gmail.com', 'true',
+VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec2', 'blooddonator@gmail.com', 'true',
         '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi',
         '883f13cc-25c8-4b60-b0e5-5ac938ad2594');
 
@@ -196,11 +194,11 @@ VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec4', 'systemadmin@gmail.com', 'true',
 INSERT INTO account_role (account_id, role_id)
 VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec1', 1);
 INSERT INTO account_role (account_id, role_id)
-VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec2', 2);
+VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec2', 1);
 INSERT INTO account_role (account_id, role_id)
-VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec3', 3);
+VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec3', 2);
 INSERT INTO account_role (account_id, role_id)
-VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec4', 4);
+VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec4', 3);
 
 
 
