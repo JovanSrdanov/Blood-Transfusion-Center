@@ -1,4 +1,3 @@
-
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RegisterBloodDonorComponent } from '../pages/registration-page/register-blood-donor/register-blood-donor.component';
@@ -14,30 +13,49 @@ import { LoginPageComponent } from '../pages/login-page/login-page.component';
 
 const routes: Routes = [
   {
-    path: 'blood-donor', component: BloodDonorPageComponent, canActivate: [RoleGuardService],
-    data: { expectedRole: "ROLE_BLOOD_DONOR" },
-    loadChildren: () => import("./blood-donor-routing.module").then(m => BloodDonorRoutingModule)
+    path: 'blood-donor',
+    component: BloodDonorPageComponent,
+    canActivate: [RoleGuardService],
+    data: { expectedRole: 'ROLE_BLOOD_DONOR' },
+    loadChildren: () =>
+      import('./blood-donor-routing.module').then(
+        (m) => BloodDonorRoutingModule
+      ),
   },
 
   {
-    path: 'system-admin', component: SystemAdminPageComponent, canActivate: [RoleGuardService],
-    data: { expectedRole: "ROLE_SYSTEM_ADMIN" },
-    loadChildren: () => import("./system-admin-routing.module").then(m => SystemAdminRoutingModule)
+    path: 'system-admin',
+    component: SystemAdminPageComponent,
+    canActivate: [RoleGuardService],
+    data: { expectedRole: 'ROLE_SYSTEM_ADMIN' },
+    loadChildren: () =>
+      import('./system-admin-routing.module').then(
+        (m) => SystemAdminRoutingModule
+      ),
   },
 
   {
-    path: 'staff', component: StaffPageComponent, canActivate: [RoleGuardService],
-    data: { expectedRole: "ROLE_STAFF" },
-    loadChildren: () => import("./staff-routing.module").then(m => StaffRoutingModule)
+    path: 'staff',
+    component: StaffPageComponent,
+    canActivate: [RoleGuardService],
+    data: { expectedRole: 'ROLE_STAFF' },
+    loadChildren: () =>
+      import('./staff-routing.module').then((m) => StaffRoutingModule),
   },
 
-  { path: 'register-blood-donor', component: RegisterBloodDonorComponent, canActivate: [IncognitoGuard] },
-  { path: 'login', component: LoginPageComponent, canActivate: [IncognitoGuard] },
+  {
+    path: 'register-blood-donor',
+    component: RegisterBloodDonorComponent,
+    canActivate: [IncognitoGuard],
+  },
+  {
+    path: 'login',
+    component: LoginPageComponent,
+    canActivate: [IncognitoGuard],
+  },
 
-  { path: '', redirectTo: "login", pathMatch: "full" },
-  { path: '**', redirectTo: "login", pathMatch: "full" },
-
-
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '**', redirectTo: 'login', pathMatch: 'full' },
 ];
 
 @NgModule({
@@ -45,5 +63,4 @@ const routes: Routes = [
 
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
-
+export class AppRoutingModule {}
