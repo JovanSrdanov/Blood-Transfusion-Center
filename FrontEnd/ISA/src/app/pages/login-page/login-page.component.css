@@ -62,6 +62,14 @@ p {
   background-color: lightseagreen;
 }
 
+.blob {
+  height: 27%;
+}
+
+.centreList {
+  margin-top: 3%;
+}
+
 button {
   margin: 0px 10px;
 }

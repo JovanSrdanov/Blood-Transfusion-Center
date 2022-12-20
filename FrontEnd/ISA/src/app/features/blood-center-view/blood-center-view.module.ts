@@ -9,11 +9,8 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/material/material.module';
 
-
 @NgModule({
-  declarations: [
-    BloodCenterTableComponent
-  ],
+  declarations: [BloodCenterTableComponent],
   imports: [
     CommonModule,
     MatPaginatorModule,
@@ -22,7 +19,8 @@ import { MaterialModule } from 'src/app/material/material.module';
     MatTableModule,
     MatInputModule,
     FormsModule,
-    MaterialModule
-  ]
+    MaterialModule,
+  ],
+  exports: [BloodCenterTableComponent],
 })
-export class BloodCenterViewModule { }
+export class BloodCenterViewModule {}
