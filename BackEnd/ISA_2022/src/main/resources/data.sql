@@ -188,7 +188,6 @@ VALUES ('fbf7d96c-0bac-4081-bc8d-0d33e2ab0ec1', 'blooddonor2@gmail.com', 'true',
 
 INSERT INTO "account" ("id", "email", "is_activated", "password", "person_id")
 VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec2', 'staffnopass@gmail.com', 'true',
-VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec2', 'blooddonator@gmail.com', 'true',
         '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi',
         '883f13cc-25c8-4b60-b0e5-5ac938ad2594');
 
