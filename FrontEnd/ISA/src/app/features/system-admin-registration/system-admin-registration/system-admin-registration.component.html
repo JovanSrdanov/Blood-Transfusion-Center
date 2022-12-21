@@ -1,0 +1,18 @@
+<div class="registration-form">
+  <p>Register new system admin</p>
+  <div class="content" [formGroup]="registrationForm">
+    <div class="input-field">
+      <input
+        id="email"
+        formControlName="email"
+        type="text"
+        placeholder="foo@gmail.com"
+      />
+    </div>
+  </div>
+
+  <div class="action">
+    <button id="registerButton" (click)="register()" class="register">Register</button>
+  </div>
+</div>
+

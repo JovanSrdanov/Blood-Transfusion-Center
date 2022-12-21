@@ -38,7 +38,7 @@ public class AccountController {
 
     @PreAuthorize("hasRole('ROLE_SYSTEM_ADMIN')")
     @PostMapping("system-admin")
-    public ResponseEntity registerSystemAdminAccount(@RequestBody AccountDTO dto) {
+    public ResponseEntity registerSystemAdminAccount(@Validated @RequestBody AccountDTO dto) {
         try {
             _accountService.registerAccount(dto,"ROLE_SYSTEM_ADMIN", null);
             //There's no point in returning just username

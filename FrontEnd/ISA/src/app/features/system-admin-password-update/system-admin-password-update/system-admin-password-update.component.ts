@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AccountService } from 'src/app/http-services/account.service';
-import { UpdatePasswordDto } from 'src/app/model/Account/updatePasswordDto';
+import { UpdatePasswordDto } from 'src/app/model/account/updatePasswordDto';
 
 @Component({
   selector: 'app-system-admin-password-update',

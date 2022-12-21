@@ -7,6 +7,7 @@ import { StaffRegistrationModule } from 'src/app/features/staff-registration/sta
 import { AssignBloodCenterModule } from 'src/app/features/assign-blood-center/assign-blood-center.module';
 import { MaterialModule } from 'src/app/material/material.module';
 import { SystemAdminPasswordUpdateModule } from 'src/app/features/system-admin-password-update/system-admin-password-update.module';
+import { SystemAdminRegistrationModule } from 'src/app/features/system-admin-registration/system-admin-registration.module';
 @NgModule({
   declarations: [
     SystemAdminPageComponent
@@ -18,7 +19,8 @@ import { SystemAdminPasswordUpdateModule } from 'src/app/features/system-admin-p
     BloodCenterRegistrationModule,
     StaffRegistrationModule,
     AssignBloodCenterModule,
-    SystemAdminPasswordUpdateModule
+    SystemAdminPasswordUpdateModule,
+    SystemAdminRegistrationModule
   ]
 })
 export class SystemAdminPageModule { }
