@@ -6,7 +6,7 @@ import { BloodCenterCalendarComponent } from './blood-center-calendar/blood-cent
 
 @NgModule({
   declarations: [
-    BloodCenterCalendarComponent
+    // BloodCenterCalendarComponent
   ],
   imports: [
     CommonModule
