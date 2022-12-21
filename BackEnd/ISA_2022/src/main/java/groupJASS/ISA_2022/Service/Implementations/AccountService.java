@@ -33,7 +33,7 @@ public class AccountService implements IAccountService {
     public AccountService(AccountRepository accountRepository, IRoleService roleService, PasswordEncoder passwordEncoder, IActivateAccountService activateAccountService) {
         _accountRepository = accountRepository;
         _roleService = roleService;
-        this._passwordEncoder = passwordEncoder;
+        _passwordEncoder = passwordEncoder;
         _activateAccountService = activateAccountService;
     }
 
@@ -54,10 +54,6 @@ public class AccountService implements IAccountService {
 
     @Override
     public Account save(Account entity) {
-        //Ova provera je mozda nepotrebna kad se uvde konstruktor
-        if (entity.getId() == null) {
-            entity.setId(UUID.randomUUID());
-        }
         return _accountRepository.save(entity);
     }
 
@@ -86,31 +82,6 @@ public class AccountService implements IAccountService {
         String hashedPassword = _passwordEncoder.encode(accountDto.getPassword());
         Account account = new Account(accountDto.getEmail(), hashedPassword, roles,personId, isActivated);
         return save(account);
-    }
-
-    @Override
-    public Account registerNewUser(Account account) {
-
-
-        if (_accountRepository.existsAccountByEmail(account.getEmail())) {
-
-            throw new IllegalArgumentException("Account with this email already exists");
-        }
-        account.setActivated(false);
-        account.setPassword(_passwordEncoder.encode(account.getPassword()));
-        return save(account);
-
-    }
-
-    //Kako sad druge korisnike da registrujem?
-    @Override
-    // Mislim da mozes umesto BloodDonor da smesti Person i da ce da radi, mozda cak samo da se prosledi personId
-    public Account registerRegisteredUser(Account account, BloodDonor bloodDonor) {
-        account.setPersonId(bloodDonor.getId());
-        List<Role> roles = _roleService.findByName("ROLE_BLOOD_DONOR");
-        account.setRoles(roles);
-        return registerNewUser(account);
-
     }
 
     @Override

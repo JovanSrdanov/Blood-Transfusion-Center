@@ -10,17 +10,8 @@ import java.util.UUID;
 public interface IAccountService extends ICrudService<Account> {
 
     Account registerAccount(AccountDTO accountDto, String roleName, UUID personId);
-
-    Account registerNewUser(Account account);
-
-    Account registerRegisteredUser(Account account, BloodDonor bloodDonor);
-
     boolean checkEmailAvailability(String email);
-
     Account findAccountByPersonId(UUID personId);
-
     Account findAccountByEmail(String email);
-
-
     Account activateAccount(ActivateAccountDTO activateAccountDTO);
 }

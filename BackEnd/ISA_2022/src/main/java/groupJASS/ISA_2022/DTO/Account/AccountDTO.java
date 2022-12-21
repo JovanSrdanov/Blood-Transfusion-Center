@@ -1,5 +1,6 @@
 package groupJASS.ISA_2022.DTO.Account;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,6 +9,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class AccountDTO {

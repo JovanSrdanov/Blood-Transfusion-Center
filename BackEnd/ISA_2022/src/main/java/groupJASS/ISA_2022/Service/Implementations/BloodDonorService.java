@@ -94,8 +94,7 @@ public class BloodDonorService implements IBloodDonorService {
     }
 
     @Override
-    // Sto se ovo ovako zove?
-    public BloodDonor RegisterUser(BloodDonor bloodDonor, Address address) {
+    public BloodDonor RegisterBloodDonor(BloodDonor bloodDonor, Address address) {
 
 
         if (_bloodDonorRepository.existsBloodUserByJmbg(bloodDonor.getJmbg())) {
@@ -135,14 +134,11 @@ public class BloodDonorService implements IBloodDonorService {
     }
 
     private Account saveAllBloodDonorInformation(RegisterBloodDonorDTO dto) {
-        Address address = _addressService //mogao si samo save
+        Address address = _addressService
                 .saveAddresFromBloodDonorRegistration(_mapper.map(dto.getAddressBloodDonorDTO(), Address.class));
         BloodDonor bloodDonor =
-                RegisterUser(_mapper.map(dto.getNonRegisteredBloodDonorInfoDTO(), BloodDonor.class), address);
-        return _accountService.registerRegisteredUser(_mapper.map(dto.getAccountDTO(), Account.class),
-                bloodDonor);
-
-
+                RegisterBloodDonor(_mapper.map(dto.getNonRegisteredBloodDonorInfoDTO(), BloodDonor.class), address);
+        return _accountService.registerAccount(dto.getAccountDTO(), "ROLE_BLOOD_DONOR", bloodDonor.getId());
     }
 
     @Async

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface IBloodDonorService extends ICrudService<BloodDonor> {
-    BloodDonor RegisterUser(BloodDonor map, Address address);
+    BloodDonor RegisterBloodDonor(BloodDonor map, Address address);
 
     Questionnaire getQuestionnaireFromBloodDonor(UUID bloodDonorId);
 
