@@ -96,7 +96,15 @@ public class AppointmentService implements IAppointmentService {
     }
 
     @Override
-    public List<DateRange> findFreeSlotsForStaffIds(List<UUID> staffIds, LocalDateTime date, int duration) {
+    public List<DateRange> findFreeSlotsForStaffIds(List<UUID> staffIds, LocalDateTime date, int duration) throws BadRequestException {
+        UUID bcId = _staffService.findById(staffIds.get(0)).getBloodCenter().getId();
+        for(UUID staffId : staffIds) {
+            Staff staff = _staffService.findById(staffId);
+            if(!staff.getBloodCenter().getId().equals(bcId)) {
+                throw new BadRequestException("Diffrent staff bloodCenter ids");
+            }
+        }
+
         UUID bloodCenterId = _staffService.findById(staffIds.get(0)).getBloodCenter().getId();
         DateRange bigRange = _bloodBloodCenterService.getWorkingDateRangeForDate(bloodCenterId, date);
 
@@ -127,8 +135,6 @@ public class AppointmentService implements IAppointmentService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Appointment predefine(DateRange dateRange, List<UUID> staffIds, UUID staffAdminId) throws BadRequestException {
-
-
         UUID bcId = _staffService.findById(staffAdminId).getBloodCenter().getId();
         for(UUID staffId : staffIds) {
             Staff staff = _staffService.findById(staffId);

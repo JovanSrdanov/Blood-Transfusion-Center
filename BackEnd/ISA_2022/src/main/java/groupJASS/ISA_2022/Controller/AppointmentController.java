@@ -34,10 +34,15 @@ public class AppointmentController {
 
     @PostMapping("/available-admin")
     @PreAuthorize("hasRole('STAFF')")
-    public ResponseEntity<List<DateRange>> findAll(@RequestBody AvailableSlotsDto dto, Principal account) {
+    public ResponseEntity<?> findAll(@RequestBody AvailableSlotsDto dto, Principal account) {
         Account a = _accountService.findAccountByEmail(account.getName());
-        var res = (List<DateRange>) _appointmentService.findFreeSlotsForStaffIds(dto.getStaffIds(), dto.getDate(),
-                dto.getDuration());
+        List<DateRange> res = null;
+        try {
+            res = _appointmentService.findFreeSlotsForStaffIds(dto.getStaffIds(), dto.getDate(),
+                    dto.getDuration());
+        } catch (BadRequestException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
