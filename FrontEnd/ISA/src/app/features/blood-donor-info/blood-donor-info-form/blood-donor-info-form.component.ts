@@ -11,7 +11,7 @@ import { LoyaltyTableComponent } from '../loyalty-table/loyalty-table.component'
   styleUrls: ['./blood-donor-info-form.component.css']
 })
 export class BloodDonorInfoFormComponent implements OnInit {
-  
+
   registrationForm = new FormGroup({
     name: new FormControl<string>('', [Validators.required]),
     city: new FormControl<string>('', [Validators.required]),
@@ -24,12 +24,13 @@ export class BloodDonorInfoFormComponent implements OnInit {
     institution: new FormControl<string>('', [Validators.required]),
     occupation: new FormControl<string>('', [Validators.required]),
     jmbg: new FormControl<string>('', [Validators.required]),
-    points: new FormControl<number>(0, [Validators.required])
+    points: new FormControl<number>(0, [Validators.required]),
+    penalties: new FormControl<number>(0, [Validators.required])
   });
 
   currentDonor!: BloodDonorInfo;
 
-  editable :boolean = false;
+  editable: boolean = false;
   iconType: string = "edit";
   eventsSubject: Subject<number> = new Subject<number>();
 
@@ -45,7 +46,7 @@ export class BloodDonorInfoFormComponent implements OnInit {
 
   enableEdit(): void {
     this.editable = !this.editable;
-    if(this.editable) this.iconType = "clear icon";
+    if (this.editable) this.iconType = "clear icon";
     else {
       this.iconType = "edit"
       this.populatedFields();
@@ -82,18 +83,19 @@ export class BloodDonorInfoFormComponent implements OnInit {
   }
 
   populatedFields(): void {
-      this.registrationForm.controls.name.setValue(this.currentDonor.name);
-      this.registrationForm.controls.city.setValue(this.currentDonor.address.city);
-      this.registrationForm.controls.street.setValue(this.currentDonor.address.street);
-      this.registrationForm.controls.country.setValue(this.currentDonor.address.country);
-      this.registrationForm.controls.surname.setValue(this.currentDonor.surname);
-      this.registrationForm.controls.phoneNumber.setValue(this.currentDonor.phoneNumber);
-      this.registrationForm.controls.institution.setValue(this.currentDonor.institution);
-      this.registrationForm.controls.occupation.setValue(this.currentDonor.occupation);
-      this.registrationForm.controls.jmbg.setValue(this.currentDonor.jmbg);
-      this.registrationForm.controls.streetNumber.setValue(this.currentDonor.address.number);
-      this.registrationForm.controls.points.setValue(this.currentDonor.points);
-      this.registrationForm.controls.email.setValue(this.currentDonor.email);
+    this.registrationForm.controls.name.setValue(this.currentDonor.name);
+    this.registrationForm.controls.city.setValue(this.currentDonor.address.city);
+    this.registrationForm.controls.street.setValue(this.currentDonor.address.street);
+    this.registrationForm.controls.country.setValue(this.currentDonor.address.country);
+    this.registrationForm.controls.surname.setValue(this.currentDonor.surname);
+    this.registrationForm.controls.phoneNumber.setValue(this.currentDonor.phoneNumber);
+    this.registrationForm.controls.institution.setValue(this.currentDonor.institution);
+    this.registrationForm.controls.occupation.setValue(this.currentDonor.occupation);
+    this.registrationForm.controls.jmbg.setValue(this.currentDonor.jmbg);
+    this.registrationForm.controls.streetNumber.setValue(this.currentDonor.address.number);
+    this.registrationForm.controls.points.setValue(this.currentDonor.points);
+    this.registrationForm.controls.email.setValue(this.currentDonor.email);
+    this.registrationForm.controls.penalties.setValue(this.currentDonor.penalties);
   }
 
 }

@@ -21,7 +21,7 @@ export class BloodDonorService {
   }
 
   fetchLoggedinDonor(): Observable<BloodDonorInfo> {
-    return this.http.get<BloodDonorInfo>(this.path + "/get-by-id/" + this.currentId);
+    return this.http.get<BloodDonorInfo>(this.path + "/my-info");
   }
 
   updateLoggedinDonor(currentDonor: BloodDonorInfo): Observable<BloodDonorInfo> {

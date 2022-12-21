@@ -185,7 +185,7 @@ public class BloodDonorService implements IBloodDonorService {
     }
 
     @Scheduled(cron = "${resetPenalties.cron}")
-    @Transactional(rollbackFor = DataIntegrityViolationException.class)
+    @Transactional(rollbackFor = Exception.class)
     public void fixedDelayJobWithInitialDelay() {
         System.out.println("Delete penalties:");
         System.out.println("Start time: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
