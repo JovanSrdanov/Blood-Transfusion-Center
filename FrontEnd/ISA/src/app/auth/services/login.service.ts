@@ -40,7 +40,6 @@ export class LoginService {
         },
         //TODO: handle errors
         error: err => {
-          console.log(err)
           alert(err.error);
         }
       }

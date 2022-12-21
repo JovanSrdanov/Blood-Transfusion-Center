@@ -205,7 +205,7 @@ VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec3', 'staff@gmail.com', 'true',
         '32763cf0-6a56-49f1-ad25-5a90561cd204');
 
 INSERT INTO "account" ("id", "email", "is_activated", "password")
-VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec4', 'systemadmin@gmail.com', 'true',
+VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec4', 'sad@gmail.com', 'true',
         '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi');
 
 
