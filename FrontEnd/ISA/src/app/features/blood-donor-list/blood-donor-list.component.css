@@ -1,8 +1,13 @@
-form{
- margin-top: 100px;
+form {
+  margin-top: 100px;
 }
 
-table{
-    width: 80%;
-    margin: 30px auto 0px auto;
+table {
+  width: 80%;
+  margin: 30px auto 0px auto;
+}
+
+.btn {
+  margin-top: 5%;
+  font-size: larger;
 }

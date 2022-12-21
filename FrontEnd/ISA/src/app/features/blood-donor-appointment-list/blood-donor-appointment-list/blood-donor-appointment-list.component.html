@@ -1,0 +1,39 @@
+<div>
+  <h1 class="title">Scheduled appointments</h1>
+  <table mat-table [dataSource]="dataSource" class="tabela">
+    <ng-container matColumnDef="issuing_date">
+      <th mat-header-cell *matHeaderCellDef>Appointment date</th>
+      <td mat-cell *matCellDef="let element">{{ element.issuingDate }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="start_time">
+      <th mat-header-cell *matHeaderCellDef>Start time</th>
+      <td mat-cell *matCellDef="let element">{{ element.time }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="duration">
+      <th mat-header-cell *matHeaderCellDef>Duration</th>
+      <td mat-cell *matCellDef="let element">{{ element.duration }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="button">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <button class="btn" [matMenuTriggerFor]="menustatus">Actions</button>
+
+        <mat-menu #menustatus="matMenu">
+          <!-- promeni u id -->
+          <button
+            (click)="viewDetails($event, element.id, element.bloodDonorId)"
+            mat-menu-item
+            [value]="element.id"
+          >
+            Show details
+          </button>
+        </mat-menu>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>

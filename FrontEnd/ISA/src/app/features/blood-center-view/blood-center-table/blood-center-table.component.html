@@ -1,44 +1,56 @@
 <div class="sortTable">
-    
-    <mat-form-field class="example-full-width" appearance="fill">
-        <mat-label>Search blood center</mat-label>
-        <input matInput #searchHtml [(ngModel)]="searchInput" (focusout)="doSearch()" placeholder="center name or city">
-    </mat-form-field>
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Search blood center</mat-label>
+    <input
+      matInput
+      #searchHtml
+      [(ngModel)]="searchInput"
+      (focusout)="doSearch()"
+      placeholder="center name or city"
+    />
+  </mat-form-field>
 
-    <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
-    
-        <!-- Position Column -->
-        <ng-container matColumnDef="name">
-        <th mat-header-cell mat-sort-header *matHeaderCellDef> Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-        </ng-container>
+  <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
+    <!-- Position Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.name }}
+      </td>
+    </ng-container>
 
-        <!-- Position Column -->
-        <ng-container matColumnDef="address.country">
-            <th mat-header-cell mat-sort-header *matHeaderCellDef> Country </th>
-            <td mat-cell *matCellDef="let element"> {{element.address.country}} </td>
-        </ng-container>
+    <!-- Position Column -->
+    <ng-container matColumnDef="address.country">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Country</th>
+      <td mat-cell *matCellDef="let element">{{ element.address.country }}</td>
+    </ng-container>
 
-        <!-- Position Column -->
-        <ng-container matColumnDef="address.city">
-            <th mat-header-cell mat-sort-header *matHeaderCellDef> City </th>
-            <td mat-cell *matCellDef="let element"> {{element.address.city}} </td>
-        </ng-container>
+    <!-- Position Column -->
+    <ng-container matColumnDef="address.city">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>City</th>
+      <td mat-cell *matCellDef="let element">{{ element.address.city }}</td>
+    </ng-container>
 
-        <!-- Position Column -->
-        <ng-container matColumnDef="address.street">
-            <th mat-header-cell mat-sort-header *matHeaderCellDef> Street </th>
-            <td mat-cell *matCellDef="let element"> {{element.address.street }} {{element.address.number}} </td>
-        </ng-container>
+    <!-- Position Column -->
+    <ng-container matColumnDef="address.street">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Street</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.address.street }} {{ element.address.number }}
+      </td>
+    </ng-container>
 
-        <ng-container matColumnDef="rating">
-            <th mat-header-cell mat-sort-header *matHeaderCellDef> Rating </th>
-            <td mat-cell *matCellDef="let element"> {{element.rating}} </td>
-        </ng-container>
-    
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <ng-container matColumnDef="rating">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Rating</th>
+      <td mat-cell *matCellDef="let element">{{ element.rating }}</td>
+    </ng-container>
 
-    </table>
-    <mat-paginator #paginator [length]="resultsLength" [pageSize]="5" aria-label="Select page"></mat-paginator>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+  <mat-paginator
+    #paginator
+    [length]="resultsLength"
+    [pageSize]="5"
+    aria-label="Select page"
+  ></mat-paginator>
 </div>
