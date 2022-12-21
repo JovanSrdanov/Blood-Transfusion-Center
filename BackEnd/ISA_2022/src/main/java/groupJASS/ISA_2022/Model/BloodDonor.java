@@ -1,6 +1,7 @@
 package groupJASS.ISA_2022.Model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,8 +17,8 @@ import java.util.Set;
 @Getter
 @Setter
 public class BloodDonor extends Person {
-    
-    @ManyToOne(fetch = FetchType.LAZY)
+
+    @ManyToOne(fetch = FetchType.EAGER)
     private Address address;
     @Column(nullable = false)
     private String institution;
@@ -33,6 +34,7 @@ public class BloodDonor extends Person {
     @OneToOne(fetch = FetchType.LAZY)
     private Questionnaire questionnaire;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "bloodDonor", fetch = FetchType.LAZY)
     private Set<AppointmentSchedulingHistory> appointmentSchedulingHistories;
 

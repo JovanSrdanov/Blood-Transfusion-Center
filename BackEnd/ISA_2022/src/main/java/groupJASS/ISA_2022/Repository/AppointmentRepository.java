@@ -25,4 +25,15 @@ public interface AppointmentRepository extends JpaRepository<Appointment, UUID> 
     List<Appointment> findTakenChunksByStaffId(@Param("id") UUID staff_id,
                                                @Param("startTime") LocalDateTime startTime,
                                                @Param("endTime") LocalDateTime endTime);
+
+    @Query(value = "select * from appointment a " +
+            "where a.is_premade = true " +
+            "and a.blood_center_id = :center_id " +
+            "and a.id not in ( " +
+            "select h.appointment_id from appointment_scheduling_history h " +
+            "where h.status != 3 " +
+            "or (h.blood_donor_id = :donor_id and h.status = 3)) " +
+            "order by a.start_time ",
+            nativeQuery = true)
+    List<Appointment> findAvailableAppointmentsForDonor(@Param("donor_id") UUID donor_id, @Param("center_id") UUID center_id);
 }

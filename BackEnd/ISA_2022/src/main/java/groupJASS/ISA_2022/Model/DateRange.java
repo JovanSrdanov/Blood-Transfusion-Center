@@ -61,11 +61,11 @@ public class DateRange {
 
     public static List<DateRange> splitBigRangeIntoSmallRanges(DateRange bigRange, int durationMinutes) {
         List<DateRange> ranges = new ArrayList<>();
-        if(bigRange.getDurationMinutes() < durationMinutes) {
+        if(bigRange.calcaulateDurationMinutes() < durationMinutes) {
             return ranges;
         }
 
-        int durationLeft = bigRange.getDurationMinutes();
+        int durationLeft = bigRange.calcaulateDurationMinutes();
         LocalDateTime start = bigRange.startTime;
         LocalDateTime end = bigRange.startTime.plusMinutes(durationMinutes);
 
@@ -121,7 +121,11 @@ public class DateRange {
         return intersections;
     }
 
-    public int getDurationMinutes() {
+    public boolean isEqual(DateRange dr) {
+        return dr.startTime.isEqual(this.startTime) && dr.endTime.isEqual(this.endTime);
+    }
+
+    public int calcaulateDurationMinutes() {
         return (int)ChronoUnit.MINUTES.between(this.startTime, this.endTime);
     }
 }
