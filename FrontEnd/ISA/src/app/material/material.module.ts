@@ -12,6 +12,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatTableModule } from '@angular/material/table';
 
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+
+
 
 
 const material = [
@@ -27,6 +31,8 @@ const material = [
   MatChipsModule,
   MatListModule,
   MatTableModule,
+  MatPaginatorModule,
+  MatSortModule
 
 ];
 

@@ -20,7 +20,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatCheckboxModule,
     MatInputModule,
     ReactiveFormsModule,
-    MatButtonModule
+    MatButtonModule,
+    MaterialModule
   ],
 })
 export class QuestionnaireModule { }

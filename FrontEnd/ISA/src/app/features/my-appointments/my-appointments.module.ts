@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MyAppointmentsComponent } from './my-appointments/my-appointments.component';
-
+import { MaterialModule } from 'src/app/material/material.module';
 
 
 @NgModule({
@@ -9,7 +9,8 @@ import { MyAppointmentsComponent } from './my-appointments/my-appointments.compo
     MyAppointmentsComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    MaterialModule
   ]
 })
 export class MyAppointmentsModule { }
