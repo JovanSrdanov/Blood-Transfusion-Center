@@ -5,6 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { BloodDonorAppointmentListComponent } from '../features/blood-donor-appointment-list/blood-donor-appointment-list/blood-donor-appointment-list.component';
 import { BloodDonorListComponent } from '../features/blood-donor-list/blood-donor-list.component';
 import { StaffProfileComponent } from '../features/staff-profile/staff-profile/staff-profile.component';
+import { BloodCenterCalendarComponent } from '../features/blood-center-calendar/blood-center-calendar/blood-center-calendar.component';
 
 const routes: Routes = [
   {
@@ -25,6 +26,7 @@ const routes: Routes = [
     component: CreateMedicalReportComponent,
   },
   { path: 'staff-profile', component: StaffProfileComponent },
+  { path: 'calendar', component: BloodCenterCalendarComponent },
   { path: '', redirectTo: 'staff-profile', pathMatch: 'full' },
   { path: '**', redirectTo: 'staff-profile', pathMatch: 'full' },
 ];

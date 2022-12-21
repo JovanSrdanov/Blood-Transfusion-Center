@@ -77,12 +77,12 @@ public class QuestionnaireController {
 
     @PostMapping("fillQuestionare")
     @PreAuthorize("hasRole('BLOOD_DONOR')")
-    public ResponseEntity<?> fillQuestionare(@Valid @RequestBody QuestionnaireDTO dto, Principal account)
+    public ResponseEntity<?> fillQuestionnaire(@Valid @RequestBody QuestionnaireDTO dto, Principal account)
             throws ConstraintViolationException {
-        
+
         try {
             Account a = _accountService.findAccountByEmail(account.getName());
-            _questionnaireService.fillQuestionare(_modelMapper.map(dto, Questionnaire.class), a.getPersonId());
+            _questionnaireService.fillQuestionnaire(_modelMapper.map(dto, Questionnaire.class), a.getPersonId());
             return new ResponseEntity<>(dto, HttpStatus.CREATED);
 
         } catch (IllegalArgumentException e) {

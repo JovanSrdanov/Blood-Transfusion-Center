@@ -1,28 +1,26 @@
 <div class="mat-elevation-z8">
   <table mat-table matSort [dataSource]="dataSource">
     <ng-container matColumnDef="Center">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef>Center</th>
+      <th mat-header-cell *matHeaderCellDef>Center</th>
       <td mat-cell *matCellDef="let element">{{ element.center }}</td>
     </ng-container>
 
     <ng-container matColumnDef="Date">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef>Date</th>
+      <th mat-header-cell *matHeaderCellDef>Date</th>
       <td mat-cell *matCellDef="let element">
         {{ element.date | date : "d/M/yyyy" }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="Start time">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef>Start time</th>
+      <th mat-header-cell *matHeaderCellDef>Start time</th>
       <td mat-cell *matCellDef="let element">
         {{ element.startTime | date : "HH:mm" }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="Duration">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef>
-        Duration (minutes)
-      </th>
+      <th mat-header-cell *matHeaderCellDef>Duration (minutes)</th>
       <td mat-cell *matCellDef="let element">{{ element.duration }}</td>
     </ng-container>
 
