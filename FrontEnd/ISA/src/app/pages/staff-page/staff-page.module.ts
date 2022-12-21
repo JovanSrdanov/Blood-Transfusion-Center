@@ -5,19 +5,17 @@ import { RouterModule, Routes } from '@angular/router';
 import { BloodDonorListModule } from 'src/app/features/blood-donor-list/blood-donor-list.module';
 import { StaffProfileModule } from 'src/app/features/staff-profile/staff-profile';
 import { MaterialModule } from 'src/app/material/material.module';
-
-
+import { BloodDonorAppointmentListModule } from 'src/app/features/blood-donor-appointment-list/blood-donor-appointment-list.module';
 
 @NgModule({
-  declarations: [
-    StaffPageComponent
-  ],
+  declarations: [StaffPageComponent],
   imports: [
     CommonModule,
     RouterModule,
     BloodDonorListModule,
+    BloodDonorAppointmentListModule,
     StaffProfileModule,
-    MaterialModule
-  ]
+    MaterialModule,
+  ],
 })
-export class StaffPageModule { }
+export class StaffPageModule {}
