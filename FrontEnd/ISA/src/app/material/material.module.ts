@@ -11,6 +11,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 import { MatMenuModule } from '@angular/material/menu';
 
 const material = [
@@ -26,6 +28,8 @@ const material = [
   MatChipsModule,
   MatListModule,
   MatTableModule,
+  MatPaginatorModule,
+  MatSortModule,
   MatMenuModule,
 ];
 
@@ -33,4 +37,4 @@ const material = [
   imports: [material],
   exports: [material],
 })
-export class MaterialModule {}
+export class MaterialModule { }

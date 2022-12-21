@@ -12,7 +12,7 @@ import { PageDto } from '../model/PageDto';
 export class BloodCenterService {
   path: string = environment.backendPath + '/blood-center';
 
-  constructor(private readonly http: HttpClient) {}
+  constructor(private readonly http: HttpClient) { }
 
   registerBloodCenter = (bloodCenter: BloodCenterRegistration) => {
     return this.http.post(this.path, bloodCenter);
@@ -31,14 +31,14 @@ export class BloodCenterService {
     //alert("sortType: " + sortType + "  sortField: " + field + " search:" + search)
     return this.http.get<PageDto<BloodCenterBasicInfo[]>>(
       this.path +
-        '/sort?page=' +
-        page +
-        '&field=' +
-        field +
-        '&sort=' +
-        sortType +
-        '&s=' +
-        search
+      '/sort?page=' +
+      page +
+      '&field=' +
+      field +
+      '&sort=' +
+      sortType +
+      '&s=' +
+      search
     );
   }
 }

@@ -20,7 +20,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatInputModule,
     ReactiveFormsModule,
     MatButtonModule,
+    MaterialModule
   ],
   exports: [QuestionnaireComponent],
 })
-export class QuestionnaireModule {}
+export class QuestionnaireModule { }
