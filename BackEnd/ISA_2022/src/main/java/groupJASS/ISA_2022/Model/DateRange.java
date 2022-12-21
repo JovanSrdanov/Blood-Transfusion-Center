@@ -80,6 +80,47 @@ public class DateRange {
         return ranges;
     }
 
+    public static DateRange intersectTwoRanges(DateRange range1, DateRange range2) {
+        if(range1.endTime.isBefore(range2.startTime) ||
+            range2.endTime.isBefore(range1.startTime)) {
+            return null;
+        }
+
+        LocalDateTime start = start = range1.startTime;
+        LocalDateTime end = start = range1.endTime;
+
+        if(range1.startTime.isEqual(range2.startTime) || range1.startTime.isAfter(range2.startTime)) {
+            start = range1.startTime;
+        }
+        else if(range2.startTime.isAfter(range1.startTime)) {
+            start = range2.startTime;
+        }
+
+        if(range1.endTime.isEqual(range2.endTime) || range1.endTime.isBefore(range2.endTime)) {
+            end = range1.endTime;
+        }
+        else if(range2.endTime.isBefore(range1.endTime)) {
+            end = range2.endTime;
+        }
+
+        return new DateRange(start, end);
+    }
+
+    public static List<DateRange> intersectTwoList(List<DateRange> l1, List<DateRange> l2) {
+        List<DateRange> intersections = new ArrayList<>();
+
+        for(DateRange range1 : l1) {
+            for(DateRange range2 : l2) {
+                DateRange intersection = DateRange.intersectTwoRanges(range1, range2);
+                if(intersection != null) {
+                    intersections.add(intersection);
+                }
+            }
+        }
+
+        return intersections;
+    }
+
     public int getDurationMinutes() {
         return (int)ChronoUnit.MINUTES.between(this.startTime, this.endTime);
     }

@@ -29,6 +29,9 @@ public class Appointment {
     @JoinColumn(name="blood_center_id", nullable=false)
     private BloodCenter bloodCenter;
 
+    @Column(nullable = false)
+    private boolean isPremade;
+
     @Embedded
     DateRange time;
 }

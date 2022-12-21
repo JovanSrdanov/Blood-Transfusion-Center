@@ -63,9 +63,15 @@ public class AppointmentService implements IAppointmentService {
     }
 
     @Override
-    public List<DateRange> findDefinedByStaffId(String staffId) {
+    public List<DateRange> findFreeSlotsForStaffIds(UUID staffId) {
+        //Ovo je radno vreme centra
+        LocalDateTime start = LocalDateTime.of(2022, Month.DECEMBER, 22, 5, 0, 0);
+        LocalDateTime end = LocalDateTime.of(2022, Month.DECEMBER, 22, 11, 30, 0);
+        DateRange bigRange = new DateRange(start, end);
+
         //Nadji sve app za nekog staff-a
-        List<Appointment> appointments = _appointmentRepository.findDefinedByStaffId(UUID.fromString(staffId));
+        List<Appointment> appointments =
+                _appointmentRepository.findTakenChunksByStaffId(staffId, start, end);
 
         //Posto repo vraca listu appointmente moram da ih pretovrim u listu dateRangeova
         List<DateRange> dateRanges = new ArrayList<>();
@@ -73,24 +79,33 @@ public class AppointmentService implements IAppointmentService {
             dateRanges.add(new DateRange(a.getTime().getStartTime(), a.getTime().getEndTime()));
         }
 
+        //Uzmi slobodne chunkove (zelene)
+        return DateRange.subtractFromBigRange(bigRange, dateRanges);
+    }
+
+    @Override
+    public List<DateRange> findFreeSlotsForStaffIds(List<String> staffIds) {
+        //TODO: ovaj bigRange je totalno nepotreban tako da treba prepraviti algoritam da se on ukloni
         //Ovo je radno vreme centra
-        LocalDateTime start = LocalDateTime.of(2022, Month.DECEMBER, 21, 5, 0, 0);
-        LocalDateTime end = LocalDateTime.of(2022, Month.DECEMBER, 21, 11, 30, 0);
+        LocalDateTime start = LocalDateTime.of(2022, Month.DECEMBER, 22, 5, 0, 0);
+        LocalDateTime end = LocalDateTime.of(2022, Month.DECEMBER, 22, 11, 30, 0);
         DateRange bigRange = new DateRange(start, end);
 
-        //Uzmi slobodne chunkove (zelene)
-        List<DateRange> rangesToSplit = DateRange.subtractFromBigRange(bigRange, dateRanges);
+        List<DateRange> intersections = new ArrayList<>();
+        intersections.add(bigRange);
+
+        for (String staffId : staffIds) {
+            intersections = DateRange.intersectTwoList(intersections, findFreeSlotsForStaffIds(UUID.fromString(staffId)));
+        }
 
         //Podeli chunkove u manje slotove odredjene duzine
         List<DateRange> slots = new ArrayList<>();
-        for(DateRange dr : rangesToSplit) {
-            List<DateRange> listTwo = DateRange.splitBigRangeIntoSmallRanges(dr, 13);
+        for(DateRange dr : intersections) {
+            List<DateRange> listTwo = DateRange.splitBigRangeIntoSmallRanges(dr, 30);
             slots = Stream.concat(slots.stream(), listTwo.stream())
                     .collect(Collectors.toList());
         }
 
         return slots;
     }
-
-
 }

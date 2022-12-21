@@ -112,7 +112,7 @@ public class WebSecurityConfig {
         // Zahtevi koji se mecuju za web.ignoring().antMatchers() nemaju pristup SecurityContext-u
         // Dozvoljena POST metoda na ruti /auth/login, za svaki drugi tip HTTP metode greska je 401 Unauthorized
         return (web) -> web.ignoring().antMatchers(HttpMethod.POST, "/auth/login")
-                .antMatchers(HttpMethod.POST, "/blood-donor/register", "/auth/activate-account")
+                .antMatchers(HttpMethod.POST, "/blood-donor/register", "/auth/activate-account", "/appointment/**")
 
                 // Ovim smo dozvolili pristup statickim resursima aplikacije
                 .antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "favicon.ico",

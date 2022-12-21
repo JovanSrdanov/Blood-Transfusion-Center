@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,7 +18,11 @@ public interface AppointmentRepository extends JpaRepository<Appointment, UUID> 
 
     @Query(value = "select *" +
             "from appointment_staff s join appointment a on s.appointment_id = a.id " +
-            "where s.staff_id = :id order by a.start_time asc",
+            "where s.staff_id = :id " +
+            "and a.start_time >= :startTime and a.end_time <= :endTime " +
+            "order by a.start_time asc",
             nativeQuery = true)
-    List<Appointment> findDefinedByStaffId(@Param("id") UUID staff_id);
+    List<Appointment> findTakenChunksByStaffId(@Param("id") UUID staff_id,
+                                               @Param("startTime") LocalDateTime startTime,
+                                               @Param("endTime") LocalDateTime endTime);
 }
