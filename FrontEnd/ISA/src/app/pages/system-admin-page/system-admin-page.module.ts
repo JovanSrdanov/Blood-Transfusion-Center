@@ -6,6 +6,8 @@ import { BloodCenterRegistrationModule } from 'src/app/features/blood-center-reg
 import { StaffRegistrationModule } from 'src/app/features/staff-registration/staff-registration.module';
 import { AssignBloodCenterModule } from 'src/app/features/assign-blood-center/assign-blood-center.module';
 import { MaterialModule } from 'src/app/material/material.module';
+import { SystemAdminPasswordUpdateModule } from 'src/app/features/system-admin-password-update/system-admin-password-update.module';
+import { SystemAdminRegistrationModule } from 'src/app/features/system-admin-registration/system-admin-registration.module';
 @NgModule({
   declarations: [
     SystemAdminPageComponent
@@ -13,10 +15,12 @@ import { MaterialModule } from 'src/app/material/material.module';
   imports: [
     CommonModule,
     RouterModule,
+    MaterialModule,
     BloodCenterRegistrationModule,
     StaffRegistrationModule,
     AssignBloodCenterModule,
-    MaterialModule
+    SystemAdminPasswordUpdateModule,
+    SystemAdminRegistrationModule
   ]
 })
 export class SystemAdminPageModule { }

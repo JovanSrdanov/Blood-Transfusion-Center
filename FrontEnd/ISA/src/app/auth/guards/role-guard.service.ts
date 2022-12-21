@@ -11,10 +11,9 @@ export class RoleGuardService implements CanActivate {
   constructor(private readonly auth: AuthService, private readonly router: Router, private readonly jwtHelper: JwtHelperService) { }
   canActivate(route: ActivatedRouteSnapshot): boolean {
     const expectedRole = route.data['expectedRole'];
-
     const token = localStorage.getItem('jwt');
     if (!token) {
-      this.router.navigate(['staff-profile']);
+      this.router.navigate(['login']);
       return false;
     }
 
@@ -25,7 +24,7 @@ export class RoleGuardService implements CanActivate {
       !this.auth.isAuthenticated() ||
       role !== expectedRole
     ) {
-      this.router.navigate(['staff-profile']);
+      this.router.navigate(['login']);
       return false;
     }
     return true;

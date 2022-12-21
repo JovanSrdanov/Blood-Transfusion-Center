@@ -18,9 +18,7 @@ public class Isa2022Application {
 
     public static void main(String[] args) {
         SpringApplication.run(Isa2022Application.class, args);
-        System.out.println("Pozdrav svima!");
-        System.out.println("Zelim svima ugodan dan, puno ljubavi, zdravlja i srece!");
-        System.out.println("Tim moj najjaci <3");
+        System.out.println("IDEMOOOOOOOOOOOOOOOOOOOOOOOO");
     }
 
     @Bean
