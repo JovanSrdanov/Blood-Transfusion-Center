@@ -114,7 +114,7 @@ VALUES ('d546d803-e4fe-4ba6-b8e0-6e482ad48e58', 'd43bc35e-bc4b-4566-b076-320f5c6
 
 INSERT INTO "blood_center" ("id", "description", "name", "rating", "end_hours", "end_minutes", "start_hours",
                             "start_minutes", "address_id")
-VALUES ('417c9b36-251a-4483-bfbf-abd3df786d96', 'LUMENE OY', 'Will-Wiza', '3', '17', '0', '8', '0',
+VALUES ('417c9b36-251a-4483-bfbf-abd3df786d96', 'LUMENE OY', 'Will-Wiza', '3', '11', '30', '5', '0',
         '8021c0fb-99a5-42f0-9d81-baa41265540e'),
        ('aa116b1b-c59c-403b-b64f-db201d9375d2', '"Lannett Company, Inc."', '"Grimes, Kautzer and Lebsack"', '2', '17',
         '0', '8', '0', '553414e2-857e-49b0-85c8-e08f9edc9ae3'),
@@ -176,7 +176,11 @@ VALUES ('b2fe1aff-bb8f-4fd1-b88e-aa39af8fc65c', 'Doc1', '850-326-8246', '_',
        ('1e2df797-37b7-4241-a2b0-99e262a20912', 'Doc3', '844-991-4460', '_',
         'f896b9e4-b639-43cc-882f-9d735597ef08', '417c9b36-251a-4483-bfbf-abd3df786d96'),
        ('fa41a439-0f90-46a8-96af-16bc1068d50c', 'Doc4', '844-991-4460', '_',
-        'f896b9e4-b639-43cc-882f-9d735597ef08', '417c9b36-251a-4483-bfbf-abd3df786d96');
+        'f896b9e4-b639-43cc-882f-9d735597ef08', '417c9b36-251a-4483-bfbf-abd3df786d96'),
+       ('8180fea1-7623-4a5b-8717-5b34b2abe9d3', 'Doc5', '844-991-4460', '_',
+        'f896b9e4-b639-43cc-882f-9d735597ef08', '417c9b36-251a-4483-bfbf-abd3df786d96'),
+       ('e3bd5294-441f-4ae3-807d-d85314d91e50', 'Doc6', '844-991-4460', '_',
+        'f896b9e4-b639-43cc-882f-9d735597ef08', 'aa116b1b-c59c-403b-b64f-db201d9375d2');
 
 
 

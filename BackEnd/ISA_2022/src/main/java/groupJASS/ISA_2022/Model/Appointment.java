@@ -11,7 +11,6 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -34,4 +33,12 @@ public class Appointment {
 
     @Embedded
     DateRange time;
+
+    public Appointment(UUID id, Set<Staff> staff, BloodCenter bloodCenter, boolean isPremade, DateRange time) {
+        this.id = id;
+        this.staff = staff;
+        this.bloodCenter = bloodCenter;
+        this.isPremade = isPremade;
+        this.time = time;
+    }
 }
