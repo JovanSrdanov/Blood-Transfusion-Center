@@ -1,7 +1,10 @@
 package groupJASS.ISA_2022.Service.Interfaces;
 
 import groupJASS.ISA_2022.Exceptions.SortNotFoundException;
+import groupJASS.ISA_2022.DTO.Appointment.AvailablePredefinedDto;
+import groupJASS.ISA_2022.Exceptions.BadRequestException;
 import groupJASS.ISA_2022.Model.Appointment;
+import groupJASS.ISA_2022.Model.AppointmentSchedulingHistory;
 import groupJASS.ISA_2022.Model.DateRange;
 import org.springframework.data.domain.Page;
 
@@ -14,10 +17,15 @@ public interface IAppointmentService extends ICrudService<Appointment> {
 
     List<DateRange> findFreeSlotsForStaffId(UUID staffId, DateRange bigRange, int duration);
 
-    List<DateRange> findFreeSlotsForStaffIds(List<String> staffIds, LocalDateTime date, int duration);
+    List<DateRange> findFreeSlotsForStaffIds(List<UUID> staffIds, LocalDateTime date, int duration)
+            throws BadRequestException;
 
-    Appointment predefine(DateRange dateRange, List<UUID> staffIds);
+    Appointment predefine(DateRange dateRange, List<UUID> staffIds, UUID staffAdminId) throws BadRequestException;
 
+    List<AvailablePredefinedDto> findAvailableAppointmentsForDonor(UUID donorId, UUID centerId);
 
-    Page<Appointment> getPremadeAppointmentsForBloodCenter(UUID centerId, int page, int pageSize, String sort) throws SortNotFoundException;
+    AppointmentSchedulingHistory scheduleAppointment(UUID donorId, UUID appointmentId);
+
+    Page<Appointment> getPremadeAppointmentsForBloodCenter(UUID centerId, int page, int pageSize, String sort)
+            throws SortNotFoundException;
 }

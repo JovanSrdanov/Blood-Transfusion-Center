@@ -43,7 +43,7 @@ public class AppointmentSchedulingHistoryController {
         Page<AppointmentSchedulingHistory> entities = _appointmentSchedulingHistoryRepository.bloodDonorPendingAppointments(a.getPersonId(), pageSize, page, field, sort);
         List<BloodDonorAppointmentsDTO> content = new ArrayList<>();
         for (var e : entities) {
-            content.add(new BloodDonorAppointmentsDTO(e.getAppointment().getId(), e.getAppointment().getBloodCenter().getName(), e.getAppointment().getTime().getStartTime(), e.getAppointment().getTime().getStartTime(), e.getAppointment().getTime().getDurationMinutes()));
+            content.add(new BloodDonorAppointmentsDTO(e.getAppointment().getId(), e.getAppointment().getBloodCenter().getName(), e.getAppointment().getTime().getStartTime(), e.getAppointment().getTime().getStartTime(), e.getAppointment().getTime().calcaulateDurationMinutes()));
         }
 
         PageEntityDto<List<BloodDonorAppointmentsDTO>> pageDTO = new PageEntityDto<>(content, (int) entities.getTotalElements());
