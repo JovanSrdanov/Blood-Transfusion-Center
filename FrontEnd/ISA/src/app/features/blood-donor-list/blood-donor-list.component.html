@@ -64,15 +64,14 @@
 
   <ng-container matColumnDef="button">
     <th mat-header-cell *matHeaderCellDef></th>
-    <td mat-cell *matCellDef="let row">
-      <button class="btn" [matMenuTriggerFor]="menustatus">Details</button>
+    <td mat-cell *matCellDef="let element">
+      <button class="btn" [matMenuTriggerFor]="menustatus">Actions</button>
 
       <mat-menu #menustatus="matMenu">
         <button
-          (click)="viewAppointments($event, donor.id)"
+          (click)="viewAppointments($event, element.id)"
           mat-menu-item
-          [value]="donor.id"
-          *ngFor="let donor of bloodDonorsSearched"
+          [value]="element.id"
         >
           View appointments
         </button>

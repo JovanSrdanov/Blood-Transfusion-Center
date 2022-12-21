@@ -1,3 +1,4 @@
+import { AppointmentDetailsComponent } from './../features/appointment-details/appointment-details/appointment-details.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { BloodDonorAppointmentListComponent } from '../features/blood-donor-appointment-list/blood-donor-appointment-list/blood-donor-appointment-list.component';
@@ -13,6 +14,10 @@ const routes: Routes = [
     //TODO Router link umesto navigate
     path: 'donor-appointments/:id',
     component: BloodDonorAppointmentListComponent,
+  },
+  {
+    path: 'appointment-details/:appointmentId/:donorId',
+    component: AppointmentDetailsComponent,
   },
   { path: 'staff-profile', component: StaffProfileComponent },
   { path: '', redirectTo: 'staff-profile', pathMatch: 'full' },

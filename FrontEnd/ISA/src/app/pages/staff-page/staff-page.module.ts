@@ -1,3 +1,4 @@
+import { AppointmentDetailsModule } from './../../features/appointment-details/appointment-details.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StaffPageComponent } from './staff-page/staff-page.component';
@@ -14,6 +15,7 @@ import { BloodDonorAppointmentListModule } from 'src/app/features/blood-donor-ap
     RouterModule,
     BloodDonorListModule,
     BloodDonorAppointmentListModule,
+    AppointmentDetailsModule,
     StaffProfileModule,
     MaterialModule,
   ],
