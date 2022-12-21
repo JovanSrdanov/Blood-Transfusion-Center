@@ -114,7 +114,7 @@ VALUES ('d546d803-e4fe-4ba6-b8e0-6e482ad48e58', 'd43bc35e-bc4b-4566-b076-320f5c6
 
 INSERT INTO "blood_center" ("id", "description", "name", "rating", "end_hours", "end_minutes", "start_hours",
                             "start_minutes", "address_id")
-VALUES ('417c9b36-251a-4483-bfbf-abd3df786d96', 'LUMENE OY', 'Will-Wiza', '3', '17', '0', '8', '0',
+VALUES ('417c9b36-251a-4483-bfbf-abd3df786d96', 'LUMENE OY', 'Will-Wiza', '3', '11', '30', '5', '0',
         '8021c0fb-99a5-42f0-9d81-baa41265540e'),
        ('aa116b1b-c59c-403b-b64f-db201d9375d2', '"Lannett Company, Inc."', '"Grimes, Kautzer and Lebsack"', '2', '17',
         '0', '8', '0', '553414e2-857e-49b0-85c8-e08f9edc9ae3'),
@@ -169,10 +169,18 @@ VALUES ('07ce2e8b-d34b-4156-9dd4-f29ec4321675', 'Jovan2', '22140-486-9131', 'Srd
 
 
 INSERT INTO "staff" ("id", "name", "phone_number", "surname", "address_id", "blood_center_id")
-VALUES ('b2fe1aff-bb8f-4fd1-b88e-aa39af8fc65c', 'Beatrix', '850-326-8246', 'Pietrowski',
-        'dc0bbae7-4fa1-47ca-a092-dde2f9efe046', '73548b7b-3695-4e37-989c-e2ba7a0130d0'),
-       ('883f13cc-25c8-4b60-b0e5-5ac938ad2594', 'StaffNoPass', '844-991-4460', 'StaffNoPassSurame',
-        'f896b9e4-b639-43cc-882f-9d735597ef08', 'bd701425-588c-4d16-ab96-e71be2979a75');
+VALUES ('b2fe1aff-bb8f-4fd1-b88e-aa39af8fc65c', 'Doc1', '850-326-8246', '_',
+        'dc0bbae7-4fa1-47ca-a092-dde2f9efe046', '417c9b36-251a-4483-bfbf-abd3df786d96'),
+       ('883f13cc-25c8-4b60-b0e5-5ac938ad2594', 'Doc2', '844-991-4460', '_',
+        'f896b9e4-b639-43cc-882f-9d735597ef08', '417c9b36-251a-4483-bfbf-abd3df786d96'),
+       ('1e2df797-37b7-4241-a2b0-99e262a20912', 'Doc3', '844-991-4460', '_',
+        'f896b9e4-b639-43cc-882f-9d735597ef08', '417c9b36-251a-4483-bfbf-abd3df786d96'),
+       ('fa41a439-0f90-46a8-96af-16bc1068d50c', 'Doc4', '844-991-4460', '_',
+        'f896b9e4-b639-43cc-882f-9d735597ef08', '417c9b36-251a-4483-bfbf-abd3df786d96'),
+       ('8180fea1-7623-4a5b-8717-5b34b2abe9d3', 'Doc5', '844-991-4460', '_',
+        'f896b9e4-b639-43cc-882f-9d735597ef08', '417c9b36-251a-4483-bfbf-abd3df786d96'),
+       ('e3bd5294-441f-4ae3-807d-d85314d91e50', 'Doc6', '844-991-4460', '_',
+        'f896b9e4-b639-43cc-882f-9d735597ef08', 'aa116b1b-c59c-403b-b64f-db201d9375d2');
 
 
 
@@ -378,3 +386,45 @@ VALUES ('96ea2710-8c48-458b-b5d3-6256d087f257', '79', '0', '417c9b36-251a-4483-b
        ('24705880-47de-436c-b2df-5fc4c371c0ba', '18', '7', '1dc2e158-9faa-4940-9373-879fbe8ceada'),
        ('ec0cf96b-fc68-4493-9a44-1af5a3a5a310', '31', '7', '73548b7b-3695-4e37-989c-e2ba7a0130d0'),
        ('be7709e8-f53f-4c0e-b21b-6e38bb458ed1', '95', '7', '5f29fc03-f6bd-49a6-9f41-c2ca229de403');
+
+INSERT INTO appointment (id, start_time, end_time, blood_center_id, is_premade)
+VALUES('dbf02dce-a9a1-4e20-aaf0-5fca92299407', '2022-12-21 05:00:00.000', '2022-12-21 05:30:00.000', '417c9b36-251a-4483-bfbf-abd3df786d96', true),
+      ('9e16d8b0-a805-4ffb-a08b-d50e7fef6be0', '2022-12-21 06:30:00.000', '2022-12-21 07:00:00.000', '417c9b36-251a-4483-bfbf-abd3df786d96', true),
+      ('f9854a8d-9dfb-49f5-abf4-d993fac9aac3', '2022-12-21 08:30:00.000', '2022-12-21 09:30:00.000', '417c9b36-251a-4483-bfbf-abd3df786d96', true),
+      ('c41a832e-b94c-4c6a-b3fa-e743d5f954b4', '2022-12-21 09:30:00.000', '2022-12-21 10:30:00.000', '417c9b36-251a-4483-bfbf-abd3df786d96', true),
+
+      ('da9734c6-d91c-47b3-9944-816f51957405', '2022-12-21 05:00:00.000', '2022-12-21 06:00:00.000', '417c9b36-251a-4483-bfbf-abd3df786d96', true),
+      ('61156c70-936a-428f-91c5-04a9926dd8dc', '2022-12-21 07:30:00.000', '2022-12-21 09:00:00.000', '417c9b36-251a-4483-bfbf-abd3df786d96', true),
+      ('0a738526-aae9-43f3-b81a-7f2caf792825', '2022-12-21 09:30:00.000', '2022-12-21 11:00:00.000', '417c9b36-251a-4483-bfbf-abd3df786d96', true),
+
+      ('69b72768-92df-4bd5-ad0a-47bef7cec66e', '2022-12-21 08:30:00.000', '2022-12-21 10:00:00.000', '417c9b36-251a-4483-bfbf-abd3df786d96', true),
+
+      ('be1bc87b-c7b5-4c6d-8149-b3078e3cc479', '2022-12-21 06:00:00.000', '2022-12-21 07:00:00.000', '417c9b36-251a-4483-bfbf-abd3df786d96', true),
+      ('c166c577-e870-438f-bca8-0b441f348317', '2022-12-21 09:00:00.000', '2022-12-21 09:30:00.000', '417c9b36-251a-4483-bfbf-abd3df786d96', true),
+      ('c1f74508-c3a1-4beb-b0d3-fe3399040071', '2022-12-21 09:30:00.000', '2022-12-21 10:30:00.000', '417c9b36-251a-4483-bfbf-abd3df786d96', true),
+      ('9bdaeb58-381a-4586-919c-f923df6bdd39', '2022-12-21 11:15:00.000', '2022-12-21 11:30:00.000', '417c9b36-251a-4483-bfbf-abd3df786d96', true);
+
+INSERT INTO appointment_staff (appointment_id, staff_id)
+VALUES('dbf02dce-a9a1-4e20-aaf0-5fca92299407', 'b2fe1aff-bb8f-4fd1-b88e-aa39af8fc65c'),
+      ('9e16d8b0-a805-4ffb-a08b-d50e7fef6be0', 'b2fe1aff-bb8f-4fd1-b88e-aa39af8fc65c'),
+      ('f9854a8d-9dfb-49f5-abf4-d993fac9aac3', 'b2fe1aff-bb8f-4fd1-b88e-aa39af8fc65c'),
+      ('c41a832e-b94c-4c6a-b3fa-e743d5f954b4', 'b2fe1aff-bb8f-4fd1-b88e-aa39af8fc65c'),
+
+      ('da9734c6-d91c-47b3-9944-816f51957405', '883f13cc-25c8-4b60-b0e5-5ac938ad2594'),
+      ('61156c70-936a-428f-91c5-04a9926dd8dc', '883f13cc-25c8-4b60-b0e5-5ac938ad2594'),
+      ('0a738526-aae9-43f3-b81a-7f2caf792825', '883f13cc-25c8-4b60-b0e5-5ac938ad2594'),
+
+      ('9e16d8b0-a805-4ffb-a08b-d50e7fef6be0', '1e2df797-37b7-4241-a2b0-99e262a20912'),
+      ('69b72768-92df-4bd5-ad0a-47bef7cec66e', '1e2df797-37b7-4241-a2b0-99e262a20912'),
+
+      ('be1bc87b-c7b5-4c6d-8149-b3078e3cc479', 'fa41a439-0f90-46a8-96af-16bc1068d50c'),
+      ('c166c577-e870-438f-bca8-0b441f348317', 'fa41a439-0f90-46a8-96af-16bc1068d50c'),
+      ('c1f74508-c3a1-4beb-b0d3-fe3399040071', 'fa41a439-0f90-46a8-96af-16bc1068d50c'),
+      ('9bdaeb58-381a-4586-919c-f923df6bdd39', 'fa41a439-0f90-46a8-96af-16bc1068d50c');
+
+INSERT INTO appointment_scheduling_history
+(id, qrcode, issuing_date, status, appointment_id, blood_donor_id)
+VALUES('7af0b527-5209-4c33-b7fb-2d0df7214728', 'QR', '2022-12-21 11:15:00.000', 3,
+       '9e16d8b0-a805-4ffb-a08b-d50e7fef6be0', '07ce2e8b-d34b-4156-9dd4-f29ec4311675');
+
+

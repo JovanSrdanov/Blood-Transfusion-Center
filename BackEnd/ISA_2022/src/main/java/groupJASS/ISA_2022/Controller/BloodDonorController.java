@@ -22,8 +22,8 @@ import org.webjars.NotFoundException;
 
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("blood-donor")
@@ -56,10 +56,10 @@ public class BloodDonorController {
         return new ResponseEntity<>(MappingUtilities.mapList((List<BloodDonor>) this._bloodDonorService.findAll(), BloodDonorLazyDTO.class, _mapper), HttpStatus.OK);
     }
 
-    @GetMapping("get-by-id/{id}")
-    public ResponseEntity<BloodDonorInfoDto> findById(@PathVariable UUID id) {
-        Account acc = _accountService.findAccountByPersonId(id);
-        BloodDonorInfoDto userDto = new BloodDonorInfoDto(_bloodDonorService.findById(id), acc.getEmail());
+    @GetMapping("my-info")
+    public ResponseEntity<BloodDonorInfoDto> findById(Principal account) {
+        Account a = _accountService.findAccountByEmail(account.getName());
+        BloodDonorInfoDto userDto = new BloodDonorInfoDto(_bloodDonorService.findById(a.getPersonId()), a.getEmail());
         return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
 
@@ -96,7 +96,7 @@ public class BloodDonorController {
         try {
 
             _bloodDonorService.registerNewBloodDonor(dto);
-          
+
             return new ResponseEntity<>(dto, HttpStatus.CREATED);
 
         } catch (IllegalArgumentException e) {
