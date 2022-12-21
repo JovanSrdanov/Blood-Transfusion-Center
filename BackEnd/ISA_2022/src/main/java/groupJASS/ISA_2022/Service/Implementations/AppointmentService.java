@@ -90,6 +90,11 @@ public class AppointmentService implements IAppointmentService {
         UUID bloodCenterId = _staffService.findById(UUID.fromString(staffIds.get(0))).getBloodCenter().getId();
         DateRange bigRange = _bloodBloodCenterService.getWorkingDateRangeForDate(bloodCenterId, date);
 
+        // Todo proveri da li su svi id staffa iz istog blood centra
+        // Todo proveri da li su svi postoje staff ids, ne sme prazno
+        // TODO proveri dateragne vece od 0
+        // TODO provera za radno vreme bolnice
+
         List<DateRange> intersections = new ArrayList<>();
         intersections.add(bigRange);
 
@@ -114,6 +119,7 @@ public class AppointmentService implements IAppointmentService {
     public Appointment predefine(DateRange dateRange, List<UUID> staffIds) {
         HashSet<Staff> staffHashSet = new HashSet<>();
 
+        // TODO: beskonacno mozes puta zakazati isti termin
         for(UUID id : staffIds) {
             staffHashSet.add(_staffService.findById(id));
         }
