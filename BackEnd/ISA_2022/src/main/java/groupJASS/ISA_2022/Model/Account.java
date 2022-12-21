@@ -4,8 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -42,6 +44,20 @@ public class Account implements UserDetails {
     private boolean isActivated;
     @Column(name = "last_password_reset_date")
     private Timestamp lastPasswordResetDate;
+
+
+    //Already hashed password is expected
+    public Account(String email, String password, List<Role> roles, UUID personId, boolean isActivated){
+        this.id = UUID.randomUUID();
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
+        this.personId = personId;
+        //System admins and staff accounts are acitvated by default
+        this.isActivated = isActivated;
+        this.lastPasswordResetDate = null;
+    }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
