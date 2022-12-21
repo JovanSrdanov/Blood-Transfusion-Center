@@ -1,6 +1,8 @@
 package groupJASS.ISA_2022.Repository;
 
 import groupJASS.ISA_2022.Model.Appointment;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -25,4 +27,9 @@ public interface AppointmentRepository extends JpaRepository<Appointment, UUID> 
     List<Appointment> findTakenChunksByStaffId(@Param("id") UUID staff_id,
                                                @Param("startTime") LocalDateTime startTime,
                                                @Param("endTime") LocalDateTime endTime);
+
+    @Query("select a from Appointment a " +
+            "inner join fetch AppointmentSchedulingHistory  ash on ash.appointment.id =a.id" +
+            " where   a.bloodCenter.id = :centerId and a.isPremade=true  ")
+    Page<Appointment> searchBy(@Param("centerId") UUID centerId, Pageable of);
 }

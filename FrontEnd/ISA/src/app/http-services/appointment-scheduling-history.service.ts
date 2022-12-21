@@ -8,7 +8,7 @@ import { PageDto } from '../model/PageDto';
 @Injectable({
   providedIn: 'root'
 })
-export class AppointmentService {
+export class AppointmentSchedulingHistoryService {
   constructor(private readonly http: HttpClient) { }
   path: string = environment.backendPath + '/appointment_scheduling_history';
 

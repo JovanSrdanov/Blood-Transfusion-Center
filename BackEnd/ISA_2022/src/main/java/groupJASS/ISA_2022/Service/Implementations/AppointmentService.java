@@ -1,5 +1,6 @@
 package groupJASS.ISA_2022.Service.Implementations;
 
+import groupJASS.ISA_2022.Exceptions.SortNotFoundException;
 import groupJASS.ISA_2022.Model.Appointment;
 import groupJASS.ISA_2022.Model.BloodCenter;
 import groupJASS.ISA_2022.Model.DateRange;
@@ -9,6 +10,8 @@ import groupJASS.ISA_2022.Service.Interfaces.IAppointmentService;
 import groupJASS.ISA_2022.Service.Interfaces.IBloodCenterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
@@ -137,6 +140,21 @@ public class AppointmentService implements IAppointmentService {
                 true,
                 dateRange
         ));
+    }
+
+    @Override
+    public Page<Appointment> getPremadeAppointmentsForBloodCenter(UUID centerId, int page, int pageSize, String sort) throws SortNotFoundException {
+        Page<Appointment> currentPage;
+        if (sort.isBlank()) {
+            currentPage = _appointmentRepository.searchBy(centerId, PageRequest.of(page, pageSize));
+        } else if (sort.equals("asc")) {
+            currentPage = _appointmentRepository.searchBy(centerId, PageRequest.of(page, pageSize));
+        } else if (sort.equals("desc")) {
+            currentPage = _appointmentRepository.searchBy(centerId, PageRequest.of(page, pageSize));
+        } else {
+            throw new SortNotFoundException("This sort type doesn't exist");
+        }
+        return currentPage;
     }
 
 
