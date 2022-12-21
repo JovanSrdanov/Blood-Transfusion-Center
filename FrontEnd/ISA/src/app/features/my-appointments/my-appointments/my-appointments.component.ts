@@ -99,9 +99,12 @@ export class MyAppointmentsComponent implements AfterViewInit {
 
   cancelAppoitnment(id: string) {
     this.appointmentService.cancelAppointment(id).subscribe(res => {
+      this.dataSource = this.dataSource.filter((u) => u.appointmentId !== id);;
       alert("Appointment canceled")
+
     }, err => {
       console.log(err)
+      alert(err.error);
     });
 
   }
