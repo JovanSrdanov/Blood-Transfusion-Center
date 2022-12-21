@@ -9,7 +9,7 @@ import { appointmentBloodDonorInfo } from 'src/app/model/appointment/appointment
   styleUrls: ['./blood-donor-appointment-list.component.css'],
 })
 export class BloodDonorAppointmentListComponent implements OnInit {
-  donorId: number = -1;
+  donorId: string = '-1';
   private sub: any;
 
   dataSource: appointmentBloodDonorInfo[] = [];
@@ -24,7 +24,7 @@ export class BloodDonorAppointmentListComponent implements OnInit {
 
   ngOnInit(): void {
     this.sub = this.route.params.subscribe((params) => {
-      this.donorId = +params['id']; // (+) converts string 'id' to a number
+      this.donorId = params['id']; // (+) converts string 'id' to a number
       console.log(this.donorId);
     });
     this.FillTable();
@@ -35,24 +35,21 @@ export class BloodDonorAppointmentListComponent implements OnInit {
     this.dataSource.push({
       id: '1',
       issuingDate: '21/12/2022',
-      appointmentId: '2',
-      bloodDonorId: '3',
+      bloodDonorId: '2',
       time: '10:30',
       duration: 30,
     });
     this.dataSource.push({
       id: '2',
       issuingDate: '22/12/2022',
-      appointmentId: '3',
-      bloodDonorId: '4',
+      bloodDonorId: '3',
       time: '11:30',
       duration: 30,
     });
     this.dataSource.push({
       id: '3',
       issuingDate: '23/12/2022',
-      appointmentId: '4',
-      bloodDonorId: '5',
+      bloodDonorId: '4',
       time: '12:30',
       duration: 30,
     });
@@ -64,9 +61,9 @@ export class BloodDonorAppointmentListComponent implements OnInit {
     console.log(row);
   }
 
-  viewDetails(event: any, appointmentId: string, donorId: string) {
-    console.log(appointmentId);
-    this.router.navigate(['staff/appointment-details', appointmentId, donorId]);
+  viewDetails(event: any, id: string, donorId: string) {
+    console.log(id);
+    this.router.navigate(['staff/appointment-details', id, donorId]);
   }
 
   ngOnDestroy() {

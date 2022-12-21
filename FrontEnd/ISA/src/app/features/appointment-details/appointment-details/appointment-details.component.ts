@@ -1,5 +1,6 @@
 import { Questionnaire } from 'src/app/pages/registration-page/Model/questionnaire';
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-appointment-details',
@@ -7,6 +8,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./appointment-details.component.css'],
 })
 export class AppointmentDetailsComponent implements OnInit {
+  appointmentHistoryId: string = '-1';
+  donorId: string = '-1';
+
+  private sub: any;
+
   questionaire: Questionnaire = {
     under50KG: false,
     feelsBad: false,
@@ -21,13 +27,16 @@ export class AppointmentDetailsComponent implements OnInit {
   canStartAppointment = true;
   checkedDidNotShowUp = false;
   checkedDoesNotQualify = false;
-  constructor() {}
+  constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
-    this.getQuestionaire();
+    this.sub = this.route.params.subscribe((params) => {
+      this.appointmentHistoryId = params['appointmentHistoryId'];
+      this.donorId = params['donorId'];
+      console.log(this.appointmentHistoryId);
+      console.log(this.donorId);
+    });
   }
-
-  getQuestionaire() {}
 
   clickedEventShowUp(event: any) {
     if (event.checked) {
@@ -61,5 +70,10 @@ export class AppointmentDetailsComponent implements OnInit {
       this.canStartAppointment = true;
       console.log('can not start');
     }
+  }
+
+  startAppointment() {
+    console.log(this.appointmentHistoryId);
+    this.router.navigate(['staff/create-report', this.appointmentHistoryId]);
   }
 }

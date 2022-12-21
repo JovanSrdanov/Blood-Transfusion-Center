@@ -1,3 +1,4 @@
+import { CreateMedicalReportModule } from './../../features/create-medical-report/create-medical-report.module';
 import { AppointmentDetailsModule } from './../../features/appointment-details/appointment-details.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -16,6 +17,7 @@ import { BloodDonorAppointmentListModule } from 'src/app/features/blood-donor-ap
     BloodDonorListModule,
     BloodDonorAppointmentListModule,
     AppointmentDetailsModule,
+    CreateMedicalReportModule,
     StaffProfileModule,
     MaterialModule,
   ],

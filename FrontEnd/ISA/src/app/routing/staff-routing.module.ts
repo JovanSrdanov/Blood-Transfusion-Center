@@ -1,3 +1,4 @@
+import { CreateMedicalReportComponent } from './../features/create-medical-report/create-medical-report/create-medical-report.component';
 import { AppointmentDetailsComponent } from './../features/appointment-details/appointment-details/appointment-details.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -16,8 +17,12 @@ const routes: Routes = [
     component: BloodDonorAppointmentListComponent,
   },
   {
-    path: 'appointment-details/:appointmentId/:donorId',
+    path: 'appointment-details/:appointmentHistoryId/:donorId',
     component: AppointmentDetailsComponent,
+  },
+  {
+    path: 'create-report/:appointmentHistoryId',
+    component: CreateMedicalReportComponent,
   },
   { path: 'staff-profile', component: StaffProfileComponent },
   { path: '', redirectTo: 'staff-profile', pathMatch: 'full' },

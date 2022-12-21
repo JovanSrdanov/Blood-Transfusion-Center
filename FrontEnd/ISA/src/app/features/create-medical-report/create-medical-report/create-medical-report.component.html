@@ -1,0 +1,211 @@
+<div>
+  <h1 class="title">Create report</h1>
+  <table class="report">
+    <tr>
+      <th>Blood group</th>
+      <td colspan="3">
+        <textarea
+          [(ngModel)]="bloodGroup"
+          matInput
+          cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="5"
+          class="example-margin"
+        >
+        I weight less than 50kg
+      </textarea
+        >
+      </td>
+    </tr>
+    <tr>
+      <th>Note to the medical doctor</th>
+      <td colspan="3">
+        <textarea
+          [(ngModel)]="noteToDoctor"
+          matInput
+          cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="5"
+          class="example-margin"
+        >
+        I weight less than 50kg
+      </textarea
+        >
+      </td>
+    </tr>
+    <tr>
+      <th>Lungs/Heart/Bag type</th>
+      <td>
+        <textarea
+          matInput
+          [(ngModel)]="lungs"
+          cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="5"
+          class="example-margin"
+        >
+        I weight less than 50kg
+      </textarea
+        >
+      </td>
+      <td>
+        <textarea
+          matInput
+          [(ngModel)]="heart"
+          cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="5"
+          class="example-margin"
+        >
+        I weight less than 50kg
+      </textarea
+        >
+      </td>
+      <td>
+        <textarea
+          matInput
+          [(ngModel)]="bag"
+          cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="5"
+          class="example-margin"
+        >
+        I weight less than 50kg
+      </textarea
+        >
+      </td>
+    </tr>
+    <tr>
+      <th>TA/TT/TB</th>
+      <td>
+        <textarea
+          matInput
+          [(ngModel)]="ta"
+          cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="5"
+          class="example-margin"
+        >
+        I weight less than 50kg
+      </textarea
+        >
+      </td>
+      <td>
+        <textarea
+          matInput
+          [(ngModel)]="tt"
+          cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="5"
+          class="example-margin"
+        >
+        I weight less than 50kg
+      </textarea
+        >
+      </td>
+      <td>
+        <textarea
+          matInput
+          [(ngModel)]="tb"
+          cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="5"
+          class="example-margin"
+        >
+        I weight less than 50kg
+      </textarea
+        >
+      </td>
+    </tr>
+    <tr>
+      <th>Appointment start time</th>
+      <td colspan="3">
+        <textarea
+          matInput
+          [(ngModel)]="appStart"
+          cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="5"
+          class="example-margin"
+        >
+        I weight less than 50kg
+      </textarea
+        >
+      </td>
+    </tr>
+    <tr>
+      <th>Appointment end time</th>
+      <td colspan="3">
+        <textarea
+          matInput
+          [(ngModel)]="appEnd"
+          cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="5"
+          class="example-margin"
+        >
+        I weight less than 50kg
+      </textarea
+        >
+      </td>
+    </tr>
+    <tr>
+      <th>Note</th>
+      <td colspan="3">
+        <textarea
+          matInput
+          [(ngModel)]="note"
+          cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="5"
+          class="example-margin"
+        >
+        I weight less than 50kg
+      </textarea
+        >
+      </td>
+    </tr>
+    <tr>
+      <th>Equipment/Equipment quantity</th>
+      <td colspan="2">
+        <mat-label>Select equipment</mat-label>
+        <mat-select>
+          <mat-option
+            *ngFor="let equipment of equipmentList"
+            [value]="equipment.id"
+          >
+            {{ equipment.name }} - {{ equipment.quantity }}
+          </mat-option>
+        </mat-select>
+      </td>
+      <td>
+        <input
+          type="number"
+          class="number"
+          matInput
+          name="value"
+          placeholder="quantity"
+        />
+      </td>
+    </tr>
+  </table>
+  <button
+    mat-raised-button
+    (click)="createReport()"
+    color="primary"
+    class="btn"
+  >
+    Create report
+  </button>
+</div>
