@@ -163,7 +163,7 @@ VALUES ('07ce2e8b-d34b-4156-9dd4-f29ec4311675', 'Jovan', '140-486-9131', 'Srdano
 
 INSERT INTO "blood_donor" ("id", "name", "phone_number", "surname", "gender", "institution", "jmbg", "penalties",
                            "points", "address_id", "occupation")
-VALUES ('07ce2e8b-d34b-4156-9dd4-f29ec4321675', 'Jovan2', '22140-486-9131', 'Srdanov2', '1', 'Valve2', '8541087515936',
+VALUES ('26d3381b-319d-425c-abd7-256f24f0a2e0', 'Jovan2', '22140-486-9131', 'Srdanov2', '1', 'Valve2', '8541087515936',
         '75',
         '0', 'a0cd0598-30f7-430d-8cc5-ef309d31ffb7', 'Shadow Scrum Master2');
 
@@ -192,12 +192,12 @@ VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec1', 'blooddonor@gmail.com', 'true',
 INSERT INTO "account" ("id", "email", "is_activated", "password", "person_id")
 VALUES ('fbf7d96c-0bac-4081-bc8d-0d33e2ab0ec1', 'blooddonor2@gmail.com', 'true',
         '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi',
-        '07ce2e8b-d34b-4156-9dd4-f29ec4311675');
+        '26d3381b-319d-425c-abd7-256f24f0a2e0');
 
 INSERT INTO "account" ("id", "email", "is_activated", "password", "person_id")
 VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec2', 'staffnopass@gmail.com', 'true',
         '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi',
-        '883f13cc-25c8-4b60-b0e5-5ac938ad2594');
+        'b2fe1aff-bb8f-4fd1-b88e-aa39af8fc65c');
 
 INSERT INTO "account" ("id", "email", "is_activated", "password", "person_id")
 VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec3', 'staff@gmail.com', 'true',
@@ -209,19 +209,19 @@ VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec4', 'sysadmin@gmail.com', 'true',
         '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi');
 
 
-
+INSERT INTO account_role (account_id, role_id)
+VALUES ('fbf7d96c-0bac-4081-bc8d-0d33e2ab0ec1', 1);
 INSERT INTO account_role (account_id, role_id)
 VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec1', 1);
 INSERT INTO account_role (account_id, role_id)
-VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec2', 1);
+VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec2', 2);
 INSERT INTO account_role (account_id, role_id)
 VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec3', 2);
 INSERT INTO account_role (account_id, role_id)
 VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec4', 3);
 
 
-INSERT INTO account_role (account_id, role_id)
-VALUES ('fbf7d96c-0bac-4081-bc8d-0d33e2ab0ec1', 1);
+
 
 
 
@@ -439,13 +439,10 @@ VALUES ('dbf02dce-a9a1-4e20-aaf0-5fca92299407', 'b2fe1aff-bb8f-4fd1-b88e-aa39af8
        ('9bdaeb58-381a-4586-917c-f923df6bdd39', 'fa41a439-0f90-46a8-96af-16bc1068d50c');
 
 INSERT INTO appointment_scheduling_history
-    (id, qrcode, issuing_date, status, appointment_id, blood_donor_id)
-VALUES ('7af0b527-5209-4c33-b7fb-2d0df7214728', 'QR', '2022-12-21 11:15:00.000', 0,
-        '9e16d8b0-a805-4ffb-a08b-d50e7fef6be0', '07ce2e8b-d34b-4156-9dd4-f29ec4311675');
-
-INSERT INTO appointment_scheduling_history
-    (id, qrcode, issuing_date, status, appointment_id, blood_donor_id)
-VALUES ('7af0b527-5209-4c33-b7fb-2d0df7244728', 'QR', '2022-12-21 11:15:00.000', 0,
-        '9bdaeb58-381a-4586-917c-f923df6bdd39', '07ce2e8b-d34b-4156-9dd4-f29ec4311675');
+(id, qrcode, issuing_date, status, appointment_id, blood_donor_id)
+VALUES('7af0b527-5209-4c33-b7fb-2d0df7214728', 'QR', '2022-12-21 11:15:00.000', 3,
+       '9e16d8b0-a805-4ffb-a08b-d50e7fef6be0', '07ce2e8b-d34b-4156-9dd4-f29ec4311675'),
+      ('759415d9-b4d1-45ee-9067-f53b7f945f16', 'QR', '2022-12-21 11:15:00.000', 3,
+       'f9854a8d-9dfb-49f5-abf4-d993fac9aac3', '26d3381b-319d-425c-abd7-256f24f0a2e0');
 
 
