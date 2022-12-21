@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -25,6 +24,10 @@ public class Appointment {
             joinColumns = @JoinColumn(name = "appointment_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "staff_id", referencedColumnName = "id"))
     private Set<Staff> staff = new HashSet<Staff>();
+
+    @ManyToOne
+    @JoinColumn(name="blood_center_id", nullable=false)
+    private BloodCenter bloodCenter;
 
     @Embedded
     DateRange time;
