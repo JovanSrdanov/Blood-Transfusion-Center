@@ -420,10 +420,10 @@ VALUES ('dbf02dce-a9a1-4e20-aaf0-5fca92299407', '2022-12-21 05:00:00.000', '2022
         '417c9b36-251a-4483-bfbf-abd3df786d96', true);
 
 INSERT INTO appointment_staff (appointment_id, staff_id)
-VALUES ('dbf02dce-a9a1-4e20-aaf0-5fca92299407', 'b2fe1aff-bb8f-4fd1-b88e-aa39af8fc65c'),
-       ('9e16d8b0-a805-4ffb-a08b-d50e7fef6be0', 'b2fe1aff-bb8f-4fd1-b88e-aa39af8fc65c'),
-       ('f9854a8d-9dfb-49f5-abf4-d993fac9aac3', 'b2fe1aff-bb8f-4fd1-b88e-aa39af8fc65c'),
-       ('c41a832e-b94c-4c6a-b3fa-e743d5f954b4', 'b2fe1aff-bb8f-4fd1-b88e-aa39af8fc65c'),
+VALUES ('dbf02dce-a9a1-4e20-aaf0-5fca92299407', '32763cf0-6a56-49f1-ad25-5a90561cd204'),
+       ('9e16d8b0-a805-4ffb-a08b-d50e7fef6be0', '32763cf0-6a56-49f1-ad25-5a90561cd204'),
+       ('f9854a8d-9dfb-49f5-abf4-d993fac9aac3', '32763cf0-6a56-49f1-ad25-5a90561cd204'),
+       ('c41a832e-b94c-4c6a-b3fa-e743d5f954b4', '32763cf0-6a56-49f1-ad25-5a90561cd204'),
 
        ('da9734c6-d91c-47b3-9944-816f51957405', '883f13cc-25c8-4b60-b0e5-5ac938ad2594'),
        ('61156c70-936a-428f-91c5-04a9926dd8dc', '883f13cc-25c8-4b60-b0e5-5ac938ad2594'),

@@ -111,16 +111,16 @@ public class AppointmentSchedulingHistoryController {
     public ResponseEntity<?> cancelAppointment(@Validated @RequestBody AppointmentCancelation dto) {
         try {
             BloodDonor donor = _bloodDonorService.findById(dto.getBloodDonorId());
-            _bloodDonorService.updatePenalties(donor, dto.isShowedUp());
-            _appointmentSchedulingHistoryRepository.cancelAppointment(dto.getAppointmentHistoryId());
+            _appointmentSchedulingHistoryRepository.staffCancelAppointment(
+                    donor,
+                    dto.isShowedUp(),
+                    dto.getAppointmentHistoryId());
 
             return new ResponseEntity<>(HttpStatus.OK);
 
         }
-        catch (NotFoundException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-        }
-        catch (BadRequestException e) {
+
+        catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }

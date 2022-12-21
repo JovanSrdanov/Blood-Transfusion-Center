@@ -4,7 +4,9 @@ import groupJASS.ISA_2022.Exceptions.BadRequestException;
 import groupJASS.ISA_2022.Exceptions.SortNotFoundException;
 import groupJASS.ISA_2022.Model.AppointmentSchedulingConfirmationStatus;
 import groupJASS.ISA_2022.Model.AppointmentSchedulingHistory;
+import groupJASS.ISA_2022.Model.BloodDonor;
 import groupJASS.ISA_2022.Repository.AppointmentSchedulingHistoryRepository;
+import groupJASS.ISA_2022.Repository.BloodDonorRepository;
 import groupJASS.ISA_2022.Service.Interfaces.IAppointmentSchedulingHistoryService;
 import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +25,14 @@ import java.util.UUID;
 @Primary
 public class AppointmentSchedulingHistoryService implements IAppointmentSchedulingHistoryService {
     private final AppointmentSchedulingHistoryRepository _appointmentSchedulingHistoryRepository;
+    private final BloodDonorService _bloodDonorService;
 
     @Autowired
-    public AppointmentSchedulingHistoryService(AppointmentSchedulingHistoryRepository appointmentSchedulingHistoryRepository) {
+    public AppointmentSchedulingHistoryService(
+            AppointmentSchedulingHistoryRepository appointmentSchedulingHistoryRepository,
+            BloodDonorService bloodDonorService) {
         _appointmentSchedulingHistoryRepository = appointmentSchedulingHistoryRepository;
-
+        _bloodDonorService = bloodDonorService;
     }
 
     @Override
@@ -72,12 +77,15 @@ public class AppointmentSchedulingHistoryService implements IAppointmentScheduli
     public List<AppointmentSchedulingHistory> getByDonorAndCenterId(UUID bloodDonorId, UUID bloodCenterId) {
         return _appointmentSchedulingHistoryRepository.getByDonorAndCenterId(bloodDonorId, bloodCenterId);
     }
+    @Transactional(rollbackOn = Exception.class)
+    @Override
+    public void staffCancelAppointment(BloodDonor donor, boolean showedUp,
+            UUID appointmentHistoryId) throws Exception {
 
-    public AppointmentSchedulingHistory cancelStaffAppointment(UUID appointmentHistoryId) throws BadRequestException {
+        _bloodDonorService.updatePenalties(donor, showedUp);
         AppointmentSchedulingHistory appointment = findById(appointmentHistoryId);
         appointment.setStatus(AppointmentSchedulingConfirmationStatus.REJECTED);
         save(appointment);
-        throw  new NotImplementedException();
     }
     @Transactional(rollbackOn = Exception.class)
     public void cancelAppointment(UUID appointmentId, UUID bloodDonorId) throws Exception {
