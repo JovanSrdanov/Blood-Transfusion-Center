@@ -1,5 +1,6 @@
 package groupJASS.ISA_2022.Service.Implementations;
 
+import groupJASS.ISA_2022.DTO.Account.AccountDTO;
 import groupJASS.ISA_2022.DTO.Account.ActivateAccountDTO;
 import groupJASS.ISA_2022.Model.Account;
 import groupJASS.ISA_2022.Model.BloodDonor;
@@ -53,6 +54,7 @@ public class AccountService implements IAccountService {
 
     @Override
     public Account save(Account entity) {
+        //Ova provera je mozda nepotrebna kad se uvde konstruktor
         if (entity.getId() == null) {
             entity.setId(UUID.randomUUID());
         }
@@ -62,6 +64,28 @@ public class AccountService implements IAccountService {
     @Override
     public void deleteById(UUID id) {
         _accountRepository.deleteById(id);
+    }
+
+    //At this moment one account only can have one role
+    //For more roles this method must be refactored
+    @Override
+    public Account registerAccount(AccountDTO accountDto, String roleName, UUID personId) {
+        List<Role> roles = _roleService.findByName(roleName);
+
+        boolean isActivated = false;
+        if(!roleName.equals("ROLE_BLOOD_DONOR"))
+        {
+            isActivated = true;
+        }
+
+        if (_accountRepository.existsAccountByEmail(accountDto.getEmail())) {
+
+            throw new IllegalArgumentException("Account with this email already exists");
+        }
+
+        String hashedPassword = _passwordEncoder.encode(accountDto.getPassword());
+        Account account = new Account(accountDto.getEmail(), hashedPassword, roles,personId, isActivated);
+        return save(account);
     }
 
     @Override
@@ -78,12 +102,14 @@ public class AccountService implements IAccountService {
 
     }
 
+    //Kako sad druge korisnike da registrujem?
     @Override
-    public Account registerRegisteredUser(Account map, BloodDonor bloodDonor) {
-        map.setPersonId(bloodDonor.getId());
+    // Mislim da mozes umesto BloodDonor da smesti Person i da ce da radi, mozda cak samo da se prosledi personId
+    public Account registerRegisteredUser(Account account, BloodDonor bloodDonor) {
+        account.setPersonId(bloodDonor.getId());
         List<Role> roles = _roleService.findByName("ROLE_BLOOD_DONOR");
-        map.setRoles(roles);
-        return registerNewUser(map);
+        account.setRoles(roles);
+        return registerNewUser(account);
 
     }
 

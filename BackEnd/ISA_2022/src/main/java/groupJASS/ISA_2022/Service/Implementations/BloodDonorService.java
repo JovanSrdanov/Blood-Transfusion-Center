@@ -94,18 +94,19 @@ public class BloodDonorService implements IBloodDonorService {
     }
 
     @Override
-    public BloodDonor RegisterUser(BloodDonor map, Address address) {
+    // Sto se ovo ovako zove?
+    public BloodDonor RegisterUser(BloodDonor bloodDonor, Address address) {
 
 
-        if (_bloodDonorRepository.existsBloodUserByJmbg(map.getJmbg())) {
+        if (_bloodDonorRepository.existsBloodUserByJmbg(bloodDonor.getJmbg())) {
 
             throw new IllegalArgumentException("Blood donor with this jmbg already exists");
         }
-        map.setAddress(address);
+        bloodDonor.setAddress(address);
 
-        map.setPoints(0);
-        map.setPenalties(0);
-        return save(map);
+        bloodDonor.setPoints(0);
+        bloodDonor.setPenalties(0);
+        return save(bloodDonor);
     }
 
     @Override
@@ -134,7 +135,7 @@ public class BloodDonorService implements IBloodDonorService {
     }
 
     private Account saveAllBloodDonorInformation(RegisterBloodDonorDTO dto) {
-        Address address = _addressService
+        Address address = _addressService //mogao si samo save
                 .saveAddresFromBloodDonorRegistration(_mapper.map(dto.getAddressBloodDonorDTO(), Address.class));
         BloodDonor bloodDonor =
                 RegisterUser(_mapper.map(dto.getNonRegisteredBloodDonorInfoDTO(), BloodDonor.class), address);
