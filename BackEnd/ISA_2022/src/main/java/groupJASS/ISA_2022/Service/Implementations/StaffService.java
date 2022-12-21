@@ -1,5 +1,6 @@
 package groupJASS.ISA_2022.Service.Implementations;
 
+import groupJASS.ISA_2022.DTO.Account.AccountDTO;
 import groupJASS.ISA_2022.DTO.Account.PasswordDTO;
 import groupJASS.ISA_2022.DTO.Staff.StaffBasicInfoDTO;
 import groupJASS.ISA_2022.DTO.Staff.StaffProfileDTO;
@@ -9,6 +10,7 @@ import groupJASS.ISA_2022.Model.*;
 import groupJASS.ISA_2022.Repository.AccountRepository;
 import groupJASS.ISA_2022.Repository.BloodCenterRepository;
 import groupJASS.ISA_2022.Repository.StaffRepository;
+import groupJASS.ISA_2022.Service.Interfaces.IAccountService;
 import groupJASS.ISA_2022.Service.Interfaces.IRoleService;
 import groupJASS.ISA_2022.Service.Interfaces.IStaffService;
 import groupJASS.ISA_2022.Utilities.MappingUtilities;
@@ -16,6 +18,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
@@ -31,19 +34,20 @@ public class StaffService implements IStaffService {
 
     private final StaffRepository _staffRepository;
     private final BloodCenterRepository _bloodCenterRepository;
-    private final AccountRepository _accountRepository;
     private final ModelMapper _mapper;
-    @Autowired
     private IRoleService _roleService;
+    private final IAccountService _accountService;
+    private final AccountRepository _accountRepository;
 
     @Autowired
     public StaffService(StaffRepository staffRepository, BloodCenterRepository bloodCenterService,
-                        AccountRepository accountRepository, ModelMapper mapper, IRoleService roleService) {
+                        AccountRepository accountRepository, ModelMapper mapper, IRoleService roleService, IAccountService accountService) {
         _staffRepository = staffRepository;
         _bloodCenterRepository = bloodCenterService;
-        _accountRepository = accountRepository;
         _mapper = mapper;
         _roleService = roleService;
+        _accountService = accountService;
+        _accountRepository = accountRepository;
     }
 
     @Override
@@ -153,9 +157,11 @@ public class StaffService implements IStaffService {
         return dtos;
     }
 
+    @PreAuthorize("hasRole('ROLE_SYSTEM_ADMIN')")
     @Override
     public void register(StaffRegistrationDTO dto) {
 
+        //TODO make constructor
         Address address = _mapper.map(dto.getAddress(), Address.class);
         address.setId(UUID.randomUUID());
 
@@ -164,12 +170,8 @@ public class StaffService implements IStaffService {
         staff.setAddress(address);
 
         UUID stafId = _staffRepository.save(staff).getId();
-
-        Account account = _mapper.map(dto, Account.class);
-        List<Role> roles = _roleService.findByName("ROLE_STAFF");
-        account.setRoles(roles);
-        account.setPersonId(stafId);
-        account.setId(UUID.randomUUID());
-        _accountRepository.save(account);
+        //TODO refactor StaffRegistrationDTO to contain AccountDto
+        AccountDTO accountDto = new AccountDTO(dto.getEmail(), dto.getPassword());
+        _accountService.registerAccount(accountDto, "ROLE_STAFF", staff.getId());
     }
 }

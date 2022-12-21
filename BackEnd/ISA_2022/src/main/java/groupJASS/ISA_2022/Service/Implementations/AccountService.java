@@ -1,5 +1,6 @@
 package groupJASS.ISA_2022.Service.Implementations;
 
+import groupJASS.ISA_2022.DTO.Account.AccountDTO;
 import groupJASS.ISA_2022.DTO.Account.ActivateAccountDTO;
 import groupJASS.ISA_2022.Model.Account;
 import groupJASS.ISA_2022.Model.BloodDonor;
@@ -32,7 +33,7 @@ public class AccountService implements IAccountService {
     public AccountService(AccountRepository accountRepository, IRoleService roleService, PasswordEncoder passwordEncoder, IActivateAccountService activateAccountService) {
         _accountRepository = accountRepository;
         _roleService = roleService;
-        this._passwordEncoder = passwordEncoder;
+        _passwordEncoder = passwordEncoder;
         _activateAccountService = activateAccountService;
     }
 
@@ -53,9 +54,6 @@ public class AccountService implements IAccountService {
 
     @Override
     public Account save(Account entity) {
-        if (entity.getId() == null) {
-            entity.setId(UUID.randomUUID());
-        }
         return _accountRepository.save(entity);
     }
 
@@ -64,27 +62,26 @@ public class AccountService implements IAccountService {
         _accountRepository.deleteById(id);
     }
 
+    //At this moment one account only can have one role
+    //For more roles this method must be refactored
     @Override
-    public Account registerNewUser(Account account) {
+    public Account registerAccount(AccountDTO accountDto, String roleName, UUID personId) {
+        List<Role> roles = _roleService.findByName(roleName);
 
+        boolean isActivated = false;
+        if(!roleName.equals("ROLE_BLOOD_DONOR"))
+        {
+            isActivated = true;
+        }
 
-        if (_accountRepository.existsAccountByEmail(account.getEmail())) {
+        if (_accountRepository.existsAccountByEmail(accountDto.getEmail())) {
 
             throw new IllegalArgumentException("Account with this email already exists");
         }
-        account.setActivated(false);
-        account.setPassword(_passwordEncoder.encode(account.getPassword()));
+
+        String hashedPassword = _passwordEncoder.encode(accountDto.getPassword());
+        Account account = new Account(accountDto.getEmail(), hashedPassword, roles,personId, isActivated);
         return save(account);
-
-    }
-
-    @Override
-    public Account registerRegisteredUser(Account map, BloodDonor bloodDonor) {
-        map.setPersonId(bloodDonor.getId());
-        List<Role> roles = _roleService.findByName("ROLE_BLOOD_DONOR");
-        map.setRoles(roles);
-        return registerNewUser(map);
-
     }
 
     @Override

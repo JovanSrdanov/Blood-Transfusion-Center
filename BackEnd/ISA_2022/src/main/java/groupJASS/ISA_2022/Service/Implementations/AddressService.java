@@ -57,6 +57,7 @@ public class AddressService implements IAddressService {
 
     @Override
     public Address saveAddresFromBloodDonorRegistration(Address map) {
+        //Mapper bi trebao po defaultu da stavi vrednosti na null pa si mogao samo zvati save
         map.setLongitude(0);
         map.setLatitude(0);
         return save(map);
