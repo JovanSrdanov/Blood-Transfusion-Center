@@ -2,10 +2,7 @@ package groupJASS.ISA_2022.Service.Implementations;
 
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
 import groupJASS.ISA_2022.Exceptions.SortNotFoundException;
-import groupJASS.ISA_2022.Model.Address;
-import groupJASS.ISA_2022.Model.BloodCenter;
-import groupJASS.ISA_2022.Model.BloodGroup;
-import groupJASS.ISA_2022.Model.BloodQuantity;
+import groupJASS.ISA_2022.Model.*;
 import groupJASS.ISA_2022.Repository.AddressRepository;
 import groupJASS.ISA_2022.Repository.BloodCenterRepository;
 import groupJASS.ISA_2022.Repository.BloodQuantityRepository;
@@ -20,6 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
 
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.*;
 
 @Service
@@ -109,5 +108,19 @@ public class BloodCenterService implements IBloodCenterService {
             throw new SortNotFoundException("This sort type doesn't exist");
         }
         return page;
+    }
+
+    @Override
+    public DateRange getWorkingDateRangeForDate(UUID id, LocalDateTime date) {
+        BloodCenter bloodCenter = findById(id);
+        WorkingHours wa = bloodCenter.getWorkingHours();
+
+        LocalDateTime start = LocalDateTime.of(date.getYear(), date.getMonth(),
+                date.getDayOfMonth(), wa.getStartHours(), wa.getStartMinutes(), 0);
+
+        LocalDateTime end = LocalDateTime.of(date.getYear(), date.getMonth(),
+                date.getDayOfMonth(), wa.getEndHours(), wa.getEndMinutes(), 0);
+
+        return new DateRange(start, end);
     }
 }
