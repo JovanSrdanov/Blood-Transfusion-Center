@@ -15,7 +15,7 @@ public interface IAppointmentService extends ICrudService<Appointment> {
 
     List<DateRange> findFreeSlotsForStaffId(UUID staffId, DateRange bigRange, int duration);
 
-    List<DateRange> findFreeSlotsForStaffIds(List<UUID> staffIds, LocalDateTime date, int duration);
+    List<DateRange> findFreeSlotsForStaffIds(List<UUID> staffIds, LocalDateTime date, int duration) throws BadRequestException;
 
     Appointment predefine(DateRange dateRange, List<UUID> staffIds, UUID staffAdminId) throws BadRequestException;
 
