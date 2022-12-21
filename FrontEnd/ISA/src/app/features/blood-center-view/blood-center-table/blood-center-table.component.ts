@@ -56,9 +56,9 @@ export class BloodCenterTableComponent implements OnInit {
   }
   //Stefan dodao
 
-  constructor(private readonly bloodCenterService: BloodCenterService) {}
+  constructor(private readonly bloodCenterService: BloodCenterService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   ngAfterViewInit() {
     // If the user changes the sort order, reset back to the first page.

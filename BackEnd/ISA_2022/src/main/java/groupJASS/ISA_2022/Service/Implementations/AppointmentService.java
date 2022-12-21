@@ -25,6 +25,7 @@ import java.util.stream.Stream;
 @Primary
 public class AppointmentService implements IAppointmentService {
     private final AppointmentRepository _appointmentRepository;
+
     private final IBloodCenterService _bloodBloodCenterService;
     private final StaffService _staffService;
 
@@ -34,6 +35,7 @@ public class AppointmentService implements IAppointmentService {
         this._appointmentRepository = appointmentRepository;
         this._staffService = staffService;
         this._bloodBloodCenterService = bloodBloodCenterService;
+
     }
 
     @Override
@@ -77,7 +79,7 @@ public class AppointmentService implements IAppointmentService {
 
         //Posto repo vraca listu appointmente moram da ih pretovrim u listu dateRangeova
         List<DateRange> dateRanges = new ArrayList<>();
-        for(Appointment a : appointments) {
+        for (Appointment a : appointments) {
             dateRanges.add(new DateRange(a.getTime().getStartTime(), a.getTime().getEndTime()));
         }
 
@@ -105,7 +107,7 @@ public class AppointmentService implements IAppointmentService {
 
         //Podeli chunkove u manje slotove odredjene duzine
         List<DateRange> slots = new ArrayList<>();
-        for(DateRange dr : intersections) {
+        for (DateRange dr : intersections) {
             List<DateRange> listTwo = DateRange.splitBigRangeIntoSmallRanges(dr, duration);
             slots = Stream.concat(slots.stream(), listTwo.stream())
                     .collect(Collectors.toList());
@@ -120,7 +122,7 @@ public class AppointmentService implements IAppointmentService {
         HashSet<Staff> staffHashSet = new HashSet<>();
 
         // TODO: beskonacno mozes puta zakazati isti termin
-        for(UUID id : staffIds) {
+        for (UUID id : staffIds) {
             staffHashSet.add(_staffService.findById(id));
         }
 
@@ -136,4 +138,6 @@ public class AppointmentService implements IAppointmentService {
                 dateRange
         ));
     }
+
+
 }

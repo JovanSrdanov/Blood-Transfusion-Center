@@ -17,6 +17,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.webjars.NotFoundException;
 
@@ -56,7 +57,9 @@ public class BloodDonorController {
         return new ResponseEntity<>(MappingUtilities.mapList((List<BloodDonor>) this._bloodDonorService.findAll(), BloodDonorLazyDTO.class, _mapper), HttpStatus.OK);
     }
 
+
     @GetMapping("my-info")
+    @PreAuthorize("hasRole('BLOOD_DONOR')")
     public ResponseEntity<BloodDonorInfoDto> findById(Principal account) {
         Account a = _accountService.findAccountByEmail(account.getName());
         BloodDonorInfoDto userDto = new BloodDonorInfoDto(_bloodDonorService.findById(a.getPersonId()), a.getEmail());
@@ -73,6 +76,7 @@ public class BloodDonorController {
     }
 
     @PatchMapping("update")
+    @PreAuthorize("hasRole('BLOOD_DONOR')")
     public ResponseEntity<BloodDonorInfoDto> update(@Valid @RequestBody BloodDonorInfoDto updatedUserDto) {
         BloodDonor updatedDonor = _mapper.map(updatedUserDto, BloodDonor.class);
 
