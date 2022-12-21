@@ -25,13 +25,13 @@ public class AppointmentSchedulingHistory {
     @Column(nullable = false)
     private AppointmentSchedulingConfirmationStatus status;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "appointment_id")
     private Appointment appointment;
 
     @ManyToOne
     @JoinColumn(name = "blood_donor_id")
-    private  BloodDonor bloodDonor;
+    private BloodDonor bloodDonor;
 
     @OneToOne(mappedBy = "appointmentSchedulingHistory")
     private AppointmentReport appointmentReport;

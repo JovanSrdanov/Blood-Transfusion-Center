@@ -9,12 +9,12 @@ import { PageDto } from '../model/PageDto';
   providedIn: 'root'
 })
 export class AppointmentService {
-  cancelAppointment(id: string): Observable<any> {
-    return this.http.get<any>(this.path + '/cancel/' + id);
-  }
-
   constructor(private readonly http: HttpClient) { }
   path: string = environment.backendPath + '/appointment_scheduling_history';
+
+  cancelAppointment(appointmentId: string): Observable<any> {
+    return this.http.get<any>(this.path + '/cancel-appointment/' + appointmentId);
+  }
 
   bloodDonorAppointments(pageSize: number, page: number, sortType: any,
     field: string): Observable<PageDto<BloodDonorAppointmentsDTO[]>> {
