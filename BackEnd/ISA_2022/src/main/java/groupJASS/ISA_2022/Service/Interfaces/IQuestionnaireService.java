@@ -8,5 +8,5 @@ import java.util.UUID;
 public interface IQuestionnaireService extends ICrudService<Questionnaire> {
     Boolean canDonateBlood(UUID bloodDonorId);
 
-    void fillQuestionare(Questionnaire map, UUID bloodDonorId) throws BadRequestException;
+    void fillQuestionnaire(Questionnaire map, UUID bloodDonorId) throws BadRequestException;
 }

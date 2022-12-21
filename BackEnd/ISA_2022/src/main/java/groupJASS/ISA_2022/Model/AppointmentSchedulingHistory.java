@@ -31,7 +31,7 @@ public class AppointmentSchedulingHistory {
 
     @ManyToOne
     @JoinColumn(name = "blood_donor_id")
-    private  BloodDonor bloodDonor;
+    private BloodDonor bloodDonor;
 
     @OneToOne(mappedBy = "appointmentSchedulingHistory")
     private AppointmentReport appointmentReport;

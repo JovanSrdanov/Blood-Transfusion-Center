@@ -8,6 +8,7 @@ import { BloodDonorListModule } from 'src/app/features/blood-donor-list/blood-do
 import { StaffProfileModule } from 'src/app/features/staff-profile/staff-profile';
 import { MaterialModule } from 'src/app/material/material.module';
 import { BloodDonorAppointmentListModule } from 'src/app/features/blood-donor-appointment-list/blood-donor-appointment-list.module';
+import { BloodCenterCalendarModule } from 'src/app/features/blood-center-calendar/blood-center-calendar.module';
 
 @NgModule({
   declarations: [StaffPageComponent],
@@ -20,6 +21,7 @@ import { BloodDonorAppointmentListModule } from 'src/app/features/blood-donor-ap
     CreateMedicalReportModule,
     StaffProfileModule,
     MaterialModule,
+    BloodCenterCalendarModule
   ],
 })
 export class StaffPageModule {}

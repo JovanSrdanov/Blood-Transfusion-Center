@@ -1,7 +1,6 @@
 package groupJASS.ISA_2022.Service.Implementations;
 
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
-import groupJASS.ISA_2022.Model.BloodDonor;
 import groupJASS.ISA_2022.Model.Questionnaire;
 import groupJASS.ISA_2022.Repository.QuestionnaireRepository;
 import groupJASS.ISA_2022.Service.Interfaces.IBloodDonorService;
@@ -11,7 +10,6 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -66,10 +64,9 @@ public class QuestionnaireService implements IQuestionnaireService {
     }
 
     @Override
-    public void fillQuestionare(Questionnaire map, UUID bloodDonorId) throws BadRequestException {
-        //Todo: promeni samo ovo i uradi proveru find by blooddonor id
+    public void fillQuestionnaire(Questionnaire map, UUID bloodDonorId) throws BadRequestException {
         var Questionnaire = save(map);
-        var regUser = ((List<BloodDonor>) _bloodDonorService.findAll()).get(0);
+        var regUser = _bloodDonorService.findById(bloodDonorId);
         regUser.setQuestionnaire(Questionnaire);
         _bloodDonorService.save(regUser);
 
