@@ -56,7 +56,7 @@ public class AuthenticationController {
 
             // Kreiraj token za tog korisnika
             Account account = (Account) authentication.getPrincipal();
-            String jwt = tokenUtils.generateToken(account.getUsername(), account.getRoles().get(0).getName(), account.getLastPasswordResetDate());
+            String jwt = tokenUtils.generateToken(account.getUsername(), account.getRoles().get(0).getName(), account.getLastPasswordUpdateDate());
             int expiresIn = tokenUtils.getExpiredIn();
 
             // Vrati token kao odgovor na uspesnu autentifikaciju
@@ -75,7 +75,7 @@ public class AuthenticationController {
         try {
 
             Account account = accountService.activateAccount(activateAccountDTO);
-            String jwt = tokenUtils.generateToken(account.getUsername(), account.getRoles().get(0).getName(), account.getLastPasswordResetDate());
+            String jwt = tokenUtils.generateToken(account.getUsername(), account.getRoles().get(0).getName(), account.getLastPasswordUpdateDate());
             int expiresIn = tokenUtils.getExpiredIn();
             return ResponseEntity.ok(new Jwt(jwt));
 
