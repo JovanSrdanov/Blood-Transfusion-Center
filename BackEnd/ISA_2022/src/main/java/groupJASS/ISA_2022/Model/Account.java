@@ -42,8 +42,8 @@ public class Account implements UserDetails {
 
     @Column(nullable = false)
     private boolean isActivated;
-    @Column(name = "last_password_reset_date")
-    private Timestamp lastPasswordResetDate;
+    @Column(name = "last_password_update_date")
+    private Timestamp lastPasswordUpdateDate;
 
 
     //Already hashed password is expected
@@ -55,7 +55,7 @@ public class Account implements UserDetails {
         this.personId = personId;
         //System admins and staff accounts are acitvated by default
         this.isActivated = isActivated;
-        this.lastPasswordResetDate = null;
+        this.lastPasswordUpdateDate = null;
     }
 
 
@@ -91,16 +91,7 @@ public class Account implements UserDetails {
 
     public void setPassword(String password) {
         Timestamp now = new Timestamp(new Date().getTime());
-        this.setLastPasswordResetDate(now);
+        this.setLastPasswordUpdateDate(now);
         this.password = password;
     }
-
-    public Timestamp getLastPasswordResetDate() {
-        return lastPasswordResetDate;
-    }
-
-    public void setLastPasswordResetDate(Timestamp lastPasswordResetDate) {
-        this.lastPasswordResetDate = lastPasswordResetDate;
-    }
-
 }

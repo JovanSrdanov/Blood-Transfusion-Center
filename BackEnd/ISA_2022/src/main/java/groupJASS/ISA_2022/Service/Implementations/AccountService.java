@@ -3,7 +3,6 @@ package groupJASS.ISA_2022.Service.Implementations;
 import groupJASS.ISA_2022.DTO.Account.AccountDTO;
 import groupJASS.ISA_2022.DTO.Account.ActivateAccountDTO;
 import groupJASS.ISA_2022.Model.Account;
-import groupJASS.ISA_2022.Model.BloodDonor;
 import groupJASS.ISA_2022.Model.Role;
 import groupJASS.ISA_2022.Repository.AccountRepository;
 import groupJASS.ISA_2022.Service.Interfaces.IAccountService;
@@ -15,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.UUID;
 
@@ -50,6 +50,13 @@ public class AccountService implements IAccountService {
         }
 
         throw new NotFoundException("User not found");
+    }
+
+    @Override
+    public void updatePassword(String email, String newPassword)
+    {
+        String hashedNewPassword = _passwordEncoder.encode(newPassword);
+        _accountRepository.updatePassword(email, hashedNewPassword, new Timestamp(System.currentTimeMillis()));
     }
 
     @Override

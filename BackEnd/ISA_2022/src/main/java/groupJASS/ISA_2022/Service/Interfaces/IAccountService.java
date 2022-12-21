@@ -9,6 +9,8 @@ import java.util.UUID;
 
 public interface IAccountService extends ICrudService<Account> {
 
+    public void  updatePassword(String email, String newPassword);
+
     Account registerAccount(AccountDTO accountDto, String roleName, UUID personId);
     boolean checkEmailAvailability(String email);
     Account findAccountByPersonId(UUID personId);

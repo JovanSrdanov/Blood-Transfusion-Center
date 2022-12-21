@@ -49,13 +49,13 @@ public class TokenUtils {
      * @param username Korisničko ime korisnika kojem se token izdaje
      * @return JWT token
      */
-    public String generateToken(String username, String role, Timestamp lastPasswordResetDate) {
-        LocalDateTime  _lastPasswordResetDate= lastPasswordResetDate == null ?  LocalDateTime.of(1,1,1,0,0) : lastPasswordResetDate.toLocalDateTime();
+    public String generateToken(String username, String role, Timestamp lastPasswordUpdateDate) {
+        LocalDateTime  _lastPasswordUpdateDate= lastPasswordUpdateDate == null ?  LocalDateTime.of(1,1,1,0,0) : lastPasswordUpdateDate.toLocalDateTime();
         return Jwts.builder()
                 .setIssuer(APP_NAME)
                 .setSubject(username)
                 .claim("role", role)
-                .claim("lastPasswordResetDate", _lastPasswordResetDate.toString())
+                .claim("lastPasswordUpdateDate", _lastPasswordUpdateDate.toString())
                 .setAudience(generateAudience())
                 .setIssuedAt(new Date())
                 .setExpiration(generateExpirationDate())
@@ -241,7 +241,7 @@ public class TokenUtils {
         // Token je validan kada:
         return (username != null // korisnicko ime nije null
                 && username.equals(userDetails.getUsername()) // korisnicko ime iz tokena se podudara sa korisnickom imenom koje pise u bazi
-                && !isCreatedBeforeLastPasswordReset(created, user.getLastPasswordResetDate())); // nakon kreiranja tokena korisnik nije menjao svoju lozinku
+                && !isCreatedBeforeLastPasswordReset(created, user.getLastPasswordUpdateDate())); // nakon kreiranja tokena korisnik nije menjao svoju lozinku
     }
 
     /**

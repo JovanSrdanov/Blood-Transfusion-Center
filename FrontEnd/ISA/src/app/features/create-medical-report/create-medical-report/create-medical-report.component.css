@@ -1,0 +1,53 @@
+th,
+td {
+  background-color: rgb(33, 38, 40);
+  padding: 2%;
+}
+
+.report {
+  width: 80%;
+  margin: auto;
+  color: white;
+}
+
+.title {
+  font-size: xx-large;
+  font-weight: bolder;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.btn {
+  margin-top: 1.5%;
+  margin-bottom: 1%;
+  margin-right: 3%;
+}
+
+.checkbox {
+  margin-top: 5%;
+}
+
+textarea {
+  border: none;
+  width: 100%;
+  background-color: rgb(50, 58, 61);
+  color: white;
+  font-weight: bold;
+  font-size: large;
+  -webkit-box-sizing: border-box; /* <=iOS4, <= Android  2.3 */
+  -moz-box-sizing: border-box; /* FF1+ */
+  box-sizing: border-box; /* Chrome, IE8, Opera, Safari 5.1*/
+}
+
+.number {
+  font-size: larger;
+  font-weight: bold;
+  width: 100%;
+  background-color: rgb(50, 58, 61);
+  border: 0;
+  outline: 0;
+  color: white;
+}
+
+::ng-deep .mat-select-panel {
+}

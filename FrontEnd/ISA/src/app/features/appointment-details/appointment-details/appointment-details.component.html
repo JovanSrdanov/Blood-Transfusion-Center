@@ -1,0 +1,53 @@
+<div>
+  <h1 class="title">Appointment details</h1>
+  <table class="questionaire">
+    <tr>
+      <th>Under 50 Kg</th>
+      <th>Feeling down</th>
+      <th>Skin infection</th>
+      <th>High/Low pressure</th>
+      <th>On therapy</th>
+      <th>On menstrual cycle</th>
+      <th>Visited a dentist recently</th>
+      <th>Piercing/Intervention/Transfusion</th>
+    </tr>
+    <tr>
+      <td>{{ questionaire.under50KG }}</td>
+      <td>{{ questionaire.feelsBad }}</td>
+      <td>{{ questionaire.skinChanges }}</td>
+      <td>{{ questionaire.highOrLowPresure }}</td>
+      <td>{{ questionaire.onTherapy }}</td>
+      <td>{{ questionaire.onMC }}</td>
+      <td>{{ questionaire.recentDentist }}</td>
+      <td>
+        {{ questionaire.pricingOrSurgicalInterventionsOrBloodTransfusion }}
+      </td>
+    </tr>
+  </table>
+  <div class="checkbox">
+    <mat-checkbox (change)="clickedEventShowUp($event)">
+      Did not show up
+    </mat-checkbox>
+    &nbsp; &nbsp;
+    <mat-checkbox (change)="clickedEventQualify($event)">
+      Does not qualify
+    </mat-checkbox>
+  </div>
+  <button
+    mat-raised-button
+    (click)="startAppointment()"
+    color="primary"
+    class="btn"
+    [disabled]="!canStartAppointment"
+  >
+    Start appointment
+  </button>
+  <button
+    mat-raised-button
+    color="warn"
+    class="btn"
+    [disabled]="canStartAppointment"
+  >
+    Cancel appointment
+  </button>
+</div>
