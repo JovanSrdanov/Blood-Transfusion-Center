@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTable } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AppointmentService } from 'src/app/http-services/appointment.service';
 import { appointmentBloodDonorInfo } from 'src/app/model/appointment/appointment-blood-donor-info';
 
 @Component({
@@ -20,7 +21,11 @@ export class BloodDonorAppointmentListComponent implements OnInit {
     'button',
   ];
 
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private appointmentsService: AppointmentService
+  ) {}
 
   ngOnInit(): void {
     this.sub = this.route.params.subscribe((params) => {
@@ -35,25 +40,29 @@ export class BloodDonorAppointmentListComponent implements OnInit {
     this.dataSource.push({
       id: '1',
       issuingDate: '21/12/2022',
-      bloodDonorId: '2',
       time: '10:30',
       duration: 30,
     });
     this.dataSource.push({
       id: '2',
       issuingDate: '22/12/2022',
-      bloodDonorId: '3',
       time: '11:30',
       duration: 30,
     });
     this.dataSource.push({
       id: '3',
       issuingDate: '23/12/2022',
-      bloodDonorId: '4',
       time: '12:30',
       duration: 30,
     });
     console.log(this.dataSource);
+
+    // this.appointmentsService
+    //   .bloodDonorAppointmentsForCenter(this.donorId)
+    //   .subscribe((res) => {
+    //     this.dataSource = res;
+    //   });
+
     this.table?.renderRows();
   };
 
@@ -61,9 +70,9 @@ export class BloodDonorAppointmentListComponent implements OnInit {
     console.log(row);
   }
 
-  viewDetails(event: any, id: string, donorId: string) {
+  viewDetails(event: any, id: string) {
     console.log(id);
-    this.router.navigate(['staff/appointment-details', id, donorId]);
+    this.router.navigate(['staff/appointment-details', id, this.donorId]);
   }
 
   ngOnDestroy() {

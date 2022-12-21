@@ -1,15 +1,18 @@
 package groupJASS.ISA_2022.Service.Implementations;
 
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
+import groupJASS.ISA_2022.Model.AppointmentSchedulingConfirmationStatus;
 import groupJASS.ISA_2022.Model.AppointmentSchedulingHistory;
 import groupJASS.ISA_2022.Repository.AppointmentSchedulingHistoryRepository;
 import groupJASS.ISA_2022.Service.Interfaces.IAppointmentSchedulingHistoryService;
+import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -72,4 +75,15 @@ public class AppointmentSchedulingHistoryService implements IAppointmentScheduli
         return null;
     }
 
+    @Override
+    public List<AppointmentSchedulingHistory> getByDonorAndCenterId(UUID bloodDonorId, UUID bloodCenterId) {
+        return _appointmentSchedulingHistoryRepository.getByDonorAndCenterId(bloodDonorId, bloodCenterId);
+    }
+
+    public AppointmentSchedulingHistory cancelAppointment(UUID appointmentHistoryId) throws BadRequestException {
+        AppointmentSchedulingHistory appointment = findById(appointmentHistoryId);
+        appointment.setStatus(AppointmentSchedulingConfirmationStatus.REJECTED);
+        save(appointment);
+        throw  new NotImplementedException();
+    }
 }

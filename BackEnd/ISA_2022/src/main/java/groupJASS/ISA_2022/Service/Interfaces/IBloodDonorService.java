@@ -22,4 +22,6 @@ public interface IBloodDonorService extends ICrudService<BloodDonor> {
     BloodDonor updateDonorInfo(Address map, BloodDonor updatedUser) throws BadRequestException;
 
     List<BloodDonorInfoDto> findBloodDonorByNameAAndSurname(String name, String surname);
+
+    void updatePenalties(BloodDonor donor, boolean showedUp);
 }
