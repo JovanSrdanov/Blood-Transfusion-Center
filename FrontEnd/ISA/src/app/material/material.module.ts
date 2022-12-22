@@ -14,6 +14,11 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSliderModule } from '@angular/material/slider'
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+
 
 const material = [
   MatCardModule,
@@ -31,6 +36,10 @@ const material = [
   MatPaginatorModule,
   MatSortModule,
   MatMenuModule,
+  MatIconModule,
+  MatSliderModule,
+  MatDatepickerModule,
+  MatNativeDateModule
 ];
 
 @NgModule({

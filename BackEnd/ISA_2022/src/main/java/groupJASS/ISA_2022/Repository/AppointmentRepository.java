@@ -1,6 +1,8 @@
 package groupJASS.ISA_2022.Repository;
 
 import groupJASS.ISA_2022.Model.Appointment;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -23,11 +25,19 @@ public interface AppointmentRepository extends JpaRepository<Appointment, UUID> 
             "join appointment a2 on a2.id = h.appointment_id " +
             "where h.status = 3 and a2.is_premade = false)" +
             "and a.start_time >= :startTime and a.end_time <= :endTime " +
-            "order by a.start_time asc",
-            nativeQuery = true)
+            "order by a.start_time asc", nativeQuery = true)
     List<Appointment> findTakenChunksByStaffId(@Param("id") UUID staff_id,
                                                @Param("startTime") LocalDateTime startTime,
                                                @Param("endTime") LocalDateTime endTime);
+
+    @Query(value = "select * from appointment a " +
+            "where a.is_premade = true " +
+            "and a.blood_center_id = :centerId " +
+            "and a.id not in ( " +
+            "select h.appointment_id from appointment_scheduling_history h " +
+            "where h.status != 3 " +
+            "or (h.blood_donor_id = :donor_id and h.status = 3)) ", nativeQuery = true)
+    Page<Appointment> searchBy(@Param("centerId") UUID centerId, @Param("donor_id") UUID donor_id, Pageable of);
 
     @Query(value = "select * from appointment a " +
             "where a.is_premade = true " +

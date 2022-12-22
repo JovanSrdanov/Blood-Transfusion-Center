@@ -4,20 +4,33 @@ import groupJASS.ISA_2022.DTO.Appointment.AvailableCustomAppointmentsDto;
 import groupJASS.ISA_2022.DTO.Appointment.AvailablePredefinedDto;
 import groupJASS.ISA_2022.DTO.BloodCenter.BloodCenterBasicInfoDto;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
+import groupJASS.ISA_2022.Exceptions.SortNotFoundException;
 import groupJASS.ISA_2022.Model.*;
 import groupJASS.ISA_2022.Repository.AppointmentRepository;
+import groupJASS.ISA_2022.Service.Interfaces.IAccountService;
 import groupJASS.ISA_2022.Service.Interfaces.IAppointmentService;
 import groupJASS.ISA_2022.Service.Interfaces.IBloodCenterService;
 import groupJASS.ISA_2022.Service.Interfaces.IBloodDonorService;
 import groupJASS.ISA_2022.Utilities.ObjectMapperUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -26,22 +39,27 @@ import java.util.stream.Stream;
 public class AppointmentService implements IAppointmentService {
     private final AppointmentRepository _appointmentRepository;
 
-    private  final IBloodDonorService _bloodDonorService;
+    private final IBloodDonorService _bloodDonorService;
     private final AppointmentSchedulingHistoryService _appointmentSchedulingHistoryService;
     private final IBloodCenterService _bloodBloodCenterService;
+    private final IAccountService _accountService;
     private final StaffService _staffService;
+    @Autowired
+    private JavaMailSender javaMailSender;
 
     @Autowired
     public AppointmentService(AppointmentRepository appointmentRepository,
                               IBloodDonorService bloodDonorService,
                               AppointmentSchedulingHistoryService appointmentSchedulingHistoryService,
                               StaffService staffService,
-                              IBloodCenterService bloodBloodCenterService) {
+                              IBloodCenterService bloodBloodCenterService,
+                              IAccountService accountService) {
         this._appointmentRepository = appointmentRepository;
         this._bloodDonorService = bloodDonorService;
         this._appointmentSchedulingHistoryService = appointmentSchedulingHistoryService;
         this._staffService = staffService;
         this._bloodBloodCenterService = bloodBloodCenterService;
+        this._accountService = accountService;
 
     }
 
@@ -84,7 +102,8 @@ public class AppointmentService implements IAppointmentService {
         List<Appointment> appointments =
                 _appointmentRepository.findTakenChunksByStaffId(staffId, ceneterWorkRange.getStartTime(), ceneterWorkRange.getEndTime());
 
-        //Posto repo vraca listu appointmente moram da ih pretovrim u listu dateRangeova
+        // Posto repo vraca listu appointmente moram da ih pretovrim u listu
+        // dateRangeova
         List<DateRange> dateRanges = new ArrayList<>();
         for (Appointment a : appointments) {
             dateRanges.add(new DateRange(a.getTime().getStartTime(), a.getTime().getEndTime()));
@@ -101,9 +120,9 @@ public class AppointmentService implements IAppointmentService {
         }
 
         UUID bcId = _staffService.findById(staffIds.get(0)).getBloodCenter().getId();
-        for(UUID staffId : staffIds) {
+        for (UUID staffId : staffIds) {
             Staff staff = _staffService.findById(staffId);
-            if(!staff.getBloodCenter().getId().equals(bcId)) {
+            if (!staff.getBloodCenter().getId().equals(bcId)) {
                 throw new BadRequestException("Diffrent staff bloodCenter ids");
             }
         }
@@ -143,9 +162,9 @@ public class AppointmentService implements IAppointmentService {
 
         //Provera da li su svi poslati staff iz istog bloodCentra
         UUID bcId = _staffService.findById(staffAdminId).getBloodCenter().getId();
-        for(UUID staffId : staffIds) {
+        for (UUID staffId : staffIds) {
             Staff staff = _staffService.findById(staffId);
-            if(!staff.getBloodCenter().getId().equals(bcId)) {
+            if (!staff.getBloodCenter().getId().equals(bcId)) {
                 throw new BadRequestException("Diffrent staff bloodCenter ids");
             }
         }
@@ -175,18 +194,35 @@ public class AppointmentService implements IAppointmentService {
                 staffHashSet,
                 bloodCenter,
                 true,
-                dateRange
-        ));
+                dateRange));
+    }
+
+    @Override
+    public Page<Appointment> getPremadeAppointmentsForBloodCenter(UUID centerId, UUID donorId, int page, int pageSize, String sort)
+            throws SortNotFoundException {
+        Page<Appointment> currentPage;
+        if (sort.isBlank()) {
+            currentPage = _appointmentRepository.searchBy(centerId, donorId, PageRequest.of(page, pageSize));
+        } else if (sort.equals("asc")) {
+            currentPage = _appointmentRepository.searchBy(centerId, donorId, PageRequest.of(page, pageSize).withSort(Sort.by(Sort.Direction.ASC, "start_time")));
+        } else if (sort.equals("desc")) {
+            currentPage = _appointmentRepository.searchBy(centerId, donorId, PageRequest.of(page, pageSize).withSort(Sort.by(Sort.Direction.DESC, "start_time")));
+        } else {
+            throw new SortNotFoundException("This sort type doesn't exist");
+        }
+        return currentPage;
     }
 
     @Override
     public List<AvailablePredefinedDto> findAvailableAppointmentsForDonor(UUID donorId, UUID centerId) {
-        return ObjectMapperUtils.mapAll(_appointmentRepository.findAvailableAppointmentsForDonor(donorId, centerId), AvailablePredefinedDto.class);
+        return ObjectMapperUtils.mapAll(_appointmentRepository.findAvailableAppointmentsForDonor(donorId, centerId),
+                AvailablePredefinedDto.class);
     }
 
     @Override
+    @Async
     public AppointmentSchedulingHistory scheduleAppointment(UUID donorId, UUID appointmentId) {
-        if(_appointmentRepository.findById(appointmentId).isEmpty()) {
+        if (_appointmentRepository.findById(appointmentId).isEmpty()) {
             throw new NotFoundException("Donor or appointment doesent exist");
         }
 
@@ -201,7 +237,7 @@ public class AppointmentService implements IAppointmentService {
             }
         }
 
-        if(!found) {
+        if (!found) {
             throw new NotFoundException("Appointment not available anymore");
         }
 
@@ -209,15 +245,17 @@ public class AppointmentService implements IAppointmentService {
         try {
             BloodDonor donor = _bloodDonorService.findById(donorId);
 
-            return _appointmentSchedulingHistoryService.save(new AppointmentSchedulingHistory(
+            var ash = _appointmentSchedulingHistoryService.save(new AppointmentSchedulingHistory(
                     null,
                     "QR",
                     LocalDateTime.now(),
                     AppointmentSchedulingConfirmationStatus.PENDING,
                     appointment,
                     donor,
-                    null
-            ));
+                    null));
+            String email = _accountService.findAccountByPersonId(donorId).getEmail();
+            sendScheduleConfirmation(appointment, email);
+            return ash;
         } catch (BadRequestException e) {
             throw new RuntimeException(e);
         }
@@ -297,5 +335,25 @@ public class AppointmentService implements IAppointmentService {
         return availableCustomAppointments;
     }
 
+
+    @Async
+    public void sendScheduleConfirmation(Appointment appointment, String email) {
+
+        System.out.println("Email se salje sa informacijama o pregledu!");
+        SimpleMailMessage mail = new SimpleMailMessage();
+        mail.setTo(email);
+        mail.setFrom("ISA_BEJBI");
+        mail.setSubject("New appointment! ");
+
+        String confirmationInfo = "Hello!\n" +
+                "A new appointment has been scheduled!\n" +
+                "BloodCenter: " + appointment.getBloodCenter().getName() + "\n" +
+                "Date and time: " + appointment.getTime().getStartTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + "\n" +
+                "Duration: " + appointment.getTime().calcaulateDurationMinutes() + "min\n";
+
+        mail.setText(confirmationInfo);
+        javaMailSender.send(mail);
+        System.out.println("Email poslat!");
+    }
 
 }

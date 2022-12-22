@@ -1,5 +1,5 @@
 export interface equipmentInfo {
-  id: string;
+  equipmentId: string;
   name: string;
   quantity: number;
 }

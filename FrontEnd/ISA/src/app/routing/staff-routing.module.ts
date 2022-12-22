@@ -6,6 +6,7 @@ import { BloodDonorAppointmentListComponent } from '../features/blood-donor-appo
 import { BloodDonorListComponent } from '../features/blood-donor-list/blood-donor-list.component';
 import { StaffProfileComponent } from '../features/staff-profile/staff-profile/staff-profile.component';
 import { BloodCenterCalendarComponent } from '../features/blood-center-calendar/blood-center-calendar/blood-center-calendar.component';
+import { CreatePremadeAppointmentComponent } from '../features/create-premade-appointment/create-premade-appointment/create-premade-appointment/create-premade-appointment.component';
 
 const routes: Routes = [
   {
@@ -25,6 +26,11 @@ const routes: Routes = [
     path: 'create-report/:appointmentHistoryId',
     component: CreateMedicalReportComponent,
   },
+  {
+    path: 'create-premade-appointment',
+    component: CreatePremadeAppointmentComponent,
+  },
+
   { path: 'staff-profile', component: StaffProfileComponent },
   { path: 'calendar', component: BloodCenterCalendarComponent },
   { path: '', redirectTo: 'staff-profile', pathMatch: 'full' },
@@ -36,4 +42,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class StaffRoutingModule {}
+export class StaffRoutingModule { }

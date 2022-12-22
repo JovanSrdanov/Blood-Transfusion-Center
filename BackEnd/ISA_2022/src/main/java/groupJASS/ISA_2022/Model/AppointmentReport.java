@@ -25,4 +25,8 @@ public class AppointmentReport {
     @OneToOne
     @JoinColumn
     private AppointmentSchedulingHistory appointmentSchedulingHistory;
+
+    public void update(AppointmentReport updated) {
+        this.text = updated.getText();
+    }
 }

@@ -1,3 +1,6 @@
+import { AppointmentCancelation } from './../../../model/appointment/appointment-cancelation';
+import { AppointmentSchedulingHistoryService } from 'src/app/http-services/appointment-scheduling-history.service';
+import { QuestionnaireService } from './../../../http-services/questionnaire.service';
 import { Questionnaire } from 'src/app/pages/registration-page/Model/questionnaire';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -27,7 +30,12 @@ export class AppointmentDetailsComponent implements OnInit {
   canStartAppointment = true;
   checkedDidNotShowUp = false;
   checkedDoesNotQualify = false;
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private questionaireService: QuestionnaireService,
+    private appointmentService: AppointmentSchedulingHistoryService
+  ) { }
 
   ngOnInit(): void {
     this.sub = this.route.params.subscribe((params) => {
@@ -35,6 +43,9 @@ export class AppointmentDetailsComponent implements OnInit {
       this.donorId = params['donorId'];
       console.log(this.appointmentHistoryId);
       console.log(this.donorId);
+      this.questionaireService.getByDonorId(this.donorId).subscribe((res) => {
+        this.questionaire = res;
+      });
     });
   }
 
@@ -70,6 +81,20 @@ export class AppointmentDetailsComponent implements OnInit {
       this.canStartAppointment = true;
       console.log('can not start');
     }
+  }
+
+  cancelAppointment() {
+    let cancelation: AppointmentCancelation = {
+      appointmentHistoryId: 'C924E6C2-F231-4471-AA3A-33A02CDC265E', //TODO test, prvremeno
+      bloodDonorId: this.donorId,
+      showedUp: this.checkedDidNotShowUp,
+    };
+
+    this.appointmentService
+      .staffCancelAppointment(cancelation)
+      .subscribe((res) => {
+        console.log(res);
+      });
   }
 
   startAppointment() {

@@ -169,7 +169,7 @@ VALUES ('26d3381b-319d-425c-abd7-256f24f0a2e0', 'Jovan2', '22140-486-9131', 'Srd
 
 
 INSERT INTO "staff" ("id", "name", "phone_number", "surname", "address_id", "blood_center_id")
-VALUES ('b2fe1aff-bb8f-4fd1-b88e-aa39af8fc65c', 'Doc1', '850-326-8246', '_',
+VALUES ('32763cf0-6a56-49f1-ad25-5a90561cd204', 'Doc1', '850-326-8246', '_',
         'dc0bbae7-4fa1-47ca-a092-dde2f9efe046', '417c9b36-251a-4483-bfbf-abd3df786d96'),
        ('883f13cc-25c8-4b60-b0e5-5ac938ad2594', 'Doc2', '844-991-4460', '_',
         'f896b9e4-b639-43cc-882f-9d735597ef08', '417c9b36-251a-4483-bfbf-abd3df786d96'),
@@ -219,9 +219,6 @@ INSERT INTO account_role (account_id, role_id)
 VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec3', 2);
 INSERT INTO account_role (account_id, role_id)
 VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec4', 3);
-
-
-
 
 
 
@@ -420,10 +417,10 @@ VALUES ('dbf02dce-a9a1-4e20-aaf0-5fca92299407', '2022-12-21 05:00:00.000', '2022
         '417c9b36-251a-4483-bfbf-abd3df786d96', true);
 
 INSERT INTO appointment_staff (appointment_id, staff_id)
-VALUES ('dbf02dce-a9a1-4e20-aaf0-5fca92299407', 'b2fe1aff-bb8f-4fd1-b88e-aa39af8fc65c'),
-       ('9e16d8b0-a805-4ffb-a08b-d50e7fef6be0', 'b2fe1aff-bb8f-4fd1-b88e-aa39af8fc65c'),
-       ('f9854a8d-9dfb-49f5-abf4-d993fac9aac3', 'b2fe1aff-bb8f-4fd1-b88e-aa39af8fc65c'),
-       ('c41a832e-b94c-4c6a-b3fa-e743d5f954b4', 'b2fe1aff-bb8f-4fd1-b88e-aa39af8fc65c'),
+VALUES ('dbf02dce-a9a1-4e20-aaf0-5fca92299407', '32763cf0-6a56-49f1-ad25-5a90561cd204'),
+       ('9e16d8b0-a805-4ffb-a08b-d50e7fef6be0', '32763cf0-6a56-49f1-ad25-5a90561cd204'),
+       ('f9854a8d-9dfb-49f5-abf4-d993fac9aac3', '32763cf0-6a56-49f1-ad25-5a90561cd204'),
+       ('c41a832e-b94c-4c6a-b3fa-e743d5f954b4', '32763cf0-6a56-49f1-ad25-5a90561cd204'),
 
        ('da9734c6-d91c-47b3-9944-816f51957405', '883f13cc-25c8-4b60-b0e5-5ac938ad2594'),
        ('61156c70-936a-428f-91c5-04a9926dd8dc', '883f13cc-25c8-4b60-b0e5-5ac938ad2594'),
@@ -439,11 +436,47 @@ VALUES ('dbf02dce-a9a1-4e20-aaf0-5fca92299407', 'b2fe1aff-bb8f-4fd1-b88e-aa39af8
        ('9bdaeb58-381a-4586-917c-f923df6bdd39', 'fa41a439-0f90-46a8-96af-16bc1068d50c');
 
 INSERT INTO appointment_scheduling_history
-(id, qrcode, issuing_date, status, appointment_id, blood_donor_id)
-VALUES('7af0b527-5209-4c33-b7fb-2d0df7214728', 'QR', '2022-12-21 11:15:00.000', 3,
-       '9e16d8b0-a805-4ffb-a08b-d50e7fef6be0', '07ce2e8b-d34b-4156-9dd4-f29ec4311675'),
-      ('759415d9-b4d1-45ee-9067-f53b7f945f16', 'QR', '2022-12-21 11:15:00.000', 3,
-       'f9854a8d-9dfb-49f5-abf4-d993fac9aac3', '26d3381b-319d-425c-abd7-256f24f0a2e0');
+    (id, qrcode, issuing_date, status, appointment_id, blood_donor_id)
+VALUES ('7af0b527-5209-4c33-b7fb-2d0df7214728', 'QR', '2022-12-21 11:15:00.000', 3,
+        '9e16d8b0-a805-4ffb-a08b-d50e7fef6be0', '07ce2e8b-d34b-4156-9dd4-f29ec4311675'),
+       ('759415d9-b4d1-45ee-9067-f53b7f945f16', 'QR', '2022-12-21 11:15:00.000', 3,
+        'f9854a8d-9dfb-49f5-abf4-d993fac9aac3', '26d3381b-319d-425c-abd7-256f24f0a2e0');
+
+---Jovanovo za visiting history
+INSERT INTO appointment (id, start_time, end_time, blood_center_id, is_premade)
+VALUES ('14bbd68b-7465-47fa-ae6b-cc389b4d1405', '2021-12-21 05:00:00.000', '2021-12-21 05:30:00.000',
+        '417c9b36-251a-4483-bfbf-abd3df786d96', true);
+
+INSERT INTO appointment (id, start_time, end_time, blood_center_id, is_premade)
+VALUES ('ce4891a5-2dc5-4251-907e-926db0007fb9', '2020-12-21 05:00:00.000', '2020-12-21 05:30:00.000',
+        '417c9b36-251a-4483-bfbf-abd3df786d96', true);
+
+INSERT INTO appointment_staff (appointment_id, staff_id)
+VALUES ('14bbd68b-7465-47fa-ae6b-cc389b4d1405', '32763cf0-6a56-49f1-ad25-5a90561cd204');
+
+INSERT INTO appointment_staff (appointment_id, staff_id)
+VALUES ('ce4891a5-2dc5-4251-907e-926db0007fb9', '32763cf0-6a56-49f1-ad25-5a90561cd204');
 
 
 
+INSERT INTO appointment_scheduling_history
+    (id, qrcode, issuing_date, status, appointment_id, blood_donor_id)
+VALUES ('3a098534-2565-4f33-b44f-429b0f74cfa7', 'QR', '2022-12-21 11:15:00.000', 1,
+        '14bbd68b-7465-47fa-ae6b-cc389b4d1405', '07ce2e8b-d34b-4156-9dd4-f29ec4311675');
+
+INSERT INTO appointment_scheduling_history
+    (id, qrcode, issuing_date, status, appointment_id, blood_donor_id)
+VALUES ('ce10170c-e043-4beb-a059-2b799e263d77', 'QR', '2022-12-21 11:15:00.000', 1,
+        'ce4891a5-2dc5-4251-907e-926db0007fb9', '07ce2e8b-d34b-4156-9dd4-f29ec4311675');
+
+
+
+INSERT INTO appointment_report
+    (id, text, appointment_scheduling_history_id)
+VALUES ('342c7203-deae-4118-b330-f90be9ef649b', 'OVDE SE BAS MNOGO TOGA DESILO gas gas ',
+        '3a098534-2565-4f33-b44f-429b0f74cfa7');
+
+INSERT INTO appointment_report
+    (id, text, appointment_scheduling_history_id)
+VALUES ('28e4189f-7c59-4d48-b357-9eee5612b842', 'OVDE SE BAS MNOGOaa a a a a aa  TOGA DESILO gas gas ',
+        'ce10170c-e043-4beb-a059-2b799e263d77');
