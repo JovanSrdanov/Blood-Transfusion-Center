@@ -39,7 +39,7 @@ public interface AppointmentSchedulingHistoryRepository extends JpaRepository<Ap
     @Query("select ash from AppointmentSchedulingHistory ash " +
             "left join fetch Appointment  a on ash.appointment.id = a.id " +
             "left join fetch BloodCenter bc on ash.appointment.bloodCenter.id = bc.id" +
-            " where ash.status = '0' and ash.bloodDonor.id = :id " +
+            " where  ash.bloodDonor.id = :id " +
             " order by ash.appointment.time.startTime")
     List<AppointmentSchedulingHistory> gascina(@Param("id") UUID id);
 }

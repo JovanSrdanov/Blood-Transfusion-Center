@@ -278,7 +278,13 @@ public class AppointmentService implements IAppointmentService {
         if (d.getPenalties() >= 3) {
             throw new Exception("Can not schedule because blood donor has over 3 penalties");
         }
+
         var a = _appointmentSchedulingHistoryService.getAllByBloodDonor_Id(d.getId());
+        for (var ash : _appointmentSchedulingHistoryService.getAllByBloodDonor_Id(d.getId())) {
+            if (ash.getStatus() == AppointmentSchedulingConfirmationStatus.PROCESSED && ash.getAppointment().getTime().getStartTime().isAfter(LocalDateTime.now().minusMonths(6))) {
+                throw new Exception("You have donated blood recently");
+            }
+        }
 
 
     }
