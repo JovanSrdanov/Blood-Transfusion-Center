@@ -443,3 +443,41 @@ VALUES ('7af0b527-5209-4c33-b7fb-2d0df7214728', 'QR', '2022-12-21 11:15:00.000',
         'f9854a8d-9dfb-49f5-abf4-d993fac9aac3', '26d3381b-319d-425c-abd7-256f24f0a2e0');
 
 
+---Jovanovo za visiting history
+INSERT INTO appointment (id, start_time, end_time, blood_center_id, is_premade)
+VALUES ('14bbd68b-7465-47fa-ae6b-cc389b4d1405', '2021-12-21 05:00:00.000', '2021-12-21 05:30:00.000',
+        '417c9b36-251a-4483-bfbf-abd3df786d96', true);
+
+INSERT INTO appointment (id, start_time, end_time, blood_center_id, is_premade)
+VALUES ('ce4891a5-2dc5-4251-907e-926db0007fb9', '2020-12-21 05:00:00.000', '2020-12-21 05:30:00.000',
+        '417c9b36-251a-4483-bfbf-abd3df786d96', true);
+
+INSERT INTO appointment_staff (appointment_id, staff_id)
+VALUES ('14bbd68b-7465-47fa-ae6b-cc389b4d1405', '32763cf0-6a56-49f1-ad25-5a90561cd204');
+
+INSERT INTO appointment_staff (appointment_id, staff_id)
+VALUES ('ce4891a5-2dc5-4251-907e-926db0007fb9', '32763cf0-6a56-49f1-ad25-5a90561cd204');
+
+
+
+INSERT INTO appointment_scheduling_history
+    (id, qrcode, issuing_date, status, appointment_id, blood_donor_id)
+VALUES ('3a098534-2565-4f33-b44f-429b0f74cfa7', 'QR', '2022-12-21 11:15:00.000', 1,
+        '14bbd68b-7465-47fa-ae6b-cc389b4d1405', '07ce2e8b-d34b-4156-9dd4-f29ec4311675');
+
+INSERT INTO appointment_scheduling_history
+    (id, qrcode, issuing_date, status, appointment_id, blood_donor_id)
+VALUES ('ce10170c-e043-4beb-a059-2b799e263d77', 'QR', '2022-12-21 11:15:00.000', 1,
+        'ce4891a5-2dc5-4251-907e-926db0007fb9', '07ce2e8b-d34b-4156-9dd4-f29ec4311675');
+
+
+
+INSERT INTO appointment_report
+    (id, text, appointment_scheduling_history_id)
+VALUES ('342c7203-deae-4118-b330-f90be9ef649b', 'OVDE SE BAS MNOGO TOGA DESILO gas gas ',
+        '3a098534-2565-4f33-b44f-429b0f74cfa7');
+
+INSERT INTO appointment_report
+    (id, text, appointment_scheduling_history_id)
+VALUES ('28e4189f-7c59-4d48-b357-9eee5612b842', 'OVDE SE BAS MNOGOaa a a a a aa  TOGA DESILO gas gas ',
+        'ce10170c-e043-4beb-a059-2b799e263d77');

@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { merge, startWith, switchMap, catchError, map, of as observableOf, } from 'rxjs';
 import { AppointmentServiceService } from 'src/app/http-services/appointment-service.service';
+import { AppointmentReportService } from 'src/app/http-services/AppointmentReport/appointment-report.service';
 import { PageDto } from 'src/app/model/PageDto';
 
 export interface AppointmentReportDTO {
@@ -37,12 +38,48 @@ export class VisitingHistoryComponent implements OnInit {
 
   centerId: string = '-1';
   private sub: any;
-  constructor(private appointmentService: AppointmentServiceService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private appointmentReportService: AppointmentReportService, private route: ActivatedRoute, private router: Router) { }
   ngOnInit(): void {
   }
 
   ngAfterViewInit() {
-    // If the user changes the sort order, reset back to the first page.
-  }
+    this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
 
+    merge(this.sort.sortChange, this.paginator.page)
+      .pipe(
+        startWith({}),
+        switchMap(() => {
+          this.isLoadingResults = true;
+          return this.appointmentReportService!.reportHistory(
+            this.pageSize,
+            this.paginator.pageIndex,
+            this.sort.direction,
+            this.sort.active,
+
+          ).pipe(catchError(() => observableOf(null)));
+        }),
+        map((data) => {
+          // Flip flag to show that loading has finished.
+          this.isLoadingResults = false;
+          this.isRateLimitReached = data === null;
+
+          if (data === null) {
+            let empty: PageDto<AppointmentReportDTO[]> = {
+              content: [],
+              count: 0,
+            };
+            return empty;
+          }
+
+          // Only refresh the result length if there is new data. In case of rate
+          // limit errors, we do not want to reset the paginator to zero, as that
+          // would prevent users from re-triggering requests.
+          this.resultsLength = data.count;
+          return data;
+        })
+      )
+      .subscribe((data) => (this.dataSource = data.content), err => { alert(err) });
+  }
 }
+
+
