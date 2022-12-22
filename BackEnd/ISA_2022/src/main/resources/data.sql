@@ -117,7 +117,7 @@ INSERT INTO "blood_center" ("id", "description", "name", "rating", "end_hours", 
 VALUES ('417c9b36-251a-4483-bfbf-abd3df786d96', 'LUMENE OY', 'Will-Wiza', '3', '11', '30', '5', '0',
         '8021c0fb-99a5-42f0-9d81-baa41265540e'),
        ('aa116b1b-c59c-403b-b64f-db201d9375d2', '"Lannett Company, Inc."', '"Grimes, Kautzer and Lebsack"', '2', '17',
-        '0', '8', '0', '553414e2-857e-49b0-85c8-e08f9edc9ae3'),
+        '0', '6', '0', '553414e2-857e-49b0-85c8-e08f9edc9ae3'),
        ('206b28a3-4953-4cce-a077-c7d9fcdd599c', 'Mondel?z Global LLC', '"Tillman, Robel and DuBuque"', '4', '15', '30',
         '7', '30', '5c3b169a-c50c-4b90-939d-ee3fca1459ea'),
        ('29e5ab72-265a-483b-84fc-6a7abbf5a6ab', 'Accord Healthcare Inc.', 'Vandervort-Gleason', '2', '15', '30', '9',
@@ -390,10 +390,10 @@ VALUES ('96ea2710-8c48-458b-b5d3-6256d087f257', '79', '0', '417c9b36-251a-4483-b
 INSERT INTO appointment (id, start_time, end_time, blood_center_id, is_premade)
 VALUES ('dbf02dce-a9a1-4e20-aaf0-5fca92299407', '2022-12-21 05:00:00.000', '2022-12-21 05:30:00.000',
         '417c9b36-251a-4483-bfbf-abd3df786d96', true),
-       ('9e16d8b0-a805-4ffb-a08b-d50e7fef6be0', '2020-12-21 06:30:00.000', '2020-12-21 07:00:00.000',
+       ('9e16d8b0-a805-4ffb-a08b-d50e7fef6be0', '2022-12-21 06:30:00.000', '2022-12-21 07:00:00.000',
         '417c9b36-251a-4483-bfbf-abd3df786d96', true),
        ('f9854a8d-9dfb-49f5-abf4-d993fac9aac3', '2022-12-21 08:30:00.000', '2022-12-21 09:30:00.000',
-        '417c9b36-251a-4483-bfbf-abd3df786d96', true),
+        '417c9b36-251a-4483-bfbf-abd3df786d96', false),
        ('c41a832e-b94c-4c6a-b3fa-e743d5f954b4', '2022-12-21 09:30:00.000', '2022-12-21 10:30:00.000',
         '417c9b36-251a-4483-bfbf-abd3df786d96', true),
 
@@ -444,5 +444,6 @@ VALUES('7af0b527-5209-4c33-b7fb-2d0df7214728', 'QR', '2022-12-21 11:15:00.000', 
        '9e16d8b0-a805-4ffb-a08b-d50e7fef6be0', '07ce2e8b-d34b-4156-9dd4-f29ec4311675'),
       ('759415d9-b4d1-45ee-9067-f53b7f945f16', 'QR', '2022-12-21 11:15:00.000', 3,
        'f9854a8d-9dfb-49f5-abf4-d993fac9aac3', '26d3381b-319d-425c-abd7-256f24f0a2e0');
+
 
 

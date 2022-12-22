@@ -19,6 +19,9 @@ public interface AppointmentRepository extends JpaRepository<Appointment, UUID> 
     @Query(value = "select *" +
             "from appointment_staff s join appointment a on s.appointment_id = a.id " +
             "where s.staff_id = :id " +
+            "and a.id not in (select h.appointment_id from appointment_scheduling_history h " +
+            "join appointment a2 on a2.id = h.appointment_id " +
+            "where h.status = 3 and a2.is_premade = false)" +
             "and a.start_time >= :startTime and a.end_time <= :endTime " +
             "order by a.start_time asc",
             nativeQuery = true)
@@ -36,4 +39,17 @@ public interface AppointmentRepository extends JpaRepository<Appointment, UUID> 
             "order by a.start_time ",
             nativeQuery = true)
     List<Appointment> findAvailableAppointmentsForDonor(@Param("donor_id") UUID donor_id, @Param("center_id") UUID center_id);
+
+    @Query(value = "select * from " +
+                    "appointment a left join appointment_scheduling_history h on a.id = h.appointment_id "+
+                    "where (a.is_premade = true or "+
+                    "(a.is_premade = false and (h.blood_donor_id is null or (h.status = 3 and h.blood_donor_id != :donor_id)))) "+
+                    "and a.blood_center_id = :center_id "+
+                    "and a.id not in ( "+
+                    "select h1.appointment_id from appointment_scheduling_history h1 "+
+                    "where h1.status != 3 "+
+                    "or (h1.blood_donor_id = :donor_id and h1.status = 3)) "+
+                    "order by a.start_time ",
+            nativeQuery = true)
+    List<Appointment> findAvailableAppointmentsForDonorIncludingCustom(@Param("donor_id") UUID donor_id, @Param("center_id") UUID center_id);
 }
