@@ -1,5 +1,6 @@
 import { equipmentInfo } from './../../../model/equipment/equipment-info';
 import { Component, OnInit } from '@angular/core';
+import { EquipmentService } from 'src/app/http-services/Equipment/equipment-service.service';
 
 @Component({
   selector: 'app-create-medical-report',
@@ -22,17 +23,26 @@ export class CreateMedicalReportComponent implements OnInit {
   note: string = '';
 
   equipmentList: equipmentInfo[] = [];
-  selectedEquipment: equipmentInfo = { id: '-1', name: '', quantity: -1 };
+  selectedEquipment: equipmentInfo = {
+    equipmentId: '-1',
+    name: '',
+    quantity: -1,
+  };
   quantity: number = -1;
-  constructor() {}
+  constructor(private equipmentService: EquipmentService) {}
 
   ngOnInit(): void {
     this.getEquipment();
   }
 
   getEquipment() {
-    this.equipmentList.push({ id: '1', name: 'Oprema1', quantity: 5 });
-    this.equipmentList.push({ id: '2', name: 'Oprema2', quantity: 6 });
+    this.equipmentList.push({ equipmentId: '1', name: 'Oprema1', quantity: 5 });
+    this.equipmentList.push({ equipmentId: '2', name: 'Oprema2', quantity: 6 });
+
+    this.equipmentService.getEquipmentForCentre().subscribe((res) => {
+      this.equipmentList = res;
+      console.log(res);
+    });
   }
 
   prepareText() {
