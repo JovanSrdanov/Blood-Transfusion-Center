@@ -1,3 +1,4 @@
+import { EquipmentUpdate } from './../../model/equipment/equipment-update';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -14,5 +15,9 @@ export class EquipmentService {
 
   getEquipmentForCentre(): Observable<equipmentInfo[]> {
     return this.http.get<equipmentInfo[]>(this.path + '/get-by-centre');
+  }
+
+  updateEquipmentInCentre(equipmentUpdate: EquipmentUpdate): Observable<any> {
+    return this.http.put<any>(this.path, equipmentUpdate);
   }
 }
