@@ -134,6 +134,12 @@ public class BloodDonorService implements IBloodDonorService {
     }
 
     @Override
+    public BloodDonor fetchWithQuestionnaire(UUID id) {
+        return _bloodDonorRepository.fetchWithQuestionnaire(id);
+    }
+
+
+    @Override
     @Async
     @Transactional(rollbackFor = Exception.class)
     public void registerNewBloodDonor(RegisterBloodDonorDTO dto) throws BadRequestException {

@@ -25,11 +25,11 @@ public class AppointmentSchedulingHistory {
     @Column(nullable = false)
     private AppointmentSchedulingConfirmationStatus status;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "appointment_id")
     private Appointment appointment;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "blood_donor_id")
     private BloodDonor bloodDonor;
 

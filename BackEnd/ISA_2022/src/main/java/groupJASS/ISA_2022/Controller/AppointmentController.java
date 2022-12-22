@@ -1,10 +1,6 @@
 package groupJASS.ISA_2022.Controller;
 
 import groupJASS.ISA_2022.DTO.Appointment.*;
-import groupJASS.ISA_2022.DTO.Appointment.AvailablePredefinedDto;
-import groupJASS.ISA_2022.DTO.Appointment.AvailableSlotsDto;
-import groupJASS.ISA_2022.DTO.Appointment.PredefineAppointmentDto;
-import groupJASS.ISA_2022.DTO.Appointment.PremadeAppointmentDTO;
 import groupJASS.ISA_2022.DTO.PageEntityDto;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
 import groupJASS.ISA_2022.Exceptions.SortNotFoundException;
@@ -60,8 +56,7 @@ public class AppointmentController {
         Appointment res = null;
         try {
             res = _appointmentService.predefine(dto.getDateRange(), dto.getStaffIds(), a.getPersonId(), true);
-        }
-        catch (BadRequestException e) {
+        } catch (BadRequestException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(res, HttpStatus.OK);
@@ -79,18 +74,26 @@ public class AppointmentController {
 
     @PostMapping("/schedulePredefine/{appid}")
     @PreAuthorize("hasRole('BLOOD_DONOR')")
-    public ResponseEntity<AppointmentSchedulingHistory> scheduleAppointment(@PathVariable UUID appid,
-                                                                            Principal account) {
-        Account a = _accountService.findAccountByEmail(account.getName());
-        var res = (AppointmentSchedulingHistory) _appointmentService.scheduleAppointment(a.getPersonId(), appid);
-        return new ResponseEntity<>(res, HttpStatus.OK);
+    public ResponseEntity<?> scheduleAppointment(@PathVariable UUID appid,
+                                                 Principal account) {
+
+        try {
+
+            Account a = _accountService.findAccountByEmail(account.getName());
+            var res = (AppointmentSchedulingHistory) _appointmentService.scheduleAppointment(a.getPersonId(), appid);
+            _appointmentService.sendScheduleConfirmation(res.getAppointment(), account.getName());
+            return new ResponseEntity<>(true, HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping("/custom-available")
     @PreAuthorize("hasRole('BLOOD_DONOR')")
     public ResponseEntity<?> findCustomAvailableAppointments(@RequestBody LocalDateTime time, Principal account) {
         Account a = _accountService.findAccountByEmail(account.getName());
-        var res = (List<AvailableCustomAppointmentsDto>)_appointmentService.findCustomAvailableAppointments(a.getPersonId(), time);
+        var res = (List<AvailableCustomAppointmentsDto>) _appointmentService.findCustomAvailableAppointments(a.getPersonId(), time);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 

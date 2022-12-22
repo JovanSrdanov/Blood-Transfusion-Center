@@ -10,10 +10,14 @@ import java.util.UUID;
 
 public interface IAppointmentSchedulingHistoryService extends ICrudService<AppointmentSchedulingHistory> {
     List<AppointmentSchedulingHistory> getByDonorAndCenterId(UUID bloodDonorId, UUID bloodCenterId);
+
     void staffCancelAppointment(BloodDonor donor, boolean showedUp,
                                 UUID appointmentHistoryId) throws Exception;
 
     Page<AppointmentSchedulingHistory> bloodDonorPendingAppointments(UUID personId, int pageSize, int page, String field, String sort) throws SortNotFoundException;
 
     void cancelAppointment(UUID appointmentId, UUID bloodDonorId) throws Exception;
+    
+
+    List<AppointmentSchedulingHistory> getAllByBloodDonor_Id(UUID id);
 }

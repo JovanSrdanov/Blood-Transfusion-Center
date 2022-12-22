@@ -111,7 +111,7 @@ public class AppointmentService implements IAppointmentService {
 
     @Override
     public List<DateRange> findFreeSlotsForStaffIds(List<UUID> staffIds, LocalDateTime date, int duration) throws BadRequestException {
-        if(staffIds.size() == 0) {
+        if (staffIds.size() == 0) {
             throw new BadRequestException("Nema staff ids");
         }
 
@@ -126,8 +126,7 @@ public class AppointmentService implements IAppointmentService {
                     throw new BadRequestException("Diffrent staff bloodCenter ids");
                 }
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new BadRequestException("Nema staff sa tim id");
         }
 
@@ -160,7 +159,7 @@ public class AppointmentService implements IAppointmentService {
     @Transactional(rollbackFor = Exception.class)
     public Appointment predefine(DateRange dateRange, List<UUID> staffIds, UUID staffAdminId, boolean isPredef) throws BadRequestException {
         //Provera da li je poslata prazna lista staff-ova
-        if(staffIds.size() == 0) {
+        if (staffIds.size() == 0) {
             throw new BadRequestException("Nema staff ids");
         }
 
@@ -176,13 +175,13 @@ public class AppointmentService implements IAppointmentService {
         //Provera da li je appointment koji pokusavamo da predefinisemo dostpuan
         List<DateRange> freeSlots = findFreeSlotsForStaffIds(staffIds, dateRange.getStartTime(), dateRange.calcaulateDurationMinutes());
         boolean found = false;
-        for(DateRange r : freeSlots) {
-            if(r.isEqual(dateRange)) {
+        for (DateRange r : freeSlots) {
+            if (r.isEqual(dateRange)) {
                 found = isPredef;
                 break;
             }
         }
-        if(!found) {
+        if (!found) {
             throw new BadRequestException("Ne, ovaj termin nije slobodan");
         }
 
@@ -224,18 +223,18 @@ public class AppointmentService implements IAppointmentService {
     }
 
     @Override
-    @Async
     public AppointmentSchedulingHistory scheduleAppointment(UUID donorId, UUID appointmentId) {
         if (_appointmentRepository.findById(appointmentId).isEmpty()) {
             throw new NotFoundException("Donor or appointment doesent exist");
         }
 
+
         //Provera da li je appointment koji pokusavamo da zakazemo idalje dostpuan
         Appointment appointment = findById(appointmentId);
         boolean found = false;
         var apps = _appointmentRepository.findAvailableAppointmentsForDonorIncludingCustom(donorId, appointment.getBloodCenter().getId());
-        for(Appointment a :apps) {
-            if(a.getId().equals(appointmentId)) {
+        for (Appointment a : apps) {
+            if (a.getId().equals(appointmentId)) {
                 found = true;
                 break;
             }
@@ -248,6 +247,7 @@ public class AppointmentService implements IAppointmentService {
         //Zakazi appointment, kreiraj history
         try {
             BloodDonor donor = _bloodDonorService.findById(donorId);
+            checkIfDonorCanSchedule(donor);
 
             var ash = _appointmentSchedulingHistoryService.save(new AppointmentSchedulingHistory(
                     null,
@@ -258,11 +258,35 @@ public class AppointmentService implements IAppointmentService {
                     donor,
                     null));
             String email = _accountService.findAccountByPersonId(donorId).getEmail();
-            sendScheduleConfirmation(appointment, email);
             return ash;
         } catch (BadRequestException e) {
             throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
+    }
+
+    private void checkIfDonorCanSchedule(BloodDonor donor) throws Exception {
+
+        BloodDonor d = _bloodDonorService.fetchWithQuestionnaire(donor.getId());
+        if (donor.getQuestionnaire() == null) {
+            throw new Exception("Donor can not donate blood becouse he has not filled his questionnaire");
+        }
+        if (!d.getQuestionnaire().canDonateBlood()) {
+            throw new Exception("Donor can not donate blood becouse of his questionnaire");
+        }
+        if (d.getPenalties() >= 3) {
+            throw new Exception("Can not schedule because blood donor has over 3 penalties");
+        }
+
+        var a = _appointmentSchedulingHistoryService.getAllByBloodDonor_Id(d.getId());
+        for (var ash : _appointmentSchedulingHistoryService.getAllByBloodDonor_Id(d.getId())) {
+            if (ash.getStatus() == AppointmentSchedulingConfirmationStatus.PROCESSED && ash.getAppointment().getTime().getStartTime().isAfter(LocalDateTime.now().minusMonths(6))) {
+                throw new Exception("You have donated blood recently");
+            }
+        }
+
+
     }
 
     @Override
@@ -272,14 +296,14 @@ public class AppointmentService implements IAppointmentService {
         //Proveri da li moze ovaj app da se zakaze tj el postoji
         var availableAppointments = findCustomAvailableAppointments(donorId, time);
         boolean found = false;
-        for(AvailableCustomAppointmentsDto apps : availableAppointments) {
-            if(apps.getTime().isEqual(dateRange) && apps.getStaffId().equals(staffId)) {
+        for (AvailableCustomAppointmentsDto apps : availableAppointments) {
+            if (apps.getTime().isEqual(dateRange) && apps.getStaffId().equals(staffId)) {
                 found = true;
                 break;
             }
         }
 
-        if(!found) {
+        if (!found) {
             throw new BadRequestException("Ne postoji ovaj custom app");
         }
 
@@ -306,7 +330,7 @@ public class AppointmentService implements IAppointmentService {
         DateRange wantedRange = new DateRange(time, 20);
         List<AvailableCustomAppointmentsDto> availableCustomAppointments = new ArrayList<>();
 
-        for(BloodCenter bc : _bloodBloodCenterService.findAll()) {
+        for (BloodCenter bc : _bloodBloodCenterService.findAll()) {
             DateRange centerWorkRange = _bloodBloodCenterService.getWorkingDateRangeForDate(bc.getId(), time);
             boolean foundFreeStaff = false;
             UUID foundStaffId = null;
@@ -318,15 +342,15 @@ public class AppointmentService implements IAppointmentService {
                 }
             });
 
-            for(Staff staff : staffs) {
-                for(DateRange dr : findFreeChunksForStaffId(staff.getId(), centerWorkRange)) {
-                    if(wantedRange.isSubrangeOf(dr)) {
+            for (Staff staff : staffs) {
+                for (DateRange dr : findFreeChunksForStaffId(staff.getId(), centerWorkRange)) {
+                    if (wantedRange.isSubrangeOf(dr)) {
                         foundFreeStaff = true;
                         foundStaffId = staff.getId();
                         break;
                     }
                 }
-                if(foundFreeStaff && foundStaffId != null) {
+                if (foundFreeStaff && foundStaffId != null) {
                     availableCustomAppointments.add(new AvailableCustomAppointmentsDto(
                             wantedRange,
                             ObjectMapperUtils.map(bc, BloodCenterBasicInfoDto.class),

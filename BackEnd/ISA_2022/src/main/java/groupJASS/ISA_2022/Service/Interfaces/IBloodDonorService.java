@@ -24,4 +24,8 @@ public interface IBloodDonorService extends ICrudService<BloodDonor> {
     List<BloodDonorInfoDto> findBloodDonorByNameAAndSurname(String name, String surname);
 
     void updatePenalties(BloodDonor donor, boolean showedUp);
+
+    BloodDonor fetchWithQuestionnaire(UUID id);
+
+
 }

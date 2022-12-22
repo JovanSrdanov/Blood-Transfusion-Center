@@ -6,9 +6,7 @@ import groupJASS.ISA_2022.Model.AppointmentSchedulingConfirmationStatus;
 import groupJASS.ISA_2022.Model.AppointmentSchedulingHistory;
 import groupJASS.ISA_2022.Model.BloodDonor;
 import groupJASS.ISA_2022.Repository.AppointmentSchedulingHistoryRepository;
-import groupJASS.ISA_2022.Repository.BloodDonorRepository;
 import groupJASS.ISA_2022.Service.Interfaces.IAppointmentSchedulingHistoryService;
-import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
@@ -16,9 +14,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
-import java.util.List;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -77,16 +75,18 @@ public class AppointmentSchedulingHistoryService implements IAppointmentScheduli
     public List<AppointmentSchedulingHistory> getByDonorAndCenterId(UUID bloodDonorId, UUID bloodCenterId) {
         return _appointmentSchedulingHistoryRepository.getByDonorAndCenterId(bloodDonorId, bloodCenterId);
     }
+
     @Transactional(rollbackOn = Exception.class)
     @Override
     public void staffCancelAppointment(BloodDonor donor, boolean showedUp,
-            UUID appointmentHistoryId) throws Exception {
+                                       UUID appointmentHistoryId) throws Exception {
 
         _bloodDonorService.updatePenalties(donor, showedUp);
         AppointmentSchedulingHistory appointment = findById(appointmentHistoryId);
         appointment.setStatus(AppointmentSchedulingConfirmationStatus.REJECTED);
         save(appointment);
     }
+
     @Transactional(rollbackOn = Exception.class)
     public void cancelAppointment(UUID appointmentId, UUID bloodDonorId) throws Exception {
         var ashs = _appointmentSchedulingHistoryRepository.nes(appointmentId, bloodDonorId);
@@ -110,5 +110,10 @@ public class AppointmentSchedulingHistoryService implements IAppointmentScheduli
         }
         ash.setStatus(AppointmentSchedulingConfirmationStatus.CANCELED);
         _appointmentSchedulingHistoryRepository.save(ash);
+    }
+
+    @Override
+    public List<AppointmentSchedulingHistory> getAllByBloodDonor_Id(UUID id) {
+        return _appointmentSchedulingHistoryRepository.gascina(id);
     }
 }
