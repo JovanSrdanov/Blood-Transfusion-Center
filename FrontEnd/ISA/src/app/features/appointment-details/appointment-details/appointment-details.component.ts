@@ -1,5 +1,5 @@
 import { AppointmentCancelation } from './../../../model/appointment/appointment-cancelation';
-import { AppointmentService } from 'src/app/http-services/appointment.service';
+import { AppointmentSchedulingHistoryService } from 'src/app/http-services/appointment-scheduling-history.service';
 import { QuestionnaireService } from './../../../http-services/questionnaire.service';
 import { Questionnaire } from 'src/app/pages/registration-page/Model/questionnaire';
 import { Component, OnInit } from '@angular/core';
@@ -34,8 +34,8 @@ export class AppointmentDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private questionaireService: QuestionnaireService,
-    private appointmentService: AppointmentService
-  ) {}
+    private appointmentService: AppointmentSchedulingHistoryService
+  ) { }
 
   ngOnInit(): void {
     this.sub = this.route.params.subscribe((params) => {

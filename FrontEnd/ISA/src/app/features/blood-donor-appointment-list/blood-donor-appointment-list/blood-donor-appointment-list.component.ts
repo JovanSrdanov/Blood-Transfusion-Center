@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTable } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AppointmentService } from 'src/app/http-services/appointment.service';
+import { AppointmentSchedulingHistoryService } from 'src/app/http-services/appointment-scheduling-history.service';
 import { appointmentBloodDonorInfo } from 'src/app/model/appointment/appointment-blood-donor-info';
 
 @Component({
@@ -24,8 +24,8 @@ export class BloodDonorAppointmentListComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private appointmentsService: AppointmentService
-  ) {}
+    private appointmentsService: AppointmentSchedulingHistoryService
+  ) { }
 
   ngOnInit(): void {
     this.sub = this.route.params.subscribe((params) => {
