@@ -28,7 +28,7 @@ export class CreateMedicalReportComponent implements OnInit {
 
   equipmentList: equipmentInfo[] = [];
   selectedEquipment: equipmentInfo = {
-    equipmentId: '-1',
+    equipmentId: 'DB69491D-C096-4420-8AF5-FC28BCA1BA23',
     name: '',
     quantity: -1,
   };
@@ -105,6 +105,12 @@ export class CreateMedicalReportComponent implements OnInit {
 
     this.equipmentService
       .updateEquipmentInCentre(equipmentUpdate)
+      .subscribe((res) => {
+        console.log(res);
+      });
+
+    this.appointmentReportService
+      .createAppointment(newReport)
       .subscribe((res) => {
         console.log(res);
       });

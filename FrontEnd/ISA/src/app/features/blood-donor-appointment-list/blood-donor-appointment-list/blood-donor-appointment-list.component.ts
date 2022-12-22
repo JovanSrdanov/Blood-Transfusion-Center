@@ -25,7 +25,7 @@ export class BloodDonorAppointmentListComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private appointmentsService: AppointmentSchedulingHistoryService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.sub = this.route.params.subscribe((params) => {
@@ -38,19 +38,19 @@ export class BloodDonorAppointmentListComponent implements OnInit {
   @ViewChild(MatTable) table: MatTable<appointmentBloodDonorInfo> | null = null;
   FillTable = () => {
     this.dataSource.push({
-      id: '1',
+      id: '17547189-774D-4F75-8290-4D16BD39AFCD',
       issuingDate: '21/12/2022',
       time: '10:30',
       duration: 30,
     });
     this.dataSource.push({
-      id: '2',
+      id: '6D4AE778-0749-4309-B7BD-1850FFA7292E',
       issuingDate: '22/12/2022',
       time: '11:30',
       duration: 30,
     });
     this.dataSource.push({
-      id: '3',
+      id: '151743A8-B556-4B71-8B5B-382FB69ED05A',
       issuingDate: '23/12/2022',
       time: '12:30',
       duration: 30,

@@ -11,8 +11,6 @@ import java.util.UUID;
 @Getter
 @Setter
 public class EquipmentUpdateDTO {
-    @NotEmpty
     private UUID equipmentId;
-    @NotEmpty
     private double quantity;
 }

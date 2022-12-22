@@ -11,10 +11,7 @@ import java.util.UUID;
 @Getter
 @Setter
 public class AppointmentReportCreate {
-    @NotEmpty
     private UUID appointmentHistoryId;
-    @NotEmpty
     private UUID equipmentId;
-    @NotEmpty
     private String text;
 }

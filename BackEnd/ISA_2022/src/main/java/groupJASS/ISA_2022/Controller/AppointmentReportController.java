@@ -41,7 +41,7 @@ public class AppointmentReportController {
     @PreAuthorize("hasRole('STAFF')")
     @PostMapping("create-report")
     public ResponseEntity<?> createAppointment(
-            @Validated @RequestBody AppointmentReportCreate report
+            @RequestBody AppointmentReportCreate report
             ) {
         try {
             //TODO AppointmentReportEquipmentQuantity uvezati
