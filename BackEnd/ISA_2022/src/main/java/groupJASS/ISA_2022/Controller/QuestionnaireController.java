@@ -57,7 +57,22 @@ public class QuestionnaireController {
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
+    }
 
+    @GetMapping("getQuestionaire/{bloodDonorId}")
+    @PreAuthorize("hasRole('STAFF')")
+    public ResponseEntity<?> getQuestionaire(@PathVariable("bloodDonorId") UUID bloodDonorId, Principal account) {
+        try {
+            //Account a = _accountService.findAccountByEmail(account.getName());
+            Questionnaire questionnaire = _bloodDonorService.findById(bloodDonorId).getQuestionnaire();
+            return new ResponseEntity<>(_modelMapper.map(questionnaire, QuestionnaireDTO.class), HttpStatus.CREATED);
+        }
+        catch (NotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+        catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping("fillQuestionare")

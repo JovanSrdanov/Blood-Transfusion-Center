@@ -126,6 +126,14 @@ public class BloodDonorService implements IBloodDonorService {
     }
 
     @Override
+    public void updatePenalties(BloodDonor donor, boolean showedUp) {
+        if (showedUp) {
+            donor.setPenalties(donor.getPenalties() + 1);
+            save(donor);
+        }
+    }
+
+    @Override
     @Async
     @Transactional(rollbackFor = Exception.class)
     public void registerNewBloodDonor(RegisterBloodDonorDTO dto) throws BadRequestException {
