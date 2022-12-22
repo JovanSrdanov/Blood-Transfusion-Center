@@ -6,3 +6,13 @@
 .dugmeOk {
   margin: 2%;
 }
+
+table {
+  margin: auto;
+}
+
+.appointments {
+  background-color: white;
+  border: 2px solid black;
+  height: fit-content;
+}
