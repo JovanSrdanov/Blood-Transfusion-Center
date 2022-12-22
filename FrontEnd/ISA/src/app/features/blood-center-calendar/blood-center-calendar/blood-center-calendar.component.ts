@@ -6,6 +6,7 @@ import {CalendarEvent,CalendarEventAction,CalendarEventTimesChangedEvent,Calenda
 import { EventColor } from 'calendar-utils';
 import { BloodCenterService } from 'src/app/http-services/blood-center.service';
 import { BloodCenterRoundedWorkingHours } from 'src/app/model/blood-center/blood-center-rounded-working-hours';
+import { BloodCenterCalendarAppointment } from 'src/app/model/blood-center/blood-center-calendar-appointment';
 
 const colors: Record<string, EventColor> = {
   blue: {
@@ -48,6 +49,22 @@ export class BloodCenterCalendarComponent implements OnInit{
   //   color: { ...colors['blue'] },
   // }
 
+  // parseDate = (date:Date) : string => {
+  //    const hours : string = date.getHours() < 10 ? '0' + date.getHours() : '' + date.getHours();
+  //    const minutes : string = date.getMinutes() < 10 ? '0' + date.getMinutes() : '' + date.getMinutes();
+  //    return hours + ":" + minutes;
+  // }
+
+  appointmentToEvent = (appointment : BloodCenterCalendarAppointment): CalendarEvent => {
+      return {
+        start : appointment.start,
+        end : appointment.end,
+        title : appointment.info,
+        color: { ...colors['blue'] }
+      }
+  }
+
+
   constructor(private readonly modal: NgbModal, private readonly bloodCenterService : BloodCenterService) {}
   ngOnInit(): void {
       this.bloodCenterService.getWorkingHoursRounded().subscribe({
@@ -56,16 +73,17 @@ export class BloodCenterCalendarComponent implements OnInit{
             this.dayEndHour = response.endHours;
 
             //Getting all appointments
+            this.bloodCenterService.getAppointments().subscribe({
+              next: (response: BloodCenterCalendarAppointment[]) =>
+              {
+                  response.forEach(appointment => this.events.push(this.appointmentToEvent(appointment)));
+              }
+            })
         }
       })
   }
 
 
-  // parseDate = (date:Date) : string => {
-  //    const hours : string = date.getHours() < 10 ? '0' + date.getHours() : '' + date.getHours();
-  //    const minutes : string = date.getMinutes() < 10 ? '0' + date.getMinutes() : '' + date.getMinutes();
-  //    return hours + ":" + minutes;
-  // }
 
 
 

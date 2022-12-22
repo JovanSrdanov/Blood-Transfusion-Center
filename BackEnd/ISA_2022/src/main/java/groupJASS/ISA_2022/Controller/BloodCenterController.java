@@ -75,6 +75,18 @@ public class BloodCenterController {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
+
+    @PreAuthorize("hasRole('ROLE_STAFF')")
+    @GetMapping("/incoming-appointments")
+    public ResponseEntity getIncomingAppointments(Principal principal) {
+        try {
+            //TODO
+            return  null;
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @PutMapping(path = "/{id}")
     public ResponseEntity<?> updateCenter(@PathVariable("id") UUID centerId, @Valid @RequestBody BloodCenterRegistrationDTO dto) {
         try {

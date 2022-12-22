@@ -28,6 +28,10 @@ export class BloodCenterService {
     return this.http.get<BloodCenterRoundedWorkingHours>(this.path + '/working-hours-rounded');
   };
 
+  getAppointments = () :Observable<BloodCenterCalendarAppointment[]> => {
+    return this.http.get<BloodCenterCalendarAppointment[]>(this.path + '/incoming-appointments');
+  };
+
   getPagableBloodCenters(
     page: number,
     search: string,
