@@ -89,8 +89,6 @@ public class AppointmentSchedulingHistoryController {
         Account a = _accountService.findAccountByEmail(account.getName());
         UUID personId = a.getPersonId();
         Staff staff = _staffService.findById(personId);
-        //Staff staff = _staffService.findById(_accountService.findAccountByEmail(account.getName()).getPersonId());
-        //Staff staff = new Staff();
 
         //dobijeno hql upitom
         List<AppointmentSchedulingHistory> appointmentHistories =
@@ -108,7 +106,7 @@ public class AppointmentSchedulingHistoryController {
     //TODO stavi da bude transactional
     @PutMapping("/cancel-appointment")
     @PreAuthorize("hasRole('STAFF')")
-    public ResponseEntity<?> cancelAppointment(@Validated @RequestBody AppointmentCancelation dto) {
+    public ResponseEntity<?> cancelAppointment(@RequestBody AppointmentCancelation dto) {
         try {
             BloodDonor donor = _bloodDonorService.findById(dto.getBloodDonorId());
             _appointmentSchedulingHistoryRepository.staffCancelAppointment(

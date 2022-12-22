@@ -548,3 +548,10 @@ INSERT INTO appointment_report
     (id, text, appointment_scheduling_history_id)
 VALUES ('28e4189f-7c59-4d48-b357-9eee5612b842', 'OVDE SE BAS MNOGOaa a a a a aa  TOGA DESILO gas gas ',
         'ce10170c-e043-4beb-a059-2b799e263d77');
+
+/* Stefanov equipment*/ 
+INSERT INTO equipment (id, name, quantity, blood_center_id) 
+VALUES('BDE5B263-37D3-427A-A377-BA167AF88858', 'Lopate', '100', '5f29fc03-f6bd-49a6-9f41-c2ca229de403'),
+	('0ED7565A-ABFE-4520-80A6-E7720ABC879C', 'Sekire', '100', '5f29fc03-f6bd-49a6-9f41-c2ca229de403'),
+	('2BCCF1DD-E9F6-469C-BEE0-F119A9C0E55D', 'Kasike', '100', '5f29fc03-f6bd-49a6-9f41-c2ca229de403'),
+	('B82DCB56-7A00-48AA-8132-4CAA98D03205', 'Viljuske', '100', '5f29fc03-f6bd-49a6-9f41-c2ca229de403');

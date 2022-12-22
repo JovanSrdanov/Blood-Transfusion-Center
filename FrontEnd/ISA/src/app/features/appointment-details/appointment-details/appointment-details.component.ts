@@ -35,7 +35,7 @@ export class AppointmentDetailsComponent implements OnInit {
     private router: Router,
     private questionaireService: QuestionnaireService,
     private appointmentService: AppointmentSchedulingHistoryService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.sub = this.route.params.subscribe((params) => {
@@ -85,7 +85,7 @@ export class AppointmentDetailsComponent implements OnInit {
 
   cancelAppointment() {
     let cancelation: AppointmentCancelation = {
-      appointmentHistoryId: 'C924E6C2-F231-4471-AA3A-33A02CDC265E', //TODO test, prvremeno
+      appointmentHistoryId: this.appointmentHistoryId, //TODO test, prvremeno
       bloodDonorId: this.donorId,
       showedUp: this.checkedDidNotShowUp,
     };
@@ -94,6 +94,7 @@ export class AppointmentDetailsComponent implements OnInit {
       .staffCancelAppointment(cancelation)
       .subscribe((res) => {
         console.log(res);
+        this.router.navigate(['']);
       });
   }
 
