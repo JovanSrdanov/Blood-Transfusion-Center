@@ -27,7 +27,7 @@ export class BloodCenterCalendarComponent implements OnInit{
   view: CalendarView = CalendarView.Month;
   CalendarView = CalendarView;
   viewDate: Date = new Date();
-  activeDayIsOpen: boolean = true;
+  activeDayIsOpen: boolean = false;
   refresh = new Subject<void>();
 
   modalData: {
@@ -42,23 +42,11 @@ export class BloodCenterCalendarComponent implements OnInit{
   dayStartHour : number = 0;
   dayEndHour : number = 0;
 
-  // {
-  //   start: this.startDate,
-  //   end: this.endDate,
-  //   title: this.parseDate(this.startDate) + "  Duration:" + this.duration + "min,   " + this.name + " " + this.surname,
-  //   color: { ...colors['blue'] },
-  // }
-
-  // parseDate = (date:Date) : string => {
-  //    const hours : string = date.getHours() < 10 ? '0' + date.getHours() : '' + date.getHours();
-  //    const minutes : string = date.getMinutes() < 10 ? '0' + date.getMinutes() : '' + date.getMinutes();
-  //    return hours + ":" + minutes;
-  // }
 
   appointmentToEvent = (appointment : BloodCenterCalendarAppointment): CalendarEvent => {
       return {
-        start : appointment.start,
-        end : appointment.end,
+        start :new  Date(appointment.start),
+        end : new Date(appointment.end),
         title : appointment.info,
         color: { ...colors['blue'] }
       }
@@ -76,7 +64,11 @@ export class BloodCenterCalendarComponent implements OnInit{
             this.bloodCenterService.getAppointments().subscribe({
               next: (response: BloodCenterCalendarAppointment[]) =>
               {
-                  response.forEach(appointment => this.events.push(this.appointmentToEvent(appointment)));
+                for(let i = 0; i < response.length;i++)
+                {
+                    let variable = this.appointmentToEvent(response[i]);
+                    this.events.push(variable);
+                }
               }
             })
         }

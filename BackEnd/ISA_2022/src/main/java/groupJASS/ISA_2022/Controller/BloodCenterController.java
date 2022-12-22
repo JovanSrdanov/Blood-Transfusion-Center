@@ -80,10 +80,12 @@ public class BloodCenterController {
     @GetMapping("/incoming-appointments")
     public ResponseEntity getIncomingAppointments(Principal principal) {
         try {
-            //TODO
-            return  null;
+            var result = _bloodCenterService.getIncomingAppointments(principal);
+            return  new ResponseEntity<>(result, HttpStatus.OK);
         } catch (NotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }catch (BloodCenterNotAssignedException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 
