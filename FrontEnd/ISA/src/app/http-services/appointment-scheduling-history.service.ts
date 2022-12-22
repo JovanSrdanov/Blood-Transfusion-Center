@@ -10,12 +10,8 @@ import { appointmentBloodDonorInfo } from '../model/appointment/appointment-bloo
 @Injectable({
   providedIn: 'root',
 })
-export class AppointmentService {
-  // cancelAppointment(id: string): Observable<any> {
-  //   return this.http.get<any>(this.path + '/cancel/' + id);
-  // }
-
-  constructor(private readonly http: HttpClient) {}
+export class AppointmentSchedulingHistoryService {
+  constructor(private readonly http: HttpClient) { }
   path: string = environment.backendPath + '/appointment_scheduling_history';
 
   // bloodDonorAppointments(
@@ -64,14 +60,14 @@ export class AppointmentService {
   ): Observable<PageDto<BloodDonorAppointmentsDTO[]>> {
     return this.http.get<PageDto<BloodDonorAppointmentsDTO[]>>(
       this.path +
-        '/blood-donor-appointments?pageSize=' +
-        pageSize +
-        '&page=' +
-        page +
-        '&sort=' +
-        sortType +
-        '&field=' +
-        field
+      '/blood-donor-appointments?pageSize=' +
+      pageSize +
+      '&page=' +
+      page +
+      '&sort=' +
+      sortType +
+      '&field=' +
+      field
     );
   }
 }

@@ -222,9 +222,6 @@ VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec4', 3);
 
 
 
-
-
-
 INSERT INTO "blood_quantity" ("id", "quantity", "blood_group", "blood_center_id")
 VALUES ('96ea2710-8c48-458b-b5d3-6256d087f257', '79', '0', '417c9b36-251a-4483-bfbf-abd3df786d96'),
        ('ae16c5e9-5d37-4eb1-bbbf-bd56ea2f7588', '88', '0', 'aa116b1b-c59c-403b-b64f-db201d9375d2'),
@@ -439,10 +436,10 @@ VALUES ('dbf02dce-a9a1-4e20-aaf0-5fca92299407', '32763cf0-6a56-49f1-ad25-5a90561
        ('9bdaeb58-381a-4586-917c-f923df6bdd39', 'fa41a439-0f90-46a8-96af-16bc1068d50c');
 
 INSERT INTO appointment_scheduling_history
-(id, qrcode, issuing_date, status, appointment_id, blood_donor_id)
-VALUES('7af0b527-5209-4c33-b7fb-2d0df7214728', 'QR', '2022-12-21 11:15:00.000', 3,
-       '9e16d8b0-a805-4ffb-a08b-d50e7fef6be0', '07ce2e8b-d34b-4156-9dd4-f29ec4311675'),
-      ('759415d9-b4d1-45ee-9067-f53b7f945f16', 'QR', '2022-12-21 11:15:00.000', 3,
-       'f9854a8d-9dfb-49f5-abf4-d993fac9aac3', '26d3381b-319d-425c-abd7-256f24f0a2e0');
+    (id, qrcode, issuing_date, status, appointment_id, blood_donor_id)
+VALUES ('7af0b527-5209-4c33-b7fb-2d0df7214728', 'QR', '2022-12-21 11:15:00.000', 3,
+        '9e16d8b0-a805-4ffb-a08b-d50e7fef6be0', '07ce2e8b-d34b-4156-9dd4-f29ec4311675'),
+       ('759415d9-b4d1-45ee-9067-f53b7f945f16', 'QR', '2022-12-21 11:15:00.000', 3,
+        'f9854a8d-9dfb-49f5-abf4-d993fac9aac3', '26d3381b-319d-425c-abd7-256f24f0a2e0');
 
 

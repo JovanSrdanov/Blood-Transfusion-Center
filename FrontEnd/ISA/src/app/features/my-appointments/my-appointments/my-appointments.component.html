@@ -45,6 +45,9 @@
     [pageSizeOptions]="pso"
     showFirstLastButtons
     aria-label="Select page of periodic elements"
+    #paginator
+    [length]="resultsLength"
+    aria-label="Select page"
   >
   </mat-paginator>
 </div>
