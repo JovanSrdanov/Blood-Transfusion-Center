@@ -3,7 +3,11 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { PremadeAppointmentDTO } from '../features/premade-appointments/premade-appointments/premade-appointments.component';
+import { PremadePost } from '../model/appointment/premadePost';
+import { PremadeRequest } from '../model/appointment/premadeReqest';
+import { PremadeTime } from '../model/appointment/premadeTime';
 import { PageDto } from '../model/PageDto';
+import { StaffPremade } from '../model/staff/staff-premade';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +26,16 @@ export class AppointmentServiceService {
     return this.http.post<any>(this.path + '/schedulePredefine/' + appointmentId, {});
   }
 
+  getStaff(): Observable<StaffPremade[]> {
+    return this.http.get<StaffPremade[]>(environment.backendPath + '/blood-center/get-staff/');
+  }
 
+  getPremadeList(dto: PremadeRequest): Observable<PremadeTime[]> {
+    return this.http.post<PremadeTime[]>(this.path + '/available-admin', dto);
+  }
+
+  premadeAppointment(dto: PremadePost): Observable<any> {
+    return this.http.post<PremadeTime>(this.path + '/predefine', dto);
+  }
 
 }

@@ -3,9 +3,12 @@ package groupJASS.ISA_2022.Controller;
 import groupJASS.ISA_2022.DTO.BloodCenter.BloodCenterBasicInfoDto;
 import groupJASS.ISA_2022.DTO.BloodCenter.BloodCenterRegistrationDTO;
 import groupJASS.ISA_2022.DTO.PageEntityDto;
+import groupJASS.ISA_2022.DTO.Staff.StaffPremadeDto;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
 import groupJASS.ISA_2022.Exceptions.SortNotFoundException;
+import groupJASS.ISA_2022.Model.Account;
 import groupJASS.ISA_2022.Model.BloodCenter;
+import groupJASS.ISA_2022.Service.Interfaces.IAccountService;
 import groupJASS.ISA_2022.Service.Interfaces.IBloodCenterService;
 import groupJASS.ISA_2022.Utilities.MappingUtilities;
 import groupJASS.ISA_2022.Utilities.ObjectMapperUtils;
@@ -15,10 +18,12 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.webjars.NotFoundException;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,19 +31,28 @@ import java.util.UUID;
 @RequestMapping("blood-center")
 public class BloodCenterController {
     private final IBloodCenterService _bloodCenterService;
-
+    private final IAccountService _accountService;
 
     private final ModelMapper _mapper;
 
     @Autowired
-    public BloodCenterController(IBloodCenterService bloodCenterService, ModelMapper mapper) {
+    public BloodCenterController(IBloodCenterService bloodCenterService, IAccountService accountService, ModelMapper mapper) {
         _bloodCenterService = bloodCenterService;
+        _accountService = accountService;
         _mapper = mapper;
     }
 
     @GetMapping
     public ResponseEntity<List<BloodCenter>> findAll() {
         var res = (List<BloodCenter>) _bloodCenterService.findAll();
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+    @GetMapping("/get-staff")
+    @PreAuthorize("hasRole('STAFF')")
+    public ResponseEntity<List<StaffPremadeDto>> findAllStaff(Principal account) {
+        Account a = _accountService.findAccountByEmail(account.getName());
+        var res = (List<StaffPremadeDto>) _bloodCenterService.findAllStaff(a.getPersonId());
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 

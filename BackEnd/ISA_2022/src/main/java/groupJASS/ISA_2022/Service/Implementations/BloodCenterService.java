@@ -1,12 +1,15 @@
 package groupJASS.ISA_2022.Service.Implementations;
 
+import groupJASS.ISA_2022.DTO.Staff.StaffPremadeDto;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
 import groupJASS.ISA_2022.Exceptions.SortNotFoundException;
 import groupJASS.ISA_2022.Model.*;
 import groupJASS.ISA_2022.Repository.AddressRepository;
 import groupJASS.ISA_2022.Repository.BloodCenterRepository;
 import groupJASS.ISA_2022.Repository.BloodQuantityRepository;
+import groupJASS.ISA_2022.Repository.StaffRepository;
 import groupJASS.ISA_2022.Service.Interfaces.IBloodCenterService;
+import groupJASS.ISA_2022.Utilities.ObjectMapperUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -18,8 +21,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
 
 import java.time.LocalDateTime;
-import java.time.Month;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 @Service
 @Primary
@@ -29,12 +34,15 @@ public class BloodCenterService implements IBloodCenterService {
     private final AddressRepository _addressRepository;
     private final BloodQuantityRepository _bloodQuantityRepository;
 
+    private final StaffRepository _staffRepository;
+
     @Autowired
-    public BloodCenterService(BloodCenterRepository bloodCenterRepository, AddressRepository addressRepository, BloodQuantityRepository bloodQuantityRepository)
+    public BloodCenterService(BloodCenterRepository bloodCenterRepository, AddressRepository addressRepository, BloodQuantityRepository bloodQuantityRepository, StaffRepository staffRepository)
     {
         _bloodCenterRepository = bloodCenterRepository;
         _addressRepository = addressRepository;
         _bloodQuantityRepository = bloodQuantityRepository;
+        _staffRepository = staffRepository;
     }
     @Override
     public Iterable<BloodCenter> findAll() {
@@ -122,5 +130,13 @@ public class BloodCenterService implements IBloodCenterService {
                 date.getDayOfMonth(), wa.getEndHours(), wa.getEndMinutes(), 0);
 
         return new DateRange(start, end);
+    }
+
+    @Override
+    public List<StaffPremadeDto> findAllStaff(UUID staffId) {
+        BloodCenter bloodCenter = null;
+        if(_staffRepository.findById(staffId).isPresent())
+            bloodCenter = _staffRepository.findById(staffId).get().getBloodCenter();
+        return ObjectMapperUtils.mapAll(_staffRepository.findAllByBloodCenter(bloodCenter), StaffPremadeDto.class);
     }
 }
