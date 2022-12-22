@@ -9,6 +9,11 @@ import { StaffProfileModule } from 'src/app/features/staff-profile/staff-profile
 import { MaterialModule } from 'src/app/material/material.module';
 import { BloodDonorAppointmentListModule } from 'src/app/features/blood-donor-appointment-list/blood-donor-appointment-list.module';
 import { BloodCenterCalendarModule } from 'src/app/features/blood-center-calendar/blood-center-calendar.module';
+import { CreatePremadeAppointmentModule } from 'src/app/features/create-premade-appointment/create-premade-appointment.module';
+
+import { CalendarDayModule } from 'angular-calendar';
+import { CalendarWeekModule } from 'angular-calendar';
+import { CalendarMonthModule } from 'angular-calendar';
 
 @NgModule({
   declarations: [StaffPageComponent],
@@ -21,7 +26,8 @@ import { BloodCenterCalendarModule } from 'src/app/features/blood-center-calenda
     CreateMedicalReportModule,
     StaffProfileModule,
     MaterialModule,
-    BloodCenterCalendarModule
+   BloodCenterCalendarModule,
+    CreatePremadeAppointmentModule
   ],
 })
-export class StaffPageModule {}
+export class StaffPageModule { }

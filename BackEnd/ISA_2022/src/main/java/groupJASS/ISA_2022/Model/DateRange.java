@@ -16,16 +16,27 @@ import java.util.List;
 @Setter
 @Embeddable
 public class DateRange {
-    public DateRange(LocalDateTime startTime, LocalDateTime endTime) {
-        this.startTime = startTime;
-        this.endTime = endTime;
-    }
 
     @Column(nullable = false)
     private LocalDateTime startTime;
     //Defined in minutes
     @Column(nullable = false)
     private LocalDateTime endTime;
+
+    public DateRange(LocalDateTime startTime, LocalDateTime endTime) {
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+
+    public DateRange(LocalDateTime startTime, int duration) {
+        this.startTime = startTime;
+        this.endTime = startTime.plusMinutes(duration);
+    }
+
+    public boolean isSubrangeOf(DateRange bigR) {
+        return (bigR.startTime.isEqual(this.startTime) || bigR.startTime.isBefore(this.startTime)) &&
+                (bigR.endTime.isEqual(this.endTime) || bigR.endTime.isAfter(this.endTime));
+    }
 
     public static List<DateRange> subtractFromBigRange(DateRange bigRange, List<DateRange> smallRanges) {
         List<DateRange> ranges = new ArrayList<>();

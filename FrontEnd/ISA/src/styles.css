@@ -1,3 +1,6 @@
+/* For calendar */
+@import "../node_modules/angular-calendar/css/angular-calendar.css";
+
 body {
   background: #b22519;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
