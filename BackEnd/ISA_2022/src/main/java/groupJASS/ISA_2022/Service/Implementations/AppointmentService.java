@@ -25,12 +25,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
 
 import java.time.LocalDateTime;
-import java.util.*;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -119,12 +115,20 @@ public class AppointmentService implements IAppointmentService {
             throw new BadRequestException("Nema staff ids");
         }
 
-        UUID bcId = _staffService.findById(staffIds.get(0)).getBloodCenter().getId();
-        for (UUID staffId : staffIds) {
-            Staff staff = _staffService.findById(staffId);
-            if (!staff.getBloodCenter().getId().equals(bcId)) {
-                throw new BadRequestException("Diffrent staff bloodCenter ids");
+        try {
+            Staff firstStaff = _staffService.findById(staffIds.get(0));
+            UUID bcId = firstStaff.getBloodCenter().getId();
+
+
+            for (UUID staffId : staffIds) {
+                Staff staff = _staffService.findById(staffId);
+                if (!staff.getBloodCenter().getId().equals(bcId)) {
+                    throw new BadRequestException("Diffrent staff bloodCenter ids");
+                }
             }
+        }
+        catch (Exception e) {
+            throw new BadRequestException("Nema staff sa tim id");
         }
 
         //TODO proveri dateragne vece od 0
