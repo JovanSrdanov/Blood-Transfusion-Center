@@ -1,5 +1,6 @@
 package groupJASS.ISA_2022.Controller;
 
+import groupJASS.ISA_2022.DTO.Appointment.*;
 import groupJASS.ISA_2022.DTO.Appointment.AvailablePredefinedDto;
 import groupJASS.ISA_2022.DTO.Appointment.AvailableSlotsDto;
 import groupJASS.ISA_2022.DTO.Appointment.PredefineAppointmentDto;
@@ -21,6 +22,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -57,8 +59,9 @@ public class AppointmentController {
         Account a = _accountService.findAccountByEmail(account.getName());
         Appointment res = null;
         try {
-            res = _appointmentService.predefine(dto.getDateRange(), dto.getStaffIds(), a.getPersonId());
-        } catch (BadRequestException e) {
+            res = _appointmentService.predefine(dto.getDateRange(), dto.getStaffIds(), a.getPersonId(), true);
+        }
+        catch (BadRequestException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(res, HttpStatus.OK);
@@ -80,6 +83,30 @@ public class AppointmentController {
                                                                             Principal account) {
         Account a = _accountService.findAccountByEmail(account.getName());
         var res = (AppointmentSchedulingHistory) _appointmentService.scheduleAppointment(a.getPersonId(), appid);
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+    @PostMapping("/custom-available")
+    @PreAuthorize("hasRole('BLOOD_DONOR')")
+    public ResponseEntity<?> findCustomAvailableAppointments(@RequestBody LocalDateTime time, Principal account) {
+        Account a = _accountService.findAccountByEmail(account.getName());
+        var res = (List<AvailableCustomAppointmentsDto>)_appointmentService.findCustomAvailableAppointments(a.getPersonId(), time);
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+    @PostMapping("/schedule-custom")
+    @PreAuthorize("hasRole('BLOOD_DONOR')")
+    public ResponseEntity<?> scheduleAppointment(@RequestBody ScheduleCustomAppointmentDto dto, Principal account) {
+        Account a = _accountService.findAccountByEmail(account.getName());
+        AppointmentSchedulingHistory res = null;
+        try {
+            res = _appointmentService.scheduleCustomAppointmetn(
+                    a.getPersonId(),
+                    dto.getTime(),
+                    dto.getStaffId());
+        } catch (BadRequestException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
