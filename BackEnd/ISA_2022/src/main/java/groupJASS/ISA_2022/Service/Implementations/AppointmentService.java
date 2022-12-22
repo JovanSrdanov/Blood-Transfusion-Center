@@ -5,6 +5,7 @@ import groupJASS.ISA_2022.Exceptions.BadRequestException;
 import groupJASS.ISA_2022.Exceptions.SortNotFoundException;
 import groupJASS.ISA_2022.Model.*;
 import groupJASS.ISA_2022.Repository.AppointmentRepository;
+import groupJASS.ISA_2022.Service.Interfaces.IAccountService;
 import groupJASS.ISA_2022.Service.Interfaces.IAppointmentService;
 import groupJASS.ISA_2022.Service.Interfaces.IBloodCenterService;
 import groupJASS.ISA_2022.Service.Interfaces.IBloodDonorService;
@@ -13,11 +14,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -33,19 +38,24 @@ public class AppointmentService implements IAppointmentService {
     private final IBloodDonorService _bloodDonorService;
     private final AppointmentSchedulingHistoryService _appointmentSchedulingHistoryService;
     private final IBloodCenterService _bloodBloodCenterService;
+    private final IAccountService _accountService;
     private final StaffService _staffService;
+    @Autowired
+    private JavaMailSender javaMailSender;
 
     @Autowired
     public AppointmentService(AppointmentRepository appointmentRepository,
                               IBloodDonorService bloodDonorService,
                               AppointmentSchedulingHistoryService appointmentSchedulingHistoryService,
                               StaffService staffService,
-                              IBloodCenterService bloodBloodCenterService) {
+                              IBloodCenterService bloodBloodCenterService,
+                              IAccountService accountService) {
         this._appointmentRepository = appointmentRepository;
         this._bloodDonorService = bloodDonorService;
         this._appointmentSchedulingHistoryService = appointmentSchedulingHistoryService;
         this._staffService = staffService;
         this._bloodBloodCenterService = bloodBloodCenterService;
+        this._accountService = accountService;
 
     }
 
@@ -199,6 +209,7 @@ public class AppointmentService implements IAppointmentService {
     }
 
     @Override
+    @Async
     public AppointmentSchedulingHistory scheduleAppointment(UUID donorId, UUID appointmentId) {
         if (_appointmentRepository.findById(appointmentId).isEmpty()) {
             throw new NotFoundException("Donor or appointment doesent exist");
@@ -221,7 +232,7 @@ public class AppointmentService implements IAppointmentService {
         try {
             BloodDonor donor = _bloodDonorService.findById(donorId);
 
-            return _appointmentSchedulingHistoryService.save(new AppointmentSchedulingHistory(
+            var ash = _appointmentSchedulingHistoryService.save(new AppointmentSchedulingHistory(
                     null,
                     "QR",
                     LocalDateTime.now(),
@@ -229,10 +240,33 @@ public class AppointmentService implements IAppointmentService {
                     appointment,
                     donor,
                     null));
+            String email = _accountService.findAccountByPersonId(donorId).getEmail();
+            sendScheduleConfirmation(appointment, email);
+            return ash;
         } catch (BadRequestException e) {
             throw new RuntimeException(e);
         }
 
+    }
+
+    @Async
+    public void sendScheduleConfirmation(Appointment appointment, String email) {
+
+        System.out.println("Email se salje sa informacijama o pregledu!");
+        SimpleMailMessage mail = new SimpleMailMessage();
+        mail.setTo(email);
+        mail.setFrom("ISA_BEJBI");
+        mail.setSubject("New appointment! ");
+
+        String confirmationInfo = "Hello!\n" +
+                "A new appointment has been scheduled!\n" +
+                "BloodCenter: " + appointment.getBloodCenter().getName() + "\n" +
+                "Date and time: " + appointment.getTime().getStartTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + "\n" +
+                "Duration: " + appointment.getTime().calcaulateDurationMinutes() + "min\n";
+
+        mail.setText(confirmationInfo);
+        javaMailSender.send(mail);
+        System.out.println("Email poslat!");
     }
 
 }
