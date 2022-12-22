@@ -36,6 +36,7 @@ export class CreateMedicalReportComponent implements OnInit {
 
   appointmentHistoryId: string = '-1';
   private sub: any;
+  createBtnDisabled: boolean = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -88,6 +89,19 @@ export class CreateMedicalReportComponent implements OnInit {
       '|';
 
     console.log(this.reportFinalText);
+  }
+
+  canCreateReport(event: any) {
+    if (
+      this.selectedEquipment.equipmentId ==
+      'DB69491D-C096-4420-8AF5-FC28BCA1BA23'
+    ) {
+      console.log('nije selektovano jos');
+      this.createBtnDisabled = true;
+    } else {
+      console.log('sad jeste');
+      this.createBtnDisabled = false;
+    }
   }
 
   createReport() {

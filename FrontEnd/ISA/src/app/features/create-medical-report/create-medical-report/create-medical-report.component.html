@@ -180,7 +180,10 @@
       <th>Equipment/Equipment quantity</th>
       <td colspan="2">
         <mat-label>Select equipment</mat-label>
-        <mat-select [(ngModel)]="selectedEquipment.equipmentId">
+        <mat-select
+          [(ngModel)]="selectedEquipment.equipmentId"
+          (selectionChange)="canCreateReport($event)"
+        >
           <mat-option
             *ngFor="let equipment of equipmentList"
             [value]="equipment.equipmentId"
@@ -204,6 +207,7 @@
   <button
     mat-raised-button
     (click)="createReport()"
+    [disabled]="createBtnDisabled"
     color="primary"
     class="btn"
   >
