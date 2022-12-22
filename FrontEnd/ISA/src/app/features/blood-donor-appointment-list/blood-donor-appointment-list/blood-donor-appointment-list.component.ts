@@ -17,7 +17,7 @@ export class BloodDonorAppointmentListComponent implements OnInit {
   displayedColumns: string[] = [
     'issuing_date',
     'start_time',
-    'duration',
+    'end_time',
     'button',
   ];
 
@@ -40,28 +40,29 @@ export class BloodDonorAppointmentListComponent implements OnInit {
     this.dataSource.push({
       id: '17547189-774D-4F75-8290-4D16BD39AFCD',
       issuingDate: '21/12/2022',
-      time: '10:30',
-      duration: 30,
+      startTime: '10:30',
+      endTime: '11:30',
     });
     this.dataSource.push({
       id: '6D4AE778-0749-4309-B7BD-1850FFA7292E',
       issuingDate: '22/12/2022',
-      time: '11:30',
-      duration: 30,
+      startTime: '11:30',
+      endTime: '12:30',
     });
     this.dataSource.push({
       id: '151743A8-B556-4B71-8B5B-382FB69ED05A',
       issuingDate: '23/12/2022',
-      time: '12:30',
-      duration: 30,
+      startTime: '12:30',
+      endTime: '13:30',
     });
     console.log(this.dataSource);
 
-    // this.appointmentsService
-    //   .bloodDonorAppointmentsForCenter(this.donorId)
-    //   .subscribe((res) => {
-    //     this.dataSource = res;
-    //   });
+    this.appointmentsService
+      .bloodDonorAppointmentsForCenter(this.donorId)
+      .subscribe((res) => {
+        this.dataSource = res;
+        console.log(this.dataSource);
+      });
 
     this.table?.renderRows();
   };

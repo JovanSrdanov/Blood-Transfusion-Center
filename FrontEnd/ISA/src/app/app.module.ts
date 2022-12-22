@@ -14,6 +14,8 @@ import { LoginPageModule } from './pages/login-page/login-page.module';
 import { RegisterBloodDonorModule } from './pages/registration-page/register-blood-donor.module';
 
 
+
+
 @NgModule({
   declarations: [AppComponent],
   imports: [

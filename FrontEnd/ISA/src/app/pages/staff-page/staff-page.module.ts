@@ -11,6 +11,9 @@ import { BloodDonorAppointmentListModule } from 'src/app/features/blood-donor-ap
 import { BloodCenterCalendarModule } from 'src/app/features/blood-center-calendar/blood-center-calendar.module';
 import { CreatePremadeAppointmentModule } from 'src/app/features/create-premade-appointment/create-premade-appointment.module';
 
+import { CalendarDayModule } from 'angular-calendar';
+import { CalendarWeekModule } from 'angular-calendar';
+import { CalendarMonthModule } from 'angular-calendar';
 
 @NgModule({
   declarations: [StaffPageComponent],
@@ -23,7 +26,7 @@ import { CreatePremadeAppointmentModule } from 'src/app/features/create-premade-
     CreateMedicalReportModule,
     StaffProfileModule,
     MaterialModule,
-    BloodCenterCalendarModule,
+   BloodCenterCalendarModule,
     CreatePremadeAppointmentModule
   ],
 })

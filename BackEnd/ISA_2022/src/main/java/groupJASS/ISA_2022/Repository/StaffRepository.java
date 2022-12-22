@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface StaffRepository extends JpaRepository<Staff, UUID> {
@@ -13,4 +14,5 @@ public interface StaffRepository extends JpaRepository<Staff, UUID> {
     Iterable<Staff> getUnemployedStaff();
 
     List<Staff> findAllByBloodCenter(BloodCenter bloodCenter);
+    Optional<Staff> findById(UUID id);
 }

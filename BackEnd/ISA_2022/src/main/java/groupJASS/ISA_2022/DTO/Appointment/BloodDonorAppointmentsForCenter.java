@@ -20,8 +20,9 @@ public class BloodDonorAppointmentsForCenter {
     private LocalDateTime endTime;
 
     public BloodDonorAppointmentsForCenter(AppointmentSchedulingHistory history) {
+        this.id = history.getId();
         this.issuingDate = history.getIssuingDate();
         this.startTime = history.getAppointment().getTime().getStartTime();
-        this.startTime = history.getAppointment().getTime().getEndTime();
+        this.endTime = history.getAppointment().getTime().getEndTime();
     }
 }

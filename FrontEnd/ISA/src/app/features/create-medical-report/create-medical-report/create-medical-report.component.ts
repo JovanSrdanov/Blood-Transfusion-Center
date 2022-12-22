@@ -3,7 +3,7 @@ import { EquipmentUpdate } from './../../../model/equipment/equipment-update';
 import { equipmentInfo } from './../../../model/equipment/equipment-info';
 import { Component, OnInit } from '@angular/core';
 import { EquipmentService } from 'src/app/http-services/Equipment/equipment-service.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CreateAppointmentReport } from 'src/app/model/AppointmentReport/create-appointment';
 
 @Component({
@@ -36,9 +36,11 @@ export class CreateMedicalReportComponent implements OnInit {
 
   appointmentHistoryId: string = '-1';
   private sub: any;
+  createBtnDisabled: boolean = true;
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private equipmentService: EquipmentService,
     private appointmentReportService: AppointmentReportService
   ) {}
@@ -89,6 +91,19 @@ export class CreateMedicalReportComponent implements OnInit {
     console.log(this.reportFinalText);
   }
 
+  canCreateReport(event: any) {
+    if (
+      this.selectedEquipment.equipmentId ==
+      'DB69491D-C096-4420-8AF5-FC28BCA1BA23'
+    ) {
+      console.log('nije selektovano jos');
+      this.createBtnDisabled = true;
+    } else {
+      console.log('sad jeste');
+      this.createBtnDisabled = false;
+    }
+  }
+
   createReport() {
     this.prepareText();
 
@@ -113,6 +128,7 @@ export class CreateMedicalReportComponent implements OnInit {
       .createAppointment(newReport)
       .subscribe((res) => {
         console.log(res);
+        this.router.navigate(['']);
       });
   }
 }

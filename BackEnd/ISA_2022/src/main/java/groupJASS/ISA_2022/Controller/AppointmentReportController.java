@@ -1,9 +1,7 @@
 package groupJASS.ISA_2022.Controller;
 
 import groupJASS.ISA_2022.DTO.AppointmentReport.AppointmentReportCreate;
-import groupJASS.ISA_2022.Model.AppointmentReport;
-import groupJASS.ISA_2022.Model.AppointmentReportEquipmentQuantity;
-import groupJASS.ISA_2022.Model.AppointmentSchedulingHistory;
+import groupJASS.ISA_2022.Model.*;
 import groupJASS.ISA_2022.Service.Interfaces.IAppointmentReportService;
 import groupJASS.ISA_2022.Service.Interfaces.IAppointmentSchedulingHistoryService;
 import groupJASS.ISA_2022.Service.Interfaces.IEquipmentService;
@@ -67,6 +65,7 @@ public class AppointmentReportController {
             //TODO AppointmentReportEquipmentQuantity uvezati
             AppointmentSchedulingHistory history =
                     _appointmentSchedulingHistoryService.findById(report.getAppointmentHistoryId());
+            history.setStatus(AppointmentSchedulingConfirmationStatus.PROCESSED);
             AppointmentReport newReport = new AppointmentReport();
             newReport.setText(report.getText());
             newReport.setAppointmentSchedulingHistory(history);
