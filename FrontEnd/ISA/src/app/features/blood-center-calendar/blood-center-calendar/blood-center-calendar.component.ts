@@ -1,27 +1,8 @@
-import {
-  Component,
-  ChangeDetectionStrategy,
-  ViewChild,
-  TemplateRef,
-} from '@angular/core';
-import {
-  startOfDay,
-  endOfDay,
-  subDays,
-  addDays,
-  endOfMonth,
-  isSameDay,
-  isSameMonth,
-  addHours,
-} from 'date-fns';
+import { Component, ChangeDetectionStrategy, ViewChild, TemplateRef, OnInit,} from '@angular/core';
+import {startOfDay,endOfDay,subDays,addDays,endOfMonth,isSameDay,isSameMonth,addHours,addMinutes} from 'date-fns';
 import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {
-  CalendarEvent,
-  CalendarEventAction,
-  CalendarEventTimesChangedEvent,
-  CalendarView,
-} from 'angular-calendar';
+import {CalendarEvent,CalendarEventAction,CalendarEventTimesChangedEvent,CalendarView} from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
 
 const colors: Record<string, EventColor> = {
@@ -32,90 +13,72 @@ const colors: Record<string, EventColor> = {
 };
 
 
-
 @Component({
   selector: 'app-blood-center-calendar',
   templateUrl: './blood-center-calendar.component.html',
   styleUrls: ['./blood-center-calendar.component.css'],
 })
-export class BloodCenterCalendarComponent{
+export class BloodCenterCalendarComponent implements OnInit{
 @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any> | null =  null;
 
   view: CalendarView = CalendarView.Month;
-
   CalendarView = CalendarView;
-
   viewDate: Date = new Date();
+  activeDayIsOpen: boolean = true;
+  refresh = new Subject<void>();
 
   modalData: {
     action: string;
     event: CalendarEvent;
   } | null = null;
 
-  actions: CalendarEventAction[] = [
-    {
-      label: '<i class="fas fa-fw fa-pencil-alt"></i>',
-      a11yLabel: 'Edit',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.handleEvent('Edited', event);
-      },
-    },
-    {
-      label: '<i class="fas fa-fw fa-trash-alt"></i>',
-      a11yLabel: 'Delete',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.events = this.events.filter((iEvent) => iEvent !== event);
-        this.handleEvent('Deleted', event);
-      },
-    },
-  ];
 
-  refresh = new Subject<void>();
+  weekStartsOn: number = 1; //Monday
+  events: CalendarEvent[] = [];
+  dayStartHour : number = 0;
+  dayEndHour : number = 0;
 
-  events: CalendarEvent[] = [
-    {
-      start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
-      title: 'A 3 day event',
-      color: { ...colors['blue'] },
-      actions: this.actions,
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-    {
-      start: startOfDay(new Date()),
-      title: 'An event with no end date',
-      color: { ...colors['blue'] },
-      actions: this.actions,
-    },
-    {
-      start: subDays(endOfMonth(new Date()), 3),
-      end: addDays(endOfMonth(new Date()), 3),
-      title: 'A long event that spans 2 months',
-      color: { ...colors['blue'] },
-      allDay: true,
-    },
-    {
-      start: addHours(startOfDay(new Date()), 2),
-      end: addHours(new Date(), 2),
-      title: 'A draggable and resizable event',
-      color: { ...colors['blue'] },
-      actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-  ];
 
-  activeDayIsOpen: boolean = true;
+  startDate :Date = new Date();
+  endDate :Date = addMinutes(this.startDate,40);
+  duration : number = 40;
+  name :string = "Nadja";
+  surname :string = "Vlahovic";
+
+  startDate2 :Date = addHours(this.startDate,3)
+  endDate2 :Date = addMinutes(this.startDate2,40);
+
 
   constructor(private modal: NgbModal) {}
+  ngOnInit(): void {
+    this.dayStartHour = 0;
+    this.dayEndHour = 12;
+    this.events = [
+      {
+        start: this.startDate,
+        end: this.endDate,
+        title: this.parseDate(this.startDate) + "  Duration:" + this.duration + "min,   " + this.name + " " + this.surname,
+        color: { ...colors['blue'] },
+      },
+      {
+        start: this.startDate2,
+        end: this.endDate2,
+        title: this.parseDate(this.startDate2) + " Duration:" + this.duration + ", " + this.name + " " + this.surname,
+        color: { ...colors['blue'] },
+      }
+
+    ]
+  
+  }
+
+
+  parseDate = (date:Date) : string => {
+     const hours : string = date.getHours() < 10 ? '0' + date.getHours() : '' + date.getHours();
+     const minutes : string = date.getMinutes() < 10 ? '0' + date.getMinutes() : '' + date.getMinutes();
+     return hours + ":" + minutes;
+  }
+
+
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
@@ -131,48 +94,10 @@ export class BloodCenterCalendarComponent{
     }
   }
 
-  eventTimesChanged({
-    event,
-    newStart,
-    newEnd,
-  }: CalendarEventTimesChangedEvent): void {
-    this.events = this.events.map((iEvent) => {
-      if (iEvent === event) {
-        return {
-          ...event,
-          start: newStart,
-          end: newEnd,
-        };
-      }
-      return iEvent;
-    });
-    this.handleEvent('Dropped or resized', event);
-  }
 
   handleEvent(action: string, event: CalendarEvent): void {
     this.modalData = { event, action };
     this.modal.open(this.modalContent, { size: 'lg' });
-  }
-
-  addEvent(): void {
-    this.events = [
-      ...this.events,
-      {
-        title: 'New event',
-        start: startOfDay(new Date()),
-        end: endOfDay(new Date()),
-        color: colors['red'],
-        draggable: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true,
-        },
-      },
-    ];
-  }
-
-  deleteEvent(eventToDelete: CalendarEvent) {
-    this.events = this.events.filter((event) => event !== eventToDelete);
   }
 
   setView(view: CalendarView) {

@@ -26,7 +26,7 @@ import { CalendarMonthModule } from 'angular-calendar';
     CreateMedicalReportModule,
     StaffProfileModule,
     MaterialModule,
-    BloodCenterCalendarModule,
+   BloodCenterCalendarModule,
     CreatePremadeAppointmentModule
   ],
 })
