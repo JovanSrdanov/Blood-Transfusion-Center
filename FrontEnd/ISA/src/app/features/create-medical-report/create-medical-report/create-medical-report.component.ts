@@ -3,7 +3,7 @@ import { EquipmentUpdate } from './../../../model/equipment/equipment-update';
 import { equipmentInfo } from './../../../model/equipment/equipment-info';
 import { Component, OnInit } from '@angular/core';
 import { EquipmentService } from 'src/app/http-services/Equipment/equipment-service.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CreateAppointmentReport } from 'src/app/model/AppointmentReport/create-appointment';
 
 @Component({
@@ -39,6 +39,7 @@ export class CreateMedicalReportComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private equipmentService: EquipmentService,
     private appointmentReportService: AppointmentReportService
   ) {}
@@ -113,6 +114,7 @@ export class CreateMedicalReportComponent implements OnInit {
       .createAppointment(newReport)
       .subscribe((res) => {
         console.log(res);
+        this.router.navigate(['']);
       });
   }
 }
