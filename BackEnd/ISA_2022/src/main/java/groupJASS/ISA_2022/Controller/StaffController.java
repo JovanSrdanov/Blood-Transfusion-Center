@@ -18,10 +18,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.webjars.NotFoundException;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
 
@@ -59,23 +61,16 @@ public class StaffController {
         }
     }
 
+    @PreAuthorize("hasRole('ROLE_STAFF')")
     @GetMapping(path = "/logged-in")
-    public ResponseEntity<?> getLoggedInStaff() {
-        var res = _staffService.getAllStaff();
-        var allStaff = (List<Staff>)_staffService.findAll();
-        if (res.isEmpty() || allStaff.isEmpty()) {
-            return null;
-        } else {
-            var staffDto = res.get(0);
-            var staff = allStaff.get(0);
-            var center = staff.getBloodCenter();
-
-            if (center != null) {
-                var centerDto = _mapper.map(center, BloodCenterProfileDto.class);
-                staffDto.setBloodCenter(centerDto);
-            }
-
-            return new ResponseEntity<>(staffDto, HttpStatus.OK);
+    public ResponseEntity getLoggedInStaff(Principal principal) {
+        try{
+            Staff staff = _staffService.findByEmail(principal);
+            StaffProfileDTO dto = _mapper.map(staff, StaffProfileDTO.class);
+            return new ResponseEntity<>(dto, HttpStatus.OK);
+        } catch (NotFoundException e)
+        {
+            return  new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 
@@ -155,6 +150,7 @@ public class StaffController {
         }
     }
 
+    @PreAuthorize("hasRole('ROLE_SYSTEM_ADMIN')")
     @GetMapping(path = "unemployed")
     public ResponseEntity<Iterable<StaffBasicInfoDTO>> getUnemployedStaff() {
         var dtos = (List<StaffBasicInfoDTO>) _staffService.getUnemployedStaff();

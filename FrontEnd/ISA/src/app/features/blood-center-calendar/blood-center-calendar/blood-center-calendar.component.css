@@ -1,0 +1,16 @@
+.wrapper{
+    width: 80%;
+    margin: 100px  auto ;
+}
+
+#date-title
+{
+    font-size: 20px;
+    color: white;
+}
+
+#today
+{
+    color: white;
+    font-weight: 600;
+}

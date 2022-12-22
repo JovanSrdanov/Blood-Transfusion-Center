@@ -1,12 +1,16 @@
 package groupJASS.ISA_2022.Service.Implementations;
 
+import groupJASS.ISA_2022.DTO.BloodCenter.BloodCenterIncomingAppointmentsDbDto;
+import groupJASS.ISA_2022.DTO.BloodCenter.BloodCenterIncomingAppointmentsDto;
+import groupJASS.ISA_2022.DTO.BloodCenter.WorkingHoursRoundedDto;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
+import groupJASS.ISA_2022.Exceptions.BloodCenterNotAssignedException;
 import groupJASS.ISA_2022.Exceptions.SortNotFoundException;
 import groupJASS.ISA_2022.Model.*;
-import groupJASS.ISA_2022.Repository.AddressRepository;
-import groupJASS.ISA_2022.Repository.BloodCenterRepository;
-import groupJASS.ISA_2022.Repository.BloodQuantityRepository;
+import groupJASS.ISA_2022.Repository.*;
 import groupJASS.ISA_2022.Service.Interfaces.IBloodCenterService;
+import groupJASS.ISA_2022.Utilities.MappingUtilities;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -17,8 +21,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
 
+import java.security.Principal;
+import java.sql.Timestamp;
+import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.*;
 
 @Service
@@ -28,13 +34,21 @@ public class BloodCenterService implements IBloodCenterService {
     private final BloodCenterRepository _bloodCenterRepository;
     private final AddressRepository _addressRepository;
     private final BloodQuantityRepository _bloodQuantityRepository;
+    private final AccountRepository _accountRepository;
+    private final StaffRepository _staffRepository;
+    private  final ModelMapper _mapper;
 
     @Autowired
-    public BloodCenterService(BloodCenterRepository bloodCenterRepository, AddressRepository addressRepository, BloodQuantityRepository bloodQuantityRepository)
+    public BloodCenterService(BloodCenterRepository bloodCenterRepository, AddressRepository addressRepository,
+                              BloodQuantityRepository bloodQuantityRepository, AccountRepository accountRepository,
+                              StaffRepository staffRepository, ModelMapper modelMapper)
     {
         _bloodCenterRepository = bloodCenterRepository;
         _addressRepository = addressRepository;
         _bloodQuantityRepository = bloodQuantityRepository;
+        _accountRepository = accountRepository;
+        _staffRepository = staffRepository;
+        _mapper = modelMapper;
     }
     @Override
     public Iterable<BloodCenter> findAll() {
@@ -47,6 +61,23 @@ public class BloodCenterService implements IBloodCenterService {
             return _bloodCenterRepository.findById(id).get();
         }
         throw new NotFoundException("Blood center not found");
+    }
+
+    @Override
+    public WorkingHoursRoundedDto getRoundedWorkingHours(Principal principal) throws BloodCenterNotAssignedException {
+        Account account = _accountRepository.findByEmail(principal.getName());
+        Staff staff = _staffRepository.findById(account.getPersonId()).get();
+
+        if(staff.getBloodCenter() == null)
+        {
+            throw new BloodCenterNotAssignedException("There is no blood center assigned for given staff");
+        }
+
+        WorkingHours workingHours = staff.getBloodCenter().getWorkingHours();
+        int workingHoursStart = workingHours.getStartHours();
+        int workingHoursEnd = workingHours.getEndMinutes() > 0 ? workingHours.getEndHours() + 1 : workingHours.getEndHours();
+
+        return  new WorkingHoursRoundedDto(workingHoursStart, workingHoursEnd);
     }
 
     private Set<BloodQuantity> initiateBloodQuantities()
@@ -122,5 +153,48 @@ public class BloodCenterService implements IBloodCenterService {
                 date.getDayOfMonth(), wa.getEndHours(), wa.getEndMinutes(), 0);
 
         return new DateRange(start, end);
+    }
+
+    @Override
+    public List<BloodCenterIncomingAppointmentsDto> getIncomingAppointments(Principal principal) throws BloodCenterNotAssignedException {
+        Account account = _accountRepository.findByEmail(principal.getName());
+        Staff staff = _staffRepository.findById(account.getPersonId()).get();
+
+        if(staff.getBloodCenter() == null)
+        {
+            throw new BloodCenterNotAssignedException("There is no blood center assigned for given staff");
+        }
+        //TODO REFACTOR
+        var result =  _bloodCenterRepository.getIncomingAppointmentsForBloodCenter(staff.getBloodCenter().getId());
+        List<BloodCenterIncomingAppointmentsDto> dtos = new ArrayList<BloodCenterIncomingAppointmentsDto>();
+
+        for(Object[] obj : result){
+            Timestamp start  =(Timestamp) obj[0];
+            Timestamp end  =(Timestamp) obj[1];
+            String name  =(String) obj[2];
+            String surname  =(String) obj[3];
+
+            LocalDateTime startHours = start.toLocalDateTime();
+            LocalDateTime endHours = end.toLocalDateTime();
+
+            Duration duration = Duration.between(startHours,endHours);
+            int durationMinutes = duration.toMinutesPart();
+
+            int sHours = startHours.getHour();
+            int sMinutes = startHours.getMinute();
+
+            String strHours = sHours < 10 ? "0" + Integer.toString(sHours) : Integer.toString(sHours);
+            String strMinutes = sMinutes < 10 ? "0" + Integer.toString(sMinutes) : Integer.toString(sMinutes);
+            String strTime = strHours+ ":" + strMinutes;
+            String strDuration = Integer.toString(durationMinutes);
+
+            String info = strTime + ",  " + strDuration +"min,  " +  name + " " + surname;
+            BloodCenterIncomingAppointmentsDto dto = new BloodCenterIncomingAppointmentsDto(startHours, endHours, info);
+
+
+            dtos.add(dto);
+
+        }
+        return dtos;
     }
 }
