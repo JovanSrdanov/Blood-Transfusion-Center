@@ -169,7 +169,7 @@ VALUES ('26d3381b-319d-425c-abd7-256f24f0a2e0', 'Jovan2', '22140-486-9131', 'Srd
 
 
 INSERT INTO "staff" ("id", "name", "phone_number", "surname", "address_id", "blood_center_id")
-VALUES ('b2fe1aff-bb8f-4fd1-b88e-aa39af8fc65c', 'Doc1', '850-326-8246', '_',
+VALUES ('32763cf0-6a56-49f1-ad25-5a90561cd204', 'Doc1', '850-326-8246', '_',
         'dc0bbae7-4fa1-47ca-a092-dde2f9efe046', '417c9b36-251a-4483-bfbf-abd3df786d96'),
        ('883f13cc-25c8-4b60-b0e5-5ac938ad2594', 'Doc2', '844-991-4460', '_',
         'f896b9e4-b639-43cc-882f-9d735597ef08', '417c9b36-251a-4483-bfbf-abd3df786d96'),
@@ -420,10 +420,10 @@ VALUES ('dbf02dce-a9a1-4e20-aaf0-5fca92299407', '2022-12-21 05:00:00.000', '2022
         '417c9b36-251a-4483-bfbf-abd3df786d96', true);
 
 INSERT INTO appointment_staff (appointment_id, staff_id)
-VALUES ('dbf02dce-a9a1-4e20-aaf0-5fca92299407', 'b2fe1aff-bb8f-4fd1-b88e-aa39af8fc65c'),
-       ('9e16d8b0-a805-4ffb-a08b-d50e7fef6be0', 'b2fe1aff-bb8f-4fd1-b88e-aa39af8fc65c'),
-       ('f9854a8d-9dfb-49f5-abf4-d993fac9aac3', 'b2fe1aff-bb8f-4fd1-b88e-aa39af8fc65c'),
-       ('c41a832e-b94c-4c6a-b3fa-e743d5f954b4', 'b2fe1aff-bb8f-4fd1-b88e-aa39af8fc65c'),
+VALUES ('dbf02dce-a9a1-4e20-aaf0-5fca92299407', '32763cf0-6a56-49f1-ad25-5a90561cd204'),
+       ('9e16d8b0-a805-4ffb-a08b-d50e7fef6be0', '32763cf0-6a56-49f1-ad25-5a90561cd204'),
+       ('f9854a8d-9dfb-49f5-abf4-d993fac9aac3', '32763cf0-6a56-49f1-ad25-5a90561cd204'),
+       ('c41a832e-b94c-4c6a-b3fa-e743d5f954b4', '32763cf0-6a56-49f1-ad25-5a90561cd204'),
 
        ('da9734c6-d91c-47b3-9944-816f51957405', '883f13cc-25c8-4b60-b0e5-5ac938ad2594'),
        ('61156c70-936a-428f-91c5-04a9926dd8dc', '883f13cc-25c8-4b60-b0e5-5ac938ad2594'),
