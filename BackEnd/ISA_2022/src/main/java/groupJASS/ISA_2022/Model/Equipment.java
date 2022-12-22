@@ -28,4 +28,10 @@ public class Equipment {
 
     @OneToMany(mappedBy = "equipment", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<AppointmentReportEquipmentQuantity> usingAppointments;
+
+    public void update(Equipment updated) {
+        //TODO add more if needed
+        this.name = updated.name;
+        this.quantity = updated.quantity;
+    }
 }
