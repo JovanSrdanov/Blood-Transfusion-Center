@@ -2,8 +2,10 @@ package groupJASS.ISA_2022.Controller;
 
 import groupJASS.ISA_2022.DTO.BloodCenter.BloodCenterBasicInfoDto;
 import groupJASS.ISA_2022.DTO.BloodCenter.BloodCenterRegistrationDTO;
+import groupJASS.ISA_2022.DTO.BloodCenter.WorkingHoursRoundedDto;
 import groupJASS.ISA_2022.DTO.PageEntityDto;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
+import groupJASS.ISA_2022.Exceptions.BloodCenterNotAssignedException;
 import groupJASS.ISA_2022.Exceptions.SortNotFoundException;
 import groupJASS.ISA_2022.Model.BloodCenter;
 import groupJASS.ISA_2022.Service.Interfaces.IBloodCenterService;
@@ -15,10 +17,12 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.webjars.NotFoundException;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
 
@@ -59,6 +63,18 @@ public class BloodCenterController {
         }
     }
 
+    @PreAuthorize("hasRole('ROLE_STAFF')")
+    @GetMapping("working-hours-rounded")
+    public ResponseEntity getRoundedWorkingHours(Principal principal) {
+        try {
+            WorkingHoursRoundedDto workingHoursRoundedDto = _bloodCenterService.getRoundedWorkingHours(principal);
+           return new ResponseEntity<WorkingHoursRoundedDto>(workingHoursRoundedDto, HttpStatus.OK);
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }catch (BloodCenterNotAssignedException e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
     @PutMapping(path = "/{id}")
     public ResponseEntity<?> updateCenter(@PathVariable("id") UUID centerId, @Valid @RequestBody BloodCenterRegistrationDTO dto) {
         try {

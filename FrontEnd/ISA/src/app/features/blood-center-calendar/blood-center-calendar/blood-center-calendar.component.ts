@@ -4,6 +4,8 @@ import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {CalendarEvent,CalendarEventAction,CalendarEventTimesChangedEvent,CalendarView} from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
+import { BloodCenterService } from 'src/app/http-services/blood-center.service';
+import { BloodCenterRoundedWorkingHours } from 'src/app/model/blood-center/blood-center-rounded-working-hours';
 
 const colors: Record<string, EventColor> = {
   blue: {
@@ -34,49 +36,36 @@ export class BloodCenterCalendarComponent implements OnInit{
 
 
   weekStartsOn: number = 1; //Monday
+
   events: CalendarEvent[] = [];
   dayStartHour : number = 0;
   dayEndHour : number = 0;
 
+  // {
+  //   start: this.startDate,
+  //   end: this.endDate,
+  //   title: this.parseDate(this.startDate) + "  Duration:" + this.duration + "min,   " + this.name + " " + this.surname,
+  //   color: { ...colors['blue'] },
+  // }
 
-  startDate :Date = new Date();
-  endDate :Date = addMinutes(this.startDate,40);
-  duration : number = 40;
-  name :string = "Nadja";
-  surname :string = "Vlahovic";
-
-  startDate2 :Date = addHours(this.startDate,3)
-  endDate2 :Date = addMinutes(this.startDate2,40);
-
-
-  constructor(private modal: NgbModal) {}
+  constructor(private readonly modal: NgbModal, private readonly bloodCenterService : BloodCenterService) {}
   ngOnInit(): void {
-    this.dayStartHour = 0;
-    this.dayEndHour = 12;
-    this.events = [
-      {
-        start: this.startDate,
-        end: this.endDate,
-        title: this.parseDate(this.startDate) + "  Duration:" + this.duration + "min,   " + this.name + " " + this.surname,
-        color: { ...colors['blue'] },
-      },
-      {
-        start: this.startDate2,
-        end: this.endDate2,
-        title: this.parseDate(this.startDate2) + " Duration:" + this.duration + ", " + this.name + " " + this.surname,
-        color: { ...colors['blue'] },
-      }
+      this.bloodCenterService.getWorkingHoursRounded().subscribe({
+        next: (response: BloodCenterRoundedWorkingHours) =>{
+            this.dayStartHour = response.startHours;
+            this.dayEndHour = response.endHours;
 
-    ]
-  
+            //Getting all appointments
+        }
+      })
   }
 
 
-  parseDate = (date:Date) : string => {
-     const hours : string = date.getHours() < 10 ? '0' + date.getHours() : '' + date.getHours();
-     const minutes : string = date.getMinutes() < 10 ? '0' + date.getMinutes() : '' + date.getMinutes();
-     return hours + ":" + minutes;
-  }
+  // parseDate = (date:Date) : string => {
+  //    const hours : string = date.getHours() < 10 ? '0' + date.getHours() : '' + date.getHours();
+  //    const minutes : string = date.getMinutes() < 10 ? '0' + date.getMinutes() : '' + date.getMinutes();
+  //    return hours + ":" + minutes;
+  // }
 
 
 

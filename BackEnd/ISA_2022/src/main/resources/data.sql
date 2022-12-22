@@ -202,7 +202,7 @@ VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec2', 'staffnopass@gmail.com', 'true',
 INSERT INTO "account" ("id", "email", "is_activated", "password", "person_id")
 VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec3', 'staff@gmail.com', 'true',
         '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi',
-        '32763cf0-6a56-49f1-ad25-5a90561cd204');
+        'b2fe1aff-bb8f-4fd1-b88e-aa39af8fc65c');
 
 INSERT INTO "account" ("id", "email", "is_activated", "password")
 VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec4', 'sysadmin@gmail.com', 'true',
