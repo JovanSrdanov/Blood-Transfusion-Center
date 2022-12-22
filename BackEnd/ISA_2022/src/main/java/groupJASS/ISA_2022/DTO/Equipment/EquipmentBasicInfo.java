@@ -12,10 +12,8 @@ import java.util.UUID;
 @Getter
 @Setter
 public class EquipmentBasicInfo {
-    @NotEmpty
     private UUID equipmentId;
-    @NotEmpty String name;
-    @NotEmpty
+    private String name;
     private double quantity;
 
     public EquipmentBasicInfo(Equipment equipment) {

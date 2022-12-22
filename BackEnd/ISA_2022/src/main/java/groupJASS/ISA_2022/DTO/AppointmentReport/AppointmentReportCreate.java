@@ -1,4 +1,4 @@
-package groupJASS.ISA_2022.DTO.Equipment;
+package groupJASS.ISA_2022.DTO.AppointmentReport;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +10,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
-public class EquipmentUpdateDTO {
+public class AppointmentReportCreate {
+    private UUID appointmentHistoryId;
     private UUID equipmentId;
-    private double quantity;
+    private String text;
 }
