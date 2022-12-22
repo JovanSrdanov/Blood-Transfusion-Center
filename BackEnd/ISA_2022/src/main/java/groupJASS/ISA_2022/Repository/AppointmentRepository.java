@@ -33,8 +33,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, UUID> 
             "and a.id not in ( " +
             "select h.appointment_id from appointment_scheduling_history h " +
             "where h.status != 3 " +
-            "or (h.blood_donor_id = :donor_id and h.status = 3)) " +
-            "order by a.start_time ", nativeQuery = true)
+            "or (h.blood_donor_id = :donor_id and h.status = 3)) ", nativeQuery = true)
     Page<Appointment> searchBy(@Param("centerId") UUID centerId, @Param("donor_id") UUID donor_id, Pageable of);
 
     @Query(value = "select * from appointment a " +

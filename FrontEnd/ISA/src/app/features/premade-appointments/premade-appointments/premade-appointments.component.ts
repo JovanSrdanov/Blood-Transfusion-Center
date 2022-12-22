@@ -4,7 +4,6 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { merge, startWith, switchMap, catchError, map, of as observableOf, } from 'rxjs';
-import { AppointmentSchedulingHistoryService } from 'src/app/http-services/appointment-scheduling-history.service';
 import { AppointmentServiceService } from 'src/app/http-services/appointment-service.service';
 import { PageDto } from 'src/app/model/PageDto';
 

@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
@@ -193,9 +194,9 @@ public class AppointmentService implements IAppointmentService {
         if (sort.isBlank()) {
             currentPage = _appointmentRepository.searchBy(centerId, donorId, PageRequest.of(page, pageSize));
         } else if (sort.equals("asc")) {
-            currentPage = _appointmentRepository.searchBy(centerId, donorId, PageRequest.of(page, pageSize));
+            currentPage = _appointmentRepository.searchBy(centerId, donorId, PageRequest.of(page, pageSize).withSort(Sort.by(Sort.Direction.ASC, "start_time")));
         } else if (sort.equals("desc")) {
-            currentPage = _appointmentRepository.searchBy(centerId, donorId, PageRequest.of(page, pageSize));
+            currentPage = _appointmentRepository.searchBy(centerId, donorId, PageRequest.of(page, pageSize).withSort(Sort.by(Sort.Direction.DESC, "start_time")));
         } else {
             throw new SortNotFoundException("This sort type doesn't exist");
         }

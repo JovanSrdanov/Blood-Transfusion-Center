@@ -6,12 +6,15 @@
 table {
   width: 100%;
   table-layout: fixed;
+  text-align: center !important;
 }
 
 .mat-header-cell {
   text-align: center;
+  justify-content: center;
 }
 
-.mat-sort-header {
-  text-align: center;
+:host ::ng-deep .mat-sort-header-container {
+  display: flex;
+  justify-content: center;
 }
