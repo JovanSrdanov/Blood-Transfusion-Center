@@ -171,7 +171,7 @@ VALUES ('26d3381b-319d-425c-abd7-256f24f0a2e0', 'Jovan2', '22140-486-9131', 'Srd
 
 /* Aleksandrov staff je ovaj na kraju */
 INSERT INTO "staff" ("id", "name", "phone_number", "surname", "address_id", "blood_center_id")
-VALUES ('b2fe1aff-bb8f-4fd1-b88e-aa39af8fc65c', 'Doc1', '850-326-8246', '_',
+VALUES ('32763cf0-6a56-49f1-ad25-5a90561cd204', 'Doc1', '850-326-8246', '_',
         'dc0bbae7-4fa1-47ca-a092-dde2f9efe046', '417c9b36-251a-4483-bfbf-abd3df786d96'),
        ('883f13cc-25c8-4b60-b0e5-5ac938ad2594', 'Doc2', '844-991-4460', '_',
         'f896b9e4-b639-43cc-882f-9d735597ef08', '417c9b36-251a-4483-bfbf-abd3df786d96'),
@@ -449,10 +449,10 @@ VALUES ('dbf02dce-a9a1-4e20-aaf0-5fca92299407', '2022-12-21 05:00:00.000', '2022
 
 
 INSERT INTO appointment_staff (appointment_id, staff_id)
-VALUES ('dbf02dce-a9a1-4e20-aaf0-5fca92299407', 'b2fe1aff-bb8f-4fd1-b88e-aa39af8fc65c'),
-       ('9e16d8b0-a805-4ffb-a08b-d50e7fef6be0', 'b2fe1aff-bb8f-4fd1-b88e-aa39af8fc65c'),
-       ('f9854a8d-9dfb-49f5-abf4-d993fac9aac3', 'b2fe1aff-bb8f-4fd1-b88e-aa39af8fc65c'),
-       ('c41a832e-b94c-4c6a-b3fa-e743d5f954b4', 'b2fe1aff-bb8f-4fd1-b88e-aa39af8fc65c'),
+VALUES ('dbf02dce-a9a1-4e20-aaf0-5fca92299407', '32763cf0-6a56-49f1-ad25-5a90561cd204'),
+       ('9e16d8b0-a805-4ffb-a08b-d50e7fef6be0', '32763cf0-6a56-49f1-ad25-5a90561cd204'),
+       ('f9854a8d-9dfb-49f5-abf4-d993fac9aac3', '32763cf0-6a56-49f1-ad25-5a90561cd204'),
+       ('c41a832e-b94c-4c6a-b3fa-e743d5f954b4', '32763cf0-6a56-49f1-ad25-5a90561cd204'),
 
        ('da9734c6-d91c-47b3-9944-816f51957405', '883f13cc-25c8-4b60-b0e5-5ac938ad2594'),
        ('61156c70-936a-428f-91c5-04a9926dd8dc', '883f13cc-25c8-4b60-b0e5-5ac938ad2594'),
@@ -528,43 +528,30 @@ VALUES('7af0b527-5209-4c33-b7fb-2d0df7214728', 'QR', '2022-12-21 11:15:00.000', 
 
 
 INSERT INTO appointment_scheduling_history
-(id, qrcode, issuing_date, status, appointment_id, blood_donor_id)
-VALUES('7af0b527-5209-4c33-b7fb-2d0df7214728', 'QR', '2022-12-21 11:15:00.000', 3,
-       '9e16d8b0-a805-4ffb-a08b-d50e7fef6be0', '07ce2e8b-d34b-4156-9dd4-f29ec4311675'),
-      ('759415d9-b4d1-45ee-9067-f53b7f945f16', 'QR', '2022-12-21 11:15:00.000', 3,
-       'f9854a8d-9dfb-49f5-abf4-d993fac9aac3', '26d3381b-319d-425c-abd7-256f24f0a2e0'),
-      ('95fcdcbe-3b7e-40cf-9494-e0215593d025', 'QR', '2022-12-21 11:15:00.000', 3,
-       'f9854a8d-9dfb-49f5-abf4-d993fac9aac3', '07ce2e8b-d34b-4156-9dd4-f29ec4311675'),
+    (id, qrcode, issuing_date, status, appointment_id, blood_donor_id)
+VALUES ('3a098534-2565-4f33-b44f-429b0f74cfa7', 'QR', '2022-12-21 11:15:00.000', 1,
+        '14bbd68b-7465-47fa-ae6b-cc389b4d1405', '07ce2e8b-d34b-4156-9dd4-f29ec4311675');
 
-/* Aleksandrov history*/
+INSERT INTO appointment_scheduling_history
+    (id, qrcode, issuing_date, status, appointment_id, blood_donor_id)
+VALUES ('ce10170c-e043-4beb-a059-2b799e263d77', 'QR', '2022-12-21 11:15:00.000', 1,
+        'ce4891a5-2dc5-4251-907e-926db0007fb9', '07ce2e8b-d34b-4156-9dd4-f29ec4311675');
 
-      ('76b8e99c-bad5-4ea5-9810-cdb4bb70b2a0', 'QR', '2022-12-22 11:15:00.000', 0,  
-       '23e7e896-f37d-4e2d-8bf8-8800c1739028', '26d3381b-319d-425c-abd7-256f24f0a2e0'),
 
-      ('4d735d88-680a-4ead-bf98-51cc399c9d61', 'QR', '2022-12-22 11:15:00.000', 0,
-       '5958ab52-5097-41b8-9b5c-c33a130a939d', '26d3381b-319d-425c-abd7-256f24f0a2e0'),
 
-      ('bea68ca3-9fb9-4e0c-b94f-c2d0774c3f39', 'QR', '2022-12-22 11:15:00.000', 0,
-       '1e564ae0-73df-47fa-8ea7-b17e8e3e4551', '26d3381b-319d-425c-abd7-256f24f0a2e0'),
+INSERT INTO appointment_report
+    (id, text, appointment_scheduling_history_id)
+VALUES ('342c7203-deae-4118-b330-f90be9ef649b', 'OVDE SE BAS MNOGO TOGA DESILO gas gas ',
+        '3a098534-2565-4f33-b44f-429b0f74cfa7');
 
-      ('73be90cd-aa95-43ad-84d0-cb5baa6e0b59', 'QR', '2022-12-22 11:15:00.000', 0,
-       'bf6ecac0-72d4-4e5a-96a2-422b5c0f6db8', '26d3381b-319d-425c-abd7-256f24f0a2e0'),
+INSERT INTO appointment_report
+    (id, text, appointment_scheduling_history_id)
+VALUES ('28e4189f-7c59-4d48-b357-9eee5612b842', 'OVDE SE BAS MNOGOaa a a a a aa  TOGA DESILO gas gas ',
+        'ce10170c-e043-4beb-a059-2b799e263d77');
 
-      ('062bd33b-d578-4e65-b4dc-fecf5b9fc668', 'QR', '2022-12-22 11:15:00.000', 0,
-       '6843ec41-fc00-4f18-b891-715d9a897f81', '26d3381b-319d-425c-abd7-256f24f0a2e0');
-
-/* Stefanov equipment*/
-INSERT INTO equipment
-(id, name, quantity, blood_center_id)
+/* Stefanov equipment*/ 
+INSERT INTO equipment (id, name, quantity, blood_center_id) 
 VALUES('BDE5B263-37D3-427A-A377-BA167AF88858', 'Lopate', '100', '5f29fc03-f6bd-49a6-9f41-c2ca229de403'),
-	  ('0ED7565A-ABFE-4520-80A6-E7720ABC879C', 'Sekire', '100', '5f29fc03-f6bd-49a6-9f41-c2ca229de403'),
-	  ('2BCCF1DD-E9F6-469C-BEE0-F119A9C0E55D', 'Kasike', '100', '5f29fc03-f6bd-49a6-9f41-c2ca229de403'),
-	  ('B82DCB56-7A00-48AA-8132-4CAA98D03205', 'Viljuske', '100', '5f29fc03-f6bd-49a6-9f41-c2ca229de403');
-
-
-
-
-
-
-
-
+	('0ED7565A-ABFE-4520-80A6-E7720ABC879C', 'Sekire', '100', '5f29fc03-f6bd-49a6-9f41-c2ca229de403'),
+	('2BCCF1DD-E9F6-469C-BEE0-F119A9C0E55D', 'Kasike', '100', '5f29fc03-f6bd-49a6-9f41-c2ca229de403'),
+	('B82DCB56-7A00-48AA-8132-4CAA98D03205', 'Viljuske', '100', '5f29fc03-f6bd-49a6-9f41-c2ca229de403');
