@@ -2,6 +2,7 @@ package groupJASS.ISA_2022.Controller;
 
 import groupJASS.ISA_2022.DTO.Equipment.EquipmentBasicInfo;
 import groupJASS.ISA_2022.DTO.Equipment.EquipmentUpdateDTO;
+import groupJASS.ISA_2022.Exceptions.CenterOutOfEquipmentException;
 import groupJASS.ISA_2022.Model.Account;
 import groupJASS.ISA_2022.Model.Equipment;
 import groupJASS.ISA_2022.Model.Staff;
@@ -67,12 +68,16 @@ public class EquipmentController {
     @PreAuthorize("hasRole('STAFF')")
     public ResponseEntity<?> updateEquipmentInCenter(@RequestBody EquipmentUpdateDTO updatedInfo) {
         try {
-            return new ResponseEntity<>(_equipmentService.updateQuantity(
+            Equipment updatedEquipment = _equipmentService.updateQuantity(
                     updatedInfo.getEquipmentId(),
-                    updatedInfo.getQuantity()), HttpStatus.OK);
+                    updatedInfo.getQuantity());
+            return new ResponseEntity<>(updatedEquipment.getQuantity(), HttpStatus.OK);
         }
         catch (NotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+        catch (CenterOutOfEquipmentException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
         catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);

@@ -1,6 +1,7 @@
 package groupJASS.ISA_2022.Service.Implementations;
 
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
+import groupJASS.ISA_2022.Exceptions.CenterOutOfEquipmentException;
 import groupJASS.ISA_2022.Model.Equipment;
 import groupJASS.ISA_2022.Repository.EquipmentRepository;
 import groupJASS.ISA_2022.Service.Interfaces.IEquipmentService;
@@ -60,12 +61,15 @@ public class EquipmentService implements IEquipmentService {
     }
 
     @Override
-    public Equipment updateQuantity(UUID equipmentId, double quantity) {
+    public Equipment updateQuantity(UUID equipmentId, double quantity) throws  CenterOutOfEquipmentException{
         Equipment updatedEquipment = findById(equipmentId);
         if (updatedEquipment == null) {
             throw new NotFoundException("Equipment not found");
         }
-        updatedEquipment.setQuantity(quantity);
+        updatedEquipment.setQuantity(updatedEquipment.getQuantity() - quantity);
+        if (updatedEquipment.getQuantity() < 0) {
+            throw new CenterOutOfEquipmentException("Out of equipment");
+        }
         return save(updatedEquipment);
     }
 
