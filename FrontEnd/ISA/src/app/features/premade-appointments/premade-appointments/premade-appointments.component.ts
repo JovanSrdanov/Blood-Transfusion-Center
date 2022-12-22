@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { merge, startWith, switchMap, catchError, map, of as observableOf, } from 'rxjs';
 import { AppointmentSchedulingHistoryService } from 'src/app/http-services/appointment-scheduling-history.service';
 import { AppointmentServiceService } from 'src/app/http-services/appointment-service.service';
@@ -38,7 +38,7 @@ export class PremadeAppointmentsComponent implements OnInit {
 
   centerId: string = '-1';
   private sub: any;
-  constructor(private appointmentService: AppointmentServiceService, private route: ActivatedRoute) { }
+  constructor(private appointmentService: AppointmentServiceService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.sub = this.route.params.subscribe((params) => {
@@ -89,8 +89,14 @@ export class PremadeAppointmentsComponent implements OnInit {
       .subscribe((data) => (this.dataSource = data.content), err => { alert(err) });
   }
 
-  Schedule(id: string): void {
-    console.log(id);
+  Schedule(appointmentId: string): void {
+    console.log(appointmentId);
+    this.appointmentService.schedule(appointmentId).subscribe(res => {
+      alert("Appointment schedueled")
+      this.router.navigate(['/blood-donor/my-appointments']);
+    }, err => {
+      alert(err.errror);
+    })
   }
 
 }

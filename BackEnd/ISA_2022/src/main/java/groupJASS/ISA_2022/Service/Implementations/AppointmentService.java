@@ -1,12 +1,8 @@
 package groupJASS.ISA_2022.Service.Implementations;
 
-import groupJASS.ISA_2022.Exceptions.SortNotFoundException;
-import groupJASS.ISA_2022.Model.Appointment;
-import groupJASS.ISA_2022.Model.BloodCenter;
-import groupJASS.ISA_2022.Model.DateRange;
-import groupJASS.ISA_2022.Model.Staff;
 import groupJASS.ISA_2022.DTO.Appointment.AvailablePredefinedDto;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
+import groupJASS.ISA_2022.Exceptions.SortNotFoundException;
 import groupJASS.ISA_2022.Model.*;
 import groupJASS.ISA_2022.Repository.AppointmentRepository;
 import groupJASS.ISA_2022.Service.Interfaces.IAppointmentService;
@@ -41,10 +37,10 @@ public class AppointmentService implements IAppointmentService {
 
     @Autowired
     public AppointmentService(AppointmentRepository appointmentRepository,
-            IBloodDonorService bloodDonorService,
-            AppointmentSchedulingHistoryService appointmentSchedulingHistoryService,
-            StaffService staffService,
-            IBloodCenterService bloodBloodCenterService) {
+                              IBloodDonorService bloodDonorService,
+                              AppointmentSchedulingHistoryService appointmentSchedulingHistoryService,
+                              StaffService staffService,
+                              IBloodCenterService bloodBloodCenterService) {
         this._appointmentRepository = appointmentRepository;
         this._bloodDonorService = bloodDonorService;
         this._appointmentSchedulingHistoryService = appointmentSchedulingHistoryService;
@@ -181,21 +177,22 @@ public class AppointmentService implements IAppointmentService {
     }
 
     @Override
-    public Page<Appointment> getPremadeAppointmentsForBloodCenter(UUID centerId, int page, int pageSize, String sort)
+    public Page<Appointment> getPremadeAppointmentsForBloodCenter(UUID centerId, UUID donorId, int page, int pageSize, String sort)
             throws SortNotFoundException {
         Page<Appointment> currentPage;
         if (sort.isBlank()) {
-            currentPage = _appointmentRepository.searchBy(centerId, PageRequest.of(page, pageSize));
+            currentPage = _appointmentRepository.searchBy(centerId, donorId, PageRequest.of(page, pageSize));
         } else if (sort.equals("asc")) {
-            currentPage = _appointmentRepository.searchBy(centerId, PageRequest.of(page, pageSize));
+            currentPage = _appointmentRepository.searchBy(centerId, donorId, PageRequest.of(page, pageSize));
         } else if (sort.equals("desc")) {
-            currentPage = _appointmentRepository.searchBy(centerId, PageRequest.of(page, pageSize));
+            currentPage = _appointmentRepository.searchBy(centerId, donorId, PageRequest.of(page, pageSize));
         } else {
             throw new SortNotFoundException("This sort type doesn't exist");
         }
         return currentPage;
     }
 
+    @Override
     public List<AvailablePredefinedDto> findAvailableAppointmentsForDonor(UUID donorId, UUID centerId) {
         return ObjectMapperUtils.mapAll(_appointmentRepository.findAvailableAppointmentsForDonor(donorId, centerId),
                 AvailablePredefinedDto.class);

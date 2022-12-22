@@ -5,8 +5,8 @@ import groupJASS.ISA_2022.DTO.Appointment.AvailableSlotsDto;
 import groupJASS.ISA_2022.DTO.Appointment.PredefineAppointmentDto;
 import groupJASS.ISA_2022.DTO.Appointment.PremadeAppointmentDTO;
 import groupJASS.ISA_2022.DTO.PageEntityDto;
-import groupJASS.ISA_2022.Exceptions.SortNotFoundException;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
+import groupJASS.ISA_2022.Exceptions.SortNotFoundException;
 import groupJASS.ISA_2022.Model.Account;
 import groupJASS.ISA_2022.Model.Appointment;
 import groupJASS.ISA_2022.Model.AppointmentSchedulingHistory;
@@ -67,7 +67,7 @@ public class AppointmentController {
     @GetMapping("/available-donor/{cid}")
     @PreAuthorize("hasRole('BLOOD_DONOR')")
     public ResponseEntity<List<AvailablePredefinedDto>> findAvailableAppointmentsForDonor(@PathVariable UUID cid,
-            Principal account) {
+                                                                                          Principal account) {
         Account a = _accountService.findAccountByEmail(account.getName());
         var res = (List<AvailablePredefinedDto>) _appointmentService.findAvailableAppointmentsForDonor(a.getPersonId(),
                 cid);
@@ -77,7 +77,7 @@ public class AppointmentController {
     @PostMapping("/schedulePredefine/{appid}")
     @PreAuthorize("hasRole('BLOOD_DONOR')")
     public ResponseEntity<AppointmentSchedulingHistory> scheduleAppointment(@PathVariable UUID appid,
-            Principal account) {
+                                                                            Principal account) {
         Account a = _accountService.findAccountByEmail(account.getName());
         var res = (AppointmentSchedulingHistory) _appointmentService.scheduleAppointment(a.getPersonId(), appid);
         return new ResponseEntity<>(res, HttpStatus.OK);
@@ -96,12 +96,12 @@ public class AppointmentController {
         try {
             UUID BloodDonorId = _accountService.findAccountByEmail(account.getName()).getPersonId();
 
-            Page<Appointment> entities = _appointmentService.getPremadeAppointmentsForBloodCenter(centerId, page,
+            Page<Appointment> entities = _appointmentService.getPremadeAppointmentsForBloodCenter(centerId, BloodDonorId, page,
                     pageSize, sort);
             List<PremadeAppointmentDTO> content = new ArrayList<>();
             for (var e : entities) {
                 content.add(new PremadeAppointmentDTO(e.getId(), e.getTime().getStartTime(),
-                        e.getTime().getDurationMinutes()));
+                        e.getTime().calcaulateDurationMinutes()));
             }
             PageEntityDto<List<PremadeAppointmentDTO>> pageDTO = new PageEntityDto<>(content,
                     (int) entities.getTotalElements());

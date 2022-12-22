@@ -1,8 +1,8 @@
 package groupJASS.ISA_2022.Service.Interfaces;
 
-import groupJASS.ISA_2022.Exceptions.SortNotFoundException;
 import groupJASS.ISA_2022.DTO.Appointment.AvailablePredefinedDto;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
+import groupJASS.ISA_2022.Exceptions.SortNotFoundException;
 import groupJASS.ISA_2022.Model.Appointment;
 import groupJASS.ISA_2022.Model.AppointmentSchedulingHistory;
 import groupJASS.ISA_2022.Model.DateRange;
@@ -26,6 +26,6 @@ public interface IAppointmentService extends ICrudService<Appointment> {
 
     AppointmentSchedulingHistory scheduleAppointment(UUID donorId, UUID appointmentId);
 
-    Page<Appointment> getPremadeAppointmentsForBloodCenter(UUID centerId, int page, int pageSize, String sort)
+    Page<Appointment> getPremadeAppointmentsForBloodCenter(UUID centerId, UUID donorId, int page, int pageSize, String sort)
             throws SortNotFoundException;
 }

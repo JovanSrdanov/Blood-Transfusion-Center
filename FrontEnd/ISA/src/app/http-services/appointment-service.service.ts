@@ -18,6 +18,10 @@ export class AppointmentServiceService {
     return this.http.get<PageDto<PremadeAppointmentDTO[]>>(this.path + '/premadeAppointments/' + centerId + '?pageSize=' + pageSize + "&page=" + page + "&sort=" + sortType + "&field=" + field);
   };
 
+  schedule(appointmentId: string): Observable<any> {
+    return this.http.post<any>(this.path + '/schedulePredefine/' + appointmentId, {});
+  }
+
 
 
 }
