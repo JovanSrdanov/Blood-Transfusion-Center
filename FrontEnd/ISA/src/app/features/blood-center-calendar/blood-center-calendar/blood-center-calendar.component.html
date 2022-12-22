@@ -64,7 +64,7 @@
 <!-- CALENDAR -->
 <br />
 <!-- MONTH -->
-<div [ngSwitch]="view">
+<div [ngSwitch]="view" id="tabelaMrale"> 
   <mwl-calendar-month-view
     *ngSwitchCase="CalendarView.Month"
     [viewDate]="viewDate"

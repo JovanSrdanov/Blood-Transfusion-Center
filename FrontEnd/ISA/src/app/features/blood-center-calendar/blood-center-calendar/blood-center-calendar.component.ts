@@ -68,6 +68,19 @@ export class BloodCenterCalendarComponent implements OnInit{
                 {
                     let variable = this.appointmentToEvent(response[i]);
                     this.events.push(variable);
+
+
+                    var evt = new MouseEvent("click", {
+                            view: window,
+                            bubbles: true,
+                            cancelable: true,
+                            clientX: 20,
+                        }),
+                            ele = document.getElementsByTagName("mwl-calendar-month-cell")[10];
+                        ele?.dispatchEvent(evt);
+
+
+
                 }
               }
             })
