@@ -1,17 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CreateAppointmentComponent } from './create-appointment/create-appointment.component';
 import { MaterialModule } from 'src/app/material/material.module';
+import { CreatePremadeAppointmentComponent } from './create-premade-appointment/create-premade-appointment/create-premade-appointment.component';
 
 
 
 @NgModule({
   declarations: [
-    CreateAppointmentComponent
+
+
+    CreatePremadeAppointmentComponent
   ],
   imports: [
     CommonModule,
     MaterialModule
   ]
 })
-export class CreateAppointmentModule { }
+export class CreatePremadeAppointmentModule { }
