@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AfterViewInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { AppointmentService } from 'src/app/http-services/appointment.service';
+import { AppointmentSchedulingHistoryService } from 'src/app/http-services/appointment-scheduling-history.service';
 
 
 
@@ -41,13 +41,13 @@ export class MyAppointmentsComponent implements AfterViewInit {
   displayedColumns: string[] = ['Center', 'Date', 'Start time', 'Duration', "Cancel"];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  pageSize: number = 3;
+  pageSize: number = 4;
   pso: number[] = [this.pageSize];
   @ViewChild(MatSort) sort!: MatSort;
   resultsLength = 0;
   isLoadingResults = true;
   isRateLimitReached = false;
-  constructor(private appointmentService: AppointmentService) { }
+  constructor(private appointmentSchedulingHistory: AppointmentSchedulingHistoryService) { }
 
   ngOnInit(): void {
   }
@@ -60,7 +60,7 @@ export class MyAppointmentsComponent implements AfterViewInit {
         startWith({}),
         switchMap(() => {
           this.isLoadingResults = true;
-          return this.appointmentService!.bloodDonorAppointments(
+          return this.appointmentSchedulingHistory!.bloodDonorAppointments(
             this.pageSize,
             this.paginator.pageIndex,
             this.sort.direction,
@@ -98,7 +98,7 @@ export class MyAppointmentsComponent implements AfterViewInit {
 
 
   cancelAppoitnment(id: string) {
-    this.appointmentService.cancelAppointment(id).subscribe(res => {
+    this.appointmentSchedulingHistory.cancelAppointment(id).subscribe(res => {
       this.dataSource = this.dataSource.filter((u) => u.appointmentId !== id);;
       alert("Appointment canceled")
 

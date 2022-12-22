@@ -9,6 +9,7 @@ import {
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import {
   catchError,
   merge,
@@ -34,6 +35,7 @@ export class BloodCenterTableComponent implements OnInit {
     'address.city',
     'address.street',
     'rating',
+    'seePremade'
   ];
   dataSource: BloodCenterBasicInfo[] = [];
   public tableDataSource: MatTableDataSource<BloodCenterBasicInfo[]> =
@@ -56,7 +58,7 @@ export class BloodCenterTableComponent implements OnInit {
   }
   //Stefan dodao
 
-  constructor(private readonly bloodCenterService: BloodCenterService) { }
+  constructor(private readonly bloodCenterService: BloodCenterService, private readonly router: Router) { }
 
   ngOnInit(): void { }
 
@@ -107,5 +109,10 @@ export class BloodCenterTableComponent implements OnInit {
 
   doSearch(): void {
     this.searchEvent.emit();
+  }
+
+  seeAppointments(id: string): void {
+    this.router.navigate(['blood-donor/premade-appointments/' + id]);
+
   }
 }

@@ -17,7 +17,7 @@ const routes: Routes = [
 
   { path: 'visiting-history', component: VisitingHistoryComponent },
   { path: 'my-appointments', component: MyAppointmentsComponent },
-  { path: 'premade-appointments', component: PremadeAppointmentsComponent },
+  { path: 'premade-appointments/:id', component: PremadeAppointmentsComponent },
 
 
   { path: '', redirectTo: 'blood-center-view', pathMatch: 'full' },

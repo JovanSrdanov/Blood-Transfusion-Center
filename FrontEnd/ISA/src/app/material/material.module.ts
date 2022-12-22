@@ -14,6 +14,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
 
 const material = [
   MatCardModule,
@@ -31,6 +32,7 @@ const material = [
   MatPaginatorModule,
   MatSortModule,
   MatMenuModule,
+  MatIconModule
 ];
 
 @NgModule({
