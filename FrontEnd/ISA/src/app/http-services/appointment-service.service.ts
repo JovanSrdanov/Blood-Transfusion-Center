@@ -3,9 +3,12 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { PremadeAppointmentDTO } from '../features/premade-appointments/premade-appointments/premade-appointments.component';
+import { CustomAppointmentInfo } from '../model/appointment/customAvailable';
 import { PremadePost } from '../model/appointment/premadePost';
 import { PremadeRequest } from '../model/appointment/premadeReqest';
 import { PremadeTime } from '../model/appointment/premadeTime';
+import { ScheduleCustomDto } from '../model/appointment/scheduleCustomDto';
+import { TimeWarpper } from '../model/appointment/timeWarpper';
 import { PageDto } from '../model/PageDto';
 import { StaffPremade } from '../model/staff/staff-premade';
 
@@ -36,6 +39,14 @@ export class AppointmentServiceService {
 
   premadeAppointment(dto: PremadePost): Observable<any> {
     return this.http.post<PremadeTime>(this.path + '/predefine', dto);
+  }
+
+  getCustomAvailable(time: TimeWarpper): Observable<CustomAppointmentInfo[]> {
+    return this.http.post<CustomAppointmentInfo[]>(this.path + '/custom-available', time);
+  }
+
+  scheduleCustom(dto: ScheduleCustomDto | null): Observable<any> {
+    return this.http.post<CustomAppointmentInfo[]>(this.path + '/schedule-custom', dto);
   }
 
 }

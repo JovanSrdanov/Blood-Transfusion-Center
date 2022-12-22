@@ -19,12 +19,12 @@ export class CreatePremadeAppointmentComponent implements OnInit {
   dto: PremadeRequest | null = null;
   scheduleDto: PremadePost | null = null;
 
-  premadeTable: PremadeTime[] = [];
-
+  
   toppings = new FormControl('');
   toppingList: StaffPremade[] = [];
-
+  
   formPremade = new FormControl('');
+  premadeTable: PremadeTime[] = [];
 
   constructor(private readonly router: Router, private readonly appointmentService: AppointmentServiceService) { }
   ngOnInit(): void {

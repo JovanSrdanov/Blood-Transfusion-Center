@@ -1,1 +1,23 @@
-<p>OVO JE ZA TEBE STRAHINJAAAAAAAAAAAAAAAA</p>
+<table>
+    <tr>
+        <td>
+          <input
+            id="time2"
+            formControlName="time2"
+            type="text"
+            placeholder="time"
+          />
+        </td>
+        <td><button class="dugmeOk" mat-raised-button color="accent" (click)="test()">Find available</button></td>
+    </tr>
+    <tr>
+        <td>
+            <mat-selection-list #shoes [formControl]="formPremade" [multiple]="false">
+                <mat-list-option *ngFor="let shoe of premadeTable" [value]="shoe.staffId">
+                  {{shoe.centerInfo.name}} {{shoe.centerInfo.rating}} {{shoe.time.startTime}} {{shoe.time.endTime}}
+                </mat-list-option>
+            </mat-selection-list>
+        </td>
+        <td><button class="dugmeOk" mat-raised-button color="accent" (click)="schedule()">Schedule</button></td>
+    </tr>
+</table>

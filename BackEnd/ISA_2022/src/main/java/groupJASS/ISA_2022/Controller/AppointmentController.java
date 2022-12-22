@@ -1,10 +1,6 @@
 package groupJASS.ISA_2022.Controller;
 
 import groupJASS.ISA_2022.DTO.Appointment.*;
-import groupJASS.ISA_2022.DTO.Appointment.AvailablePredefinedDto;
-import groupJASS.ISA_2022.DTO.Appointment.AvailableSlotsDto;
-import groupJASS.ISA_2022.DTO.Appointment.PredefineAppointmentDto;
-import groupJASS.ISA_2022.DTO.Appointment.PremadeAppointmentDTO;
 import groupJASS.ISA_2022.DTO.PageEntityDto;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
 import groupJASS.ISA_2022.Exceptions.SortNotFoundException;
@@ -22,7 +18,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -88,9 +83,9 @@ public class AppointmentController {
 
     @PostMapping("/custom-available")
     @PreAuthorize("hasRole('BLOOD_DONOR')")
-    public ResponseEntity<?> findCustomAvailableAppointments(@RequestBody LocalDateTime time, Principal account) {
+    public ResponseEntity<?> findCustomAvailableAppointments(@RequestBody CustomAppointmentTimeWrapper time, Principal account) {
         Account a = _accountService.findAccountByEmail(account.getName());
-        var res = (List<AvailableCustomAppointmentsDto>)_appointmentService.findCustomAvailableAppointments(a.getPersonId(), time);
+        var res = (List<AvailableCustomAppointmentsDto>)_appointmentService.findCustomAvailableAppointments(a.getPersonId(), time.getTime());
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
