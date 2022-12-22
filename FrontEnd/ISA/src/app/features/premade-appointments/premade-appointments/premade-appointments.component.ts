@@ -94,7 +94,8 @@ export class PremadeAppointmentsComponent implements OnInit {
       alert("Appointment schedueled")
       this.router.navigate(['/blood-donor/my-appointments']);
     }, err => {
-      alert(err.errror);
+      alert(err.error.split("java.lang.Exception: ")[1]);
+      console.log(err);
     })
   }
 
