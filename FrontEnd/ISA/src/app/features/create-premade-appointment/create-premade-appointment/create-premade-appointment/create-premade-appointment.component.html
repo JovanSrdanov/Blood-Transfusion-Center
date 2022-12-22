@@ -1,31 +1,71 @@
-
-
 <table>
   <tr>
-    <td><mat-selection-list #shoes [formControl]="formPremade" [multiple]="false">
-      <mat-list-option *ngFor="let shoe of premadeTable" [value]="shoe">
-        {{shoe.startTime}} {{shoe.endTime}}
-      </mat-list-option>
-    </mat-selection-list></td>
+    <td>
+      <mat-selection-list
+        class="appointments"
+        #shoes
+        [formControl]="formPremade"
+        [multiple]="false"
+      >
+        <mat-list-option *ngFor="let shoe of premadeTable" [value]="shoe">
+          {{ shoe.startTime }} {{ shoe.endTime }}
+        </mat-list-option>
+      </mat-selection-list>
+    </td>
 
-    <td><mat-form-field appearance="fill">
-      <mat-label>Staff</mat-label>
-      <mat-select [formControl]="toppings" multiple>
-        <mat-option *ngFor="let topping of toppingList" [value]="topping.id">{{topping.name}} {{topping.surname}}</mat-option>
-      </mat-select>
-    </mat-form-field></td>
+    <td>
+      <mat-form-field class="staff" appearance="fill">
+        <mat-label>Staff</mat-label>
+        <mat-select [formControl]="toppings" multiple>
+          <mat-option *ngFor="let topping of toppingList" [value]="topping.id"
+            >{{ topping.name }} {{ topping.surname }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+    </td>
   </tr>
   <tr>
-    <td><button class="dugmeOk" mat-raised-button color="accent" (click)="schedule()">Schedule</button>
-      <button class="dugmeOk" mat-raised-button color="accent" (click)="generate()">Generate</button></td>
     <td>
-      <mat-form-field appearance="fill">
+      <button
+        class="dugmeOk"
+        mat-raised-button
+        color="accent"
+        (click)="schedule()"
+      >
+        Schedule
+      </button>
+      <button
+        class="dugmeOk"
+        mat-raised-button
+        color="accent"
+        (click)="generate()"
+      >
+        Generate
+      </button>
+    </td>
+    <td>
+      <mat-form-field class="date" appearance="fill">
         <mat-label>Choose a date</mat-label>
         <input matInput [matDatepicker]="picker" [formControl]="dateFormCtrl" />
         <mat-hint>MM/DD/YYYY</mat-hint>
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
         <mat-datepicker #picker startView="year"></mat-datepicker>
       </mat-form-field>
+    </td>
+    <td>
+      <div class="content" [formGroup]="loginForm">
+        <div class="input-field">
+          <input
+            id="Minutes"
+            formControlName="Minutes"
+            type="number"
+            placeholder="Minutes"
+          />
+        </div>
+      </div>
     </td>
   </tr>
 </table>
