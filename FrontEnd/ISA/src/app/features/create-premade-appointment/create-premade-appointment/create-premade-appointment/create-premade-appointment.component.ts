@@ -26,10 +26,21 @@ export class CreatePremadeAppointmentComponent implements OnInit {
 
   formPremade = new FormControl('');
 
+  loginForm = new FormGroup({
+    Minutes: new FormControl<number>(0),
+
+  });
+
+  get mins() {
+    return this.loginForm.controls.Minutes.value;
+  }
+
   constructor(private readonly router: Router, private readonly appointmentService: AppointmentServiceService) { }
   ngOnInit(): void {
     this.staffList();
+
   }
+
 
   generate(): void {
     //console.table("aaa " + this.dateFormCtrl.value)
@@ -48,15 +59,27 @@ export class CreatePremadeAppointmentComponent implements OnInit {
       dateRange: this.formPremade.value?.at(0)
     }
 
-    this.appointmentService.premadeAppointment(this.scheduleDto).subscribe((res) => console.log(res));
+    this.appointmentService.premadeAppointment(this.scheduleDto).subscribe((res) => {
+      console.log(res);
+      this.staffList();
+      this.toppingList = [];
+      window.location.reload();
+    }
+    );
+
+    this.staffList();
   }
 
+
+
+
   showAvailable(): void {
+
 
     this.dto = {
       staffIds: this.toppings.value ?? '',
       date: this.dateFormCtrl.value,
-      duration: 60
+      duration: this.mins ?? 0
     }
 
     this.appointmentService.getPremadeList(this.dto).subscribe((res) => {
