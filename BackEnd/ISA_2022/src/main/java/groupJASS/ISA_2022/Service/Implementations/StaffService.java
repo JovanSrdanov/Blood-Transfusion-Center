@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -115,6 +116,18 @@ public class StaffService implements IStaffService {
         throw new NotFoundException("Blood admin not found");
     }
 
+    @Override
+    public Staff findByEmail(Principal principal) throws NotFoundException {
+        Account account = _accountRepository.findByEmail(principal.getName());
+        Optional<Staff> staff = _staffRepository.findById(account.getPersonId());
+        if(!staff.isPresent())
+        {
+            throw new NotFoundException("Staff not found");
+        }
+
+        return staff.get();
+
+    }
     @Override
     public Staff save(Staff entity) {
         if (entity.getId() == null) {
