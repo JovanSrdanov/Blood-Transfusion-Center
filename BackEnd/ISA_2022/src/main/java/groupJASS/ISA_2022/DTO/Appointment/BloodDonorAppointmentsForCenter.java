@@ -15,7 +15,7 @@ import java.util.UUID;
 @Setter
 public class BloodDonorAppointmentsForCenter {
     private UUID id;
-    private LocalDate issuingDate;
+    private LocalDateTime issuingDate;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 
