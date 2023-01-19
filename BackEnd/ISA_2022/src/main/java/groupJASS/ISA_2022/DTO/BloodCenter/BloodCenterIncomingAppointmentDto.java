@@ -9,16 +9,19 @@ import java.time.OffsetDateTime;
 import java.time.OffsetTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.UUID;
 
 @NoArgsConstructor
 @Getter
 @Setter
 public class BloodCenterIncomingAppointmentDto {
+    private UUID appointmentId;
     private LocalDateTime start;
     private LocalDateTime end;
     private String info;
 
-    public BloodCenterIncomingAppointmentDto(LocalDateTime start, LocalDateTime end, String patientName, String patientSurname) {
+    public BloodCenterIncomingAppointmentDto(UUID appointmentId, LocalDateTime start, LocalDateTime end, String patientName, String patientSurname) {
+        this.appointmentId = appointmentId;
         this.start = start;
         this.end = end;
 

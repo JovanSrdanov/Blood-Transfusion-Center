@@ -162,7 +162,6 @@ public class BloodCenterService implements IBloodCenterService {
         {
             throw new BloodCenterNotAssignedException("There is no blood center assigned for given staff");
         }
-        var result =  _bloodCenterRepository.getIncomingAppointments(staff.getBloodCenter().getId(), LocalDateTime.now());
-        return result ;
+        return  _bloodCenterRepository.getIncomingAppointments(staff.getBloodCenter().getId(), LocalDateTime.now());
     }
 }
