@@ -19,7 +19,7 @@ public interface BloodCenterRepository extends JpaRepository<BloodCenter, UUID> 
     Page<BloodCenter> searchBy(@Param("s") String s, Pageable pageable);
 
 
-    @Query("select new groupJASS.ISA_2022.DTO.BloodCenter.BloodCenterIncomingAppointmentDto(ash.id, a.time.startTime, a.time.endTime, bd.name, bd.surname)" +
+    @Query("select new groupJASS.ISA_2022.DTO.BloodCenter.BloodCenterIncomingAppointmentDto(ash.id, bd.id,  a.time.startTime, a.time.endTime, bd.name, bd.surname)" +
             " from AppointmentSchedulingHistory ash " +
             "left join Appointment a on ash.appointment.id = a.id " +
             "left join BloodCenter  bc on a.bloodCenter.id = bc.id " +

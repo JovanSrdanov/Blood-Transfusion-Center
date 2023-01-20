@@ -7,6 +7,7 @@ import { EventColor } from 'calendar-utils';
 import { BloodCenterService } from 'src/app/http-services/blood-center.service';
 import { BloodCenterRoundedWorkingHours } from 'src/app/model/blood-center/blood-center-rounded-working-hours';
 import { BloodCenterCalendarAppointment } from 'src/app/model/blood-center/blood-center-calendar-appointment';
+import { Router } from '@angular/router';
 
 const colors: Record<string, EventColor> = {
   blue: {
@@ -45,6 +46,8 @@ export class BloodCenterCalendarComponent implements OnInit{
 
   appointmentToEvent = (appointment : BloodCenterCalendarAppointment): CalendarEvent => {
       return {
+        id: appointment.appointmentId,
+        bloodDonorId: appointment.bloodDonorId,
         start :new  Date(appointment.start),
         end : new Date(appointment.end),
         title : appointment.info,
@@ -53,7 +56,9 @@ export class BloodCenterCalendarComponent implements OnInit{
   }
 
 
-  constructor(private readonly modal: NgbModal, private readonly bloodCenterService : BloodCenterService) {}
+  constructor(private readonly modal: NgbModal,
+     private readonly bloodCenterService : BloodCenterService,
+     private readonly router : Router) {}
   ngOnInit(): void {
       this.bloodCenterService.getWorkingHoursRounded().subscribe({
         next: (response: BloodCenterRoundedWorkingHours) =>{
@@ -108,8 +113,7 @@ export class BloodCenterCalendarComponent implements OnInit{
 
 
   handleEvent(action: string, event: CalendarEvent): void {
-    this.modalData = { event, action };
-    this.modal.open(this.modalContent, { size: 'lg' });
+    this.router.navigate(['staff/appointment-details/' + event.id + "/" + event.bloodDonorId]);
   }
 
   setView(view: CalendarView) {

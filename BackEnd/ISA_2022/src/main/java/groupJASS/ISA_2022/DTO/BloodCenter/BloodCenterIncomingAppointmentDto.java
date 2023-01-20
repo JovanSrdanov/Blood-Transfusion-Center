@@ -16,12 +16,14 @@ import java.util.UUID;
 @Setter
 public class BloodCenterIncomingAppointmentDto {
     private UUID appointmentId;
+    private UUID bloodDonorId;
     private LocalDateTime start;
     private LocalDateTime end;
     private String info;
 
-    public BloodCenterIncomingAppointmentDto(UUID appointmentId, LocalDateTime start, LocalDateTime end, String patientName, String patientSurname) {
+    public BloodCenterIncomingAppointmentDto(UUID appointmentId, UUID bloodDonorId, LocalDateTime start, LocalDateTime end, String patientName, String patientSurname) {
         this.appointmentId = appointmentId;
+        this.bloodDonorId = bloodDonorId;
         this.start = start;
         this.end = end;
 
