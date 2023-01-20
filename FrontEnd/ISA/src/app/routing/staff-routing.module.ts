@@ -19,6 +19,7 @@ const routes: Routes = [
     component: BloodDonorAppointmentListComponent,
   },
   {
+    //Za cega ce ti donorId?
     path: 'appointment-details/:appointmentHistoryId/:donorId',
     component: AppointmentDetailsComponent,
   },
