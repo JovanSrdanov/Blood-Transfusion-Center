@@ -3,20 +3,26 @@ package groupJASS.ISA_2022.Controller;
 import groupJASS.ISA_2022.DTO.Appointment.*;
 import groupJASS.ISA_2022.DTO.PageEntityDto;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
+import groupJASS.ISA_2022.Exceptions.QrCodeReadingException;
 import groupJASS.ISA_2022.Exceptions.SortNotFoundException;
 import groupJASS.ISA_2022.Model.Account;
 import groupJASS.ISA_2022.Model.Appointment;
 import groupJASS.ISA_2022.Model.AppointmentSchedulingHistory;
 import groupJASS.ISA_2022.Model.DateRange;
 import groupJASS.ISA_2022.Service.Interfaces.IAccountService;
+import groupJASS.ISA_2022.Service.Interfaces.IAppointmentSchedulingHistoryService;
 import groupJASS.ISA_2022.Service.Interfaces.IAppointmentService;
+import groupJASS.ISA_2022.Service.Interfaces.IQrCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.*;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -28,11 +34,16 @@ import java.util.UUID;
 public class AppointmentController {
     private final IAppointmentService _appointmentService;
     private final IAccountService _accountService;
+    private final IQrCodeService _qrCodeService;
+    private  final IAppointmentSchedulingHistoryService _appointmentSchedulingHistoryService;
 
     @Autowired
-    public AppointmentController(IAppointmentService appointmentService, IAccountService accountService) {
-        this._appointmentService = appointmentService;
+    public AppointmentController(IAppointmentService appointmentService, IAccountService accountService,
+                                 IQrCodeService qrCodeService, IAppointmentSchedulingHistoryService appointmentSchedulingHistoryService) {
+        _appointmentService = appointmentService;
         _accountService = accountService;
+        _qrCodeService = qrCodeService;
+        _appointmentSchedulingHistoryService = appointmentSchedulingHistoryService;
     }
 
     @PostMapping("/available-admin")
@@ -144,4 +155,32 @@ public class AppointmentController {
 
     }
 
+    @PostMapping(path = "/scan-qr",consumes = {MediaType.MULTIPART_FORM_DATA_VALUE} )
+    @PreAuthorize("hasRole('ROLE_STAFF')")
+    public ResponseEntity scanQRCode(@RequestParam MultipartFile qrCode, Principal principal)
+    {
+        try
+        {
+            UUID appointmentId = _qrCodeService.readAppointmentCode(qrCode);
+            if(!_appointmentSchedulingHistoryService.exists(appointmentId))
+            {
+                return  new ResponseEntity<>("There is no appointment with given code", HttpStatus.NOT_FOUND);
+            }
+
+            //Checks if patient came at right blood center
+            var correctBloodCenterName = _appointmentSchedulingHistoryService.takesPlaceAtBloodCenter(appointmentId, principal);
+            if(correctBloodCenterName.isPresent())
+            {
+                return  new ResponseEntity<>("Appointment is scheduled in: " + correctBloodCenterName.get(), HttpStatus.BAD_REQUEST);
+            }
+
+            AppointmentSchedulingHistory appointment = _appointmentSchedulingHistoryService.findById(appointmentId);
+            AppointmentQrInformationDto dto = new AppointmentQrInformationDto(appointment.getId(), appointment.getBloodDonor().getId());
+
+            return  new ResponseEntity<>(dto, HttpStatus.OK);
+        }
+        catch (QrCodeReadingException e){
+            return  new ResponseEntity<>("QR code couldn't be read", HttpStatus.BAD_REQUEST);
+        }
+    }
 }

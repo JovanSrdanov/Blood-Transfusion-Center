@@ -5,7 +5,9 @@ import groupJASS.ISA_2022.Model.AppointmentSchedulingHistory;
 import groupJASS.ISA_2022.Model.BloodDonor;
 import org.springframework.data.domain.Page;
 
+import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface IAppointmentSchedulingHistoryService extends ICrudService<AppointmentSchedulingHistory> {
@@ -18,4 +20,8 @@ public interface IAppointmentSchedulingHistoryService extends ICrudService<Appoi
 
     void cancelAppointment(UUID appointmentId, UUID bloodDonorId) throws Exception;
     
+
+    List<AppointmentSchedulingHistory> getAllByBloodDonor_Id(UUID id);
+    boolean exists(UUID id);
+    Optional<String> takesPlaceAtBloodCenter(UUID appointmentId, Principal principal);
 }
