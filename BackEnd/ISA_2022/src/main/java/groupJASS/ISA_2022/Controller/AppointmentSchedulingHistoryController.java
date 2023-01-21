@@ -3,6 +3,7 @@ package groupJASS.ISA_2022.Controller;
 import groupJASS.ISA_2022.DTO.Appointment.AppointmentCancelation;
 import groupJASS.ISA_2022.DTO.Appointment.BloodDonorAppointmentsDTO;
 import groupJASS.ISA_2022.DTO.Appointment.BloodDonorAppointmentsForCenter;
+import groupJASS.ISA_2022.DTO.BloodDonor.BloodDonorSearchByNameAndSurnameDto;
 import groupJASS.ISA_2022.DTO.PageEntityDto;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
 import groupJASS.ISA_2022.Exceptions.SortNotFoundException;
@@ -48,6 +49,24 @@ public class AppointmentSchedulingHistoryController {
         _staffService = staffService;
         _appointmentSchedulingHistoryRepository = appointmentSchedulingHistoryRepository;
         //_bloodDonorService = blooDonorService;
+    }
+
+    @GetMapping("fullname/{ashId}")
+    @PreAuthorize("hasRole('STAFF')")
+    public  ResponseEntity<?> getDonorFullname(
+            @PathVariable("ashId") UUID ashId) {
+        try {
+            var donor = _appointmentSchedulingHistoryRepository.findById(ashId)
+                    .getBloodDonor();
+            var result = new BloodDonorSearchByNameAndSurnameDto();
+            result.setName(donor.getName());
+            result.setSurname(donor.getSurname());
+
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }
+        catch (NotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/blood-donor-appointments")

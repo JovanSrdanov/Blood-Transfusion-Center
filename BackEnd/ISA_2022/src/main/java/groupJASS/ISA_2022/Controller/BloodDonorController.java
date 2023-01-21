@@ -57,7 +57,6 @@ public class BloodDonorController {
         return new ResponseEntity<>(MappingUtilities.mapList((List<BloodDonor>) this._bloodDonorService.findAll(), BloodDonorLazyDTO.class, _mapper), HttpStatus.OK);
     }
 
-
     @GetMapping("my-info")
     @PreAuthorize("hasRole('BLOOD_DONOR')")
     public ResponseEntity<BloodDonorInfoDto> findById(Principal account) {
@@ -111,7 +110,7 @@ public class BloodDonorController {
         }
     }
 
-    //It is not get because you cant send null parameter inside path variable, and I need that case
+    //It is not GET because you can't send null parameter inside a path variable, and I need that case
     //TODO Search only donors who visited certain center
     @PostMapping("search-name-surname")
     public ResponseEntity<List<BloodDonorInfoDto>> searchByNameAndSurname(@RequestBody BloodDonorSearchByNameAndSurnameDto dto) {
