@@ -47,7 +47,9 @@ public class QrCodeService implements IQrCodeService {
 
     @Override
     public UUID readAppointmentCode(MultipartFile qrCode) throws QrCodeReadingException {
-        File qrCodeFile = new File("src/main/resources/temp/qrFile.tmp");
+        //For concurrency reasons
+        String randomNumber = Integer.toString((int) Math.round(Math.random()));
+        File qrCodeFile = new File("src/main/resources/temp/qrFile" + randomNumber + ".tmp");
 
         try {
             //Converting multipart file to file

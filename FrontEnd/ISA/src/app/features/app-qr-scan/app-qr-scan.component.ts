@@ -53,7 +53,7 @@ export class AppQrScanComponent {
     this.appointmentService.scanQrCode(this.qrCodeImage).subscribe({
       next: response =>
       {
-          this.router.navigate(['staff/appointment-details/' + response.appointmentId + '/' + response.bloodDonorId]);
+          this.router.navigate(['staff/appointment-details/' + response.appointmentId]);
       },
       //TODO beautify messages
       error: (errResponse : HttpErrorResponse) =>

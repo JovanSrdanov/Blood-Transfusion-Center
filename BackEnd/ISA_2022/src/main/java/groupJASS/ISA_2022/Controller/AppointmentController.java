@@ -162,6 +162,7 @@ public class AppointmentController {
         try
         {
             UUID appointmentId = _qrCodeService.readAppointmentCode(qrCode);
+
             if(!_appointmentSchedulingHistoryService.exists(appointmentId))
             {
                 return  new ResponseEntity<>("There is no appointment with given code", HttpStatus.NOT_FOUND);
@@ -174,9 +175,7 @@ public class AppointmentController {
                 return  new ResponseEntity<>("Appointment is scheduled in: " + correctBloodCenterName.get(), HttpStatus.BAD_REQUEST);
             }
 
-            AppointmentSchedulingHistory appointment = _appointmentSchedulingHistoryService.findById(appointmentId);
-            AppointmentQrInformationDto dto = new AppointmentQrInformationDto(appointment.getId(), appointment.getBloodDonor().getId());
-
+            AppointmentQrInformationDto dto = new AppointmentQrInformationDto(appointmentId);
             return  new ResponseEntity<>(dto, HttpStatus.OK);
         }
         catch (QrCodeReadingException e){

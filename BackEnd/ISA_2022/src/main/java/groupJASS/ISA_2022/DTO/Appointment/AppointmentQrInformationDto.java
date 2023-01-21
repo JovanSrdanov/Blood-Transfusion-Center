@@ -13,5 +13,4 @@ import java.util.UUID;
 @Setter
 public class AppointmentQrInformationDto {
     public UUID appointmentId;
-    public UUID bloodDonorId;
 }
