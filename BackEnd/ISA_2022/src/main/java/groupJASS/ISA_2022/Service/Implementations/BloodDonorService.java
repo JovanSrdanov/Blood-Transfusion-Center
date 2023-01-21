@@ -133,18 +133,12 @@ public class BloodDonorService implements IBloodDonorService {
         }
     }
 
+ 
     @Override
-    public BloodDonor fetchWithQuestionnaire(UUID id) {
-        return _bloodDonorRepository.fetchWithQuestionnaire(id);
-    }
-
-
-    @Override
-    @Async
     @Transactional(rollbackFor = Exception.class)
-    public void registerNewBloodDonor(RegisterBloodDonorDTO dto) throws BadRequestException {
-        Account account = saveAllBloodDonorInformation(dto);
-        sendActvivationToken(_activateAccountService.save(new ActivateAccount(UUID.randomUUID(), account.getEmail(), UUID.randomUUID(), account.getId())));
+    public Account registerNewBloodDonor(RegisterBloodDonorDTO dto) throws BadRequestException {
+        return saveAllBloodDonorInformation(dto);
+
     }
 
     private Account saveAllBloodDonorInformation(RegisterBloodDonorDTO dto) {
@@ -155,6 +149,7 @@ public class BloodDonorService implements IBloodDonorService {
         return _accountService.registerAccount(dto.getAccountDTO(), "ROLE_BLOOD_DONOR", bloodDonor.getId());
     }
 
+    @Override
     @Async
     public void sendActvivationToken(ActivateAccount activateAccount) {
 

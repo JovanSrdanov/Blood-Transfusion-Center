@@ -6,9 +6,11 @@ import groupJASS.ISA_2022.DTO.BloodDonor.BloodDonorSearchByNameAndSurnameDto;
 import groupJASS.ISA_2022.DTO.BloodDonor.RegisterBloodDonorDTO;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
 import groupJASS.ISA_2022.Model.Account;
+import groupJASS.ISA_2022.Model.ActivateAccount;
 import groupJASS.ISA_2022.Model.Address;
 import groupJASS.ISA_2022.Model.BloodDonor;
 import groupJASS.ISA_2022.Service.Interfaces.IAccountService;
+import groupJASS.ISA_2022.Service.Interfaces.IActivateAccountService;
 import groupJASS.ISA_2022.Service.Interfaces.IAddressService;
 import groupJASS.ISA_2022.Service.Interfaces.IBloodDonorService;
 import groupJASS.ISA_2022.Utilities.MappingUtilities;
@@ -25,6 +27,7 @@ import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("blood-donor")
@@ -34,16 +37,18 @@ public class BloodDonorController {
     private final IAddressService _addressService;
 
     private final IAccountService _accountService;
+    private final IActivateAccountService _activateAccountService;
 
     private final ModelMapper _mapper;
 
     @Autowired
     public BloodDonorController(IBloodDonorService bloodDonorService, ModelMapper modelMapper,
-                                IAddressService addressService, IAccountService _accountService) {
+                                IAddressService addressService, IAccountService _accountService, IActivateAccountService activateAccountService) {
         this._bloodDonorService = bloodDonorService;
         this._mapper = modelMapper;
         this._addressService = addressService;
         this._accountService = _accountService;
+        this._activateAccountService = activateAccountService;
 
     }
 
@@ -98,9 +103,8 @@ public class BloodDonorController {
             throws ConstraintViolationException {
 
         try {
-
-            _bloodDonorService.registerNewBloodDonor(dto);
-
+            var account = _bloodDonorService.registerNewBloodDonor(dto);
+            _bloodDonorService.sendActvivationToken(_activateAccountService.save(new ActivateAccount(UUID.randomUUID(), account.getEmail(), UUID.randomUUID(), account.getId())));
             return new ResponseEntity<>(dto, HttpStatus.CREATED);
 
         } catch (IllegalArgumentException e) {
