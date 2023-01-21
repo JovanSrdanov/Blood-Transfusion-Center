@@ -36,10 +36,4 @@ public interface AppointmentSchedulingHistoryRepository extends JpaRepository<Ap
             "where ash.appointment.id = :appointmentId and ash.bloodDonor.id = :bloodDonorId")
     List<AppointmentSchedulingHistory> nes(@Param("appointmentId") UUID appointmentId, @Param("bloodDonorId") UUID bloodDonorId);
 
-    @Query("select ash from AppointmentSchedulingHistory ash " +
-            "left join fetch Appointment  a on ash.appointment.id = a.id " +
-            "left join fetch BloodCenter bc on ash.appointment.bloodCenter.id = bc.id" +
-            " where  ash.bloodDonor.id = :id " +
-            " order by ash.appointment.time.startTime")
-    List<AppointmentSchedulingHistory> getAllByBloodDonor_Id(@Param("id") UUID id);
 }

@@ -111,9 +111,4 @@ public class AppointmentSchedulingHistoryService implements IAppointmentScheduli
         ash.setStatus(AppointmentSchedulingConfirmationStatus.CANCELED);
         _appointmentSchedulingHistoryRepository.save(ash);
     }
-
-    @Override
-    public List<AppointmentSchedulingHistory> getAllByBloodDonor_Id(UUID id) {
-        return _appointmentSchedulingHistoryRepository.getAllByBloodDonor_Id(id);
-    }
 }
