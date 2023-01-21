@@ -12,6 +12,8 @@ export interface QrCodeASHDTO {
   status: string,
   issuingDate: Date
 }
+import { appointmentBloodDonorInfo } from '../model/appointment/appointment-blood-donor-info';
+import { BloodDonorSearchNameSurname } from '../model/blood-donor/blood-donor-search-name-surname';
 
 @Injectable({
   providedIn: 'root',
@@ -66,4 +68,9 @@ export class AppointmentSchedulingHistoryService {
       + page + "&pageSize=" + pageSize + "&filter=" + filter + "&sort=" + sortType);
   }
 
+  getDonorFullname(ashId: string): Observable<BloodDonorSearchNameSurname> {
+    return this.http.get<BloodDonorSearchNameSurname>(
+      this.path + '/fullname/' + ashId
+    );
+  }
 }
