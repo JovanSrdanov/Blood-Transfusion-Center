@@ -20,7 +20,7 @@ const routes: Routes = [
   },
   {
     //Za cega ce ti donorId?
-    path: 'appointment-details/:appointmentHistoryId/:donorId',
+    path: 'appointment-details/:appointmentHistoryId',
     component: AppointmentDetailsComponent,
   },
   {
@@ -43,4 +43,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class StaffRoutingModule { }
+export class StaffRoutingModule {}

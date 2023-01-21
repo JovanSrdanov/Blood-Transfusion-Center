@@ -38,17 +38,16 @@ public class AppointmentSchedulingHistoryController {
     private final IAccountService _accountService;
     private final IAppointmentSchedulingHistoryService _appointmentSchedulingHistoryRepository;
     private final IStaffService _staffService;
-    private final IBloodDonorService _bloodDonorService;
+    //private final IBloodDonorService _bloodDonorService;
 
     @Autowired
     public AppointmentSchedulingHistoryController(IAccountService accountService,
                                                   IAppointmentSchedulingHistoryService appointmentSchedulingHistoryRepository,
-                                                  IStaffService staffService,
-                                                  IBloodDonorService blooDonorService) {
+                                                  IStaffService staffService) {
         _accountService = accountService;
         _staffService = staffService;
         _appointmentSchedulingHistoryRepository = appointmentSchedulingHistoryRepository;
-        _bloodDonorService = blooDonorService;
+        //_bloodDonorService = blooDonorService;
     }
 
     @GetMapping("/blood-donor-appointments")
@@ -108,7 +107,7 @@ public class AppointmentSchedulingHistoryController {
     @PreAuthorize("hasRole('STAFF')")
     public ResponseEntity<?> cancelAppointment(@RequestBody AppointmentCancelation dto) {
         try {
-            BloodDonor donor = _bloodDonorService.findById(dto.getBloodDonorId());
+            BloodDonor donor = _appointmentSchedulingHistoryRepository.findById(dto.getAppointmentHistoryId()).getBloodDonor();
             _appointmentSchedulingHistoryRepository.staffCancelAppointment(
                     donor,
                     dto.isShowedUp(),

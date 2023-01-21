@@ -73,7 +73,7 @@ export class BloodDonorAppointmentListComponent implements OnInit {
 
   viewDetails(event: any, id: string) {
     console.log(id);
-    this.router.navigate(['staff/appointment-details', id, this.donorId]);
+    this.router.navigate(['staff/appointment-details', id]);
   }
 
   ngOnDestroy() {

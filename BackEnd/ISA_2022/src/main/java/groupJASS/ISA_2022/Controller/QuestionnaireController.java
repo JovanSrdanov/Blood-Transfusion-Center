@@ -4,6 +4,7 @@ import groupJASS.ISA_2022.DTO.QuestionnaireDTO;
 import groupJASS.ISA_2022.Model.Account;
 import groupJASS.ISA_2022.Model.Questionnaire;
 import groupJASS.ISA_2022.Service.Interfaces.IAccountService;
+import groupJASS.ISA_2022.Service.Interfaces.IAppointmentSchedulingHistoryService;
 import groupJASS.ISA_2022.Service.Interfaces.IBloodDonorService;
 import groupJASS.ISA_2022.Service.Interfaces.IQuestionnaireService;
 import org.modelmapper.ModelMapper;
@@ -26,18 +27,24 @@ public class QuestionnaireController {
 
     private final IQuestionnaireService _questionnaireService;
     private final ModelMapper _modelMapper;
-    @Autowired
-    private IBloodDonorService _bloodDonorService;
+    //@Autowired
+    //private IBloodDonorService _bloodDonorService;
+
+    private final IAppointmentSchedulingHistoryService _appointmentSchedulingHistoryService;
 
     @Autowired
     private IAccountService _accountService;
 
 
     @Autowired
-    public QuestionnaireController(IQuestionnaireService questionnaireService, ModelMapper mapper, IBloodDonorService bloodDonorService, IAccountService accountService) {
+    public QuestionnaireController(IQuestionnaireService questionnaireService,
+                                   ModelMapper mapper,
+                                   IAppointmentSchedulingHistoryService appointmentSchedulingHistoryService,
+                                   IAccountService accountService) {
         _questionnaireService = questionnaireService;
         _modelMapper = mapper;
-        _bloodDonorService = bloodDonorService;
+        //_bloodDonorService = bloodDonorService;
+        _appointmentSchedulingHistoryService = appointmentSchedulingHistoryService;
         _accountService = accountService;
     }
 
@@ -59,12 +66,14 @@ public class QuestionnaireController {
         }
     }
 
-    @GetMapping("getQuestionaire/{bloodDonorId}")
+    @GetMapping("getQuestionaire/{ashId}")
     @PreAuthorize("hasRole('STAFF')")
-    public ResponseEntity<?> getQuestionaire(@PathVariable("bloodDonorId") UUID bloodDonorId, Principal account) {
+    public ResponseEntity<?> getQuestionaire(@PathVariable("ashId") UUID ashId, Principal account) {
         try {
             //Account a = _accountService.findAccountByEmail(account.getName());
-            Questionnaire questionnaire = _bloodDonorService.findById(bloodDonorId).getQuestionnaire();
+            Questionnaire questionnaire = _appointmentSchedulingHistoryService.findById(ashId).getBloodDonor()
+                    .getQuestionnaire();
+            //Questionnaire questionnaire = _bloodDonorService.findById(bloodDonorId).getQuestionnaire();
             return new ResponseEntity<>(_modelMapper.map(questionnaire, QuestionnaireDTO.class), HttpStatus.CREATED);
         }
         catch (NotFoundException e) {

@@ -1,5 +1,5 @@
 export interface AppointmentCancelation {
   appointmentHistoryId: String;
-  bloodDonorId: String;
+  //bloodDonorId: String;
   showedUp: Boolean;
 }

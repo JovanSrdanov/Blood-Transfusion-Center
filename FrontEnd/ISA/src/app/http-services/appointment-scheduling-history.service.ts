@@ -11,27 +11,8 @@ import { appointmentBloodDonorInfo } from '../model/appointment/appointment-bloo
   providedIn: 'root',
 })
 export class AppointmentSchedulingHistoryService {
-  constructor(private readonly http: HttpClient) { }
+  constructor(private readonly http: HttpClient) {}
   path: string = environment.backendPath + '/appointment_scheduling_history';
-
-  // bloodDonorAppointments(
-  //   pageSize: number,
-  //   page: number,
-  //   sortType: any,
-  //   field: string
-  // ): Observable<PageDto<BloodDonorAppointmentsDTO[]>> {
-  //   return this.http.get<PageDto<BloodDonorAppointmentsDTO[]>>(
-  //     this.path +
-  //       '/blood-donor-appointments?pageSize=' +
-  //       pageSize +
-  //       '&page=' +
-  //       page +
-  //       '&sort=' +
-  //       sortType +
-  //       '&field=' +
-  //       field
-  //   );
-  // }
 
   bloodDonorAppointmentsForCenter(donorId: string): Observable<any> {
     console.log();
@@ -60,14 +41,14 @@ export class AppointmentSchedulingHistoryService {
   ): Observable<PageDto<BloodDonorAppointmentsDTO[]>> {
     return this.http.get<PageDto<BloodDonorAppointmentsDTO[]>>(
       this.path +
-      '/blood-donor-appointments?pageSize=' +
-      pageSize +
-      '&page=' +
-      page +
-      '&sort=' +
-      sortType +
-      '&field=' +
-      field
+        '/blood-donor-appointments?pageSize=' +
+        pageSize +
+        '&page=' +
+        page +
+        '&sort=' +
+        sortType +
+        '&field=' +
+        field
     );
   }
 }
