@@ -68,7 +68,6 @@ export class BloodCenterCalendarComponent implements OnInit {
   ): CalendarEvent => {
     return {
       id: appointment.appointmentId,
-      //bloodDonorId: appointment.bloodDonorId,
       start: new Date(appointment.start),
       end: new Date(appointment.end),
       title: appointment.info,

@@ -42,4 +42,7 @@ public interface AppointmentSchedulingHistoryRepository extends JpaRepository<Ap
             " where  ash.bloodDonor.id = :id " +
             " order by ash.appointment.time.startTime")
     List<AppointmentSchedulingHistory> gascina(@Param("id") UUID id);
+
+
+    boolean existsById(UUID id);
 }

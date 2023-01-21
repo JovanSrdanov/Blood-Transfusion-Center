@@ -2,10 +2,10 @@ package groupJASS.ISA_2022.Service.Implementations;
 
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
 import groupJASS.ISA_2022.Exceptions.SortNotFoundException;
-import groupJASS.ISA_2022.Model.AppointmentSchedulingConfirmationStatus;
-import groupJASS.ISA_2022.Model.AppointmentSchedulingHistory;
-import groupJASS.ISA_2022.Model.BloodDonor;
+import groupJASS.ISA_2022.Model.*;
+import groupJASS.ISA_2022.Repository.AccountRepository;
 import groupJASS.ISA_2022.Repository.AppointmentSchedulingHistoryRepository;
+import groupJASS.ISA_2022.Repository.StaffRepository;
 import groupJASS.ISA_2022.Service.Interfaces.IAppointmentSchedulingHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -15,21 +15,29 @@ import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
 import javax.transaction.Transactional;
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
 @Primary
 public class AppointmentSchedulingHistoryService implements IAppointmentSchedulingHistoryService {
-    private final AppointmentSchedulingHistoryRepository _appointmentSchedulingHistoryRepository;
     private final BloodDonorService _bloodDonorService;
+    private final AppointmentSchedulingHistoryRepository _appointmentSchedulingHistoryRepository;
+    private final StaffRepository _staffRepository;
+    private final AccountRepository _accountRepository;
 
     @Autowired
     public AppointmentSchedulingHistoryService(
             AppointmentSchedulingHistoryRepository appointmentSchedulingHistoryRepository,
+            StaffRepository staffRepository,
+            AccountRepository accountRepository,
             BloodDonorService bloodDonorService) {
         _appointmentSchedulingHistoryRepository = appointmentSchedulingHistoryRepository;
+        _staffRepository = staffRepository;
+        _accountRepository = accountRepository;
         _bloodDonorService = bloodDonorService;
     }
 
@@ -115,5 +123,30 @@ public class AppointmentSchedulingHistoryService implements IAppointmentScheduli
     @Override
     public List<AppointmentSchedulingHistory> getAllByBloodDonor_Id(UUID id) {
         return _appointmentSchedulingHistoryRepository.gascina(id);
+    }
+
+    @Override
+    public boolean exists(UUID id) {
+        return _appointmentSchedulingHistoryRepository.existsById(id);
+    }
+
+    @Override
+    //If everything is ok it returns null, otherwise returns name of blood center appointment should be held
+    public Optional<String> takesPlaceAtBloodCenter(UUID appointmentId, Principal principal) {
+        UUID staffId = _accountRepository.findByEmail(principal.getName()).getPersonId();
+        Optional<Staff> requestingStaff = _staffRepository.findById(staffId);
+        if(!requestingStaff.isPresent())
+        {
+           return Optional.ofNullable(null);
+        }
+
+        UUID requestingBloodCenterId = requestingStaff.get().getBloodCenter().getId();
+        BloodCenter appointmentsBloodCenter = _appointmentSchedulingHistoryRepository.findById(appointmentId).get().getAppointment().getBloodCenter();
+
+        if(requestingBloodCenterId.equals(appointmentsBloodCenter.getId()))
+        {
+            return Optional.ofNullable(null);
+        }
+        return Optional.ofNullable(appointmentsBloodCenter.getName());
     }
 }
