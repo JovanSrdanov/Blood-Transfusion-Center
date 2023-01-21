@@ -52,11 +52,11 @@ public class AppointmentService implements IAppointmentService {
 
     @Autowired
     public AppointmentService(AppointmentRepository appointmentRepository,
-                              IBloodDonorService bloodDonorService,
-                              AppointmentSchedulingHistoryService appointmentSchedulingHistoryService,
-                              StaffService staffService,
-                              IBloodCenterService bloodBloodCenterService,
-                              IAccountService accountService) {
+            IBloodDonorService bloodDonorService,
+            AppointmentSchedulingHistoryService appointmentSchedulingHistoryService,
+            StaffService staffService,
+            IBloodCenterService bloodBloodCenterService,
+            IAccountService accountService) {
         this._appointmentRepository = appointmentRepository;
         this._bloodDonorService = bloodDonorService;
         this._appointmentSchedulingHistoryService = appointmentSchedulingHistoryService;
@@ -101,9 +101,9 @@ public class AppointmentService implements IAppointmentService {
 
     @Override
     public List<DateRange> findFreeChunksForStaffId(UUID staffId, DateRange ceneterWorkRange) {
-        //Nadji sve appointmente za nekog staff-a
-        List<Appointment> appointments =
-                _appointmentRepository.findTakenChunksByStaffId(staffId, ceneterWorkRange.getStartTime(), ceneterWorkRange.getEndTime());
+        // Nadji sve appointmente za nekog staff-a
+        List<Appointment> appointments = _appointmentRepository.findTakenChunksByStaffId(staffId,
+                ceneterWorkRange.getStartTime(), ceneterWorkRange.getEndTime());
 
         // Posto repo vraca listu appointmente moram da ih pretovrim u listu
         // dateRangeova
@@ -112,12 +112,14 @@ public class AppointmentService implements IAppointmentService {
             dateRanges.add(new DateRange(a.getTime().getStartTime(), a.getTime().getEndTime()));
         }
 
-        //Od celog radnog vremena oduzmi zauzete chunkove i onda vracamo slobodne (zelene)
+        // Od celog radnog vremena oduzmi zauzete chunkove i onda vracamo slobodne
+        // (zelene)
         return DateRange.subtractFromBigRange(ceneterWorkRange, dateRanges);
     }
 
     @Override
-    public List<DateRange> findFreeSlotsForStaffIds(List<UUID> staffIds, LocalDateTime date, int duration) throws BadRequestException {
+    public List<DateRange> findFreeSlotsForStaffIds(List<UUID> staffIds, LocalDateTime date, int duration)
+            throws BadRequestException {
         if (staffIds.size() == 0) {
             throw new BadRequestException("Nema staff ids");
         }
@@ -125,7 +127,6 @@ public class AppointmentService implements IAppointmentService {
         try {
             Staff firstStaff = _staffService.findById(staffIds.get(0));
             UUID bcId = firstStaff.getBloodCenter().getId();
-
 
             for (UUID staffId : staffIds) {
                 Staff staff = _staffService.findById(staffId);
@@ -137,9 +138,9 @@ public class AppointmentService implements IAppointmentService {
             throw new BadRequestException("Nema staff sa tim id");
         }
 
-        //TODO proveri dateragne vece od 0
+        // TODO proveri dateragne vece od 0
 
-        //Nadji preseke izmedju slobodnih chunkova svih prosledjenih zaposlenih
+        // Nadji preseke izmedju slobodnih chunkova svih prosledjenih zaposlenih
         UUID bloodCenterId = _staffService.findById(staffIds.get(0)).getBloodCenter().getId();
         DateRange centerWorkRange = _bloodBloodCenterService.getWorkingDateRangeForDate(bloodCenterId, date);
 
@@ -151,7 +152,7 @@ public class AppointmentService implements IAppointmentService {
                     findFreeChunksForStaffId(staffId, centerWorkRange));
         }
 
-        //Podeli (iscepkaj) chunkove u manje slotove odredjene duzine
+        // Podeli (iscepkaj) chunkove u manje slotove odredjene duzine
         List<DateRange> slots = new ArrayList<>();
         for (DateRange dr : intersections) {
             List<DateRange> listTwo = DateRange.splitBigRangeIntoSmallRanges(dr, duration);
@@ -164,13 +165,14 @@ public class AppointmentService implements IAppointmentService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Appointment predefine(DateRange dateRange, List<UUID> staffIds, UUID staffAdminId, boolean isPredef) throws BadRequestException {
-        //Provera da li je poslata prazna lista staff-ova
+    public Appointment predefine(DateRange dateRange, List<UUID> staffIds, UUID staffAdminId, boolean isPredef)
+            throws BadRequestException {
+        // Provera da li je poslata prazna lista staff-ova
         if (staffIds.size() == 0) {
             throw new BadRequestException("Nema staff ids");
         }
 
-        //Provera da li su svi poslati staff iz istog bloodCentra
+        // Provera da li su svi poslati staff iz istog bloodCentra
         UUID bcId = _staffService.findById(staffAdminId).getBloodCenter().getId();
         for (UUID staffId : staffIds) {
             Staff staff = _staffService.findById(staffId);
@@ -179,8 +181,9 @@ public class AppointmentService implements IAppointmentService {
             }
         }
 
-        //Provera da li je appointment koji pokusavamo da predefinisemo dostpuan
-        List<DateRange> freeSlots = findFreeSlotsForStaffIds(staffIds, dateRange.getStartTime(), dateRange.calcaulateDurationMinutes());
+        // Provera da li je appointment koji pokusavamo da predefinisemo dostpuan
+        List<DateRange> freeSlots = findFreeSlotsForStaffIds(staffIds, dateRange.getStartTime(),
+                dateRange.calcaulateDurationMinutes());
         boolean found = false;
         for (DateRange r : freeSlots) {
             if (r.isEqual(dateRange)) {
@@ -192,7 +195,7 @@ public class AppointmentService implements IAppointmentService {
             throw new BadRequestException("Ne, ovaj termin nije slobodan");
         }
 
-        //Predefinis appointment, kreiraj Appointment
+        // Predefinis appointment, kreiraj Appointment
         HashSet<Staff> staffHashSet = new HashSet<>();
         for (UUID id : staffIds) {
             staffHashSet.add(_staffService.findById(id));
@@ -208,15 +211,18 @@ public class AppointmentService implements IAppointmentService {
     }
 
     @Override
-    public Page<Appointment> getPremadeAppointmentsForBloodCenter(UUID centerId, UUID donorId, int page, int pageSize, String sort)
+    public Page<Appointment> getPremadeAppointmentsForBloodCenter(UUID centerId, UUID donorId, int page, int pageSize,
+            String sort)
             throws SortNotFoundException {
         Page<Appointment> currentPage;
         if (sort.isBlank()) {
             currentPage = _appointmentRepository.searchBy(centerId, donorId, PageRequest.of(page, pageSize));
         } else if (sort.equals("asc")) {
-            currentPage = _appointmentRepository.searchBy(centerId, donorId, PageRequest.of(page, pageSize).withSort(Sort.by(Sort.Direction.ASC, "start_time")));
+            currentPage = _appointmentRepository.searchBy(centerId, donorId,
+                    PageRequest.of(page, pageSize).withSort(Sort.by(Sort.Direction.ASC, "start_time")));
         } else if (sort.equals("desc")) {
-            currentPage = _appointmentRepository.searchBy(centerId, donorId, PageRequest.of(page, pageSize).withSort(Sort.by(Sort.Direction.DESC, "start_time")));
+            currentPage = _appointmentRepository.searchBy(centerId, donorId,
+                    PageRequest.of(page, pageSize).withSort(Sort.by(Sort.Direction.DESC, "start_time")));
         } else {
             throw new SortNotFoundException("This sort type doesn't exist");
         }
@@ -235,11 +241,11 @@ public class AppointmentService implements IAppointmentService {
             throw new NotFoundException("Donor or appointment doesent exist");
         }
 
-
-        //Provera da li je appointment koji pokusavamo da zakazemo idalje dostpuan
+        // Provera da li je appointment koji pokusavamo da zakazemo idalje dostpuan
         Appointment appointment = findById(appointmentId);
         boolean found = false;
-        var apps = _appointmentRepository.findAvailableAppointmentsForDonorIncludingCustom(donorId, appointment.getBloodCenter().getId());
+        var apps = _appointmentRepository.findAvailableAppointmentsForDonorIncludingCustom(donorId,
+                appointment.getBloodCenter().getId());
         for (Appointment a : apps) {
             if (a.getId().equals(appointmentId)) {
                 found = true;
@@ -251,7 +257,7 @@ public class AppointmentService implements IAppointmentService {
             throw new NotFoundException("Appointment not available anymore");
         }
 
-        //Zakazi appointment, kreiraj history
+        // Zakazi appointment, kreiraj history
         try {
             BloodDonor donor = _bloodDonorService.findById(donorId);
             checkIfDonorCanSchedule(donor);
@@ -274,7 +280,7 @@ public class AppointmentService implements IAppointmentService {
     }
 
     private void checkIfDonorCanSchedule(BloodDonor donor) throws Exception {
-        
+
         if (donor.getQuestionnaire() == null) {
             throw new Exception("Donor can not donate blood becouse he has not filled his questionnaire");
         }
@@ -285,17 +291,19 @@ public class AppointmentService implements IAppointmentService {
             throw new Exception("Can not schedule because blood donor has over 3 penalties");
         }
         for (var ash : donor.getAppointmentSchedulingHistories()) {
-            if (ash.getStatus() == AppointmentSchedulingConfirmationStatus.PROCESSED && ash.getAppointment().getTime().getStartTime().isAfter(LocalDateTime.now().minusMonths(6))) {
+            if (ash.getStatus() == AppointmentSchedulingConfirmationStatus.PROCESSED
+                    && ash.getAppointment().getTime().getStartTime().isAfter(LocalDateTime.now().minusMonths(6))) {
                 throw new Exception("You have donated blood recently");
             }
         }
     }
 
     @Override
-    @Transactional(rollbackFor = {Exception.class})
-    public AppointmentSchedulingHistory scheduleCustomAppointmetn(UUID donorId, LocalDateTime time, UUID staffId) throws BadRequestException {
+    @Transactional(rollbackFor = { Exception.class })
+    public AppointmentSchedulingHistory scheduleCustomAppointmetn(UUID donorId, LocalDateTime time, UUID staffId)
+            throws BadRequestException {
         DateRange dateRange = new DateRange(time, 20);
-        //Proveri da li moze ovaj app da se zakaze tj el postoji
+        // Proveri da li moze ovaj app da se zakaze tj el postoji
         var availableAppointments = findCustomAvailableAppointments(donorId, time);
         boolean found = false;
         for (AvailableCustomAppointmentsDto apps : availableAppointments) {
@@ -309,7 +317,7 @@ public class AppointmentService implements IAppointmentService {
             throw new BadRequestException("Ne postoji ovaj custom app");
         }
 
-        //Predefinis appointment, kreiraj Appointment
+        // Predefinis appointment, kreiraj Appointment
         HashSet<Staff> staffHashSet = new HashSet<>();
         staffHashSet.add(_staffService.findById(staffId));
         BloodCenter bloodCenter = staffHashSet.stream().toList().get(0).getBloodCenter();
@@ -321,8 +329,7 @@ public class AppointmentService implements IAppointmentService {
                 staffHashSet,
                 bloodCenter,
                 false,
-                dateRange
-        ));
+                dateRange));
 
         return scheduleAppointment(donorId, appId);
     }
@@ -356,8 +363,7 @@ public class AppointmentService implements IAppointmentService {
                     availableCustomAppointments.add(new AvailableCustomAppointmentsDto(
                             wantedRange,
                             ObjectMapperUtils.map(bc, BloodCenterBasicInfoDto.class),
-                            foundStaffId
-                    ));
+                            foundStaffId));
                     break;
                 }
             }
@@ -365,10 +371,9 @@ public class AppointmentService implements IAppointmentService {
         return availableCustomAppointments;
     }
 
-
     @Async
     public void sendScheduleConfirmation(Appointment appointment, String email, UUID ASHId) {
-        //Todo stavi mail od donora
+        // Todo stavi mail od donora
         try {
             System.out.println("Email sending started.");
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
@@ -380,7 +385,9 @@ public class AppointmentService implements IAppointmentService {
             String confirmationInfo = "Hello!\n" +
                     "A new appointment has been scheduled!\n" +
                     "BloodCenter: " + appointment.getBloodCenter().getName() + "\n" +
-                    "Date and time: " + appointment.getTime().getStartTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + "\n" +
+                    "Date and time: "
+                    + appointment.getTime().getStartTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+                    + "\n" +
                     "Duration: " + appointment.getTime().calcaulateDurationMinutes() + "min\n";
             helper.setText(confirmationInfo);
 
@@ -407,7 +414,4 @@ public class AppointmentService implements IAppointmentService {
         }
     }
 
-
 }
-
-
