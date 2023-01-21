@@ -133,7 +133,7 @@ public class BloodDonorService implements IBloodDonorService {
         }
     }
 
- 
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Account registerNewBloodDonor(RegisterBloodDonorDTO dto) throws BadRequestException {

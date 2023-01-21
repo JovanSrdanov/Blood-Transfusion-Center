@@ -20,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.webjars.NotFoundException;
 
 import java.security.Principal;
 import java.time.format.DateTimeFormatter;
@@ -37,8 +38,8 @@ public class AppointmentSchedulingHistoryController {
 
     @Autowired
     public AppointmentSchedulingHistoryController(IAccountService accountService,
-            IAppointmentSchedulingHistoryService appointmentSchedulingHistoryRepository,
-            IStaffService staffService) {
+                                                  IAppointmentSchedulingHistoryService appointmentSchedulingHistoryRepository,
+                                                  IStaffService staffService) {
         _accountService = accountService;
         _staffService = staffService;
         _appointmentSchedulingHistoryService = appointmentSchedulingHistoryRepository;
@@ -49,7 +50,7 @@ public class AppointmentSchedulingHistoryController {
     public ResponseEntity<?> getDonorFullname(
             @PathVariable("ashId") UUID ashId) {
         try {
-            var donor = _appointmentSchedulingHistoryRepository.findById(ashId)
+            var donor = _appointmentSchedulingHistoryService.findById(ashId)
                     .getBloodDonor();
             var result = new BloodDonorSearchByNameAndSurnameDto();
             result.setName(donor.getName());
@@ -64,10 +65,10 @@ public class AppointmentSchedulingHistoryController {
     @GetMapping("/blood-donor-appointments")
     @PreAuthorize("hasRole('BLOOD_DONOR')")
     public ResponseEntity<?> bloodDonorAppointments(Principal account,
-            @RequestParam(name = "page") int page,
-            @RequestParam(name = "pageSize") int pageSize,
-            @RequestParam(name = "field") String field,
-            @RequestParam(name = "sort") String sort) throws SortNotFoundException {
+                                                    @RequestParam(name = "page") int page,
+                                                    @RequestParam(name = "pageSize") int pageSize,
+                                                    @RequestParam(name = "field") String field,
+                                                    @RequestParam(name = "sort") String sort) throws SortNotFoundException {
         Account a = _accountService.findAccountByEmail(account.getName());
         Page<AppointmentSchedulingHistory> entities = _appointmentSchedulingHistoryService
                 .bloodDonorPendingAppointments(a.getPersonId(), pageSize, page, field, sort);
@@ -87,10 +88,10 @@ public class AppointmentSchedulingHistoryController {
     @GetMapping("/blood-donor-appointments-QR")
     @PreAuthorize("hasRole('BLOOD_DONOR')")
     public ResponseEntity<?> bloodDonorAppointmentsQR(Principal account,
-            @RequestParam(name = "page") int page,
-            @RequestParam(name = "pageSize") int pageSize,
-            @RequestParam(name = "sort") String sort,
-            @RequestParam(name = "filter") String filter) throws SortNotFoundException {
+                                                      @RequestParam(name = "page") int page,
+                                                      @RequestParam(name = "pageSize") int pageSize,
+                                                      @RequestParam(name = "sort") String sort,
+                                                      @RequestParam(name = "filter") String filter) throws SortNotFoundException {
         try {
 
             UUID bloodDonorId = _accountService.findAccountByEmail(account.getName()).getPersonId();
@@ -101,7 +102,7 @@ public class AppointmentSchedulingHistoryController {
             for (var ash : ashList) {
                 String qrCodeText = "Your appointment is scheduled at "
                         + ash.getAppointment().getTime().getStartTime()
-                                .format(DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy."))
+                        .format(DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy."))
                         +
                         " in blood center " + ash.getAppointment().getBloodCenter().getName() + ".\n=====\n" +
                         "Appointment code: " + ash.getId();
@@ -129,7 +130,7 @@ public class AppointmentSchedulingHistoryController {
     @GetMapping("/blood-donor-appointments-for-centre/{bloodDonorId}")
     @PreAuthorize("hasRole('STAFF')") // nisam siguran dal je ovo dobro
     public ResponseEntity<?> bloodDonorAppointmentsForCentre(Principal account,
-            @PathVariable("bloodDonorId") UUID bloodDonorId) {
+                                                             @PathVariable("bloodDonorId") UUID bloodDonorId) {
         List<BloodDonorAppointmentsForCenter> result = new ArrayList<>();
         Account a = _accountService.findAccountByEmail(account.getName());
         UUID personId = a.getPersonId();
