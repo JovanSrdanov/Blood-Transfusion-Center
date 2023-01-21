@@ -12,7 +12,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class AppointmentDetailsComponent implements OnInit {
   appointmentHistoryId: string = '-1';
-  donorId: string = '-1';
+  //donorId: string = '-1';
 
   private sub: any;
 
@@ -40,12 +40,14 @@ export class AppointmentDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.sub = this.route.params.subscribe((params) => {
       this.appointmentHistoryId = params['appointmentHistoryId'];
-      this.donorId = params['donorId'];
+      //this.donorId = params['donorId'];
       console.log(this.appointmentHistoryId);
-      console.log(this.donorId);
-      this.questionaireService.getByDonorId(this.donorId).subscribe((res) => {
-        this.questionaire = res;
-      });
+      //console.log(this.donorId);
+      this.questionaireService
+        .getByAshId(this.appointmentHistoryId)
+        .subscribe((res) => {
+          this.questionaire = res;
+        });
     });
   }
 
@@ -86,7 +88,7 @@ export class AppointmentDetailsComponent implements OnInit {
   cancelAppointment() {
     let cancelation: AppointmentCancelation = {
       appointmentHistoryId: this.appointmentHistoryId, //TODO test, prvremeno
-      bloodDonorId: this.donorId,
+      //bloodDonorId: this.donorId,
       showedUp: this.checkedDidNotShowUp,
     };
 

@@ -14,6 +14,6 @@ import java.util.UUID;
 @Setter
 public class AppointmentCancelation {
     UUID appointmentHistoryId;
-    UUID bloodDonorId;
+    //UUID bloodDonorId;
     boolean showedUp;
 }
