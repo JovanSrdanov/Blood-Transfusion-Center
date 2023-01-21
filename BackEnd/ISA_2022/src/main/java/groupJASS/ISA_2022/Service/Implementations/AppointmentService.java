@@ -1,5 +1,9 @@
 package groupJASS.ISA_2022.Service.Implementations;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 import groupJASS.ISA_2022.DTO.Appointment.AvailableCustomAppointmentsDto;
 import groupJASS.ISA_2022.DTO.Appointment.AvailablePredefinedDto;
 import groupJASS.ISA_2022.DTO.BloodCenter.BloodCenterBasicInfoDto;
@@ -12,18 +16,21 @@ import groupJASS.ISA_2022.Service.Interfaces.IAppointmentService;
 import groupJASS.ISA_2022.Service.Interfaces.IBloodCenterService;
 import groupJASS.ISA_2022.Service.Interfaces.IBloodDonorService;
 import groupJASS.ISA_2022.Utilities.ObjectMapperUtils;
+import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
 
+import javax.mail.internet.MimeMessage;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -267,26 +274,21 @@ public class AppointmentService implements IAppointmentService {
     }
 
     private void checkIfDonorCanSchedule(BloodDonor donor) throws Exception {
-
-        BloodDonor d = _bloodDonorService.fetchWithQuestionnaire(donor.getId());
+        
         if (donor.getQuestionnaire() == null) {
             throw new Exception("Donor can not donate blood becouse he has not filled his questionnaire");
         }
-        if (!d.getQuestionnaire().canDonateBlood()) {
+        if (!donor.getQuestionnaire().canDonateBlood()) {
             throw new Exception("Donor can not donate blood becouse of his questionnaire");
         }
-        if (d.getPenalties() >= 3) {
+        if (donor.getPenalties() >= 3) {
             throw new Exception("Can not schedule because blood donor has over 3 penalties");
         }
-
-        var a = _appointmentSchedulingHistoryService.getAllByBloodDonor_Id(d.getId());
-        for (var ash : _appointmentSchedulingHistoryService.getAllByBloodDonor_Id(d.getId())) {
+        for (var ash : donor.getAppointmentSchedulingHistories()) {
             if (ash.getStatus() == AppointmentSchedulingConfirmationStatus.PROCESSED && ash.getAppointment().getTime().getStartTime().isAfter(LocalDateTime.now().minusMonths(6))) {
                 throw new Exception("You have donated blood recently");
             }
         }
-
-
     }
 
     @Override
@@ -365,23 +367,47 @@ public class AppointmentService implements IAppointmentService {
 
 
     @Async
-    public void sendScheduleConfirmation(Appointment appointment, String email) {
+    public void sendScheduleConfirmation(Appointment appointment, String email, UUID ASHId) {
+        //Todo stavi mail od donora
+        try {
+            System.out.println("Email sending started.");
+            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
 
-        System.out.println("Email se salje sa informacijama o pregledu!");
-        SimpleMailMessage mail = new SimpleMailMessage();
-        mail.setTo(email);
-        mail.setFrom("ISA_BEJBI");
-        mail.setSubject("New appointment! ");
+            helper.setFrom("psw.integrations.g4@gmail.com");
+            helper.setTo(email);
+            helper.setSubject("New appoitnment!");
+            String confirmationInfo = "Hello!\n" +
+                    "A new appointment has been scheduled!\n" +
+                    "BloodCenter: " + appointment.getBloodCenter().getName() + "\n" +
+                    "Date and time: " + appointment.getTime().getStartTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + "\n" +
+                    "Duration: " + appointment.getTime().calcaulateDurationMinutes() + "min\n";
+            helper.setText(confirmationInfo);
 
-        String confirmationInfo = "Hello!\n" +
-                "A new appointment has been scheduled!\n" +
-                "BloodCenter: " + appointment.getBloodCenter().getName() + "\n" +
-                "Date and time: " + appointment.getTime().getStartTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + "\n" +
-                "Duration: " + appointment.getTime().calcaulateDurationMinutes() + "min\n";
+            System.out.println("QR CODE GENERATING STARTED");
 
-        mail.setText(confirmationInfo);
-        javaMailSender.send(mail);
-        System.out.println("Email poslat!");
+            QRCodeWriter qrCodeWriter = new QRCodeWriter();
+            String qrCodeText = "Your appointment is scheduled at "
+                    + appointment.getTime().getStartTime().format(DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy.")) +
+                    " in blood center " + appointment.getBloodCenter().getName() + ".\n=====\n" +
+                    "Appointment code: " + ASHId;
+            BitMatrix bitMatrix = qrCodeWriter.encode(qrCodeText, BarcodeFormat.QR_CODE, 300, 300);
+            ByteArrayOutputStream pngOutputStream = new ByteArrayOutputStream();
+            MatrixToImageWriter.writeToStream(bitMatrix, "PNG", pngOutputStream);
+            byte[] qrCode = pngOutputStream.toByteArray();
+
+            System.out.println("QR CODE GENERATING FINISHED");
+
+            helper.addAttachment("qrCode.png", new ByteArrayResource(qrCode), "image/png");
+            javaMailSender.send(mimeMessage);
+
+            System.out.println("Email sending complete.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
+
 }
+
+

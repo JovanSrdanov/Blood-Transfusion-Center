@@ -114,6 +114,6 @@ public class AppointmentSchedulingHistoryService implements IAppointmentScheduli
 
     @Override
     public List<AppointmentSchedulingHistory> getAllByBloodDonor_Id(UUID id) {
-        return _appointmentSchedulingHistoryRepository.gascina(id);
+        return _appointmentSchedulingHistoryRepository.getAllByBloodDonor_Id(id);
     }
 }
