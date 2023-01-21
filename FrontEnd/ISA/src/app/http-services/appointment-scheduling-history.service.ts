@@ -6,6 +6,7 @@ import { BloodDonorAppointmentsDTO } from '../features/my-appointments/my-appoin
 import { Observable } from 'rxjs';
 import { PageDto } from '../model/PageDto';
 import { appointmentBloodDonorInfo } from '../model/appointment/appointment-blood-donor-info';
+import { BloodDonorSearchNameSurname } from '../model/blood-donor/blood-donor-search-name-surname';
 
 @Injectable({
   providedIn: 'root',
@@ -49,6 +50,12 @@ export class AppointmentSchedulingHistoryService {
         sortType +
         '&field=' +
         field
+    );
+  }
+
+  getDonorFullname(ashId: string): Observable<BloodDonorSearchNameSurname> {
+    return this.http.get<BloodDonorSearchNameSurname>(
+      this.path + '/fullname/' + ashId
     );
   }
 }
