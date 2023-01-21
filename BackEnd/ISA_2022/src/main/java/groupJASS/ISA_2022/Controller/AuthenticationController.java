@@ -73,11 +73,8 @@ public class AuthenticationController {
     @PostMapping("/activate-account")
     public ResponseEntity<?> activateAccount(@RequestBody ActivateAccountDTO activateAccountDTO) {
         try {
-
             Account account = accountService.activateAccount(activateAccountDTO);
-            String jwt = tokenUtils.generateToken(account.getUsername(), account.getRoles().get(0).getName(), account.getLastPasswordUpdateDate());
-            int expiresIn = tokenUtils.getExpiredIn();
-            return ResponseEntity.ok(new Jwt(jwt));
+            return ResponseEntity.ok("Succes");
 
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);

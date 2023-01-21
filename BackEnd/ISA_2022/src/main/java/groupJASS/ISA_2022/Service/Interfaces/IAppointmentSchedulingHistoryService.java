@@ -18,6 +18,4 @@ public interface IAppointmentSchedulingHistoryService extends ICrudService<Appoi
 
     void cancelAppointment(UUID appointmentId, UUID bloodDonorId) throws Exception;
     
-
-    List<AppointmentSchedulingHistory> getAllByBloodDonor_Id(UUID id);
 }

@@ -81,7 +81,7 @@ public class AppointmentController {
 
             Account a = _accountService.findAccountByEmail(account.getName());
             var res = (AppointmentSchedulingHistory) _appointmentService.scheduleAppointment(a.getPersonId(), appid);
-            _appointmentService.sendScheduleConfirmation(res.getAppointment(), account.getName());
+            _appointmentService.sendScheduleConfirmation(res.getAppointment(), account.getName(), res.getId());
             return new ResponseEntity<>(true, HttpStatus.OK);
 
         } catch (Exception e) {
@@ -107,6 +107,7 @@ public class AppointmentController {
                     a.getPersonId(),
                     dto.getTime(),
                     dto.getStaffId());
+            _appointmentService.sendScheduleConfirmation(res.getAppointment(), account.getName(), res.getId());
         } catch (BadRequestException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
