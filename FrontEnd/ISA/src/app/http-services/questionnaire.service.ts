@@ -16,9 +16,9 @@ export class QuestionnaireService {
     return this.http.post(this.path + '/fillQuestionare', dto);
   };
 
-  getByDonorId(donorId: string): Observable<Questionnaire> {
+  getByAshId(ashId: string): Observable<Questionnaire> {
     return this.http.get<Questionnaire>(
-      this.path + '/getQuestionaire/' + donorId
+      this.path + '/getQuestionaire/' + ashId
     );
   }
 }
