@@ -5,13 +5,19 @@ import { environment } from 'src/environments/environment';
 import { BloodDonorAppointmentsDTO } from '../features/my-appointments/my-appointments/my-appointments.component';
 import { Observable } from 'rxjs';
 import { PageDto } from '../model/PageDto';
-import { appointmentBloodDonorInfo } from '../model/appointment/appointment-blood-donor-info';
+
+export interface QrCodeASHDTO {
+  ashid: String,
+  qrcodeMessage: string
+  status: string,
+  issuingDate: Date
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class AppointmentSchedulingHistoryService {
-  constructor(private readonly http: HttpClient) {}
+  constructor(private readonly http: HttpClient) { }
   path: string = environment.backendPath + '/appointment_scheduling_history';
 
   bloodDonorAppointmentsForCenter(donorId: string): Observable<any> {
@@ -41,14 +47,23 @@ export class AppointmentSchedulingHistoryService {
   ): Observable<PageDto<BloodDonorAppointmentsDTO[]>> {
     return this.http.get<PageDto<BloodDonorAppointmentsDTO[]>>(
       this.path +
-        '/blood-donor-appointments?pageSize=' +
-        pageSize +
-        '&page=' +
-        page +
-        '&sort=' +
-        sortType +
-        '&field=' +
-        field
+      '/blood-donor-appointments?pageSize=' +
+      pageSize +
+      '&page=' +
+      page +
+      '&sort=' +
+      sortType +
+      '&field=' +
+      field
     );
   }
+
+  QRbloodDonorAppointments(pageSize: number,
+    page: number,
+    sortType: any,
+    filter: string): Observable<PageDto<QrCodeASHDTO[]>> {
+    return this.http.get<PageDto<QrCodeASHDTO[]>>(this.path + '/blood-donor-appointments-QR?page='
+      + page + "&pageSize=" + pageSize + "&filter=" + filter + "&sort=" + sortType);
+  }
+
 }

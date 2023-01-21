@@ -19,9 +19,11 @@ public interface IAppointmentSchedulingHistoryService extends ICrudService<Appoi
     Page<AppointmentSchedulingHistory> bloodDonorPendingAppointments(UUID personId, int pageSize, int page, String field, String sort) throws SortNotFoundException;
 
     void cancelAppointment(UUID appointmentId, UUID bloodDonorId) throws Exception;
-    
 
-    List<AppointmentSchedulingHistory> getAllByBloodDonor_Id(UUID id);
+
+    Page<AppointmentSchedulingHistory> getAllByBloodDonor_Id(UUID id, int page, int pageSize, String sort, String filter) throws SortNotFoundException;
+
     boolean exists(UUID id);
+
     Optional<String> takesPlaceAtBloodCenter(UUID appointmentId, Principal principal);
 }

@@ -1,0 +1,32 @@
+.mat-elevation-z8 {
+  width: 80%;
+  margin: auto;
+  margin-top: 25px;
+}
+table {
+  width: 100%;
+  table-layout: fixed;
+  text-align: center !important;
+}
+
+.mat-header-cell {
+  text-align: center;
+  justify-content: center;
+}
+
+:host ::ng-deep .mat-sort-header-container {
+  display: flex;
+  justify-content: center;
+}
+
+.filters {
+  background: white;
+  height: fit-content;
+  width: fit-content;
+  margin: auto;
+  border-radius: 10px;
+}
+
+.filters:hover {
+  box-shadow: 0 0 30px white;
+}
