@@ -35,10 +35,7 @@ export class VisitingHistoryComponent implements OnInit {
   resultsLength = 0;
   isLoadingResults = true;
   isRateLimitReached = false;
-
-  centerId: string = '-1';
-  private sub: any;
-  constructor(private appointmentReportService: AppointmentReportService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private appointmentReportService: AppointmentReportService) { }
   ngOnInit(): void {
   }
 

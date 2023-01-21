@@ -88,6 +88,7 @@ export class MyAppointmentsComponent implements AfterViewInit {
         })
       )
       .subscribe((data) => (this.dataSource = data.content), err => { alert(err) });
+
   }
 
   setTableDataSource(data: any) {

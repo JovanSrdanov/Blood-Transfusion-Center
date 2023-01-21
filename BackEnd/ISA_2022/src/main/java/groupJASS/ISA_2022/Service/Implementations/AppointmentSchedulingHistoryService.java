@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
@@ -121,8 +122,27 @@ public class AppointmentSchedulingHistoryService implements IAppointmentScheduli
     }
 
     @Override
-    public List<AppointmentSchedulingHistory> getAllByBloodDonor_Id(UUID id) {
-        return _appointmentSchedulingHistoryRepository.gascina(id);
+    public Page<AppointmentSchedulingHistory> getAllByBloodDonor_Id(UUID BloodDonorId, int page, int pageSize, String sort, String filter) throws SortNotFoundException {
+        Page<AppointmentSchedulingHistory> pageToSend;
+        AppointmentSchedulingConfirmationStatus f = switch (filter) {
+            case "PENDING" -> AppointmentSchedulingConfirmationStatus.PENDING;
+            case "PROCESSED" -> AppointmentSchedulingConfirmationStatus.PROCESSED;
+            case "REJECTED" -> AppointmentSchedulingConfirmationStatus.REJECTED;
+            case "CANCELED" -> AppointmentSchedulingConfirmationStatus.CANCELED;
+            default -> AppointmentSchedulingConfirmationStatus.PENDING;
+        };
+        if (sort.isBlank()) {
+            pageToSend = _appointmentSchedulingHistoryRepository.sortFilter(f, BloodDonorId, PageRequest.of(page, pageSize));
+        } else if (sort.equals("asc")) {
+            pageToSend = _appointmentSchedulingHistoryRepository.sortFilter(f, BloodDonorId, PageRequest.of(page, pageSize)
+                    .withSort(Sort.by(Sort.Direction.ASC, "issuingDate")));
+        } else if (sort.equals("desc")) {
+            pageToSend = _appointmentSchedulingHistoryRepository.sortFilter(f, BloodDonorId, PageRequest.of(page, pageSize)
+                    .withSort(Sort.by(Sort.Direction.DESC, "issuingDate")));
+        } else {
+            throw new SortNotFoundException("This sort type doesn't exist");
+        }
+        return pageToSend;
     }
 
     @Override
@@ -135,16 +155,14 @@ public class AppointmentSchedulingHistoryService implements IAppointmentScheduli
     public Optional<String> takesPlaceAtBloodCenter(UUID appointmentId, Principal principal) {
         UUID staffId = _accountRepository.findByEmail(principal.getName()).getPersonId();
         Optional<Staff> requestingStaff = _staffRepository.findById(staffId);
-        if(!requestingStaff.isPresent())
-        {
-           return Optional.ofNullable(null);
+        if (!requestingStaff.isPresent()) {
+            return Optional.ofNullable(null);
         }
 
         UUID requestingBloodCenterId = requestingStaff.get().getBloodCenter().getId();
         BloodCenter appointmentsBloodCenter = _appointmentSchedulingHistoryRepository.findById(appointmentId).get().getAppointment().getBloodCenter();
 
-        if(requestingBloodCenterId.equals(appointmentsBloodCenter.getId()))
-        {
+        if (requestingBloodCenterId.equals(appointmentsBloodCenter.getId())) {
             return Optional.ofNullable(null);
         }
         return Optional.ofNullable(appointmentsBloodCenter.getName());
