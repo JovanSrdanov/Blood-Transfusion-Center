@@ -31,7 +31,7 @@ export class LoginPageComponent implements OnInit {
     private readonly loginService: LoginService,
     private readonly router: Router,
     private readonly accountService: AccountService,
-    private readonly bloodCentreService: BloodCenterService
+
   ) { }
 
   ngOnInit(): void {
@@ -40,8 +40,7 @@ export class LoginPageComponent implements OnInit {
     var accountId = params.get('accountId');
     if (token !== null && accountId != null) {
       this.accountService.activateAccount(token, accountId).subscribe((res) => {
-        localStorage.setItem('jwt', res.jwt);
-        this.router.navigate(['blood-donor']);
+        alert("Account activated");
 
       });
     }
