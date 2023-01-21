@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { PremadeAppointmentDTO } from '../features/premade-appointments/premade-appointments/premade-appointments.component';
 import { PageDto } from '../model/PageDto';
+import {AppointmentQrInformation} from '../model/appointment/appointment-qr-information'
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,12 @@ export class AppointmentServiceService {
     return this.http.post<any>(this.path + '/schedulePredefine/' + appointmentId, {});
   }
 
+  scanQrCode = (qrCode : File) : Observable<AppointmentQrInformation> => {
+    const uploadData : FormData = new FormData();
+    uploadData.append('qrCode', (qrCode as Blob), qrCode.name);
+
+    return this.http.post<AppointmentQrInformation>(this.path + '/scan-qr' , uploadData);
+  }
 
 
 }
