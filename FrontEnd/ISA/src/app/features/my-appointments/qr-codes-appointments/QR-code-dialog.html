@@ -1,0 +1,22 @@
+<h1 mat-dialog-title>Your QR Code:</h1>
+
+<qrcode
+  [qrdata]="data.qrcode.qrcodeMessage"
+  [width]="300"
+  [errorCorrectionLevel]="'H'"
+></qrcode>
+
+<div mat-dialog-content style="white-space: pre-line">
+  {{data.qrcode.qrcodeMessage}}
+</div>
+<br />
+<div mat-dialog-content style="white-space: pre-line">
+  Issuing Date:<b>
+    {{data.qrcode.issuingDate| date : "dd/MM/YYYY HH:MM:SS" }}</b
+  >
+</div>
+<div mat-dialog-content>Status: <b>{{data.qrcode.status}}</b></div>
+
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Close</button>
+</div>

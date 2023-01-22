@@ -7,6 +7,7 @@ import { BloodDonorListComponent } from '../features/blood-donor-list/blood-dono
 import { StaffProfileComponent } from '../features/staff-profile/staff-profile/staff-profile.component';
 import { BloodCenterCalendarComponent } from '../features/blood-center-calendar/blood-center-calendar/blood-center-calendar.component';
 import { CreatePremadeAppointmentComponent } from '../features/create-premade-appointment/create-premade-appointment/create-premade-appointment/create-premade-appointment.component';
+import { AppQrScanComponent } from '../features/app-qr-scan/app-qr-scan.component';
 
 const routes: Routes = [
   {
@@ -19,7 +20,7 @@ const routes: Routes = [
     component: BloodDonorAppointmentListComponent,
   },
   {
-    path: 'appointment-details/:appointmentHistoryId/:donorId',
+    path: 'appointment-details/:appointmentHistoryId',
     component: AppointmentDetailsComponent,
   },
   {
@@ -30,7 +31,10 @@ const routes: Routes = [
     path: 'create-premade-appointment',
     component: CreatePremadeAppointmentComponent,
   },
-
+  {
+    path: 'app-qr-scan',
+    component: AppQrScanComponent,
+  },
   { path: 'staff-profile', component: StaffProfileComponent },
   { path: 'calendar', component: BloodCenterCalendarComponent },
   { path: '', redirectTo: 'staff-profile', pathMatch: 'full' },
@@ -42,4 +46,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class StaffRoutingModule { }
+export class StaffRoutingModule {}

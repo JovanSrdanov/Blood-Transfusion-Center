@@ -1,7 +1,6 @@
 package groupJASS.ISA_2022.Service.Implementations;
 
-import groupJASS.ISA_2022.DTO.BloodCenter.BloodCenterIncomingAppointmentsDbDto;
-import groupJASS.ISA_2022.DTO.BloodCenter.BloodCenterIncomingAppointmentsDto;
+import groupJASS.ISA_2022.DTO.BloodCenter.BloodCenterIncomingAppointmentDto;
 import groupJASS.ISA_2022.DTO.BloodCenter.WorkingHoursRoundedDto;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
 import groupJASS.ISA_2022.Exceptions.BloodCenterNotAssignedException;
@@ -9,7 +8,6 @@ import groupJASS.ISA_2022.Exceptions.SortNotFoundException;
 import groupJASS.ISA_2022.Model.*;
 import groupJASS.ISA_2022.Repository.*;
 import groupJASS.ISA_2022.Service.Interfaces.IBloodCenterService;
-import groupJASS.ISA_2022.Utilities.MappingUtilities;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -156,7 +154,7 @@ public class BloodCenterService implements IBloodCenterService {
     }
 
     @Override
-    public List<BloodCenterIncomingAppointmentsDto> getIncomingAppointments(Principal principal) throws BloodCenterNotAssignedException {
+    public List<BloodCenterIncomingAppointmentDto> getIncomingAppointments(Principal principal) throws BloodCenterNotAssignedException {
         Account account = _accountRepository.findByEmail(principal.getName());
         Staff staff = _staffRepository.findById(account.getPersonId()).get();
 
@@ -164,37 +162,6 @@ public class BloodCenterService implements IBloodCenterService {
         {
             throw new BloodCenterNotAssignedException("There is no blood center assigned for given staff");
         }
-        //TODO REFACTOR
-        var result =  _bloodCenterRepository.getIncomingAppointmentsForBloodCenter(staff.getBloodCenter().getId());
-        List<BloodCenterIncomingAppointmentsDto> dtos = new ArrayList<BloodCenterIncomingAppointmentsDto>();
-
-        for(Object[] obj : result){
-            Timestamp start  =(Timestamp) obj[0];
-            Timestamp end  =(Timestamp) obj[1];
-            String name  =(String) obj[2];
-            String surname  =(String) obj[3];
-
-            LocalDateTime startHours = start.toLocalDateTime();
-            LocalDateTime endHours = end.toLocalDateTime();
-
-            Duration duration = Duration.between(startHours,endHours);
-            int durationMinutes = duration.toMinutesPart();
-
-            int sHours = startHours.getHour();
-            int sMinutes = startHours.getMinute();
-
-            String strHours = sHours < 10 ? "0" + Integer.toString(sHours) : Integer.toString(sHours);
-            String strMinutes = sMinutes < 10 ? "0" + Integer.toString(sMinutes) : Integer.toString(sMinutes);
-            String strTime = strHours+ ":" + strMinutes;
-            String strDuration = Integer.toString(durationMinutes);
-
-            String info = strTime + ",  " + strDuration +"min,  " +  name + " " + surname;
-            BloodCenterIncomingAppointmentsDto dto = new BloodCenterIncomingAppointmentsDto(startHours, endHours, info);
-
-
-            dtos.add(dto);
-
-        }
-        return dtos;
+        return  _bloodCenterRepository.getIncomingAppointments(staff.getBloodCenter().getId(), LocalDateTime.now());
     }
 }

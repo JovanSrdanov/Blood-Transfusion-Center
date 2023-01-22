@@ -35,5 +35,5 @@ public interface IAppointmentService extends ICrudService<Appointment> {
     Page<Appointment> getPremadeAppointmentsForBloodCenter(UUID centerId, UUID donorId, int page, int pageSize, String sort)
             throws SortNotFoundException;
 
-    void sendScheduleConfirmation(Appointment appointment, String email);
+    void sendScheduleConfirmation(Appointment appointment, String email, UUID ASHId);
 }

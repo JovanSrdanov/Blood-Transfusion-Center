@@ -64,7 +64,7 @@
 <!-- CALENDAR -->
 <br />
 <!-- MONTH -->
-<div [ngSwitch]="view" id="tabelaMrale"> 
+<div [ngSwitch]="view" > 
   <mwl-calendar-month-view
     *ngSwitchCase="CalendarView.Month"
     [viewDate]="viewDate"
@@ -84,6 +84,7 @@
     [viewDate]="viewDate"
     [events]="events"
     [refresh]="refresh"
+    (eventClicked)="handleEvent('Clicked', $event.event)"
   >
   </mwl-calendar-week-view>
   <!-- DAY -->
@@ -94,6 +95,7 @@
     [viewDate]="viewDate"
     [events]="events"
     [refresh]="refresh"
+    (eventClicked)="handleEvent('Clicked', $event.event)"
   >
   </mwl-calendar-day-view>
 </div>

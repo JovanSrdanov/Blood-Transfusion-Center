@@ -1,5 +1,6 @@
 package groupJASS.ISA_2022.Repository;
 
+import groupJASS.ISA_2022.Model.AppointmentSchedulingConfirmationStatus;
 import groupJASS.ISA_2022.Model.AppointmentSchedulingHistory;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
@@ -36,10 +37,15 @@ public interface AppointmentSchedulingHistoryRepository extends JpaRepository<Ap
             "where ash.appointment.id = :appointmentId and ash.bloodDonor.id = :bloodDonorId")
     List<AppointmentSchedulingHistory> nes(@Param("appointmentId") UUID appointmentId, @Param("bloodDonorId") UUID bloodDonorId);
 
-    @Query("select ash from AppointmentSchedulingHistory ash " +
-            "left join fetch Appointment  a on ash.appointment.id = a.id " +
-            "left join fetch BloodCenter bc on ash.appointment.bloodCenter.id = bc.id" +
-            " where  ash.bloodDonor.id = :id " +
-            " order by ash.appointment.time.startTime")
-    List<AppointmentSchedulingHistory> gascina(@Param("id") UUID id);
+
+//    @Query("select bc from AppointmentSchedulingHistory bc left join fetch Appointment a on bc.address.id = a.id " +
+//            "where lower(bc.name) like CONCAT('%',lower(:s),'%') or lower(a.city) like CONCAT('%',lower(:s),'%')")
+//    Page<AppointmentSchedulingHistory> sortFilter(@Param("s") String s, Pageable pageable);
+
+    @Query("select ASH from AppointmentSchedulingHistory ASH left join fetch Appointment a on ASH.appointment.id = a.id " +
+            "where ASH.status = :Filter and ASH.bloodDonor.id = :BloodDonorId")
+    Page<AppointmentSchedulingHistory> sortFilter(@Param("Filter") AppointmentSchedulingConfirmationStatus Filter, @Param("BloodDonorId") UUID BloodDonorId, Pageable pageable);
+
+
+    boolean existsById(UUID id);
 }

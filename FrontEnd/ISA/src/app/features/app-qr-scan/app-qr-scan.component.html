@@ -1,0 +1,18 @@
+<!-- Hidden -->
+<input style="display: none" type="file" (change)="onFileChanged($event)" #fileInput>
+
+<div class="top-buttons">
+    <!-- first button is used to hide ugly default file picker -->
+    <button (click)="fileInput.click()" class="btn btn-primary">Upload QR</button>
+    <button (click)="toggleCamera()" class="btn btn-primary">Scan QR</button>
+</div>
+
+<div class="media-container"> 
+    <img  *ngIf="!cameraOn"  src={{imageUrl}} id="uploadedImage">
+    <video  id="webcam" autoplay></video>
+</div>
+
+<button [disabled] ="uploadDisabled" *ngIf="!cameraOn" (click)="goToAppointment()" class="btn btn-primary">Go to appointment</button>
+<button *ngIf="cameraOn" (click)="captureImage()" class="btn btn-primary">Capture QR</button>
+
+<canvas id="canvas" autoplay></canvas>

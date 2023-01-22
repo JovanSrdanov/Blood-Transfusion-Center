@@ -4,6 +4,7 @@ import { QuestionnaireService } from './../../../http-services/questionnaire.ser
 import { Questionnaire } from 'src/app/pages/registration-page/Model/questionnaire';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { BloodDonorSearchNameSurname } from 'src/app/model/blood-donor/blood-donor-search-name-surname';
 
 @Component({
   selector: 'app-appointment-details',
@@ -12,7 +13,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class AppointmentDetailsComponent implements OnInit {
   appointmentHistoryId: string = '-1';
-  donorId: string = '-1';
+  donorFullname: BloodDonorSearchNameSurname = { name: '', surname: '' };
+  //donorId: string = '-1';
 
   private sub: any;
 
@@ -40,12 +42,21 @@ export class AppointmentDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.sub = this.route.params.subscribe((params) => {
       this.appointmentHistoryId = params['appointmentHistoryId'];
-      this.donorId = params['donorId'];
+      //this.donorId = params['donorId'];
       console.log(this.appointmentHistoryId);
-      console.log(this.donorId);
-      this.questionaireService.getByDonorId(this.donorId).subscribe((res) => {
-        this.questionaire = res;
-      });
+
+      this.appointmentService
+        .getDonorFullname(this.appointmentHistoryId)
+        .subscribe((res) => {
+          this.donorFullname.name = res.name;
+          this.donorFullname.surname = res.surname;
+
+          this.questionaireService
+            .getByAshId(this.appointmentHistoryId)
+            .subscribe((res1) => {
+              this.questionaire = res1;
+            });
+        });
     });
   }
 
@@ -86,7 +97,7 @@ export class AppointmentDetailsComponent implements OnInit {
   cancelAppointment() {
     let cancelation: AppointmentCancelation = {
       appointmentHistoryId: this.appointmentHistoryId, //TODO test, prvremeno
-      bloodDonorId: this.donorId,
+      //bloodDonorId: this.donorId,
       showedUp: this.checkedDidNotShowUp,
     };
 
