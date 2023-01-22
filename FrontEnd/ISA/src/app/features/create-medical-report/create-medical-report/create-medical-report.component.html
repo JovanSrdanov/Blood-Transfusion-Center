@@ -21,18 +21,9 @@
     <tr>
       <th>Note to the medical doctor</th>
       <td colspan="3">
-        <textarea
-          [(ngModel)]="noteToDoctor"
-          matInput
-          cdkTextareaAutosize
-          #autosize="cdkTextareaAutosize"
-          cdkAutosizeMinRows="1"
-          cdkAutosizeMaxRows="5"
-          class="example-margin"
-        >
-        I weight less than 50kg
-      </textarea
-        >
+        <button mat-fab (click)="openNoteToDoctorDialog()">
+          <mat-icon>add</mat-icon>
+        </button>
       </td>
     </tr>
     <tr>
@@ -160,20 +151,11 @@
       </td>
     </tr>
     <tr>
-      <th>Note</th>
+      <th>Report note</th>
       <td colspan="3">
-        <textarea
-          matInput
-          [(ngModel)]="note"
-          cdkTextareaAutosize
-          #autosize="cdkTextareaAutosize"
-          cdkAutosizeMinRows="1"
-          cdkAutosizeMaxRows="5"
-          class="example-margin"
-        >
-        I weight less than 50kg
-      </textarea
-        >
+        <button mat-fab (click)="openNoteDialog()">
+          <mat-icon>add</mat-icon>
+        </button>
       </td>
     </tr>
     <tr>

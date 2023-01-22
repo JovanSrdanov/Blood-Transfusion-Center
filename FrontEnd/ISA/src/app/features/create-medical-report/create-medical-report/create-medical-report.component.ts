@@ -1,3 +1,4 @@
+import { MatDialog } from '@angular/material/dialog';
 import { bloodUpdate } from './../../../model/blood/blood-update';
 import { bloodInfo } from './../../../model/blood/blood-info';
 import { AppointmentReportService } from './../../../http-services/AppointmentReport/appointment-report.service';
@@ -8,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 import { EquipmentService } from 'src/app/http-services/Equipment/equipment-service.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CreateAppointmentReport } from 'src/app/model/AppointmentReport/create-appointment';
+import { NoteToDoctorModalComponent } from '../note-to-doctor-modal/note-to-doctor-modal.component';
 
 @Component({
   selector: 'app-create-medical-report',
@@ -52,7 +54,8 @@ export class CreateMedicalReportComponent implements OnInit {
     private router: Router,
     private equipmentService: EquipmentService,
     private appointmentReportService: AppointmentReportService,
-    private bloodQuantityService: BloodQuantityService
+    private bloodQuantityService: BloodQuantityService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -64,9 +67,6 @@ export class CreateMedicalReportComponent implements OnInit {
   }
 
   getEquipmentAndBlood() {
-    //this.equipmentList.push({ equipmentId: '1', name: 'Oprema1', quantity: 5 });
-    //this.equipmentList.push({ equipmentId: '2', name: 'Oprema2', quantity: 6 });
-
     this.equipmentService.getEquipmentForCentre().subscribe((res) => {
       this.equipmentList = res;
       console.log(res);
@@ -132,6 +132,28 @@ export class CreateMedicalReportComponent implements OnInit {
       console.log('sad jeste');
       this.createBtnDisabled = false;
     }
+  }
+
+  openNoteToDoctorDialog() {
+    const dialogRef = this.dialog.open(NoteToDoctorModalComponent, {
+      data: { note: this.noteToDoctor },
+    });
+
+    dialogRef.afterClosed().subscribe((res) => {
+      this.noteToDoctor = res;
+      console.log(this.noteToDoctor);
+    });
+  }
+
+  openNoteDialog() {
+    const dialogRef = this.dialog.open(NoteToDoctorModalComponent, {
+      data: { note: this.note },
+    });
+
+    dialogRef.afterClosed().subscribe((res) => {
+      this.note = res;
+      console.log(this.note);
+    });
   }
 
   createReport() {
