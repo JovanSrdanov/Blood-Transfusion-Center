@@ -14,7 +14,9 @@ import { BloodDonorSearchNameSurname } from 'src/app/model/blood-donor/blood-don
 export class AppointmentDetailsComponent implements OnInit {
   appointmentHistoryId: string = '-1';
   donorFullname: BloodDonorSearchNameSurname = { name: '', surname: '' };
-  //donorId: string = '-1';
+
+  //ako pacijent koji je zakazao pregled nema popunjen upitnik
+  noQuestionaire: boolean = false;
 
   private sub: any;
 
@@ -53,9 +55,16 @@ export class AppointmentDetailsComponent implements OnInit {
 
           this.questionaireService
             .getByAshId(this.appointmentHistoryId)
-            .subscribe((res1) => {
-              this.questionaire = res1;
-            });
+            .subscribe(
+              (res1) => {
+                this.questionaire = res1;
+              },
+              (err) => {
+                if (err.status == 400) {
+                  this.noQuestionaire = true;
+                }
+              }
+            );
         });
     });
   }
