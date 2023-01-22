@@ -12,83 +12,90 @@
   <button class="btn btn-primary" (click)="search()">Search</button>
 </div>
 
+  <div class="pageable-table">
+  <table mat-table matSort [dataSource]="bloodDonorsSearched" class="mat-elevation-z8">
+    <ng-container matColumnDef="name">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+    </ng-container>
 
-<table mat-table matSort [dataSource]="bloodDonorsSearched" class="mat-elevation-z8">
-  <ng-container matColumnDef="name">
-    <th mat-header-cell mat-sort-header *matHeaderCellDef>Name</th>
-    <td mat-cell *matCellDef="let element">{{ element.name }}</td>
-  </ng-container>
+    <ng-container matColumnDef="surname">
+      <th mat-header-cell  mat-sort-header *matHeaderCellDef>Surname</th>
+      <td mat-cell *matCellDef="let element">{{ element.surname }}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="surname">
-    <th mat-header-cell  mat-sort-header *matHeaderCellDef>Surname</th>
-    <td mat-cell *matCellDef="let element">{{ element.surname }}</td>
-  </ng-container>
+    <ng-container matColumnDef="email">
+      <th mat-header-cell  mat-sort-header  *matHeaderCellDef>Email</th>
+      <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="email">
-    <th mat-header-cell  mat-sort-header  *matHeaderCellDef>Email</th>
-    <td mat-cell *matCellDef="let element">{{ element.email }}</td>
-  </ng-container>
-
-  <ng-container matColumnDef="address">
-    <th mat-header-cell  mat-sort-header *matHeaderCellDef>Address</th>
-    <td mat-cell *matCellDef="let element">
-      {{
-        element.address.street +
-          " " +
+    <ng-container matColumnDef="address">
+      <th mat-header-cell  mat-sort-header *matHeaderCellDef>Address</th>
+      <td mat-cell *matCellDef="let element">
+        {{
           element.address.street +
-          ", " +
-          element.address.city +
-          "," +
-          element.address.country
-      }}
-    </td>
-  </ng-container>
+            " " +
+            element.address.street +
+            ", " +
+            element.address.city +
+            "," +
+            element.address.country
+        }}
+      </td>
+    </ng-container>
 
-  <ng-container matColumnDef="jmbg">
-    <th mat-header-cell  mat-sort-header *matHeaderCellDef>Jmbg</th>
-    <td mat-cell *matCellDef="let element">{{ element.jmbg }}</td>
-  </ng-container>
+    <ng-container matColumnDef="jmbg">
+      <th mat-header-cell  mat-sort-header *matHeaderCellDef>Jmbg</th>
+      <td mat-cell *matCellDef="let element">{{ element.jmbg }}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="phoneNumber">
-    <th mat-header-cell  mat-sort-header *matHeaderCellDef>PhoneNumber</th>
-    <td mat-cell *matCellDef="let element">{{ element.phoneNumber }}</td>
-  </ng-container>
+    <ng-container matColumnDef="phoneNumber">
+      <th mat-header-cell  mat-sort-header *matHeaderCellDef>PhoneNumber</th>
+      <td mat-cell *matCellDef="let element">{{ element.phoneNumber }}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="institution">
-    <th mat-header-cell  mat-sort-header *matHeaderCellDef>Institution</th>
-    <td mat-cell *matCellDef="let element">{{ element.institution }}</td>
-  </ng-container>
+    <ng-container matColumnDef="institution">
+      <th mat-header-cell  mat-sort-header *matHeaderCellDef>Institution</th>
+      <td mat-cell *matCellDef="let element">{{ element.institution }}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="gender">
-    <th mat-header-cell  mat-sort-header *matHeaderCellDef>Gender</th>
-    <td mat-cell *matCellDef="let element">
-      {{ parseGender(element.gender) }}
-    </td>
-  </ng-container>
+    <ng-container matColumnDef="gender">
+      <th mat-header-cell  mat-sort-header *matHeaderCellDef>Gender</th>
+      <td mat-cell *matCellDef="let element">
+        {{ parseGender(element.gender) }}
+      </td>
+    </ng-container>
 
-  <!-- Mislim da ovo ne treba ovde, pa ako treba otkomentarisi -->
+    <!-- Mislim da ovo ne treba ovde, pa ako treba otkomentarisi -->
 
-  <ng-container matColumnDef="button">
-    <th mat-header-cell *matHeaderCellDef></th>
-    <td mat-cell *matCellDef="let element">
-      <button class="btn" [matMenuTriggerFor]="menustatus">Actions</button>
+    <ng-container matColumnDef="button">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <button class="btn" [matMenuTriggerFor]="menustatus">Actions</button>
 
-      <mat-menu #menustatus="matMenu">
-        <button
-          (click)="viewAppointments($event, element.id)"
-          mat-menu-item
-          [value]="element.id"
-        >
-          View appointments
-        </button>
-      </mat-menu>
-    </td>
-  </ng-container>
+        <mat-menu #menustatus="matMenu">
+          <button
+            (click)="viewAppointments($event, element.id)"
+            mat-menu-item
+            [value]="element.id"
+          >
+            View appointments
+          </button>
+        </mat-menu>
+      </td>
+    </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr
-    mat-row
-    (click)="getDonor(row)"
-    *matRowDef="let row; columns: displayedColumns">
-  </tr>
-</table>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns">
+    </tr>
+  <!-- (click)="getDonor(row)" sam obrisao iz tr iznad -->
+  </table>
+  <mat-paginator
+    #paginator
+    [length]="resultsLength"
+    [pageSize]="5"
+    aria-label="Select page">
+  </mat-paginator>
+</div>

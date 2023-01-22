@@ -16,9 +16,13 @@ form
 }
 
 
-table {
+.pageable-table {
   width: 80%;
   margin: 30px auto 0px auto;
+}
+
+table{
+  width: 100%;
 }
 
 .btn {

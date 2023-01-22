@@ -9,10 +9,12 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BloodDonorGetByNameAndSurnameDto {
-    private String name;
-    private String surname;
-    int page;
-    int pageSize;
-    String sortByField;
-    SortType sortType;
+    //Search
+    public String name;
+    public String surname;
+    //Paging and sorting
+    public int page;
+    public int pageSize;
+    public  String sortByField;
+    public SortType sortType;
 }

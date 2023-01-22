@@ -5,6 +5,7 @@ import { BloodDonorInfo } from '../model/blood-donor/blood-donor-info';
 import { Observable } from 'rxjs';
 import { BloodDonorSearchNameSurname } from '../model/blood-donor/blood-donor-search-name-surname';
 import { environment } from 'src/environments/environment';
+import { PageDto } from '../model/PageDto';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +29,7 @@ export class BloodDonorService {
     return this.http.patch<BloodDonorInfo>(this.path + "/update", currentDonor);
   }
 
-  searchByNameAndUsername = (dto: BloodDonorSearchNameSurname) => {
-    return this.http.post<BloodDonorInfo[]>(this.path + '/search-name-surname', dto);
+  searchByNameAndUsername = (dto: BloodDonorSearchNameSurname) : Observable<PageDto<BloodDonorInfo>> => {
+    return this.http.post<PageDto<BloodDonorInfo>>(this.path + '/get-by-name-surname', dto);
   }
 }

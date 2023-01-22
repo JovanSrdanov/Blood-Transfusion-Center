@@ -4,7 +4,7 @@ import groupJASS.ISA_2022.DTO.Appointment.AppointmentCancelation;
 import groupJASS.ISA_2022.DTO.Appointment.BloodDonorAppointmentsDTO;
 import groupJASS.ISA_2022.DTO.Appointment.BloodDonorAppointmentsForCenter;
 import groupJASS.ISA_2022.DTO.Appointment.QrCodeASHDTO;
-import groupJASS.ISA_2022.DTO.BloodDonor.BloodDonorSearchByNameAndSurnameDto;
+import groupJASS.ISA_2022.DTO.BloodDonor.BloodDonorFullNameDto;
 import groupJASS.ISA_2022.DTO.PageEntityDto;
 import groupJASS.ISA_2022.Exceptions.SortNotFoundException;
 import groupJASS.ISA_2022.Model.Account;
@@ -45,6 +45,7 @@ public class AppointmentSchedulingHistoryController {
         _appointmentSchedulingHistoryService = appointmentSchedulingHistoryRepository;
     }
 
+    //TODO SAMO SAM NAMESTIO DA SE COMPILE, MOZDA NE RADI FRONT JER SAM SWAPOVAO DTO(NAPRAVIO SAM TI NOVI SKROZ)
     @GetMapping("fullname/{ashId}")
     @PreAuthorize("hasRole('STAFF')")
     public ResponseEntity<?> getDonorFullname(
@@ -52,7 +53,7 @@ public class AppointmentSchedulingHistoryController {
         try {
             var donor = _appointmentSchedulingHistoryService.findById(ashId)
                     .getBloodDonor();
-            var result = new BloodDonorSearchByNameAndSurnameDto();
+            var result = new BloodDonorFullNameDto();
             result.setName(donor.getName());
             result.setSurname(donor.getSurname());
 

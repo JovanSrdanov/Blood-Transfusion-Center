@@ -16,6 +16,7 @@ import groupJASS.ISA_2022.Service.Interfaces.IAddressService;
 import groupJASS.ISA_2022.Service.Interfaces.IBloodDonorService;
 import groupJASS.ISA_2022.Utilities.MappingUtilities;
 import groupJASS.ISA_2022.Utilities.ObjectMapperUtils;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,6 +33,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("blood-donor")
+@SecurityRequirement(name = "Bearer Authentication")
 public class BloodDonorController {
 
     private final IBloodDonorService _bloodDonorService;

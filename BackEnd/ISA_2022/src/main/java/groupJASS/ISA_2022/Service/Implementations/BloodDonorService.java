@@ -210,7 +210,6 @@ public class BloodDonorService implements IBloodDonorService {
 
         List<BloodDonor> bloodDonors = page.getContent();
 
-
         List<BloodDonorInfoDto> bloodDonorInfoDtos = MappingUtilities.mapList(bloodDonors, BloodDonorInfoDto.class, _mapper);
         List<BloodDonorInfoDto> res = bloodDonorInfoDtos
                 .stream()

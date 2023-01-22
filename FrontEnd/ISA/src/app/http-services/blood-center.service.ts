@@ -38,7 +38,6 @@ export class BloodCenterService {
     sortType: any,
     field: string
   ): Observable<PageDto<BloodCenterBasicInfo[]>> {
-    //alert("sortType: " + sortType + "  sortField: " + field + " search:" + search)
     return this.http.get<PageDto<BloodCenterBasicInfo[]>>(
       this.path +
       '/sort?page=' +
