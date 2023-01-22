@@ -49,6 +49,10 @@ textarea {
   color: white;
 }
 
+::ng-deep .mat-select {
+  background-color: rgb(50, 58, 61);
+}
+
 ::ng-deep .mat-select-placeholder {
   color: red !important;
 }

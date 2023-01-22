@@ -2,8 +2,8 @@
   <h1 class="title">Create report</h1>
   <table class="report">
     <tr>
-      <th>Blood group</th>
-      <td colspan="3">
+      <th>Blood group/appointment start time/appointment end time</th>
+      <td colspan="1">
         <textarea
           [(ngModel)]="bloodGroup"
           matInput
@@ -17,13 +17,33 @@
       </textarea
         >
       </td>
-    </tr>
-    <tr>
-      <th>Note to the medical doctor</th>
-      <td colspan="3">
-        <button mat-fab (click)="openNoteToDoctorDialog()">
-          <mat-icon>add</mat-icon>
-        </button>
+      <td colspan="1">
+        <textarea
+          matInput
+          [(ngModel)]="appStart"
+          cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="5"
+          class="example-margin"
+        >
+        I weight less than 50kg
+      </textarea
+        >
+      </td>
+      <td colspan="1">
+        <textarea
+          matInput
+          [(ngModel)]="appEnd"
+          cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="5"
+          class="example-margin"
+        >
+        I weight less than 50kg
+      </textarea
+        >
       </td>
     </tr>
     <tr>
@@ -117,43 +137,9 @@
       </td>
     </tr>
     <tr>
-      <th>Appointment start time</th>
+      <th>Note to the medical doctor</th>
       <td colspan="3">
-        <textarea
-          matInput
-          [(ngModel)]="appStart"
-          cdkTextareaAutosize
-          #autosize="cdkTextareaAutosize"
-          cdkAutosizeMinRows="1"
-          cdkAutosizeMaxRows="5"
-          class="example-margin"
-        >
-        I weight less than 50kg
-      </textarea
-        >
-      </td>
-    </tr>
-    <tr>
-      <th>Appointment end time</th>
-      <td colspan="3">
-        <textarea
-          matInput
-          [(ngModel)]="appEnd"
-          cdkTextareaAutosize
-          #autosize="cdkTextareaAutosize"
-          cdkAutosizeMinRows="1"
-          cdkAutosizeMaxRows="5"
-          class="example-margin"
-        >
-        I weight less than 50kg
-      </textarea
-        >
-      </td>
-    </tr>
-    <tr>
-      <th>Report note</th>
-      <td colspan="3">
-        <button mat-fab (click)="openNoteDialog()">
+        <button mat-fab (click)="openNoteToDoctorDialog()">
           <mat-icon>add</mat-icon>
         </button>
       </td>
@@ -208,6 +194,14 @@
           name="value"
           value="0"
         />
+      </td>
+    </tr>
+    <tr>
+      <th>Report note</th>
+      <td colspan="3">
+        <button mat-fab (click)="openNoteDialog()">
+          <mat-icon>add</mat-icon>
+        </button>
       </td>
     </tr>
   </table>
