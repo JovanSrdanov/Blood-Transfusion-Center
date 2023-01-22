@@ -4,6 +4,7 @@ import groupJASS.ISA_2022.Model.Staff;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -12,4 +13,5 @@ public interface StaffRepository extends JpaRepository<Staff, UUID> {
     Iterable<Staff> getUnemployedStaff();
 
     Optional<Staff> findById(UUID id);
+    List<Staff> getByBloodCenterId(UUID bloodCenterId);
 }

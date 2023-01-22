@@ -1,3 +1,5 @@
+-- noinspection SqlNoDataSourceInspectionForFile
+
 INSERT INTO ROLE (name)
 VALUES ('ROLE_BLOOD_DONOR');
 INSERT INTO ROLE (name)

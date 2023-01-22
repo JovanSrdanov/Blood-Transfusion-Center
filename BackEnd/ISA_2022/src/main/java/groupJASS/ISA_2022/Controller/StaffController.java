@@ -1,11 +1,9 @@
 package groupJASS.ISA_2022.Controller;
 
 import groupJASS.ISA_2022.DTO.Account.PasswordDTO;
-import groupJASS.ISA_2022.DTO.Staff.AssignBloodCenterDTO;
-import groupJASS.ISA_2022.DTO.Staff.StaffBasicInfoDTO;
-import groupJASS.ISA_2022.DTO.Staff.StaffProfileDTO;
-import groupJASS.ISA_2022.DTO.Staff.StaffRegistrationDTO;
+import groupJASS.ISA_2022.DTO.Staff.*;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
+import groupJASS.ISA_2022.Model.Account;
 import groupJASS.ISA_2022.Model.Staff;
 import groupJASS.ISA_2022.Service.Interfaces.IAccountService;
 import groupJASS.ISA_2022.Service.Interfaces.IAddressService;
@@ -161,6 +159,15 @@ public class StaffController {
     public ResponseEntity<Boolean> checkEmailAvailability(@PathVariable String email) {
         Boolean exists = _accountService.checkEmailAvailability(email);
         return new ResponseEntity<>(!exists, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_STAFF')")
+    @GetMapping(path = "by-blood-center")
+    public ResponseEntity<List<StaffFreeSlotsInfo>> getByBloodCenterId(Principal account) {
+        Account acc = _accountService.findAccountByEmail(account.getName());
+        Staff staff = _staffService.findById(acc.getPersonId());
+
+        return new ResponseEntity<>(_staffService.getByBloodCenterId(staff.getBloodCenter().getId()), HttpStatus.OK);
     }
 
 }
