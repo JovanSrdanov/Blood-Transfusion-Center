@@ -70,7 +70,8 @@ export class StaffProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.profileService.getLoggedInStaffInfo().subscribe((res) => {
-      console.log(res);
+      //console.log('staffInfo');
+      //console.log(res);
       this.staffInfo = res;
       this.staffId = this.staffInfo.id;
       this.staffEmail = this.staffInfo.email;
@@ -80,8 +81,10 @@ export class StaffProfileComponent implements OnInit {
 
       if (this.staffInfo.bloodCenter != null) {
         this.centerInfo = this.staffInfo.bloodCenter;
+        console.log('centerInfo:');
+        console.log(this.staffInfo);
         this.centerId = this.staffInfo.bloodCenter.id;
-        console.log(this.centerId);
+        //console.log(this.centerId);
       }
       this.centerInfoCopy = structuredClone(this.centerInfo);
       this.createFormCenter();
@@ -212,10 +215,15 @@ export class StaffProfileComponent implements OnInit {
         [Validators.required],
       ],
       score: [{ value: 10, disabled: true }, [Validators.required]],
-      appointments: [{ value: this.centerInfo.appointments, disabled: true }],
+      appointments: [
+        {
+          value: this.getAllAppointmentsForCenter(this.centerInfo.appointments),
+          disabled: true,
+        },
+      ],
       staff: [
         {
-          value: this.getAllStaffForAppointment(this.centerInfo.staff),
+          value: this.getAllStaffForAppointment(this.centerInfo.centerStaff),
           disabled: true,
         },
       ],
@@ -225,18 +233,34 @@ export class StaffProfileComponent implements OnInit {
     });
   }
 
+  getAllAppointmentsForCenter(appointments: any) {
+    console.log('appointments:');
+    console.log(appointments);
+    let res = '';
+    appointments.forEach((value: any) => {
+      if (value != undefined) {
+        res += value.time.startTime;
+        res += ' ';
+        res += value.time.endTime;
+        res += '|';
+      }
+    });
+
+    return res;
+  }
+
   getAllStaffForAppointment(staff: any): string {
-    console.log(staff);
+    console.log('staff:' + staff);
     let res = '';
     staff.forEach((value: any) => {
       if (value != undefined) {
-        res += value.id;
-        res += ' | ';
-      } else {
-        res += value;
+        res += value.name;
+        res += ' ';
+        res += value.surname;
         res += ' | ';
       }
     });
+
     return res;
   }
 
@@ -343,9 +367,11 @@ export class StaffProfileComponent implements OnInit {
         longitude: this.centerInfo.address.longitude,
       },
       description: this.centerInfo.description,
-      score: this.centerInfo.score,
-      appointments: this.centerInfo.appointments,
-      staff: this.centerInfo.staff,
+      score: '10',
+      appointments: this.getAllAppointmentsForCenter(
+        this.centerInfo.appointments
+      ),
+      staff: this.getAllStaffForAppointment(this.centerInfo.centerStaff),
     });
 
     this.isPreventChangeCenter = !this.isPreventChangeCenter;

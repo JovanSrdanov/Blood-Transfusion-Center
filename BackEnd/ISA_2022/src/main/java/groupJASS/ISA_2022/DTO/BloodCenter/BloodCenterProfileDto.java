@@ -1,6 +1,7 @@
 package groupJASS.ISA_2022.DTO.BloodCenter;
 
 import groupJASS.ISA_2022.DTO.Address.AddressDTO;
+import groupJASS.ISA_2022.DTO.Staff.StaffFullNameDto;
 import groupJASS.ISA_2022.Model.Address;
 import groupJASS.ISA_2022.Model.Appointment;
 import groupJASS.ISA_2022.Model.BloodQuantity;
@@ -14,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -33,5 +35,7 @@ public class BloodCenterProfileDto {
     @NotEmpty
     private Set<BloodQuantity> bloodQuantities;
     private Set<Appointment> appointments;
-    private Set<Staff> staff;
+    //Stefan menjao
+    //private Set<Staff> staff;
+    private List<StaffFullNameDto> centerStaff;
 }
