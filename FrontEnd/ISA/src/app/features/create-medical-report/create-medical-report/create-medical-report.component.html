@@ -179,14 +179,15 @@
     <tr>
       <th>Equipment/Equipment quantity</th>
       <td colspan="2">
-        <mat-label>Select equipment</mat-label>
         <mat-select
-          [(ngModel)]="selectedEquipment.equipmentId"
-          (selectionChange)="canCreateReport($event)"
+          [(ngModel)]="selectedEquipment"
+          (selectionChange)="canCreateReport()"
+          placeholder="Please select a piece of equipment"
         >
           <mat-option
             *ngFor="let equipment of equipmentList"
-            [value]="equipment.equipmentId"
+            [value]="equipment"
+            class="matOption"
           >
             {{ equipment.name }} - {{ equipment.quantity }}
           </mat-option>
@@ -199,7 +200,31 @@
           class="number"
           matInput
           name="value"
-          placeholder="quantity"
+          placeholder="0"
+        />
+      </td>
+    </tr>
+    <tr>
+      <th>Blood/Blood quantity</th>
+      <td colspan="2">
+        <mat-select
+          [(ngModel)]="selectedBloodQuantity"
+          (selectionChange)="canCreateReport()"
+          placeholder="Please select a blood group"
+        >
+          <mat-option *ngFor="let blood of bloodGroupList" [value]="blood">
+            {{ blood.bloodGroup }} - {{ blood.quantity }}
+          </mat-option>
+        </mat-select>
+      </td>
+      <td>
+        <input
+          type="number"
+          [(ngModel)]="selectedBloodQuantity.quantity"
+          class="number"
+          matInput
+          name="value"
+          value="0"
         />
       </td>
     </tr>

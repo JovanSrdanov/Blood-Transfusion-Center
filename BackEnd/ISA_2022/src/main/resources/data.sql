@@ -544,4 +544,9 @@ INSERT INTO equipment (id, name, quantity, blood_center_id)
 VALUES ('BDE5B263-37D3-427A-A377-BA167AF88858', 'Lopate', '100', '5f29fc03-f6bd-49a6-9f41-c2ca229de403'),
        ('0ED7565A-ABFE-4520-80A6-E7720ABC879C', 'Sekire', '100', '5f29fc03-f6bd-49a6-9f41-c2ca229de403'),
        ('2BCCF1DD-E9F6-469C-BEE0-F119A9C0E55D', 'Kasike', '100', '5f29fc03-f6bd-49a6-9f41-c2ca229de403'),
-       ('B82DCB56-7A00-48AA-8132-4CAA98D03205', 'Viljuske', '100', '5f29fc03-f6bd-49a6-9f41-c2ca229de403');
+       ('B82DCB56-7A00-48AA-8132-4CAA98D03205', 'Viljuske', '100', '5f29fc03-f6bd-49a6-9f41-c2ca229de403'),
+       ('8A5637D6-B290-4CCD-9A15-01E82762A286', 'Asovi', '10', '417c9b36-251a-4483-bfbf-abd3df786d96'),
+       ('45E9B102-E3A1-4738-8288-7F0AA85F3E6F', 'Traktori', '10', '417c9b36-251a-4483-bfbf-abd3df786d96'),
+       ('87A49DA5-17B0-497E-9155-2D3EA53FC631', 'Kosilice', '10', '417c9b36-251a-4483-bfbf-abd3df786d96'),
+       ('0AABB354-8592-4FBB-B8A0-CEE8F0A7C56F', 'Nozevi', '10', '417c9b36-251a-4483-bfbf-abd3df786d96');
+/*dodao poslednja 4*/
