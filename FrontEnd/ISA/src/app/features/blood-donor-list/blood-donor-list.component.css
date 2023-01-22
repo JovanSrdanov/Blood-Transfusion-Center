@@ -1,6 +1,20 @@
-form {
-  margin-top: 100px;
+.search-container
+{
+  text-align: left;
+    width: 30%;
+    margin: 100px auto 20px auto;
+    display: grid;
+    grid-template-columns: 75% 15%;
+    column-gap: 10%;
 }
+
+form
+{
+  display: grid;
+  grid-template-columns: 45% 45%;
+  column-gap: 10%;
+}
+
 
 table {
   width: 80%;
@@ -8,6 +22,8 @@ table {
 }
 
 .btn {
-  margin-top: 5%;
   font-size: larger;
+  height: 35px;
+  padding: 3px;
+  margin-top: 14px;
 }

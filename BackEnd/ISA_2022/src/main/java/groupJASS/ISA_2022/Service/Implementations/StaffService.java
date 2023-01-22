@@ -170,7 +170,6 @@ public class StaffService implements IStaffService {
         return dtos;
     }
 
-    @PreAuthorize("hasRole('ROLE_SYSTEM_ADMIN')")
     @Override
     public void register(StaffRegistrationDTO dto) {
 

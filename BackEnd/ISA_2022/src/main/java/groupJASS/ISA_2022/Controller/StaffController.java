@@ -109,6 +109,7 @@ public class StaffController {
 
 
     @PostMapping(consumes = "application/json")
+    @PreAuthorize("hasRole('ROLE_SYSTEM_ADMIN')")
     public ResponseEntity<String> registerStaff(@Valid @RequestBody StaffRegistrationDTO dto) {
         try {
 

@@ -126,6 +126,7 @@ public class BloodCenterController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_SYSTEM_ADMIN')")
     public ResponseEntity<String> registerBloodCenter(@Valid @RequestBody BloodCenterRegistrationDTO dto) {
         try {
             _bloodCenterService.save(_mapper.map(dto, BloodCenter.class));

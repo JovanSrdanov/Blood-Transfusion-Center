@@ -2,8 +2,9 @@ package groupJASS.ISA_2022.Controller;
 
 import groupJASS.ISA_2022.DTO.BloodDonor.BloodDonorInfoDto;
 import groupJASS.ISA_2022.DTO.BloodDonor.BloodDonorLazyDTO;
-import groupJASS.ISA_2022.DTO.BloodDonor.BloodDonorSearchByNameAndSurnameDto;
+import groupJASS.ISA_2022.DTO.BloodDonor.BloodDonorGetByNameAndSurnameDto;
 import groupJASS.ISA_2022.DTO.BloodDonor.RegisterBloodDonorDTO;
+import groupJASS.ISA_2022.DTO.PageEntityDto;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
 import groupJASS.ISA_2022.Model.Account;
 import groupJASS.ISA_2022.Model.ActivateAccount;
@@ -114,13 +115,10 @@ public class BloodDonorController {
         }
     }
 
-    //It is not GET because you can't send null parameter inside a path variable, and I need that case
-    //TODO Search only donors who visited certain center
-    @PostMapping("search-name-surname")
-    public ResponseEntity<List<BloodDonorInfoDto>> searchByNameAndSurname(@RequestBody BloodDonorSearchByNameAndSurnameDto dto) {
-        List<BloodDonorInfoDto> bloodDonors = _bloodDonorService.findBloodDonorByNameAAndSurname(dto.getName(), dto.getSurname());
-        var res = MappingUtilities.mapList(bloodDonors, BloodDonorInfoDto.class, _mapper);
-        return new ResponseEntity<>(res, HttpStatus.OK);
+    @PostMapping("get-by-name-surname")
+    @PreAuthorize("hasRole('ROLE_SYSTEM_ADMIN')")
+    public ResponseEntity<PageEntityDto<BloodDonorInfoDto>> getByNameAndSurname(@RequestBody BloodDonorGetByNameAndSurnameDto dto) {
+        PageEntityDto<List<BloodDonorInfoDto>> bloodDonors = _bloodDonorService.findBloodDonorByNameAndSurname(dto);
+        return new ResponseEntity(bloodDonors, HttpStatus.OK);
     }
-
 }

@@ -11,10 +11,6 @@ import { AppQrScanComponent } from '../features/app-qr-scan/app-qr-scan.componen
 
 const routes: Routes = [
   {
-    path: 'blood-donor-list',
-    component: BloodDonorListComponent,
-  },
-  {
     //TODO Router link umesto navigate
     path: 'donor-appointments/:id',
     component: BloodDonorAppointmentListComponent,

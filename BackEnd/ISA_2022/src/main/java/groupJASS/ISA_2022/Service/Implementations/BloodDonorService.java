@@ -1,7 +1,9 @@
 package groupJASS.ISA_2022.Service.Implementations;
 
+import groupJASS.ISA_2022.DTO.BloodDonor.BloodDonorGetByNameAndSurnameDto;
 import groupJASS.ISA_2022.DTO.BloodDonor.BloodDonorInfoDto;
 import groupJASS.ISA_2022.DTO.BloodDonor.RegisterBloodDonorDTO;
+import groupJASS.ISA_2022.DTO.PageEntityDto;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
 import groupJASS.ISA_2022.Model.*;
 import groupJASS.ISA_2022.Repository.AccountRepository;
@@ -11,10 +13,14 @@ import groupJASS.ISA_2022.Service.Interfaces.IActivateAccountService;
 import groupJASS.ISA_2022.Service.Interfaces.IAddressService;
 import groupJASS.ISA_2022.Service.Interfaces.IBloodDonorService;
 import groupJASS.ISA_2022.Utilities.MappingUtilities;
+import groupJASS.ISA_2022.Utilities.SortType;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
@@ -23,6 +29,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
 
+import java.awt.print.Pageable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -175,22 +182,51 @@ public class BloodDonorService implements IBloodDonorService {
     }
 
     @Override
-    public List<BloodDonorInfoDto> findBloodDonorByNameAAndSurname(String name, String surname) {
-        List<BloodDonor> bloodDonors = (List<BloodDonor>) _bloodDonorRepository.searchByNameAndSurnameIgnoreCase(name, surname);
-        List<BloodDonorInfoDto> dtos = MappingUtilities.mapList(bloodDonors, BloodDonorInfoDto.class, _mapper);
-        List<BloodDonorInfoDto> res = dtos
+    public PageEntityDto<List<BloodDonorInfoDto>> findBloodDonorByNameAndSurname(BloodDonorGetByNameAndSurnameDto dto) {
+        Page<BloodDonor> page = null;
+        switch (dto.getSortType())
+        {
+            case NONE : {
+                page = _bloodDonorRepository.findByNameAndSurnameIgnoreCase(dto.getName().trim(),
+                        dto.getSurname().trim(),
+                        PageRequest.of(dto.getPage(), dto.getPageSize()));
+                break;
+            }
+            case ASC:{
+                page = _bloodDonorRepository.findByNameAndSurnameIgnoreCase(dto.getName().trim(),
+                        dto.getSurname().trim(),
+                        PageRequest.of(dto.getPage(), dto.getPageSize())
+                                .withSort(Sort.by(Sort.Direction.ASC, dto.getSortByField())));
+                break;
+            }
+            case DESC: {
+                page = _bloodDonorRepository.findByNameAndSurnameIgnoreCase(dto.getName().trim(),
+                        dto.getSurname().trim(),
+                        PageRequest.of(dto.getPage(), dto.getPageSize())
+                                .withSort(Sort.by(Sort.Direction.DESC, dto.getSortByField())));
+                break;
+            }
+        }
+
+        List<BloodDonor> bloodDonors = page.getContent();
+
+
+        List<BloodDonorInfoDto> bloodDonorInfoDtos = MappingUtilities.mapList(bloodDonors, BloodDonorInfoDto.class, _mapper);
+        List<BloodDonorInfoDto> res = bloodDonorInfoDtos
                 .stream()
-                .map(dto -> {
-                    Account acc = _accountRepository.findAccountByPersonId(dto.getId());
-                    String mail = "mail@mail.com";
+                .map(bdiDto -> {
+                    Account acc = _accountRepository.findAccountByPersonId(bdiDto.getId());
+                    String mail = "";
                     if (acc != null) {
                         mail = acc.getEmail();
                     }
-                    dto.setEmail(mail);
-                    return dto;
+                    bdiDto.setEmail(mail);
+                    return bdiDto;
                 })
                 .collect(Collectors.toList());
-        return res;
+
+
+        return new PageEntityDto<List<BloodDonorInfoDto>>(res, (int) page.getTotalElements());
     }
 
     @Scheduled(cron = "${resetPenalties.cron}")

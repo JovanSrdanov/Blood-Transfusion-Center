@@ -1,6 +1,8 @@
 package groupJASS.ISA_2022.Repository;
 
 import groupJASS.ISA_2022.Model.BloodDonor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -18,9 +20,9 @@ public interface BloodDonorRepository extends JpaRepository<BloodDonor, UUID> {
     Iterable<BloodDonor> findBloodDonorByNameAndSurname(String name, String surname);
 
     @Query("select  bd from BloodDonor bd" +
-            " where upper(bd.name) like CONCAT(upper(coalesce(:name,'%') ) ,'%') and" +
-            "  upper(bd.surname) like CONCAT(upper(coalesce(:surname, '%') ) ,'%') ")
-    Iterable<BloodDonor> searchByNameAndSurnameIgnoreCase(String name, String surname);
+            " where upper(bd.name) like CONCAT(upper(:name) ,'%') and" +
+            " upper(bd.surname) like CONCAT(upper(:surname) ,'%') ")
+    Page<BloodDonor> findByNameAndSurnameIgnoreCase(@Param("name") String name, @Param("surname") String surname, Pageable pageable);
 
     @Modifying
     @Query("update BloodDonor b set b.penalties = 0 ")
