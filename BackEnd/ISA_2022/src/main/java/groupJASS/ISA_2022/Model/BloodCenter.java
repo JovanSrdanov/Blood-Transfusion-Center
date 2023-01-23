@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -52,6 +53,10 @@ public class BloodCenter {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "bloodCenter")
     private Set<Complaint> complaints;
+    @ColumnDefault("false")
+    private boolean isDeliveryInProgres;
+    @ColumnDefault("false")
+    private boolean isHelicopterHere;
 }
 
 
