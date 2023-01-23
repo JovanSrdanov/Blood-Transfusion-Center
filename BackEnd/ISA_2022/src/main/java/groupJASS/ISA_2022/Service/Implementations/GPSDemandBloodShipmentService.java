@@ -13,6 +13,8 @@ import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
@@ -71,11 +73,16 @@ public class GPSDemandBloodShipmentService implements IGPSDemandBloodShipmentSer
         DemandBloodShipmentDTO demandBloodShipmentDTO = mapper.readValue(body, DemandBloodShipmentDTO.class);
 
         GPSDemandBloodShipment gpsDemandBloodShipment = _mapper.map(demandBloodShipmentDTO, GPSDemandBloodShipment.class);
-        gpsDemandBloodShipment.setDemandBloodShipmentStatus(DemandBloodShipmentStatus.HAS_NOT_STARTED_STARTED_THE_DELIVERY);
+        gpsDemandBloodShipment.setDemandBloodShipmentStatus(DemandBloodShipmentStatus.PENDING_DELIVERY);
         gpsDemandBloodShipment.setBloodCenter(_bloodCenterService.findById(demandBloodShipmentDTO.getBloodCenterId()));
         gpsDemandBloodShipment.setId(UUID.randomUUID());
 
         _gpsDemandBloodShipmentRepository.save(gpsDemandBloodShipment);
     }
 
+    @Override
+    public Page<GPSDemandBloodShipment> getAllPendingShipments(UUID bloodCenterId, int page, int pageSize) {
+
+        return _gpsDemandBloodShipmentRepository.getAllPendingShipments(bloodCenterId, PageRequest.of(page, pageSize));
+    }
 }
