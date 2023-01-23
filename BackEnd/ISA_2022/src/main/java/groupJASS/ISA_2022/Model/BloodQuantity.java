@@ -31,4 +31,9 @@ public class BloodQuantity {
         this.quantity = 0;
         this.bloodGroup = bloodGroup;
     }
+
+    public void update(BloodQuantity updated) {
+        this.bloodGroup = updated.getBloodGroup();
+        this.quantity = updated.getQuantity();
+    }
 }

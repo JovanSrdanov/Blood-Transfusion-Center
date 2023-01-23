@@ -1,0 +1,15 @@
+<div>
+  <textarea
+    name="noteDoc"
+    id="1"
+    cols="30"
+    rows="10"
+    [(ngModel)]="data.note"
+  ></textarea>
+</div>
+<div>
+  <button mat-button [mat-dialog-close]="data.note" cdkFocusInitial>
+    Confirm
+  </button>
+  <button mat-button [mat-dialog-close]="oldNote">Cancel</button>
+</div>

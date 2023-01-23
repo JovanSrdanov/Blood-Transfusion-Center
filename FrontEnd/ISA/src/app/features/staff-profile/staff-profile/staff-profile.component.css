@@ -121,3 +121,11 @@ h3 {
 .succ {
   color: green;
 }
+
+.modalDiv {
+  margin-bottom: 7%;
+}
+
+.modalBtn {
+  margin-right: 10%;
+}

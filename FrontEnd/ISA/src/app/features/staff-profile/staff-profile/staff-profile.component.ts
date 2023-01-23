@@ -6,6 +6,8 @@ import {
   Validators,
   FormControl,
 } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { StaffProfileModalComponent } from '../staff-profile-modal/staff-profile-modal.component';
 
 @Component({
   selector: 'app-blood-admin-profile',
@@ -32,7 +34,11 @@ export class StaffProfileComponent implements OnInit {
   centerId: any;
   centerInfoCopy: any;
 
-  constructor(private profileService: ProfileService, private fb: FormBuilder) {
+  constructor(
+    private profileService: ProfileService,
+    private fb: FormBuilder,
+    private dialog: MatDialog
+  ) {
     this.staffForm = this.fb.group({
       name: '',
       surname: '',
@@ -70,7 +76,8 @@ export class StaffProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.profileService.getLoggedInStaffInfo().subscribe((res) => {
-      console.log(res);
+      //console.log('staffInfo');
+      //console.log(res);
       this.staffInfo = res;
       this.staffId = this.staffInfo.id;
       this.staffEmail = this.staffInfo.email;
@@ -80,10 +87,14 @@ export class StaffProfileComponent implements OnInit {
 
       if (this.staffInfo.bloodCenter != null) {
         this.centerInfo = this.staffInfo.bloodCenter;
+        console.log('centerInfo:');
+        console.log(this.staffInfo);
         this.centerId = this.staffInfo.bloodCenter.id;
-        console.log(this.centerId);
+        //console.log(this.centerId);
       }
       this.centerInfoCopy = structuredClone(this.centerInfo);
+      console.log('copy:');
+      console.log(this.centerInfoCopy);
       this.createFormCenter();
     });
   }
@@ -212,32 +223,10 @@ export class StaffProfileComponent implements OnInit {
         [Validators.required],
       ],
       score: [{ value: 10, disabled: true }, [Validators.required]],
-      appointments: [{ value: this.centerInfo.appointments, disabled: true }],
-      staff: [
-        {
-          value: this.getAllStaffForAppointment(this.centerInfo.staff),
-          disabled: true,
-        },
-      ],
     });
     this.centerForm.valueChanges.subscribe((currValue) => {
       this.centerInfo = currValue;
     });
-  }
-
-  getAllStaffForAppointment(staff: any): string {
-    console.log(staff);
-    let res = '';
-    staff.forEach((value: any) => {
-      if (value != undefined) {
-        res += value.id;
-        res += ' | ';
-      } else {
-        res += value;
-        res += ' | ';
-      }
-    });
-    return res;
   }
 
   //ADMIN
@@ -250,6 +239,38 @@ export class StaffProfileComponent implements OnInit {
 
     this.staffForm.get('email')?.disable();
   }
+
+  openStaffDialog() {
+    let staffList: string[] = [];
+    this.centerInfoCopy.centerStaff.forEach((value: any) => {
+      if (value != undefined) {
+        staffList.push(value.name + ' ' + value.surname);
+      }
+    });
+
+    const dialogRef = this.dialog.open(StaffProfileModalComponent, {
+      data: { input: staffList },
+    });
+  }
+
+  openAppointmentsDialog() {
+    let appointmentList: string[] = [];
+    this.centerInfoCopy.appointments.forEach((value: any) => {
+      if (value != undefined) {
+        appointmentList.push(
+          'Start time: ' +
+            value.time.startTime +
+            ' | End time: ' +
+            value.time.endTime
+        );
+      }
+    });
+
+    const dialogRef = this.dialog.open(StaffProfileModalComponent, {
+      data: { input: appointmentList },
+    });
+  }
+
   confirmChangeStaff(event: Event) {
     event.preventDefault();
     this.staffInfo.id = this.staffId;
@@ -322,7 +343,12 @@ export class StaffProfileComponent implements OnInit {
         }, 2500);
       });
 
+    let appointments = this.centerInfoCopy.appointments;
+    let staff = this.centerInfoCopy.centerStaff;
+
     this.centerInfoCopy = structuredClone(this.centerInfo);
+    this.centerInfoCopy.appointments = appointments;
+    this.centerInfoCopy.centerStaff = staff;
 
     this.isPreventChangeCenter = !this.isPreventChangeCenter;
     this.centerForm.disable();
@@ -343,9 +369,7 @@ export class StaffProfileComponent implements OnInit {
         longitude: this.centerInfo.address.longitude,
       },
       description: this.centerInfo.description,
-      score: this.centerInfo.score,
-      appointments: this.centerInfo.appointments,
-      staff: this.centerInfo.staff,
+      score: '10',
     });
 
     this.isPreventChangeCenter = !this.isPreventChangeCenter;

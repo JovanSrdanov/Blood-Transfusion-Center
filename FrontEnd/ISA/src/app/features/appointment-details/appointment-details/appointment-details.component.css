@@ -32,3 +32,9 @@ td {
 .checkbox {
   margin-top: 5%;
 }
+
+.err {
+  font-size: xx-large;
+  font-weight: 900;
+  color: crimson;
+}

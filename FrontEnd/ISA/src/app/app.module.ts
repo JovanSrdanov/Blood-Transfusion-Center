@@ -12,12 +12,13 @@ import { SystemAdminPageModule } from './pages/system-admin-page/system-admin-pa
 import { BrowserModule } from '@angular/platform-browser';
 import { LoginPageModule } from './pages/login-page/login-page.module';
 import { RegisterBloodDonorModule } from './pages/registration-page/register-blood-donor.module';
+import { StaffProfileModalComponent } from './features/staff-profile/staff-profile-modal/staff-profile-modal.component';
 
 
 
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, StaffProfileModalComponent],
   imports: [
     //Nasi moduli za role
     BloodDonorPageModule,

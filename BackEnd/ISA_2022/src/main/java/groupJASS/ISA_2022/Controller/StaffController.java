@@ -1,10 +1,8 @@
 package groupJASS.ISA_2022.Controller;
 
 import groupJASS.ISA_2022.DTO.Account.PasswordDTO;
-import groupJASS.ISA_2022.DTO.Staff.AssignBloodCenterDTO;
-import groupJASS.ISA_2022.DTO.Staff.StaffBasicInfoDTO;
-import groupJASS.ISA_2022.DTO.Staff.StaffProfileDTO;
-import groupJASS.ISA_2022.DTO.Staff.StaffRegistrationDTO;
+import groupJASS.ISA_2022.DTO.BloodCenter.BloodCenterProfileDto;
+import groupJASS.ISA_2022.DTO.Staff.*;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
 import groupJASS.ISA_2022.Model.Staff;
 import groupJASS.ISA_2022.Service.Interfaces.IAccountService;
@@ -66,6 +64,8 @@ public class StaffController {
         try{
             Staff staff = _staffService.findByEmail(principal);
             StaffProfileDTO dto = _mapper.map(staff, StaffProfileDTO.class);
+
+            dto.setEmail(principal.getName());
             return new ResponseEntity<>(dto, HttpStatus.OK);
         } catch (NotFoundException e)
         {

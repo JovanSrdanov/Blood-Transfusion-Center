@@ -7,6 +7,7 @@ import { NavbarModule } from '../navbar/navbar.module';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [StaffProfileComponent, ChangePasswordComponent],
@@ -17,6 +18,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    MatListModule,
   ],
 })
-export class StaffProfileModule { }
+export class StaffProfileModule {}

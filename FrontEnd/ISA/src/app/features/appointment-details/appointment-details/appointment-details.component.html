@@ -3,7 +3,10 @@
   <h3 class="subtitle">
     Donor: {{ donorFullname.name }} {{ donorFullname.surname }}
   </h3>
-  <table class="questionaire">
+  <div class="err" *ngIf="noQuestionaire">
+    Donor did not fill out a questionaire!
+  </div>
+  <table class="questionaire" *ngIf="!noQuestionaire">
     <tr>
       <th>Under 50 Kg</th>
       <th>Feeling down</th>
@@ -27,7 +30,7 @@
       </td>
     </tr>
   </table>
-  <div class="checkbox">
+  <div class="checkbox" *ngIf="!noQuestionaire">
     <mat-checkbox (change)="clickedEventShowUp($event)">
       Did not show up
     </mat-checkbox>
@@ -41,6 +44,7 @@
     (click)="startAppointment()"
     color="primary"
     class="btn"
+    *ngIf="!noQuestionaire"
     [disabled]="!canStartAppointment"
   >
     Start appointment
@@ -50,7 +54,7 @@
     (click)="cancelAppointment()"
     color="warn"
     class="btn"
-    [disabled]="canStartAppointment"
+    [disabled]="canStartAppointment && !noQuestionaire"
   >
     Cancel appointment
   </button>

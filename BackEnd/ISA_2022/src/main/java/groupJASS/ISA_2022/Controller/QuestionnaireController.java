@@ -73,7 +73,10 @@ public class QuestionnaireController {
             //Account a = _accountService.findAccountByEmail(account.getName());
             Questionnaire questionnaire = _appointmentSchedulingHistoryService.findById(ashId).getBloodDonor()
                     .getQuestionnaire();
-            //Questionnaire questionnaire = _bloodDonorService.findById(bloodDonorId).getQuestionnaire();
+            if (questionnaire == null) {
+                return new ResponseEntity<>("Donor did not fill out a questionaire",
+                        HttpStatus.BAD_REQUEST);
+            }
             return new ResponseEntity<>(_modelMapper.map(questionnaire, QuestionnaireDTO.class), HttpStatus.CREATED);
         }
         catch (NotFoundException e) {
