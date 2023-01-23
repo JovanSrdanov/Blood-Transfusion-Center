@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatListModule } from '@angular/material/list';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 @NgModule({
   declarations: [StaffProfileComponent, ChangePasswordComponent],
@@ -19,6 +20,7 @@ import { MatListModule } from '@angular/material/list';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatListModule,
+    GoogleMapsModule,
   ],
 })
 export class StaffProfileModule {}

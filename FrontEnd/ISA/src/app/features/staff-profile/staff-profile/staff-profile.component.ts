@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { StaffProfileModalComponent } from '../staff-profile-modal/staff-profile-modal.component';
+import { GoogleMapsModalComponent } from '../google-maps-modal/google-maps-modal/google-maps-modal.component';
 
 @Component({
   selector: 'app-blood-admin-profile',
@@ -238,6 +239,20 @@ export class StaffProfileComponent implements OnInit {
     console.log(this.staffInfo);
 
     this.staffForm.get('email')?.disable();
+  }
+
+  openMapsDialog() {
+    let latLong = {
+      latitude: this.centerInfo.address.latitude,
+      longitude: this.centerInfo.address.longitude,
+    };
+
+    console.log('latlong:');
+    console.log(latLong);
+
+    const dialogRef = this.dialog.open(GoogleMapsModalComponent, {
+      data: { input: latLong },
+    });
   }
 
   openStaffDialog() {
