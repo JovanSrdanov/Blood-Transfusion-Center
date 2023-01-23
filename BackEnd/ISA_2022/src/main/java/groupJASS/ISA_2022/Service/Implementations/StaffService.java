@@ -73,7 +73,7 @@ public class StaffService implements IStaffService {
         }
 
         account.setPassword(dto.getNewPassword());
-        _accountRepository.save(account);
+        _accountService.updatePassword(account.getEmail(), dto.getNewPassword());
     }
 
 

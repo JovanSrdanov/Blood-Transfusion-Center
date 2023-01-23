@@ -550,8 +550,6 @@ VALUES ('BDE5B263-37D3-427A-A377-BA167AF88858', 'Lopate', '100', '5f29fc03-f6bd-
        ('87A49DA5-17B0-497E-9155-2D3EA53FC631', 'Kosilice', '10', '417c9b36-251a-4483-bfbf-abd3df786d96'),
        ('0AABB354-8592-4FBB-B8A0-CEE8F0A7C56F', 'Nozevi', '10', '417c9b36-251a-4483-bfbf-abd3df786d96');
 /*dodao poslednja 4*/
-       ('B82DCB56-7A00-48AA-8132-4CAA98D03205', 'Viljuske', '100', '5f29fc03-f6bd-49a6-9f41-c2ca229de403');
-
 
 -- Blood donor adresses first digit is changing
 INSERT INTO public.address (id,city,country,latitude,longitude,"number",street) VALUES
