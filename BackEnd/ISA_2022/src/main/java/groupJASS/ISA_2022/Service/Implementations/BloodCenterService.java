@@ -20,10 +20,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
 
 import java.security.Principal;
-import java.sql.Timestamp;
-import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 @Service
 @Primary
@@ -34,13 +35,12 @@ public class BloodCenterService implements IBloodCenterService {
     private final BloodQuantityRepository _bloodQuantityRepository;
     private final AccountRepository _accountRepository;
     private final StaffRepository _staffRepository;
-    private  final ModelMapper _mapper;
+    private final ModelMapper _mapper;
 
     @Autowired
     public BloodCenterService(BloodCenterRepository bloodCenterRepository, AddressRepository addressRepository,
                               BloodQuantityRepository bloodQuantityRepository, AccountRepository accountRepository,
-                              StaffRepository staffRepository, ModelMapper modelMapper)
-    {
+                              StaffRepository staffRepository, ModelMapper modelMapper) {
         _bloodCenterRepository = bloodCenterRepository;
         _addressRepository = addressRepository;
         _bloodQuantityRepository = bloodQuantityRepository;
@@ -48,6 +48,7 @@ public class BloodCenterService implements IBloodCenterService {
         _staffRepository = staffRepository;
         _mapper = modelMapper;
     }
+
     @Override
     public Iterable<BloodCenter> findAll() {
         return _bloodCenterRepository.findAll();
@@ -66,8 +67,7 @@ public class BloodCenterService implements IBloodCenterService {
         Account account = _accountRepository.findByEmail(principal.getName());
         Staff staff = _staffRepository.findById(account.getPersonId()).get();
 
-        if(staff.getBloodCenter() == null)
-        {
+        if (staff.getBloodCenter() == null) {
             throw new BloodCenterNotAssignedException("There is no blood center assigned for given staff");
         }
 
@@ -75,17 +75,15 @@ public class BloodCenterService implements IBloodCenterService {
         int workingHoursStart = workingHours.getStartHours();
         int workingHoursEnd = workingHours.getEndMinutes() > 0 ? workingHours.getEndHours() + 1 : workingHours.getEndHours();
 
-        return  new WorkingHoursRoundedDto(workingHoursStart, workingHoursEnd);
+        return new WorkingHoursRoundedDto(workingHoursStart, workingHoursEnd);
     }
 
-    private Set<BloodQuantity> initiateBloodQuantities()
-    {
+    private Set<BloodQuantity> initiateBloodQuantities() {
         Set<BloodQuantity> bloodQuantities = new HashSet<>();
-        for(BloodGroup bloodGroup : BloodGroup.values())
-        {
-           bloodQuantities.add(new BloodQuantity(bloodGroup));
+        for (BloodGroup bloodGroup : BloodGroup.values()) {
+            bloodQuantities.add(new BloodQuantity(bloodGroup));
         }
-        return  bloodQuantities;
+        return bloodQuantities;
     }
 
     @Override
@@ -94,9 +92,8 @@ public class BloodCenterService implements IBloodCenterService {
         if (entity.getId() == null) {
             Address address = entity.getAddress();
             //Don't look at this
-            if(_addressRepository.existsAddressByStreetIgnoreCaseAndNumberIgnoreCaseAndCityIgnoreCaseAndCountryIgnoreCase(
-                    address.getStreet(), address.getNumber(), address.getCity(), address.getCountry()))
-            {
+            if (_addressRepository.existsAddressByStreetIgnoreCaseAndNumberIgnoreCaseAndCityIgnoreCaseAndCountryIgnoreCase(
+                    address.getStreet(), address.getNumber(), address.getCity(), address.getCountry())) {
                 throw new DataIntegrityViolationException("Exact same address already exists");
             }
             address.setId(UUID.randomUUID());
@@ -105,8 +102,7 @@ public class BloodCenterService implements IBloodCenterService {
             entity.setId(UUID.randomUUID());
         }
 
-        if(!entity.getWorkingHours().isValid())
-        {
+        if (!entity.getWorkingHours().isValid()) {
             throw new BadRequestException("Invalid working hours");
         }
 
@@ -122,18 +118,15 @@ public class BloodCenterService implements IBloodCenterService {
     public Page<BloodCenter> findProductsWithSorting(int offset, int pageSize, String field, String sort, String s)
             throws SortNotFoundException {
         Page<BloodCenter> page;
-        if(sort.isBlank()) {
+        if (sort.isBlank()) {
             page = _bloodCenterRepository.searchBy(s, PageRequest.of(offset, pageSize));
-        }
-        else if(sort.equals("asc")) {
+        } else if (sort.equals("asc")) {
             page = _bloodCenterRepository.searchBy(s, PageRequest.of(offset, pageSize)
-                    .withSort(Sort.by(Sort.Direction.ASC,field)));
-        }
-        else if(sort.equals("desc")) {
+                    .withSort(Sort.by(Sort.Direction.ASC, field)));
+        } else if (sort.equals("desc")) {
             page = _bloodCenterRepository.searchBy(s, PageRequest.of(offset, pageSize)
-                    .withSort(Sort.by(Sort.Direction.DESC,field)));
-        }
-        else {
+                    .withSort(Sort.by(Sort.Direction.DESC, field)));
+        } else {
             throw new SortNotFoundException("This sort type doesn't exist");
         }
         return page;
@@ -158,10 +151,25 @@ public class BloodCenterService implements IBloodCenterService {
         Account account = _accountRepository.findByEmail(principal.getName());
         Staff staff = _staffRepository.findById(account.getPersonId()).get();
 
-        if(staff.getBloodCenter() == null)
-        {
+        if (staff.getBloodCenter() == null) {
             throw new BloodCenterNotAssignedException("There is no blood center assigned for given staff");
         }
-        return  _bloodCenterRepository.getIncomingAppointments(staff.getBloodCenter().getId(), LocalDateTime.now());
+        return _bloodCenterRepository.getIncomingAppointments(staff.getBloodCenter().getId(), LocalDateTime.now());
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void callTheHelicopter(BloodCenter bloodCenter) throws Exception {
+        if (_bloodCenterRepository.existsBloodCenterByDeliveryInProgres()) {
+            throw new Exception("Helicpoter is currently delivering blood");
+        }
+        if (bloodCenter.isHelicopterHere()) {
+
+            throw new Exception("Helicpoter is already here");
+        }
+        _bloodCenterRepository.removeHelicopterFromOtherHospital();
+        bloodCenter.setHelicopterHere(true);
+        save(bloodCenter);
+
     }
 }

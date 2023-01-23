@@ -21,4 +21,6 @@ public interface IBloodCenterService extends ICrudService<BloodCenter> {
     DateRange getWorkingDateRangeForDate(UUID id, LocalDateTime date);
 
     List<BloodCenterIncomingAppointmentDto> getIncomingAppointments(Principal principal) throws BloodCenterNotAssignedException;
+
+    void callTheHelicopter(BloodCenter bloodCenter) throws Exception;
 }
