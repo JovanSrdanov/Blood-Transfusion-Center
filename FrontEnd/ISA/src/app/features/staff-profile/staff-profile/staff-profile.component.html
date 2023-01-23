@@ -180,6 +180,15 @@
               />
             </mat-form-field>
           </div>
+          <div>
+            <button
+              mat-raised-button
+              (click)="openMapsDialog()"
+              class="mapsBtn"
+            >
+              View on google maps
+            </button>
+          </div>
           <h3>Blood Amount</h3>
           <div formGroupName="bloodAmount">
             <mat-form-field class="bloodGroupInput">
