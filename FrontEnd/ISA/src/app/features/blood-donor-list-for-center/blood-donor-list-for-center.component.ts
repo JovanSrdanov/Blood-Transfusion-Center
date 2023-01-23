@@ -1,20 +1,21 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, SortDirection } from '@angular/material/sort';
 import { Router } from '@angular/router';
-import { catchError, map, merge, startWith, switchMap } from 'rxjs';
+import { merge, startWith, switchMap, catchError, map } from 'rxjs';
 import { BloodDonorService } from 'src/app/http-services/blood-donor.service';
+import { AppointmentStatus } from 'src/app/model/appointment/appointment-status';
 import { BloodDonorInfo } from 'src/app/model/blood-donor/blood-donor-info';
 import { PageDto } from 'src/app/model/PageDto';
 import { SortType } from 'src/app/model/sort-type';
 
 @Component({
-  selector: 'app-blood-donor-list',
-  templateUrl: './blood-donor-list.component.html',
-  styleUrls: ['./blood-donor-list.component.css'],
+  selector: 'app-blood-donor-list-for-center',
+  templateUrl: './blood-donor-list-for-center.component.html',
+  styleUrls: ['./blood-donor-list-for-center.component.css']
 })
-export class BloodDonorListComponent implements OnInit {
+export class BloodDonorListForCenterComponent {
   displayedColumns: string[] = [
     'name',
     'surname',
@@ -23,7 +24,8 @@ export class BloodDonorListComponent implements OnInit {
     'jmbg',
     'phoneNumber',
     'institution',
-    'gender'
+    'gender',
+    'button',
   ];
 
   bloodDonorsSearched: BloodDonorInfo[] = [];
@@ -65,14 +67,14 @@ export class BloodDonorListComponent implements OnInit {
         switchMap(() => {
           this.isLoadingResults = true;
           //Ovde svoj servis metis
-          return this.bloodDonorService.searchByNameAndUsername({
+          return this.bloodDonorService.searchByNameAndUsernameForCenterAndStatus({
               name: this.searchForm['name'].value,
               surname: this.searchForm['surname'].value,
               page : this.paginator.pageIndex,
               pageSize: this.pageSize,
               sortType: this.parseSortDirection(this.sort.direction),
               sortByField: this.sort.active
-          })
+          }, AppointmentStatus.Pending)
           .pipe(catchError(() => observableOf(null)));
         }),
         map((data) => {
@@ -103,6 +105,11 @@ export class BloodDonorListComponent implements OnInit {
   }
 
 
+  viewAppointments(event: any, donorId: string) {
+    console.log(donorId);
+    this.router.navigate(['staff/donor-appointments', donorId]);
+  }
+
   parseGender(gender: string) {
     if (gender === 'MALE') {
       return 'Male';
@@ -118,8 +125,9 @@ export class BloodDonorListComponent implements OnInit {
         case 'desc': return SortType.Desc; break;
       }
   }
+
 }
+
 function observableOf(arg0: null): any {
   throw new Error('Function not implemented.');
 }
-

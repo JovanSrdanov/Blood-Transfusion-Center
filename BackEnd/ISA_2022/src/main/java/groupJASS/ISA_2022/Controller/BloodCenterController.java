@@ -11,6 +11,7 @@ import groupJASS.ISA_2022.Model.BloodCenter;
 import groupJASS.ISA_2022.Service.Interfaces.IBloodCenterService;
 import groupJASS.ISA_2022.Utilities.MappingUtilities;
 import groupJASS.ISA_2022.Utilities.ObjectMapperUtils;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -27,6 +28,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
+@SecurityRequirement(name = "Bearer Authentication")
 @RequestMapping("blood-center")
 public class BloodCenterController {
     private final IBloodCenterService _bloodCenterService;
@@ -124,6 +126,7 @@ public class BloodCenterController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_SYSTEM_ADMIN')")
     public ResponseEntity<String> registerBloodCenter(@Valid @RequestBody BloodCenterRegistrationDTO dto) {
         try {
             _bloodCenterService.save(_mapper.map(dto, BloodCenter.class));

@@ -1,5 +1,7 @@
 package groupJASS.ISA_2022;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,6 +16,7 @@ import javax.validation.ValidatorFactory;
 @SpringBootApplication
 @EnableAsync
 @EnableScheduling
+@OpenAPIDefinition(info = @Info(title = "Blood Bank", version = "0.1", description = "Projekat za ISU 22/23"))
 public class Isa2022Application {
 
     public static void main(String[] args) {

@@ -158,7 +158,7 @@ VALUES ('417c9b36-251a-4483-bfbf-abd3df786d96', 'LUMENE OY', 'Will-Wiza', '3', '
 
 INSERT INTO "blood_donor" ("id", "name", "phone_number", "surname", "gender", "institution", "jmbg", "penalties",
                            "points", "address_id", "occupation")
-VALUES ('07ce2e8b-d34b-4156-9dd4-f29ec4311675', 'Jovan', '140-486-9131', 'Srdanov', '1', 'Valve', '8541087715936',
+VALUES ('07ce2e8b-d34b-4156-9dd4-f29ec4311675', 'Jovan', '140-486-9131', 'Srdanov', '0', 'Valve', '8541087715936',
         '0',
         '0', 'a0cd0598-30f7-430d-8cc5-ef309d31ffb7', 'Shadow Scrum Master');
 
@@ -188,12 +188,12 @@ VALUES ('32763cf0-6a56-49f1-ad25-5a90561cd204', 'Doc1', '850-326-8246', '_',
 
 
 INSERT INTO "account" ("id", "email", "is_activated", "password", "person_id")
-VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec1', 'blooddonor@gmail.com', 'true',
+VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec1', 'isadonor+1@gmail.com', 'true',
         '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi',
         '07ce2e8b-d34b-4156-9dd4-f29ec4311675');
 
 INSERT INTO "account" ("id", "email", "is_activated", "password", "person_id")
-VALUES ('fbf7d96c-0bac-4081-bc8d-0d33e2ab0ec1', 'blooddonor2@gmail.com', 'true',
+VALUES ('fbf7d96c-0bac-4081-bc8d-0d33e2ab0ec1', 'isadonor+2@gmail.com', 'true',
         '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi',
         '26d3381b-319d-425c-abd7-256f24f0a2e0');
 
@@ -493,7 +493,7 @@ VALUES ('ce4891a5-2dc5-4251-907e-926db0007fb9', '32763cf0-6a56-49f1-ad25-5a90561
 INSERT INTO appointment_scheduling_history(id, qrcode, issuing_date, status, appointment_id, blood_donor_id)
 VALUES ('7af0b527-5209-4c33-b7fb-2d0df7214728', 'QR', '2022-12-21 11:15:00.000', 3,
         '9e16d8b0-a805-4ffb-a08b-d50e7fef6be0', '07ce2e8b-d34b-4156-9dd4-f29ec4311675'),
-       ('759415d9-b4d1-45ee-9067-f53b7f945f16', 'QR', '2022-12-21 11:15:00.000', 3,
+       ('759415d9-b4d1-45ee-9067-f53b7f945f16', 'QR', '2022-12-21 11:15:00.000', 1, --Needed one for visited
         'f9854a8d-9dfb-49f5-abf4-d993fac9aac3', '26d3381b-319d-425c-abd7-256f24f0a2e0'),
        ('95fcdcbe-3b7e-40cf-9494-e0215593d025', 'QR', '2022-12-21 11:15:00.000', 3,
         'f9854a8d-9dfb-49f5-abf4-d993fac9aac3', '07ce2e8b-d34b-4156-9dd4-f29ec4311675'),
@@ -550,3 +550,56 @@ VALUES ('BDE5B263-37D3-427A-A377-BA167AF88858', 'Lopate', '100', '5f29fc03-f6bd-
        ('87A49DA5-17B0-497E-9155-2D3EA53FC631', 'Kosilice', '10', '417c9b36-251a-4483-bfbf-abd3df786d96'),
        ('0AABB354-8592-4FBB-B8A0-CEE8F0A7C56F', 'Nozevi', '10', '417c9b36-251a-4483-bfbf-abd3df786d96');
 /*dodao poslednja 4*/
+       ('B82DCB56-7A00-48AA-8132-4CAA98D03205', 'Viljuske', '100', '5f29fc03-f6bd-49a6-9f41-c2ca229de403');
+
+
+-- Blood donor adresses first digit is changing
+INSERT INTO public.address (id,city,country,latitude,longitude,"number",street) VALUES
+    ('05886e19-2c10-41fd-8d1f-32af32b80b99','A','asdf',0.0,0.0,'a','asdf'),
+    ('15886e19-2c10-41fd-8d1f-32af32b80b99','B','asdf',0.0,0.0,'a','asdf'),
+    ('25886e19-2c10-41fd-8d1f-32af32b80b99','C','asdf',0.0,0.0,'a','asdf'),
+    ('35886e19-2c10-41fd-8d1f-32af32b80b99','D','asdf',0.0,0.0,'a','asdf'),
+    ('45886e19-2c10-41fd-8d1f-32af32b80b99','E','asdf',0.0,0.0,'a','asdf'),
+    ('55886e19-2c10-41fd-8d1f-32af32b80b99','F','asdf',0.0,0.0,'a','asdf'),
+    ('65886e19-2c10-41fd-8d1f-32af32b80b99','G','asdf',0.0,0.0,'a','asdf'),
+    ('75886e19-2c10-41fd-8d1f-32af32b80b99','H','asdf',0.0,0.0,'a','asdf'),
+    ('85886e19-2c10-41fd-8d1f-32af32b80b99','H','asdf',0.0,0.0,'a','asdf'),
+    ('95886e19-2c10-41fd-8d1f-32af32b80b99','I','asdf',0.0,0.0,'a','asdf'),
+    ('a5886e19-2c10-41fd-8d1f-32af32b80b99','J','asdf',0.0,0.0,'a','asdf'),
+    ('b5886e19-2c10-41fd-8d1f-32af32b80b99','K','asdf',0.0,0.0,'a','asdf'),
+    ('c5886e19-2c10-41fd-8d1f-32af32b80b99','L','asdf',0.0,0.0,'a','asdf');
+
+
+-- Blood donors first digit is changing for id and second and third  from the end for jmbg
+INSERT INTO public.blood_donor (id,name,phone_number,surname,gender,institution,jmbg,occupation,penalties,points,address_id,questionnaire_id) VALUES
+  ('0c285f71-c0be-4a50-bf10-575a3364e6ab','Stefan','231243','Matkovic',0,'asdfa','1234567890003','asdfa',0,0,'05886e19-2c10-41fd-8d1f-32af32b80b99',NULL),
+  ('1c285f71-c0be-4a50-bf10-575a3364e6ab','Filip','231243','Mrdjanovic',0,'asdfa','1234567890013','asdfa',0,0,'05886e19-2c10-41fd-8d1f-32af32b80b99',NULL),
+  ('2c285f71-c0be-4a50-bf10-575a3364e6ab','Jovana','231243','Nedeljkovic',1,'asdfa','1234567890023','asdfa',0,0,'05886e19-2c10-41fd-8d1f-32af32b80b99',NULL),
+  ('3c285f71-c0be-4a50-bf10-575a3364e6ab','Dane','231243','Misic',0,'asdfa','1234567890033','asdfa',0,0,'05886e19-2c10-41fd-8d1f-32af32b80b99',NULL),
+  ('4c285f71-c0be-4a50-bf10-575a3364e6ab','Dejan','231243','Barcal',0,'asdfa','1234567890043','asdfa',0,0,'05886e19-2c10-41fd-8d1f-32af32b80b99',NULL),
+  ('5c285f71-c0be-4a50-bf10-575a3364e6ab','Sergej','231243','Madic',0,'asdfa','1234567890053','asdfa',0,0,'05886e19-2c10-41fd-8d1f-32af32b80b99',NULL),
+  ('6c285f71-c0be-4a50-bf10-575a3364e6ab','Nikola','231243','Vukic',0,'asdfa','1234567890063','asdfa',0,0,'05886e19-2c10-41fd-8d1f-32af32b80b99',NULL),
+  ('7c285f71-c0be-4a50-bf10-575a3364e6ab','Uros','231243','Spasenic',0,'asdfa','1234567890073','asdfa',0,0,'05886e19-2c10-41fd-8d1f-32af32b80b99',NULL),
+  ('8c285f71-c0be-4a50-bf10-575a3364e6ab','Srdjan','231243','Tosic',0,'asdfa','1234567890083','asdfa',0,0,'05886e19-2c10-41fd-8d1f-32af32b80b99',NULL),
+  ('9c285f71-c0be-4a50-bf10-575a3364e6ab','Stefan','231243','Kalicanin',0,'asdfa','1234567890093','asdfa',0,0,'05886e19-2c10-41fd-8d1f-32af32b80b99',NULL),
+  ('ac285f71-c0be-4a50-bf10-575a3364e6ab','Andrea','231243','Lojpur',1,'asdfa','1234567890103','asdfa',0,0,'05886e19-2c10-41fd-8d1f-32af32b80b99',NULL),
+  ('bc285f71-c0be-4a50-bf10-575a3364e6ab','Milan','231243','Vracar',0,'asdfa','1234567890113','asdfa',0,0,'05886e19-2c10-41fd-8d1f-32af32b80b99',NULL),
+  ('cc285f71-c0be-4a50-bf10-575a3364e6ab','Ilija','231243','Cvetkovic',0,'asdfa','1234567890123','asdfa',0,0,'05886e19-2c10-41fd-8d1f-32af32b80b99',NULL);
+
+
+
+-- Blood donor accounts first digit is changing for id, mail is incrementing also
+INSERT INTO public.account (id,email,is_activated,last_password_update_date,"password",person_id) VALUES
+  ('0cc5196a-fb16-4394-a259-c5c81017cfac','isadonor+3@gmail.com',true,NULL,'$2a$10$P9XieoF311mu20jQIwSoMeNdqV3KBiIhTTZCM4QEITiSbksSsvCha','0c285f71-c0be-4a50-bf10-575a3364e6ab'),
+  ('1cc5196a-fb16-4394-a259-c5c81017cfac','isadonor+4@gmail.com',true,NULL,'$2a$10$P9XieoF311mu20jQIwSoMeNdqV3KBiIhTTZCM4QEITiSbksSsvCha','1c285f71-c0be-4a50-bf10-575a3364e6ab'),
+  ('2cc5196a-fb16-4394-a259-c5c81017cfac','isadonor+5@gmail.com',true,NULL,'$2a$10$P9XieoF311mu20jQIwSoMeNdqV3KBiIhTTZCM4QEITiSbksSsvCha','2c285f71-c0be-4a50-bf10-575a3364e6ab'),
+  ('3cc5196a-fb16-4394-a259-c5c81017cfac','isadonor+6@gmail.com',true,NULL,'$2a$10$P9XieoF311mu20jQIwSoMeNdqV3KBiIhTTZCM4QEITiSbksSsvCha','3c285f71-c0be-4a50-bf10-575a3364e6ab'),
+  ('4cc5196a-fb16-4394-a259-c5c81017cfac','isadonor+7@gmail.com',true,NULL,'$2a$10$P9XieoF311mu20jQIwSoMeNdqV3KBiIhTTZCM4QEITiSbksSsvCha','4c285f71-c0be-4a50-bf10-575a3364e6ab'),
+  ('5cc5196a-fb16-4394-a259-c5c81017cfac','isadonor+8@gmail.com',true,NULL,'$2a$10$P9XieoF311mu20jQIwSoMeNdqV3KBiIhTTZCM4QEITiSbksSsvCha','5c285f71-c0be-4a50-bf10-575a3364e6ab'),
+  ('6cc5196a-fb16-4394-a259-c5c81017cfac','isadonor+9@gmail.com',true,NULL,'$2a$10$P9XieoF311mu20jQIwSoMeNdqV3KBiIhTTZCM4QEITiSbksSsvCha','6c285f71-c0be-4a50-bf10-575a3364e6ab'),
+  ('7cc5196a-fb16-4394-a259-c5c81017cfac','isadonor+10@gmail.com',true,NULL,'$2a$10$P9XieoF311mu20jQIwSoMeNdqV3KBiIhTTZCM4QEITiSbksSsvCha','7c285f71-c0be-4a50-bf10-575a3364e6ab'),
+  ('8cc5196a-fb16-4394-a259-c5c81017cfac','isadonor+11@gmail.com',true,NULL,'$2a$10$P9XieoF311mu20jQIwSoMeNdqV3KBiIhTTZCM4QEITiSbksSsvCha','8c285f71-c0be-4a50-bf10-575a3364e6ab'),
+  ('9cc5196a-fb16-4394-a259-c5c81017cfac','isadonor+12@gmail.com',true,NULL,'$2a$10$P9XieoF311mu20jQIwSoMeNdqV3KBiIhTTZCM4QEITiSbksSsvCha','9c285f71-c0be-4a50-bf10-575a3364e6ab'),
+  ('acc5196a-fb16-4394-a259-c5c81017cfac','isadonor+13@gmail.com',true,NULL,'$2a$10$P9XieoF311mu20jQIwSoMeNdqV3KBiIhTTZCM4QEITiSbksSsvCha','ac285f71-c0be-4a50-bf10-575a3364e6ab'),
+  ('bcc5196a-fb16-4394-a259-c5c81017cfac','isadonor+14@gmail.com',true,NULL,'$2a$10$P9XieoF311mu20jQIwSoMeNdqV3KBiIhTTZCM4QEITiSbksSsvCha','bc285f71-c0be-4a50-bf10-575a3364e6ab'),
+  ('ccc5196a-fb16-4394-a259-c5c81017cfac','isadonor+15@gmail.com',true,NULL,'$2a$10$P9XieoF311mu20jQIwSoMeNdqV3KBiIhTTZCM4QEITiSbksSsvCha','cc285f71-c0be-4a50-bf10-575a3364e6ab');

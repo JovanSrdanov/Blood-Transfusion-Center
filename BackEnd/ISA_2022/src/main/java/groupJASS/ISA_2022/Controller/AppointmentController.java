@@ -12,6 +12,7 @@ import groupJASS.ISA_2022.Model.DateRange;
 import groupJASS.ISA_2022.Service.Interfaces.IAccountService;
 import groupJASS.ISA_2022.Service.Interfaces.IAppointmentSchedulingHistoryService;
 import groupJASS.ISA_2022.Service.Interfaces.IAppointmentService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import groupJASS.ISA_2022.Service.Interfaces.IQrCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -31,6 +32,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("appointment")
+@SecurityRequirement(name = "Bearer Authentication")
 public class AppointmentController {
     private final IAppointmentService _appointmentService;
     private final IAccountService _accountService;
