@@ -5,11 +5,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 public class PendingShipmentsDTO {
+
+    private UUID id;
     private String serverPort;
     private float longitude;
     private float latitude;

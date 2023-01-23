@@ -25,8 +25,11 @@ public interface BloodCenterRepository extends JpaRepository<BloodCenter, UUID> 
             "left join BloodCenter  bc on a.bloodCenter.id = bc.id " +
             "left join BloodDonor bd on ash.bloodDonor.id = bd.id " +
             "where bc.id = :bloodCenterId and a.time.startTime > :now  ")
-    List<BloodCenterIncomingAppointmentDto> getIncomingAppointments(@Param("bloodCenterId") UUID bloodCenterId, @Param("now")LocalDateTime now);
+    List<BloodCenterIncomingAppointmentDto> getIncomingAppointments(@Param("bloodCenterId") UUID bloodCenterId, @Param("now") LocalDateTime now);
+
     //Curent time has to be passed because hqls current_time() has problems with timezones
+    @Query("select case when count(bc)> 0 then true else false end from BloodCenter bc where bc.isDeliveryInProgres=true")
+    boolean existsBloodCenterByDeliveryInProgres();
 }
 
 

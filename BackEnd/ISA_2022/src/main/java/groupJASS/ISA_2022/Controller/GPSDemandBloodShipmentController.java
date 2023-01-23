@@ -2,8 +2,8 @@ package groupJASS.ISA_2022.Controller;
 
 import groupJASS.ISA_2022.DTO.PageEntityDto;
 import groupJASS.ISA_2022.DTO.PendingShipmentsDTO;
+import groupJASS.ISA_2022.Model.BloodCenter;
 import groupJASS.ISA_2022.Model.GPSDemandBloodShipment;
-import groupJASS.ISA_2022.Model.Staff;
 import groupJASS.ISA_2022.Service.Interfaces.IAccountService;
 import groupJASS.ISA_2022.Service.Interfaces.IGPSDemandBloodShipmentService;
 import groupJASS.ISA_2022.Service.Interfaces.IStaffService;
@@ -42,8 +42,11 @@ public class GPSDemandBloodShipmentController {
                                                     @RequestParam(name = "pageSize") int pageSize) {
 
         try {
-            Staff staff = _staffService.findById(_accountService.findAccountByEmail(account.getName()).getPersonId());
-            Page<GPSDemandBloodShipment> entities = _gpsDemandBloodShipmentService.getAllPendingShipments(staff.getBloodCenter().getId(), page, pageSize);
+            BloodCenter bloodCenter = _staffService.findById(_accountService.findAccountByEmail(account.getName()).getPersonId()).getBloodCenter();
+            if (bloodCenter == null) {
+                return new ResponseEntity<>("This staff member is not a member of any bloodcenter", HttpStatus.CONFLICT);
+            }
+            Page<GPSDemandBloodShipment> entities = _gpsDemandBloodShipmentService.getAllPendingShipments(bloodCenter.getId(), page, pageSize);
             List<PendingShipmentsDTO> content = ObjectMapperUtils.mapAll(entities.getContent(), PendingShipmentsDTO.class);
             PageEntityDto<List<PendingShipmentsDTO>> pageDto = new PageEntityDto<>(content, (int) entities.getTotalElements());
             return new ResponseEntity<>(pageDto, HttpStatus.OK);
