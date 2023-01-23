@@ -10,6 +10,7 @@ import groupJASS.ISA_2022.Model.Address;
 import groupJASS.ISA_2022.Model.BloodDonor;
 import groupJASS.ISA_2022.Model.Questionnaire;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,6 +26,9 @@ public interface IBloodDonorService extends ICrudService<BloodDonor> {
     BloodDonor updateDonorInfo(Address map, BloodDonor updatedUser) throws BadRequestException;
 
     PageEntityDto<List<BloodDonorInfoDto>> findBloodDonorByNameAndSurname(BloodDonorGetByNameAndSurnameDto dto);
+    PageEntityDto<List<BloodDonorInfoDto>> findBloodDonorByNameAndSurnameForCenterAndStatus(BloodDonorGetByNameAndSurnameDto dto,
+                                                                                            AppointmentSchedulingConfirmationStatus status,
+                                                                                            Principal principal);
 
     void updatePenalties(BloodDonor donor, boolean showedUp);
 

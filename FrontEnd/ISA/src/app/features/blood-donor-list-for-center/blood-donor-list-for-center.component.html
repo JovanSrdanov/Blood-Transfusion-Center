@@ -1,3 +1,4 @@
+<!-- THIS IS FOR SCHEDULED BLOOD DONORS -->
 <div class="search-container">
   <form [formGroup]="_searchForm">
     <mat-form-field>
@@ -66,6 +67,25 @@
       </td>
     </ng-container>
 
+    <!-- Mislim da ovo ne treba ovde, pa ako treba otkomentarisi -->
+
+    <ng-container matColumnDef="button">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <button class="btn" [matMenuTriggerFor]="menustatus">Actions</button>
+
+        <mat-menu #menustatus="matMenu">
+          <button
+            (click)="viewAppointments($event, element.id)"
+            mat-menu-item
+            [value]="element.id"
+          >
+            View appointments
+          </button>
+        </mat-menu>
+      </td>
+    </ng-container>
+
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr
       mat-row
@@ -80,3 +100,4 @@
     aria-label="Select page">
   </mat-paginator>
 </div>
+

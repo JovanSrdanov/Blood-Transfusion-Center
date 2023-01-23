@@ -6,6 +6,10 @@ import { MaterialModule } from 'src/app/material/material.module';
 
 @NgModule({
   declarations: [BloodDonorListComponent],
-  imports: [CommonModule, MaterialModule, RouterModule],
+  imports: [
+    CommonModule,
+    MaterialModule,
+    RouterModule
+  ],
 })
 export class BloodDonorListModule {}

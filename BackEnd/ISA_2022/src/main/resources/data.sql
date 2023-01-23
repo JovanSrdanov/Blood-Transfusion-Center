@@ -158,7 +158,7 @@ VALUES ('417c9b36-251a-4483-bfbf-abd3df786d96', 'LUMENE OY', 'Will-Wiza', '3', '
 
 INSERT INTO "blood_donor" ("id", "name", "phone_number", "surname", "gender", "institution", "jmbg", "penalties",
                            "points", "address_id", "occupation")
-VALUES ('07ce2e8b-d34b-4156-9dd4-f29ec4311675', 'Jovan', '140-486-9131', 'Srdanov', '1', 'Valve', '8541087715936',
+VALUES ('07ce2e8b-d34b-4156-9dd4-f29ec4311675', 'Jovan', '140-486-9131', 'Srdanov', '0', 'Valve', '8541087715936',
         '0',
         '0', 'a0cd0598-30f7-430d-8cc5-ef309d31ffb7', 'Shadow Scrum Master');
 
@@ -493,7 +493,7 @@ VALUES ('ce4891a5-2dc5-4251-907e-926db0007fb9', '32763cf0-6a56-49f1-ad25-5a90561
 INSERT INTO appointment_scheduling_history(id, qrcode, issuing_date, status, appointment_id, blood_donor_id)
 VALUES ('7af0b527-5209-4c33-b7fb-2d0df7214728', 'QR', '2022-12-21 11:15:00.000', 3,
         '9e16d8b0-a805-4ffb-a08b-d50e7fef6be0', '07ce2e8b-d34b-4156-9dd4-f29ec4311675'),
-       ('759415d9-b4d1-45ee-9067-f53b7f945f16', 'QR', '2022-12-21 11:15:00.000', 3,
+       ('759415d9-b4d1-45ee-9067-f53b7f945f16', 'QR', '2022-12-21 11:15:00.000', 1, --Needed one for visited
         'f9854a8d-9dfb-49f5-abf4-d993fac9aac3', '26d3381b-319d-425c-abd7-256f24f0a2e0'),
        ('95fcdcbe-3b7e-40cf-9494-e0215593d025', 'QR', '2022-12-21 11:15:00.000', 3,
         'f9854a8d-9dfb-49f5-abf4-d993fac9aac3', '07ce2e8b-d34b-4156-9dd4-f29ec4311675'),
