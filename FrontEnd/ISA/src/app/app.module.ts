@@ -1,3 +1,4 @@
+import { GoogleMapsModule } from '@angular/google-maps';
 import { AppRoutingModule } from './routing/app-routing.module';
 import { MaterialModule } from './material/material.module';
 import { NgModule } from '@angular/core';
@@ -13,12 +14,16 @@ import { BrowserModule } from '@angular/platform-browser';
 import { LoginPageModule } from './pages/login-page/login-page.module';
 import { RegisterBloodDonorModule } from './pages/registration-page/register-blood-donor.module';
 import { StaffProfileModalComponent } from './features/staff-profile/staff-profile-modal/staff-profile-modal.component';
-
-
-
+import { GoogleMapComponent } from './GoogleMaps/google-map/google-map.component';
+import { GoogleMapsModalComponent } from './features/staff-profile/google-maps-modal/google-maps-modal/google-maps-modal.component';
 
 @NgModule({
-  declarations: [AppComponent, StaffProfileModalComponent],
+  declarations: [
+    AppComponent,
+    StaffProfileModalComponent,
+    GoogleMapComponent,
+    GoogleMapsModalComponent,
+  ],
   imports: [
     //Nasi moduli za role
     BloodDonorPageModule,
@@ -27,14 +32,13 @@ import { StaffProfileModalComponent } from './features/staff-profile/staff-profi
     LoginPageModule,
     RegisterBloodDonorModule,
 
-
     //Pomocni moduli
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
     HttpClientModule,
-
+    GoogleMapsModule,
   ],
   providers: [
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
@@ -44,8 +48,8 @@ import { StaffProfileModalComponent } from './features/staff-profile/staff-profi
       useClass: AuthInterceptor,
       multi: true,
     },
-
   ],
+  exports: [GoogleMapComponent],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

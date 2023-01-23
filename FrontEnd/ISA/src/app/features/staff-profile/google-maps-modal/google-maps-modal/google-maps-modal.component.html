@@ -1,0 +1,13 @@
+<app-google-map
+  [latitude]="data.input.latitude"
+  [longitude]="data.input.longitude"
+></app-google-map>
+
+<!--<p>Latitude: {{ data.input.latitude }}</p>
+<p>Longitude: {{ data.input.longitude }}</p>-->
+
+<div>
+  <button mat-button [mat-dialog-close]="data.input" class="closeBtn">
+    Close
+  </button>
+</div>
