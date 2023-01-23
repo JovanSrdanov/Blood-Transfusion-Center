@@ -14,6 +14,7 @@ const routes: Routes = [
   {
     path: 'blood-donor-list',
     component: BloodDonorListComponent,
+    canActivate : [UpdatedPasswordGuard]
   },
   {
     path: 'register-blood-center',
