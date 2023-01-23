@@ -158,6 +158,7 @@ public class BloodCenterService implements IBloodCenterService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void callTheHelicopter(BloodCenter bloodCenter) throws Exception {
         if (_bloodCenterRepository.existsBloodCenterByDeliveryInProgres()) {
             throw new Exception("Helicpoter is currently delivering blood");
@@ -166,6 +167,7 @@ public class BloodCenterService implements IBloodCenterService {
 
             throw new Exception("Helicpoter is already here");
         }
+        _bloodCenterRepository.removeHelicopterFromOtherHospital();
         bloodCenter.setHelicopterHere(true);
         save(bloodCenter);
 

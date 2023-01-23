@@ -5,6 +5,7 @@ import groupJASS.ISA_2022.Model.BloodCenter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -30,6 +31,13 @@ public interface BloodCenterRepository extends JpaRepository<BloodCenter, UUID> 
     //Curent time has to be passed because hqls current_time() has problems with timezones
     @Query("select case when count(bc)> 0 then true else false end from BloodCenter bc where bc.isDeliveryInProgres=true")
     boolean existsBloodCenterByDeliveryInProgres();
+
+
+    @Modifying
+    @Query("update BloodCenter bc " +
+            "set bc.isHelicopterHere=false " +
+            "where bc.isHelicopterHere=true")
+    void removeHelicopterFromOtherHospital();
 }
 
 
