@@ -17,30 +17,14 @@ public class DemandBloodShipmentDTO implements Serializable {
     private String serverPort;
     private float longitude;
     private float latitude;
-    private int A_POS;
-    private int A_NEG;
-    private int B_POS;
-    private int B_NEG;
-    private int O_POS;
-    private int O_NEG;
-    private int AB_POS;
-    private int AB_NEG;
+    private int a_pos;
+    private int a_neg;
+    private int b_pos;
+    private int b_neg;
+    private int o_pos;
+    private int O_neg;
+    private int ab_pos;
+    private int ab_neg;
 
-    @Override
-    public String toString() {
-        return "DemandBloodShipmentDTO{" +
-                "bloodCenterId=" + bloodCenterId +
-                ", localHost='" + serverPort + '\'' +
-                ", longitude=" + longitude +
-                ", latitude=" + latitude +
-                ", A_POS=" + A_POS +
-                ", A_NEG=" + A_NEG +
-                ", B_POS=" + B_POS +
-                ", B_NEG=" + B_NEG +
-                ", O_POS=" + O_POS +
-                ", O_NEG=" + O_NEG +
-                ", AB_POS=" + AB_POS +
-                ", AB_NEG=" + AB_NEG +
-                '}';
-    }
+
 }
