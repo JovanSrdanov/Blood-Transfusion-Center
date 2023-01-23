@@ -4,7 +4,7 @@ import { QuestionnaireService } from './../../../http-services/questionnaire.ser
 import { Questionnaire } from 'src/app/pages/registration-page/Model/questionnaire';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { BloodDonorSearchNameSurname } from 'src/app/model/blood-donor/blood-donor-search-name-surname';
+import {BloodDonorFullname} from '../../../model/blood-donor/blood-donor-fullname'
 
 @Component({
   selector: 'app-appointment-details',
@@ -13,7 +13,7 @@ import { BloodDonorSearchNameSurname } from 'src/app/model/blood-donor/blood-don
 })
 export class AppointmentDetailsComponent implements OnInit {
   appointmentHistoryId: string = '-1';
-  donorFullname: BloodDonorSearchNameSurname = { name: '', surname: '' };
+  donorFullname: BloodDonorFullname = { name: '', surname: '' };
   //donorId: string = '-1';
 
   private sub: any;

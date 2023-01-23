@@ -16,7 +16,7 @@ import javax.validation.ValidatorFactory;
 @SpringBootApplication
 @EnableAsync
 @EnableScheduling
-@OpenAPIDefinition(info = @Info(title = "ISA Projekat", version = "0.1", description = "Projekat za ISU 22/23"))
+@OpenAPIDefinition(info = @Info(title = "Blood Bank", version = "0.1", description = "Projekat za ISU 22/23"))
 public class Isa2022Application {
 
     public static void main(String[] args) {
