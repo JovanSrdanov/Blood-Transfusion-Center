@@ -6,6 +6,8 @@ import {
   Validators,
   FormControl,
 } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { StaffProfileModalComponent } from '../staff-profile-modal/staff-profile-modal.component';
 
 @Component({
   selector: 'app-blood-admin-profile',
@@ -32,7 +34,11 @@ export class StaffProfileComponent implements OnInit {
   centerId: any;
   centerInfoCopy: any;
 
-  constructor(private profileService: ProfileService, private fb: FormBuilder) {
+  constructor(
+    private profileService: ProfileService,
+    private fb: FormBuilder,
+    private dialog: MatDialog
+  ) {
     this.staffForm = this.fb.group({
       name: '',
       surname: '',
@@ -87,6 +93,8 @@ export class StaffProfileComponent implements OnInit {
         //console.log(this.centerId);
       }
       this.centerInfoCopy = structuredClone(this.centerInfo);
+      console.log('copy:');
+      console.log(this.centerInfoCopy);
       this.createFormCenter();
     });
   }
@@ -215,53 +223,10 @@ export class StaffProfileComponent implements OnInit {
         [Validators.required],
       ],
       score: [{ value: 10, disabled: true }, [Validators.required]],
-      appointments: [
-        {
-          value: this.getAllAppointmentsForCenter(this.centerInfo.appointments),
-          disabled: true,
-        },
-      ],
-      staff: [
-        {
-          value: this.getAllStaffForAppointment(this.centerInfo.centerStaff),
-          disabled: true,
-        },
-      ],
     });
     this.centerForm.valueChanges.subscribe((currValue) => {
       this.centerInfo = currValue;
     });
-  }
-
-  getAllAppointmentsForCenter(appointments: any) {
-    console.log('appointments:');
-    console.log(appointments);
-    let res = '';
-    appointments.forEach((value: any) => {
-      if (value != undefined) {
-        res += value.time.startTime;
-        res += ' ';
-        res += value.time.endTime;
-        res += '|';
-      }
-    });
-
-    return res;
-  }
-
-  getAllStaffForAppointment(staff: any): string {
-    console.log('staff:' + staff);
-    let res = '';
-    staff.forEach((value: any) => {
-      if (value != undefined) {
-        res += value.name;
-        res += ' ';
-        res += value.surname;
-        res += ' | ';
-      }
-    });
-
-    return res;
   }
 
   //ADMIN
@@ -274,6 +239,38 @@ export class StaffProfileComponent implements OnInit {
 
     this.staffForm.get('email')?.disable();
   }
+
+  openStaffDialog() {
+    let staffList: string[] = [];
+    this.centerInfoCopy.centerStaff.forEach((value: any) => {
+      if (value != undefined) {
+        staffList.push(value.name + ' ' + value.surname);
+      }
+    });
+
+    const dialogRef = this.dialog.open(StaffProfileModalComponent, {
+      data: { input: staffList },
+    });
+  }
+
+  openAppointmentsDialog() {
+    let appointmentList: string[] = [];
+    this.centerInfoCopy.appointments.forEach((value: any) => {
+      if (value != undefined) {
+        appointmentList.push(
+          'Start time: ' +
+            value.time.startTime +
+            ' | End time: ' +
+            value.time.endTime
+        );
+      }
+    });
+
+    const dialogRef = this.dialog.open(StaffProfileModalComponent, {
+      data: { input: appointmentList },
+    });
+  }
+
   confirmChangeStaff(event: Event) {
     event.preventDefault();
     this.staffInfo.id = this.staffId;
@@ -346,7 +343,12 @@ export class StaffProfileComponent implements OnInit {
         }, 2500);
       });
 
+    let appointments = this.centerInfoCopy.appointments;
+    let staff = this.centerInfoCopy.centerStaff;
+
     this.centerInfoCopy = structuredClone(this.centerInfo);
+    this.centerInfoCopy.appointments = appointments;
+    this.centerInfoCopy.centerStaff = staff;
 
     this.isPreventChangeCenter = !this.isPreventChangeCenter;
     this.centerForm.disable();
@@ -368,10 +370,6 @@ export class StaffProfileComponent implements OnInit {
       },
       description: this.centerInfo.description,
       score: '10',
-      appointments: this.getAllAppointmentsForCenter(
-        this.centerInfo.appointments
-      ),
-      staff: this.getAllStaffForAppointment(this.centerInfo.centerStaff),
     });
 
     this.isPreventChangeCenter = !this.isPreventChangeCenter;

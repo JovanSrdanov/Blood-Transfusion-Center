@@ -115,16 +115,6 @@
           <mat-form-field>
             <input matInput placeholder="score" formControlName="score" />
           </mat-form-field>
-          <mat-form-field>
-            <input
-              matInput
-              placeholder="appointments"
-              formControlName="appointments"
-            />
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="staff" formControlName="staff" />
-          </mat-form-field>
           <h3>Address</h3>
           <div formGroupName="address">
             <mat-form-field>
@@ -256,6 +246,18 @@
                 formControlName="AB_NEG"
               />
             </mat-form-field>
+          </div>
+          <div class="modalDiv">
+            <button
+              class="modalBtn"
+              mat-raised-button
+              (click)="openStaffDialog()"
+            >
+              Staff
+            </button>
+            <button mat-raised-button (click)="openAppointmentsDialog()">
+              Appointments
+            </button>
           </div>
           <div *ngIf="isPreventChangeCenter && isPreventChangeStaff">
             <button mat-raised-button (click)="enableChangeCenter($event)">
