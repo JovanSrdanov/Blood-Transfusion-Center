@@ -98,3 +98,12 @@ button:hover {
     );
   }
 }
+
+.my-css-class .mat-dialog-container {
+  background-color: rgb(33, 38, 40);
+  color: white;
+  min-width: 500px;
+
+  display: flex;
+  justify-content: center;
+}

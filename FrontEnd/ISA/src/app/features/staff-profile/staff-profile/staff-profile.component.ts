@@ -252,6 +252,7 @@ export class StaffProfileComponent implements OnInit {
 
     const dialogRef = this.dialog.open(GoogleMapsModalComponent, {
       data: { input: latLong },
+      panelClass: 'my-css-class',
     });
   }
 
@@ -265,6 +266,7 @@ export class StaffProfileComponent implements OnInit {
 
     const dialogRef = this.dialog.open(StaffProfileModalComponent, {
       data: { input: staffList },
+      panelClass: 'my-css-class',
     });
   }
 
@@ -283,6 +285,7 @@ export class StaffProfileComponent implements OnInit {
 
     const dialogRef = this.dialog.open(StaffProfileModalComponent, {
       data: { input: appointmentList },
+      panelClass: 'my-css-class',
     });
   }
 

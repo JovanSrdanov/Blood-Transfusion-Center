@@ -137,6 +137,7 @@ export class CreateMedicalReportComponent implements OnInit {
   openNoteToDoctorDialog() {
     const dialogRef = this.dialog.open(NoteToDoctorModalComponent, {
       data: { note: this.noteToDoctor },
+      panelClass: 'my-css-class',
     });
 
     dialogRef.afterClosed().subscribe((res) => {
@@ -148,6 +149,7 @@ export class CreateMedicalReportComponent implements OnInit {
   openNoteDialog() {
     const dialogRef = this.dialog.open(NoteToDoctorModalComponent, {
       data: { note: this.note },
+      panelClass: 'my-css-class',
     });
 
     dialogRef.afterClosed().subscribe((res) => {
