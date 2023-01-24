@@ -28,15 +28,6 @@ export class HelicopterMapComponent implements OnInit {
 
   initializeWebSocketConnection() {
     // serverUrl je vrednost koju smo definisali u registerStompEndpoints() metodi na serveru
-    let ws = new SockJS(this.serverUrl);
-    this.stompClient = Stomp.over(ws);
-    let that = this;
-
-    this.stompClient.connect({}, function () {
-      that.isLoaded = true;
-      that.openGlobalSocket()
-    });
-
   }
 
 }
