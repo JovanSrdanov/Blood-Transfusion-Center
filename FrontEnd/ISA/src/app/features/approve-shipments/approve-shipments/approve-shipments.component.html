@@ -1,4 +1,11 @@
 <h1>Approve blood shipments</h1>
+
+<button mat-raised-button color="primary" (click)="callTheHelicopter()">
+  Call the helicopter
+</button>
+
+<p style="margin: 10px">Helicopter status: {{ helicopterStauts }}</p>
+
 <div class="mat-elevation-z8">
   <table mat-table matSort [dataSource]="dataSource">
     <ng-container matColumnDef="From">

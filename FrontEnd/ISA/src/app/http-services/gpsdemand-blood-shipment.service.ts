@@ -20,5 +20,15 @@ export class GPSDemandBloodShipmentService {
       + page + "&pageSize=" + pageSize);
   }
 
+  sendShipment(shipmentId: string,
+    seconds: number): Observable<any> {
+    return this.http.get<any>(this.path + '/send-shipment/' + shipmentId + "/" + seconds
+    );
+  }
+
+  canViewDelivery(): Observable<any> {
+    return this.http.get<any>(this.path + "/can-view-delivery");
+  }
+
 
 }

@@ -24,9 +24,9 @@ public class GPSDemandBloodShipment {
     @Column(nullable = false)
     private String serverPort;
     @Column(nullable = false)
-    private float longitude;
+    private double longitude;
     @Column(nullable = false)
-    private float latitude;
+    private double latitude;
     @Column(nullable = false)
     private int a_pos;
     @Column(nullable = false)

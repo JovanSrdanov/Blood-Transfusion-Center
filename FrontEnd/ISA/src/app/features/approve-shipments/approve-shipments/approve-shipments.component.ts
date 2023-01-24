@@ -1,11 +1,13 @@
-import { Component, Inject, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
-
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { merge, startWith, switchMap, catchError, map, of as observableOf, } from 'rxjs';
 import { GPSDemandBloodShipmentService } from 'src/app/http-services/gpsdemand-blood-shipment.service';
 import { PageDto } from 'src/app/model/PageDto';
+import { BloodCenterService } from 'src/app/http-services/blood-center.service';
 
 
 export interface PendingShipmentsDTO {
@@ -32,8 +34,9 @@ export interface DialogData {
   templateUrl: './approve-shipments.component.html',
   styleUrls: ['./approve-shipments.component.css']
 })
-export class ApproveShipmentsComponent {
+export class ApproveShipmentsComponent implements OnInit {
 
+  helicopterStauts: string = "Checking..."
   dataSource: PendingShipmentsDTO[] = [];
   public tableDataSource: MatTableDataSource<PendingShipmentsDTO[]> =
     new MatTableDataSource<PendingShipmentsDTO[]>([]);
@@ -47,7 +50,12 @@ export class ApproveShipmentsComponent {
   isRateLimitReached = false;
 
 
-  constructor(private gpsDemandBloodShipmentService: GPSDemandBloodShipmentService, public dialog: MatDialog) { }
+
+  constructor(private gpsDemandBloodShipmentService: GPSDemandBloodShipmentService, public dialog: MatDialog, private router: Router, private bloodCenterService: BloodCenterService) { }
+
+  ngOnInit(): void { }
+
+
 
   ngAfterViewInit() {
     merge(this.paginator.page)
@@ -78,18 +86,28 @@ export class ApproveShipmentsComponent {
           return data;
         })
       )
-      .subscribe((data) => (this.dataSource = data.content), err => { alert(err) });
+      .subscribe((data) => (this.dataSource = data.content), err => {
+        alert(err)
+        this.router.navigate(["staff/staff-profile"]);
+      });
   }
 
-  openDialog(PendingShipmentsDTO: any) {
+  openDialog(PendingShipmentsDTO: PendingShipmentsDTO) {
     this.dialog.open(SendingShipmentDialog, {
       data: {
         PendingShipmentsDTO: PendingShipmentsDTO,
       },
     });
   }
-
-
+  callTheHelicopter(): void {
+    this.bloodCenterService.callTheHelicopter().subscribe((res) => {
+      console.log(res)
+      this.helicopterStauts = "The helicopter is now here";
+    }, (err) => {
+      console.log(err)
+      this.helicopterStauts = err.error;
+    })
+  }
 }
 
 
@@ -98,5 +116,28 @@ export class ApproveShipmentsComponent {
   templateUrl: 'sending-shipment-dialog.html',
 })
 export class SendingShipmentDialog {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData, private gpsDemandBloodShipmentService: GPSDemandBloodShipmentService, private router: Router) { }
+
+  secondsForm = new FormGroup({
+    seconds: new FormControl<number>(1, [Validators.required]),
+  });
+
+
+  get form() {
+    return this.secondsForm.controls;
+  }
+
+
+  sendShipment(PendingShipmentsDTO: PendingShipmentsDTO) {
+
+    this.gpsDemandBloodShipmentService.sendShipment(PendingShipmentsDTO.id, this.form.seconds.value ?? 1).subscribe(res => {
+      alert("Shipment sent!")
+      this.router.navigate(["staff/staff-profile"]);
+    }, err => {
+      alert(err.error)
+    })
+
+  }
+
+
 }

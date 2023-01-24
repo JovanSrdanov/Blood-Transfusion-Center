@@ -3,8 +3,10 @@ package groupJASS.ISA_2022;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import org.modelmapper.ModelMapper;
+import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -21,20 +23,65 @@ import javax.validation.ValidatorFactory;
 @OpenAPIDefinition(info = @Info(title = "Blood Bank", version = "0.1", description = "Projekat za ISU 22/23"))
 public class Isa2022Application {
 
+    @Value("${demandBloodShipment}")
+    String demandBloodShipment;
+    @Value("${approvedBloodShipment}")
+    String approvedBloodShipment;
+    @Value("${bloodShipmentArrived}")
+    String bloodShipmentArrived;
+    @Value("${setGPSCoordinates}")
+    String setGPSCoordinates;
+    @Value("${getCurrentGPSCoordinates}")
+    String getCurrentGPSCoordinates;
+    @Value("${helicopterArrived}")
+    String helicopterArrived;
+
+
     public static void main(String[] args) {
         SpringApplication.run(Isa2022Application.class, args);
-        System.out.println("IDEMOOOOOOOOOOOOOOOOOOOOOOOO");
+        System.out.println("Welcome!");
     }
 
     @Bean
-    public ModelMapper modelMapper() {
-        return new ModelMapper();
+    Queue demandBloodShipmentQueue() {
+        return new Queue(demandBloodShipment, true);
     }
+
+    @Bean
+    Queue approvedBloodShipmentQueue() {
+        return new Queue(approvedBloodShipment, true);
+    }
+
+    @Bean
+    Queue bloodShipmentArrivedQueue() {
+        return new Queue(bloodShipmentArrived, true);
+    }
+
+    @Bean
+    Queue setGPSCoordinatesQueue() {
+        return new Queue(setGPSCoordinates, true);
+    }
+
+    @Bean
+    Queue getCurrentGPSCoordinatesQueue() {
+        return new Queue(getCurrentGPSCoordinates, true);
+    }
+
+    @Bean
+    Queue helicopterArrivedQueue() {
+        return new Queue(helicopterArrived, true);
+    }
+
 
     /*@Bean
     public ObjectMapperUtils modelMapper2() {
         return new ObjectMapperUtils();
     }*/
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
 
     @Bean
     public Validator validator() {
@@ -47,6 +94,7 @@ public class Isa2022Application {
         CachingConnectionFactory connectionFactory = new CachingConnectionFactory("localhost");
         return connectionFactory;
     }
+
 
 }
 

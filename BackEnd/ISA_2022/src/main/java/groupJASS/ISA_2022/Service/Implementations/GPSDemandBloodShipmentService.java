@@ -1,6 +1,7 @@
 package groupJASS.ISA_2022.Service.Implementations;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import groupJASS.ISA_2022.DTO.CoordinatesForGPSDTO;
 import groupJASS.ISA_2022.DTO.DemandBloodShipmentDTO;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
 import groupJASS.ISA_2022.Model.DemandBloodShipmentStatus;
@@ -12,7 +13,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.support.converter.DefaultClassMapper;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -26,6 +30,10 @@ public class GPSDemandBloodShipmentService implements IGPSDemandBloodShipmentSer
     private final GPSDemandBloodShipmentRepository _gpsDemandBloodShipmentRepository;
     private final IBloodCenterService _bloodCenterService;
     private final ModelMapper _mapper;
+    @Value("${approvedBloodShipment}")
+    String approvedBloodShipment;
+    @Value("${setGPSCoordinates}")
+    String setGPSCoordinates;
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
@@ -64,7 +72,6 @@ public class GPSDemandBloodShipmentService implements IGPSDemandBloodShipmentSer
         _gpsDemandBloodShipmentRepository.deleteById(id);
     }
 
-
     @RabbitListener(queues = "${demandBloodShipment}")
     public void receiveBloodShippmentDemand(Message message) throws IOException {
         System.out.println("Consumer: " + "demandBloodShipment " + "activated");
@@ -85,4 +92,48 @@ public class GPSDemandBloodShipmentService implements IGPSDemandBloodShipmentSer
 
         return _gpsDemandBloodShipmentRepository.getAllPendingShipments(bloodCenterId, PageRequest.of(page, pageSize));
     }
+
+    private GPSDemandBloodShipment setShipmentStatusToInProgress(UUID shipmentId) throws BadRequestException {
+        GPSDemandBloodShipment shipment = findById(shipmentId);
+        shipment.setDemandBloodShipmentStatus(DemandBloodShipmentStatus.DELIVERY_IN_PROGRESS);
+        return save(shipment);
+    }
+
+    @Override
+    public void handleShipment(UUID shipmentId, int seconds) throws Exception {
+
+        var shipment = setShipmentStatusToInProgress(shipmentId);
+        var bloodCenter = shipment.getBloodCenter();
+        if (!bloodCenter.isHelicopterHere()) {
+            throw new Exception("Helicopter is not here!");
+        }
+        CoordinatesForGPSDTO coordinatesForGPSDTO = new CoordinatesForGPSDTO(shipment.getLongitude(), shipment.getLatitude(), bloodCenter.getAddress().getLongitude(), bloodCenter.getAddress().getLatitude(), shipmentId, seconds);
+        sendCordinatesToGps(coordinatesForGPSDTO);
+        informHospitalThatHelicopterIsComing();
+
+    }
+
+    private void informHospitalThatHelicopterIsComing() {
+        System.out.println("Sending information about the helicopter");
+
+        this.rabbitTemplate.convertAndSend(approvedBloodShipment, "The helicopter with blood supplies is coming");
+
+        System.out.println("Information about the helicopter sent");
+    }
+
+    private void sendCordinatesToGps(CoordinatesForGPSDTO coordinatesForGPSDTO) {
+        System.out.println("Sendig coordinates!");
+
+        Jackson2JsonMessageConverter jsonConverter = new Jackson2JsonMessageConverter();
+        DefaultClassMapper classMapper = new DefaultClassMapper();
+        classMapper.setDefaultType(CoordinatesForGPSDTO.class);
+        jsonConverter.setClassMapper(classMapper);
+        rabbitTemplate.setMessageConverter(jsonConverter);
+        this.rabbitTemplate.convertAndSend(setGPSCoordinates, coordinatesForGPSDTO);
+
+        System.out.println("Coordinates sent\n");
+
+    }
+
+
 }
