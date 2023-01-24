@@ -1,0 +1,46 @@
+<h1>Approve blood shipments</h1>
+
+<button mat-raised-button color="primary" (click)="callTheHelicopter()">
+  Call the helicopter
+</button>
+
+<p style="margin: 10px">Helicopter status: {{ helicopterStauts }}</p>
+
+<div class="mat-elevation-z8">
+  <table mat-table matSort [dataSource]="dataSource">
+    <ng-container matColumnDef="From">
+      <th mat-header-cell *matHeaderCellDef>From</th>
+      <td mat-cell *matCellDef="let element">{{ element.serverPort }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="Longitude">
+      <th mat-header-cell *matHeaderCellDef>Longitude</th>
+      <td mat-cell *matCellDef="let element">{{ element.longitude }}</td>
+    </ng-container>
+    <ng-container matColumnDef="Latitude">
+      <th mat-header-cell *matHeaderCellDef>Latitude</th>
+      <td mat-cell *matCellDef="let element">{{ element.latitude }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="Send">
+      <th mat-header-cell *matHeaderCellDef>Send</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-mini-fab color="accent" (click)="openDialog(element)">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-paginator
+    [pageSizeOptions]="pso"
+    showFirstLastButtons
+    #paginator
+    [length]="resultsLength"
+    aria-label="Select page"
+  >
+  </mat-paginator>
+</div>

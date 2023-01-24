@@ -12,13 +12,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("gps-demand-blood-shipment")
@@ -36,7 +34,7 @@ public class GPSDemandBloodShipmentController {
     }
 
     @PreAuthorize("hasRole('ROLE_STAFF')")
-    @GetMapping("get-all-pending-hipments")
+    @GetMapping("get-all-pending-shipments")
     public ResponseEntity<?> getAllPendingShipments(Principal account,
                                                     @RequestParam(name = "page") int page,
                                                     @RequestParam(name = "pageSize") int pageSize) {
@@ -44,7 +42,7 @@ public class GPSDemandBloodShipmentController {
         try {
             BloodCenter bloodCenter = _staffService.findById(_accountService.findAccountByEmail(account.getName()).getPersonId()).getBloodCenter();
             if (bloodCenter == null) {
-                return new ResponseEntity<>("This staff member is not a member of any bloodcenter", HttpStatus.CONFLICT);
+                throw new Exception("This staff member is not a member of any bloodcenter");
             }
             Page<GPSDemandBloodShipment> entities = _gpsDemandBloodShipmentService.getAllPendingShipments(bloodCenter.getId(), page, pageSize);
             List<PendingShipmentsDTO> content = ObjectMapperUtils.mapAll(entities.getContent(), PendingShipmentsDTO.class);
@@ -54,4 +52,36 @@ public class GPSDemandBloodShipmentController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @PreAuthorize("hasRole('ROLE_STAFF')")
+    @GetMapping("send-shipment/{shipmentId}/{seconds}")
+    public ResponseEntity<?> sendShipment(Principal account, @PathVariable("shipmentId") UUID shipmentId, @PathVariable("seconds") int seconds) {
+
+        try {
+            _gpsDemandBloodShipmentService.handleShipment(shipmentId, seconds);
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PreAuthorize("hasRole('ROLE_STAFF')")
+    @GetMapping("can-view-delivery")
+    public ResponseEntity<?> canViewDelivery(Principal account) {
+
+        try {
+            BloodCenter bloodCenter = _staffService.findById(_accountService.findAccountByEmail(account.getName()).getPersonId()).getBloodCenter();
+            if (bloodCenter == null) {
+                throw new Exception("This staff member is not a member of any bloodcenter");
+            }
+            if (!bloodCenter.isDeliveryInProgres()) {
+                throw new Exception("No delivery is in progress");
+            }
+
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }

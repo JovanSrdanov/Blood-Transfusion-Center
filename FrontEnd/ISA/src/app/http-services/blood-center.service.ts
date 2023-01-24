@@ -24,11 +24,11 @@ export class BloodCenterService {
     return this.http.get<BloodCenterBasicInfo[]>(this.path + '/all-basic-info');
   };
 
-  getWorkingHoursRounded = () :Observable<BloodCenterRoundedWorkingHours> => {
+  getWorkingHoursRounded = (): Observable<BloodCenterRoundedWorkingHours> => {
     return this.http.get<BloodCenterRoundedWorkingHours>(this.path + '/working-hours-rounded');
   };
 
-  getAppointments = () :Observable<BloodCenterCalendarAppointment[]> => {
+  getAppointments = (): Observable<BloodCenterCalendarAppointment[]> => {
     return this.http.get<BloodCenterCalendarAppointment[]>(this.path + '/incoming-appointments');
   };
 
@@ -50,4 +50,6 @@ export class BloodCenterService {
       search
     );
   }
+  callTheHelicopter(): Observable<any> { return this.http.get<any>(this.path + "/call-the-helicopter") }
+
 }

@@ -1,0 +1,15 @@
+.mat-elevation-z8 {
+  width: 80%;
+  margin: auto;
+  margin-top: 25px;
+}
+table {
+  width: 100%;
+  table-layout: fixed;
+  text-align: center !important;
+}
+
+.mat-header-cell {
+  text-align: center;
+  justify-content: center;
+}

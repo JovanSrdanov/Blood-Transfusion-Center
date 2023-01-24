@@ -15,8 +15,8 @@ public class PendingShipmentsDTO {
 
     private UUID id;
     private String serverPort;
-    private float longitude;
-    private float latitude;
+    private double longitude;
+    private double latitude;
     private int a_pos;
     private int a_neg;
     private int b_pos;

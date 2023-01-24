@@ -7,4 +7,6 @@ import java.util.UUID;
 
 public interface IGPSDemandBloodShipmentService extends ICrudService<GPSDemandBloodShipment> {
     Page<GPSDemandBloodShipment> getAllPendingShipments(UUID bloodCenterId, int page, int pageSize);
+
+    void handleShipment(UUID shipmentId, int seconds) throws Exception;
 }

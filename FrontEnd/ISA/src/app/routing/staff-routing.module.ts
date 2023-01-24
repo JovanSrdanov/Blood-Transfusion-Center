@@ -10,6 +10,8 @@ import { CreatePremadeAppointmentComponent } from '../features/create-premade-ap
 import { AppQrScanComponent } from '../features/app-qr-scan/app-qr-scan.component';
 import { BloodDonorListForCenterComponent } from '../features/blood-donor-list-for-center/blood-donor-list-for-center.component';
 import { BloodDonorVisitedListForCenterComponent } from '../features/blood-donor-visited-list-for-center/blood-donor-visited-list-for-center.component';
+import { HelicopterMapComponent } from '../features/helicopter-map/helicopter-map/helicopter-map.component';
+import { ApproveShipmentsComponent } from '../features/approve-shipments/approve-shipments/approve-shipments.component';
 
 const routes: Routes = [
   {
@@ -41,6 +43,14 @@ const routes: Routes = [
     path: 'app-qr-scan',
     component: AppQrScanComponent,
   },
+  {
+    path: 'approve-shipments',
+    component: ApproveShipmentsComponent,
+  },
+  {
+    path: 'helicopter-map',
+    component: HelicopterMapComponent,
+  },
   { path: 'staff-profile', component: StaffProfileComponent },
   { path: 'calendar', component: BloodCenterCalendarComponent },
   { path: '', redirectTo: 'staff-profile', pathMatch: 'full' },
@@ -52,4 +62,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class StaffRoutingModule {}
+export class StaffRoutingModule { }

@@ -186,15 +186,14 @@ public class BloodDonorService implements IBloodDonorService {
     @Override
     public PageEntityDto<List<BloodDonorInfoDto>> findBloodDonorByNameAndSurname(BloodDonorGetByNameAndSurnameDto dto) {
         Page<BloodDonor> page = null;
-        switch (dto.getSortType())
-        {
-            case NONE : {
+        switch (dto.getSortType()) {
+            case NONE: {
                 page = _bloodDonorRepository.findByNameAndSurnameForCenterAndStatusIgnoreCase(dto.getName().trim(),
                         dto.getSurname().trim(),
                         PageRequest.of(dto.getPage(), dto.getPageSize()));
                 break;
             }
-            case ASC:{
+            case ASC: {
                 page = _bloodDonorRepository.findByNameAndSurnameForCenterAndStatusIgnoreCase(dto.getName().trim(),
                         dto.getSurname().trim(),
                         PageRequest.of(dto.getPage(), dto.getPageSize())
@@ -236,16 +235,15 @@ public class BloodDonorService implements IBloodDonorService {
         UUID bloodCenterId = _staffRepository.findByEmail(principal.getName()).getBloodCenter().getId();
 
         Page<BloodDonorInfoDto> page = null;
-        switch (dto.getSortType())
-        {
-            case NONE : {
+        switch (dto.getSortType()) {
+            case NONE: {
                 page = _bloodDonorRepository.findByNameAndSurnameForCenterAndStatusIgnoreCase(dto.getName().trim(),
                         dto.getSurname().trim(),
                         bloodCenterId, status,
                         PageRequest.of(dto.getPage(), dto.getPageSize()));
                 break;
             }
-            case ASC:{
+            case ASC: {
                 page = _bloodDonorRepository.findByNameAndSurnameForCenterAndStatusIgnoreCase(dto.getName().trim(),
                         dto.getSurname().trim(),
                         bloodCenterId, status,
@@ -268,7 +266,7 @@ public class BloodDonorService implements IBloodDonorService {
 
     @Scheduled(cron = "${resetPenalties.cron}")
     @Transactional(rollbackFor = Exception.class)
-    public void fixedDelayJobWithInitialDelay() {
+    public void resetPenalties() {
         System.out.println("Delete penalties:");
         System.out.println("Start time: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         _bloodDonorRepository.resetPenalties();
