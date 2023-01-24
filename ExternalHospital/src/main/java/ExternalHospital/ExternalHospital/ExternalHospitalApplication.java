@@ -3,8 +3,7 @@ import ExternalHospital.ExternalHospital.DeliveryContract.ContractDTO;
 import ExternalHospital.ExternalHospital.DeliveryContract.ContractProducer;
 import ExternalHospital.ExternalHospital.DeliveryContract.MainMenu;
 import ExternalHospital.ExternalHospital.GPS.DemandBloodShipmentDTO;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.DirectExchange;
+import org.springframework.amqp.core.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -12,8 +11,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 
@@ -29,9 +26,6 @@ import java.util.UUID;
 public class ExternalHospitalApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ExternalHospitalApplication.class, args);
-
-		MainMenu menu = new MainMenu();
-		menu.startMainMenu();
 
 		System.out.println("--- EXTERNAL HOSPITAL ---");
 	}

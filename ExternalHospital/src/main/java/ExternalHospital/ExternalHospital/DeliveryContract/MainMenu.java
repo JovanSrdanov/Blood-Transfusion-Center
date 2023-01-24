@@ -1,13 +1,13 @@
 package ExternalHospital.ExternalHospital.DeliveryContract;
 
+import ExternalHospital.ExternalHospital.Model.BloodGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.UUID;
@@ -35,70 +35,78 @@ public class MainMenu implements CommandLineRunner {
         }
         while (!(input.equals("1") || input.equals("2")));
 
-        if (input.equals("1")) {
-            createNewContract();
-        }
+        if(input.equals("2")) return;
+
+        createNewContract();
     }
 
     private void createNewContract() {
         try {
             Scanner sc = new Scanner(System.in);
+            int bloodGroupInput;
+            BloodGroup bloodGroup;
 
-            System.out.println("Please enter the desired quantity for each blood group\n");
-            System.out.println("A-Positive: ");
-            int aPos = sc.nextInt();
-            System.out.println("A-Negative: ");
-            int aNeg = sc.nextInt();
-            System.out.println("B-Positive: ");
-            int bPos = sc.nextInt();
-            System.out.println("B-Negative: ");
-            int bNeg = sc.nextInt();
-            System.out.println("O-Positive: ");
-            int oPos = sc.nextInt();
-            System.out.println("O-Negative: ");
-            int oNeg = sc.nextInt();
-            System.out.println("AB-Positive: ");
-            int abPos = sc.nextInt();
-            System.out.println("AB-Negative: ");
-            int abNeg = sc.nextInt();
+            do {
+                System.out.println("Choose a blood group:\n1)A-Positive 2)A-Negative 3)B-Positive " +
+                        "4)B-Negative\n5)O-Positive 6)O-Negative 7)AB-Positive 8)AB-Negative");
 
-            System.out.println("Please enter the desired date (format is dd-MM-yyyy) of the delivery " +
-                    "(the delivery will happen on said date every month):\n");
+                bloodGroupInput = sc.nextInt();
+            }
+            while(bloodGroupInput > 8 || bloodGroupInput < 1);
 
-            sc.nextLine();
+            switch (bloodGroupInput) {
+                case 1 -> bloodGroup = BloodGroup.A_POS;
+                case 2 -> bloodGroup = BloodGroup.A_NEG;
+                case 3 -> bloodGroup = BloodGroup.B_POS;
+                case 4 -> bloodGroup = BloodGroup.B_NEG;
+                case 5 -> bloodGroup = BloodGroup.O_POS;
+                case 6 -> bloodGroup = BloodGroup.O_NEG;
+                case 7 -> bloodGroup = BloodGroup.AB_POS;
+                case 8 -> bloodGroup = BloodGroup.AB_NEG;
+                default -> bloodGroup = BloodGroup.A_POS;
+            }
 
-            String date = sc.nextLine();
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-            Date delivery = sdf.parse(date);
+            System.out.println("\nChoose desired blood quantity (in integers): ");
+            int quantity = sc.nextInt();
+
+            int deliveryDay = 0;
+
+            do {
+                System.out.println("Please enter the desired day of the delivery which is at least " +
+                        "two days after today\n" +
+                        "(the delivery will happen on said day every month):\n");
+
+                sc.nextLine();
+
+                deliveryDay = sc.nextInt();
+            }
+            while(deliveryDay - LocalDate.now().getDayOfMonth() <= 2 &&
+                    deliveryDay >= LocalDate.now().getDayOfMonth());
 
             ContractDTO contract = new ContractDTO(
-                    UUID.fromString(hospitalId), aPos, aNeg, bPos, bNeg, oPos, oNeg, abPos, abNeg, delivery
+                    UUID.fromString(hospitalId), bloodGroup, quantity, deliveryDay
             );
 
             _producer.createContract(contract);
 
             System.out.println("\n*********************");
             System.out.println("Delivery contract successfully created! Contract details:\n");
-            System.out.println("Delivery date: " + delivery + "\n");
-            System.out.println("Blood quantities per blood group: ");
-            System.out.println("A-Positive: " + aPos + ", A-Negative: " + aNeg + ", B-Positive: "  + bPos
-                    + ", B-Negative: " + bNeg + ", O-Positive: " + oPos + ", O-Negative: " + oNeg
-                    + ", AB-Positive: " + abPos + ", AB-Negative: " + abNeg);
+            System.out.println("Delivery day: " + deliveryDay + "\n");
+            System.out.println("Blood group: " + bloodGroup + ", Quantity: " + quantity);
 
-            System.out.println("\n\nNote that only one contract can be active at a time and" +
-                    " creating a new one will replace the existing contract if one already exists");
+            System.out.println("\n\nNote that only one contract may be active at a time and" +
+                    " creating a new contract will replace the existing one");
             System.out.println("\n*********************");
         }
         catch (InputMismatchException e) {
-            System.out.println("Invalid input! Please enter a valid quantity.");
-            startMainMenu();
-        }
-        catch (ParseException e) {
-            System.out.println("Invalid input! Please enter a valid date.");
+            System.out.println("Invalid input! Please enter a valid quantity/day of the month.");
             startMainMenu();
         }
         catch (Exception e) {
             e.printStackTrace();
+        }
+        finally {
+            startMainMenu();
         }
     }
 }

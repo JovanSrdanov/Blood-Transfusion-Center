@@ -1,21 +1,26 @@
-package ExternalHospital.ExternalHospital.DeliveryContract;
+package groupJASS.ISA_2022.Model;
 
-import ExternalHospital.ExternalHospital.Model.BloodGroup;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import javax.persistence.*;
 import java.util.UUID;
 
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class ContractDTO {
+public class DeliveryContract {
+    @Id
+    @Column(nullable = false)
     private UUID id;
+    @Column(nullable = false)
     private BloodGroup bloodGroup;
+    @Column(nullable = false)
     private int quantity;
+    @Column(nullable = false)
     private int deliveryDay;
 }
