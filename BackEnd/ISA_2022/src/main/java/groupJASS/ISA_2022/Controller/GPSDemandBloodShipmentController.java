@@ -36,7 +36,7 @@ public class GPSDemandBloodShipmentController {
     }
 
     @PreAuthorize("hasRole('ROLE_STAFF')")
-    @GetMapping("get-all-pending-hipments")
+    @GetMapping("get-all-pending-shipments")
     public ResponseEntity<?> getAllPendingShipments(Principal account,
                                                     @RequestParam(name = "page") int page,
                                                     @RequestParam(name = "pageSize") int pageSize) {
