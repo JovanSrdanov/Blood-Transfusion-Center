@@ -19,6 +19,7 @@ import { MatSliderModule } from '@angular/material/slider'
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatStepperModule } from '@angular/material/stepper';
 
 
 const material = [
@@ -41,7 +42,9 @@ const material = [
   MatSliderModule,
   MatDatepickerModule,
   MatNativeDateModule,
-  MatDialogModule
+  MatDialogModule,
+  MatStepperModule,
+  MatSelectModule
 ];
 
 @NgModule({

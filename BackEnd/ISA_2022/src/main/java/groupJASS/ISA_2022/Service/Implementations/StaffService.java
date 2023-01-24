@@ -3,6 +3,7 @@ package groupJASS.ISA_2022.Service.Implementations;
 import groupJASS.ISA_2022.DTO.Account.AccountDTO;
 import groupJASS.ISA_2022.DTO.Account.PasswordDTO;
 import groupJASS.ISA_2022.DTO.Staff.StaffBasicInfoDTO;
+import groupJASS.ISA_2022.DTO.Staff.StaffFreeSlotsInfo;
 import groupJASS.ISA_2022.DTO.Staff.StaffProfileDTO;
 import groupJASS.ISA_2022.DTO.Staff.StaffRegistrationDTO;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
@@ -14,6 +15,7 @@ import groupJASS.ISA_2022.Service.Interfaces.IAccountService;
 import groupJASS.ISA_2022.Service.Interfaces.IRoleService;
 import groupJASS.ISA_2022.Service.Interfaces.IStaffService;
 import groupJASS.ISA_2022.Utilities.MappingUtilities;
+import groupJASS.ISA_2022.Utilities.ObjectMapperUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -185,5 +187,10 @@ public class StaffService implements IStaffService {
         //TODO refactor StaffRegistrationDTO to contain AccountDto
         AccountDTO accountDto = new AccountDTO(dto.getEmail(), dto.getPassword());
         _accountService.registerAccount(accountDto, "ROLE_STAFF", staff.getId());
+    }
+
+    @Override
+    public List<StaffFreeSlotsInfo> getByBloodCenterId(UUID bloodCenterId) {
+        return ObjectMapperUtils.mapAll(_staffRepository.getByBloodCenterId(bloodCenterId), StaffFreeSlotsInfo.class);
     }
 }

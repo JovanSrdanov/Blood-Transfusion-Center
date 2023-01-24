@@ -1,16 +1,44 @@
-<p>OVO JE ZA TEBE STRAHINJAAAAAAAAAAAAAAAA</p>
-<p>OVO JE ZA TEBE STRAHINJAAAAAAAAAAAAAAAA</p>
-<p>OVO JE ZA TEBE STRAHINJAAAAAAAAAAAAAAAA</p>
-<p>OVO JE ZA TEBE STRAHINJAAAAAAAAAAAAAAAA</p>
-<p>OVO JE ZA TEBE STRAHINJAAAAAAAAAAAAAAAA</p>
-<p>OVO JE ZA TEBE STRAHINJAAAAAAAAAAAAAAAA</p>
-<p>OVO JE ZA TEBE STRAHINJAAAAAAAAAAAAAAAA</p>
-<p>OVO JE ZA TEBE STRAHINJAAAAAAAAAAAAAAAA</p>
-<p>OVO JE ZA TEBE STRAHINJAAAAAAAAAAAAAAAA</p>
-<p>OVO JE ZA TEBE STRAHINJAAAAAAAAAAAAAAAA</p>
-<p>OVO JE ZA TEBE STRAHINJAAAAAAAAAAAAAAAA</p>
-<p>OVO JE ZA TEBE STRAHINJAAAAAAAAAAAAAAAA</p>
-<p>OVO JE ZA TEBE STRAHINJAAAAAAAAAAAAAAAA</p>
-<p>OVO JE ZA TEBE STRAHINJAAAAAAAAAAAAAAAA</p>
-<p>OVO JE ZA TEBE STRAHINJAAAAAAAAAAAAAAAA</p>
-<p>OVO JE ZA TEBE STRAHINJAAAAAAAAAAAAAAAA</p>
+<button mat-raised-button (click)="isEditable = !isEditable">
+    {{!isEditable ? 'Enable edit mode' : 'Disable edit mode'}}
+  </button>
+  
+  <mat-stepper linear #stepper>
+    <mat-step [stepControl]="createCustomForm" [editable]="isEditable">
+      <form [formGroup]="createCustomForm">
+        <ng-template matStepLabel>Choose date and time</ng-template>
+        <input formControlName="date" type="datetime-local" id="start">
+        <div>
+          <button mat-button matStepperNext (click)="test()">Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="selectedForm" [editable]="isEditable">
+      <form [formGroup]="selectedForm">
+        <ng-template matStepLabel>Select appointment</ng-template>
+        <mat-selection-list #shoes1 [multiple]="false" formControlName="selectedCustom" class="lista1">
+            <mat-list-option *ngFor="let custApp of availableCustom" [value]="custApp.staffId">
+              {{custApp.time.startTime}} - {{custApp.time.endTime}} in center {{custApp.centerInfo.name}}
+            </mat-list-option>
+        </mat-selection-list>
+
+        <mat-selection-list #shoes2 [multiple]="false" formControlName="selectedPremade">
+            <mat-list-option *ngFor="let predApp of availablePredefined" [value]="predApp.id">
+              {{predApp.info.time.startTime}} - {{predApp.info.time.endTime}} in center {{predApp.info.centerInfo.name}}
+            </mat-list-option>
+        </mat-selection-list>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext (click)="scheduleCustom()" [disabled]="!shoes1.selectedOptions.hasValue()">Schedule custom(plava boja)</button>
+          <button mat-button matStepperNext (click)="schedulepredefined()" [disabled]="!shoes2.selectedOptions.hasValue()">Schedule predefined(belo)</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      <p>You are now done.</p>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+      </div>
+    </mat-step>
+  </mat-stepper>

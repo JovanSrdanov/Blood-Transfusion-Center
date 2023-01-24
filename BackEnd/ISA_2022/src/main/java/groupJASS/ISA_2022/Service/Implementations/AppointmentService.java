@@ -6,6 +6,7 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import groupJASS.ISA_2022.DTO.Appointment.AvailableCustomAppointmentsDto;
 import groupJASS.ISA_2022.DTO.Appointment.AvailablePredefinedDto;
+import groupJASS.ISA_2022.DTO.Appointment.PredefinedInCustomTimeDto;
 import groupJASS.ISA_2022.DTO.BloodCenter.BloodCenterBasicInfoDto;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
 import groupJASS.ISA_2022.Exceptions.SortNotFoundException;
@@ -412,6 +413,11 @@ public class AppointmentService implements IAppointmentService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public List<PredefinedInCustomTimeDto>  findAllByTimeStartTime(LocalDateTime startTime) {
+        List<Appointment> lista = _appointmentRepository.findAllByTimeStartTime(startTime);
+        return ObjectMapperUtils.mapAll(_appointmentRepository.findAllByTimeStartTime(startTime), PredefinedInCustomTimeDto.class);
     }
 
 }

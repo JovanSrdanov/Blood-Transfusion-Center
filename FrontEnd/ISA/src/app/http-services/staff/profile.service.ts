@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { StaffFreeSlotsInfo } from 'src/app/model/staff/staff-free-slots-info';
 import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -35,5 +37,9 @@ export class ProfileService {
       environment.backendPath + '/staff/change-password/' + staffId,
       passwordInfo
     );
+  }
+
+  getStaffInfoForFreeSlots(): Observable<StaffFreeSlotsInfo[]> {
+    return this.http.get<StaffFreeSlotsInfo[]>(environment.backendPath + '/staff/by-blood-center');
   }
 }

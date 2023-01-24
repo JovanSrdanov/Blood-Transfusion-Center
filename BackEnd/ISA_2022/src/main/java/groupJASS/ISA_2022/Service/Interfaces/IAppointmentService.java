@@ -2,6 +2,7 @@ package groupJASS.ISA_2022.Service.Interfaces;
 
 import groupJASS.ISA_2022.DTO.Appointment.AvailableCustomAppointmentsDto;
 import groupJASS.ISA_2022.DTO.Appointment.AvailablePredefinedDto;
+import groupJASS.ISA_2022.DTO.Appointment.PredefinedInCustomTimeDto;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
 import groupJASS.ISA_2022.Exceptions.SortNotFoundException;
 import groupJASS.ISA_2022.Model.Appointment;
@@ -36,4 +37,5 @@ public interface IAppointmentService extends ICrudService<Appointment> {
             throws SortNotFoundException;
 
     void sendScheduleConfirmation(Appointment appointment, String email, UUID ASHId);
+    List<PredefinedInCustomTimeDto>  findAllByTimeStartTime(LocalDateTime startTime);
 }
