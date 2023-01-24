@@ -1,1 +1,17 @@
-<p>helicopter-map works!</p>
+<h1>GPS LOCATION OF HELLICOPTER</h1>
+<div class="map">
+  <google-map height="800px" width="1000px" [center]="center" [zoom]="zoom">
+    <map-marker
+      [position]="srcPos"
+      [options]="srcPosMarkerOptions"
+    ></map-marker>
+    <map-marker
+      [position]="desPos"
+      [options]="desPosMarkerOptions"
+    ></map-marker>
+    <map-marker
+      [position]="curPos"
+      [options]="curPosMarkerOptions"
+    ></map-marker>
+  </google-map>
+</div>

@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
@@ -40,6 +41,9 @@ public class GPSDemandBloodShipmentService implements IGPSDemandBloodShipmentSer
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
+
+    @Autowired
+    private SimpMessagingTemplate simpMessagingTemplate;
 
     public GPSDemandBloodShipmentService(GPSDemandBloodShipmentRepository gpsDemandBloodShipmentRepository, ModelMapper modelMapper, IBloodCenterService bloodCenterService) {
         _gpsDemandBloodShipmentRepository = gpsDemandBloodShipmentRepository;
@@ -157,6 +161,7 @@ public class GPSDemandBloodShipmentService implements IGPSDemandBloodShipmentSer
         CurrentHelicopterPositionDTO currentHelicopterPositionDTO = mapper.readValue(body, CurrentHelicopterPositionDTO.class);
         System.out.println(currentHelicopterPositionDTO);
 
+        this.simpMessagingTemplate.convertAndSend("/socket-publisher/", "caooo");
         //TODO jovan stavi na front
     }
 
