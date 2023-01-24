@@ -6,6 +6,10 @@ import groupJASS.ISA_2022.DTO.Auth.JwtAuthenticationRequest;
 import groupJASS.ISA_2022.Model.Account;
 import groupJASS.ISA_2022.Service.Interfaces.IAccountService;
 import groupJASS.ISA_2022.Utilities.TokenUtils;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -40,6 +44,15 @@ public class AuthenticationController {
 
     // Prvi endpoint koji pogadja korisnik kada se loguje.
     // Tada zna samo svoje korisnicko ime i lozinku i to prosledjuje na backend.
+    @Operation(summary = "Log in", description = "Retruns JWT for given username and password", method="POST")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Logged in, JWT:",
+                    content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "400", description = "Something went wrong",
+                    content = @Content),
+            @ApiResponse(responseCode = "403", description = "Account is not activated or password and username are invalid",
+                    content = @Content)
+    })
     @PostMapping("/login")
     public ResponseEntity<?> createAuthenticationToken(
             @RequestBody JwtAuthenticationRequest authenticationRequest, HttpServletResponse response) {
@@ -70,6 +83,11 @@ public class AuthenticationController {
         }
     }
 
+    @Operation(summary = "Activates account", description = "Activates account for given activation code and account id", method="POST")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Account activated",
+                    content = @Content(mediaType = "application/json"))
+    })
     @PostMapping("/activate-account")
     public ResponseEntity<?> activateAccount(@RequestBody ActivateAccountDTO activateAccountDTO) {
         try {
