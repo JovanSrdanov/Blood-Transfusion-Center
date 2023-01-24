@@ -36,7 +36,7 @@ export interface DialogData {
 })
 export class ApproveShipmentsComponent implements OnInit {
 
-  helicopterStauts: string = "Checking..."
+  helicopterStauts: string = "Please call the helicopter"
   dataSource: PendingShipmentsDTO[] = [];
   public tableDataSource: MatTableDataSource<PendingShipmentsDTO[]> =
     new MatTableDataSource<PendingShipmentsDTO[]>([]);

@@ -2,6 +2,7 @@ package groupJASS.ISA_2022.Service.Implementations;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import groupJASS.ISA_2022.DTO.CoordinatesForGPSDTO;
+import groupJASS.ISA_2022.DTO.CurrentHelicopterPositionDTO;
 import groupJASS.ISA_2022.DTO.DemandBloodShipmentDTO;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
 import groupJASS.ISA_2022.Model.DemandBloodShipmentStatus;
@@ -77,17 +78,23 @@ public class GPSDemandBloodShipmentService implements IGPSDemandBloodShipmentSer
 
     @RabbitListener(queues = "${demandBloodShipment}")
     public void receiveBloodShippmentDemand(Message message) throws IOException {
-        System.out.println("Consumer: " + "demandBloodShipment" + " activated");
-        byte[] body = message.getBody();
-        ObjectMapper mapper = new ObjectMapper();
-        DemandBloodShipmentDTO demandBloodShipmentDTO = mapper.readValue(body, DemandBloodShipmentDTO.class);
+        try {
+            System.out.println("Consumer: " + "demandBloodShipment" + " activated");
+            byte[] body = message.getBody();
+            ObjectMapper mapper = new ObjectMapper();
+            DemandBloodShipmentDTO demandBloodShipmentDTO = mapper.readValue(body, DemandBloodShipmentDTO.class);
 
-        GPSDemandBloodShipment gpsDemandBloodShipment = _mapper.map(demandBloodShipmentDTO, GPSDemandBloodShipment.class);
-        gpsDemandBloodShipment.setDemandBloodShipmentStatus(DemandBloodShipmentStatus.PENDING_DELIVERY);
-        gpsDemandBloodShipment.setBloodCenter(_bloodCenterService.findById(demandBloodShipmentDTO.getBloodCenterId()));
-        gpsDemandBloodShipment.setId(UUID.randomUUID());
+            GPSDemandBloodShipment gpsDemandBloodShipment = _mapper.map(demandBloodShipmentDTO, GPSDemandBloodShipment.class);
+            gpsDemandBloodShipment.setBloodCenter(_bloodCenterService.findById(demandBloodShipmentDTO.getBloodCenterId()));
+            gpsDemandBloodShipment.setDemandBloodShipmentStatus(DemandBloodShipmentStatus.PENDING_DELIVERY);
+            gpsDemandBloodShipment.setId(UUID.randomUUID());
 
-        _gpsDemandBloodShipmentRepository.save(gpsDemandBloodShipment);
+            _gpsDemandBloodShipmentRepository.save(gpsDemandBloodShipment);
+            System.out.println("Consumer: " + "demandBloodShipment" + ": demandBloodShipmentDTO saved");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+
+        }
     }
 
     @Override
@@ -111,7 +118,10 @@ public class GPSDemandBloodShipmentService implements IGPSDemandBloodShipmentSer
             throw new Exception("Helicopter is not here!");
         }
         //TODO jovan uradi smanjivanje krvi
-        CoordinatesForGPSDTO coordinatesForGPSDTO = new CoordinatesForGPSDTO(shipment.getLongitude(), shipment.getLatitude(), bloodCenter.getAddress().getLongitude(), bloodCenter.getAddress().getLatitude(), shipmentId, seconds);
+        CoordinatesForGPSDTO coordinatesForGPSDTO = new CoordinatesForGPSDTO(bloodCenter.getAddress().getLongitude(), bloodCenter.getAddress().getLatitude(), shipment.getLongitude(), shipment.getLatitude(), shipmentId, seconds);
+        bloodCenter.setDeliveryInProgres(true);
+        bloodCenter.setHelicopterHere(false);
+        _bloodCenterService.save(bloodCenter);
         sendCordinatesToGps(coordinatesForGPSDTO);
         informHospitalThatHelicopterIsComing();
 
@@ -144,15 +154,31 @@ public class GPSDemandBloodShipmentService implements IGPSDemandBloodShipmentSer
         System.out.println("Consumer: " + "getCurrentGPSCoordinates" + "activated");
         byte[] body = message.getBody();
         ObjectMapper mapper = new ObjectMapper();
-        // DemandBloodShipmentDTO demandBloodShipmentDTO = mapper.readValue(body, DemandBloodShipmentDTO.class);
-        //TODO jovan salji na front
+        CurrentHelicopterPositionDTO currentHelicopterPositionDTO = mapper.readValue(body, CurrentHelicopterPositionDTO.class);
+        System.out.println(currentHelicopterPositionDTO);
+
+        //TODO jovan stavi na front
     }
 
 
-    @RabbitListener(queues = "${bloodShipmentArrived}")
-    public void helicopterArrived(Message message) throws IOException {
-        //TODO jovan salji i na front
-        this.rabbitTemplate.convertAndSend(bloodShipmentArrived, message);
+    @RabbitListener(queues = "${helicopterArrived}")
+    public void helicopterArrived(Message message) throws IOException, BadRequestException {
+        System.out.println("Consumer: " + "bloodShipmentArrived" + "activated");
+        byte[] body = message.getBody();
+        ObjectMapper mapper = new ObjectMapper();
+        CurrentHelicopterPositionDTO currentHelicopterPositionDTO = mapper.readValue(body, CurrentHelicopterPositionDTO.class);
+
+        System.out.println(currentHelicopterPositionDTO);
+
+        var shipment = findById(currentHelicopterPositionDTO.getShipmentID());
+        shipment.setDemandBloodShipmentStatus(DemandBloodShipmentStatus.DELIVERED);
+        save(shipment);
+        var bloodcenter = shipment.getBloodCenter();
+        bloodcenter.setDeliveryInProgres(false);
+        _bloodCenterService.save(bloodcenter);
+
+        this.rabbitTemplate.convertAndSend(bloodShipmentArrived, "Helicopter has arrived");
+        //TODO jovan stavi na front
     }
 
 

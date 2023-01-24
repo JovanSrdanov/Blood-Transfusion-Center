@@ -9,14 +9,12 @@ import java.util.UUID;
 @Getter
 @Setter
 @ToString
-public class CoordinatesForGPSDTO {
-
-    private double srcLongitude;
+public class CurrentHelicopterPositionDTO {
     private double srcLatitude;
     private double destLongitude;
     private double destLatitude;
     private UUID shipmentID;
-
     private int seconds;
-
+    private double curLongitude;
+    private double curLatitude;
 }

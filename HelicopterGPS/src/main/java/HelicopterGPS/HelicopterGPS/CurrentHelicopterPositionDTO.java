@@ -1,22 +1,20 @@
-package groupJASS.ISA_2022.DTO;
+package HelicopterGPS.HelicopterGPS;
 
 import lombok.*;
 
+import javax.persistence.Column;
 import java.util.UUID;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString
-public class CoordinatesForGPSDTO {
-
-    private double srcLongitude;
+public class CurrentHelicopterPositionDTO {
     private double srcLatitude;
     private double destLongitude;
     private double destLatitude;
     private UUID shipmentID;
-
     private int seconds;
-
+    private double  curLongitude;
+    private double curLatitude;
 }
