@@ -6,6 +6,8 @@ import { environment } from 'src/environments/environment';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 
+
+
 @Component({
   selector: 'app-helicopter-map',
   templateUrl: './helicopter-map.component.html',
@@ -14,6 +16,7 @@ import * as SockJS from 'sockjs-client';
 export class HelicopterMapComponent implements OnInit {
   private serverUrl = environment.backendPath + '/socket'
   private stompClient: any;
+
   zoom = 7
   center = {
     lat: 44.0165,
@@ -53,7 +56,11 @@ export class HelicopterMapComponent implements OnInit {
   isCustomSocketOpened = false;
 
 
-  constructor(private gpsDemandBloodShipmentService: GPSDemandBloodShipmentService, private router: Router) { }
+  constructor(private gpsDemandBloodShipmentService: GPSDemandBloodShipmentService, private router: Router) {
+
+
+
+  }
 
   ngOnInit(): void {
     /*     this.gpsDemandBloodShipmentService.canViewDelivery().subscribe(res => {
@@ -62,6 +69,9 @@ export class HelicopterMapComponent implements OnInit {
           // this.router.navigate(["staff/staff-profile"]);
         }) */
     this.initializeWebSocketConnection();
+
+
+
   }
 
   initializeWebSocketConnection() {

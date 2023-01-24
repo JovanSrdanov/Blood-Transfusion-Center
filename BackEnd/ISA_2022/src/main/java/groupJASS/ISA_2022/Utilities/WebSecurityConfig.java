@@ -82,7 +82,7 @@ public class WebSecurityConfig {
         http.authorizeRequests().antMatchers("/auth/**").permitAll()        // /auth/**
                 .antMatchers("/h2-console/**").permitAll()    // /h2-console/** ako se koristi H2 baza)
                 .antMatchers("/api/foo").permitAll()
-                .antMatchers("/socket/").permitAll() // /api/foo
+                .antMatchers("/socket/**").permitAll() // /api/foo
                 // ukoliko ne zelimo da koristimo @PreAuthorize anotacije nad metodama kontrolera, moze se iskoristiti hasRole() metoda da se ogranici
                 // koji tip korisnika moze da pristupi odgovarajucoj ruti. Npr. ukoliko zelimo da definisemo da ruti 'admin' moze da pristupi
                 // samo korisnik koji ima rolu 'ADMIN', navodimo na sledeci nacin:
@@ -118,7 +118,7 @@ public class WebSecurityConfig {
                 // Ovim smo dozvolili pristup statickim resursima aplikacije
                 .antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "favicon.ico",
                         "/**/*.html", "/**/*.css", "/**/*.js", "/blood-center/sort", "/blood-center/all-basic-info",
-                        "/swagger-ui/**", "/v3/**");
+                        "/swagger-ui/**", "/v3/**", "/socket/**");
 
     }
 
