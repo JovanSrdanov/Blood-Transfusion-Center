@@ -1,0 +1,31 @@
+<h1 mat-dialog-title>Shipment info:</h1>
+
+<div mat-dialog-content>
+  From hospital: {{data.PendingShipmentsDTO.serverPort}}
+</div>
+<br />
+<div mat-dialog-content>Longitude: {{data.PendingShipmentsDTO.longitude}}</div>
+<br />
+<div mat-dialog-content>Longitude: {{data.PendingShipmentsDTO.longitude}}</div>
+<br />
+<div mat-dialog-content>A POSTIVIE: {{data.PendingShipmentsDTO.a_pos}}</div>
+<br />
+<div mat-dialog-content>A NEGATIVE: {{data.PendingShipmentsDTO.a_neg}}</div>
+<br />
+<div mat-dialog-content>B POSITIVE: {{data.PendingShipmentsDTO.b_pos}}</div>
+<br />
+<div mat-dialog-content>B NEGATIVE: {{data.PendingShipmentsDTO.b_neg}}</div>
+<br />
+<div mat-dialog-content>O POSITIVE: {{data.PendingShipmentsDTO.o_pos}}</div>
+<br />
+<div mat-dialog-content>O NEGATIVE: {{data.PendingShipmentsDTO.o_neg}}</div>
+<br />
+<div mat-dialog-content>AB POSITIVE: {{data.PendingShipmentsDTO.ab_pos}}</div>
+<br />
+<div mat-dialog-content>AB NEGATIVE: {{data.PendingShipmentsDTO.ab_neg}}</div>
+<br />
+
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Close</button>
+  <button mat-raised-button color="primary">Send</button>
+</div>
