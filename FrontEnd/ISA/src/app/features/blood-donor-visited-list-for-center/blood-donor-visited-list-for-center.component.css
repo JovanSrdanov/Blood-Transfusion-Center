@@ -1,0 +1,34 @@
+
+.search-container
+{
+  text-align: left;
+    width: 30%;
+    margin: 100px auto 20px auto;
+    display: grid;
+    grid-template-columns: 75% 15%;
+    column-gap: 10%;
+}
+
+form
+{
+  display: grid;
+  grid-template-columns: 45% 45%;
+  column-gap: 10%;
+}
+
+
+.pageable-table {
+  width: 80%;
+  margin: 30px auto 0px auto;
+}
+
+table{
+  width: 100%;
+}
+
+.btn {
+  font-size: larger;
+  height: 35px;
+  padding: 3px;
+  margin-top: 14px;
+}

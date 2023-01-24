@@ -1,6 +1,7 @@
 package groupJASS.ISA_2022.Controller;
 
 import groupJASS.ISA_2022.DTO.Account.PasswordDTO;
+import groupJASS.ISA_2022.DTO.BloodCenter.BloodCenterProfileDto;
 import groupJASS.ISA_2022.DTO.Staff.*;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
 import groupJASS.ISA_2022.Model.Account;
@@ -64,6 +65,8 @@ public class StaffController {
         try{
             Staff staff = _staffService.findByEmail(principal);
             StaffProfileDTO dto = _mapper.map(staff, StaffProfileDTO.class);
+
+            dto.setEmail(principal.getName());
             return new ResponseEntity<>(dto, HttpStatus.OK);
         } catch (NotFoundException e)
         {
@@ -107,6 +110,7 @@ public class StaffController {
 
 
     @PostMapping(consumes = "application/json")
+    @PreAuthorize("hasRole('ROLE_SYSTEM_ADMIN')")
     public ResponseEntity<String> registerStaff(@Valid @RequestBody StaffRegistrationDTO dto) {
         try {
 

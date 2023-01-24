@@ -5,6 +5,7 @@ import groupJASS.ISA_2022.Model.Address;
 import groupJASS.ISA_2022.Model.BloodDonor;
 import groupJASS.ISA_2022.Model.Gender;
 import groupJASS.ISA_2022.Utilities.ObjectMapperUtils;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,6 +17,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.UUID;
 
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -42,6 +44,20 @@ public class BloodDonorInfoDto {
 
     private int penalties;
 
+    public BloodDonorInfoDto(UUID id, String email, String name, String surname, String phoneNumber, String institution, String jmbg, Gender gender, String occupation, Address address, int points, int penalties) {
+        this.id = id;
+        this.email = email;
+        this.name = name;
+        this.surname = surname;
+        this.phoneNumber = phoneNumber;
+        this.institution = institution;
+        this.jmbg = jmbg;
+        this.gender = gender;
+        this.occupation = occupation;
+        this.address = ObjectMapperUtils.map(Hibernate.unproxy(address, Address.class), AddressUpdateDto.class);
+        this.points = points;
+        this.penalties = penalties;
+    }
 
     public BloodDonorInfoDto(BloodDonor bloodDonor, String email) {
         this.id = bloodDonor.getId();

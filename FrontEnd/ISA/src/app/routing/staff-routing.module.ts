@@ -8,16 +8,22 @@ import { StaffProfileComponent } from '../features/staff-profile/staff-profile/s
 import { BloodCenterCalendarComponent } from '../features/blood-center-calendar/blood-center-calendar/blood-center-calendar.component';
 import { CreatePremadeAppointmentComponent } from '../features/create-premade-appointment/create-premade-appointment/create-premade-appointment/create-premade-appointment.component';
 import { AppQrScanComponent } from '../features/app-qr-scan/app-qr-scan.component';
+import { BloodDonorListForCenterComponent } from '../features/blood-donor-list-for-center/blood-donor-list-for-center.component';
+import { BloodDonorVisitedListForCenterComponent } from '../features/blood-donor-visited-list-for-center/blood-donor-visited-list-for-center.component';
 
 const routes: Routes = [
-  {
-    path: 'blood-donor-list',
-    component: BloodDonorListComponent,
-  },
   {
     //TODO Router link umesto navigate
     path: 'donor-appointments/:id',
     component: BloodDonorAppointmentListComponent,
+  },
+  {
+    path: 'blood-donor-list-scheduled',
+    component: BloodDonorListForCenterComponent,
+  },
+  {
+    path: 'blood-donor-list-visited',
+    component: BloodDonorVisitedListForCenterComponent,
   },
   {
     path: 'appointment-details/:appointmentHistoryId',

@@ -11,6 +11,8 @@ import { BloodDonorAppointmentListModule } from 'src/app/features/blood-donor-ap
 import { BloodCenterCalendarModule } from 'src/app/features/blood-center-calendar/blood-center-calendar.module';
 import { CreatePremadeAppointmentModule } from 'src/app/features/create-premade-appointment/create-premade-appointment.module';
 import { AppQrScanModule } from 'src/app/features/app-qr-scan/app-qr-scan.module';
+import { BloodDonorListForCenterModule } from 'src/app/features/blood-donor-list-for-center/blood-donor-list-for-center.module';
+import { BloodDonorVisitedListForCenterModule } from 'src/app/features/blood-donor-visited-list-for-center/blood-donor-visited-list-for-center.module';
 
 
 @NgModule({
@@ -26,7 +28,9 @@ import { AppQrScanModule } from 'src/app/features/app-qr-scan/app-qr-scan.module
     MaterialModule,
     BloodCenterCalendarModule,
     CreatePremadeAppointmentModule,
-    AppQrScanModule
+    AppQrScanModule,
+    BloodDonorListForCenterModule,
+    BloodDonorVisitedListForCenterModule
   ],
 })
 export class StaffPageModule { }

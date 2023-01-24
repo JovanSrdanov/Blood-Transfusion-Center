@@ -2,19 +2,18 @@ package groupJASS.ISA_2022.Controller;
 
 import groupJASS.ISA_2022.DTO.BloodDonor.BloodDonorInfoDto;
 import groupJASS.ISA_2022.DTO.BloodDonor.BloodDonorLazyDTO;
-import groupJASS.ISA_2022.DTO.BloodDonor.BloodDonorSearchByNameAndSurnameDto;
+import groupJASS.ISA_2022.DTO.BloodDonor.BloodDonorGetByNameAndSurnameDto;
 import groupJASS.ISA_2022.DTO.BloodDonor.RegisterBloodDonorDTO;
+import groupJASS.ISA_2022.DTO.PageEntityDto;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
-import groupJASS.ISA_2022.Model.Account;
-import groupJASS.ISA_2022.Model.ActivateAccount;
-import groupJASS.ISA_2022.Model.Address;
-import groupJASS.ISA_2022.Model.BloodDonor;
+import groupJASS.ISA_2022.Model.*;
 import groupJASS.ISA_2022.Service.Interfaces.IAccountService;
 import groupJASS.ISA_2022.Service.Interfaces.IActivateAccountService;
 import groupJASS.ISA_2022.Service.Interfaces.IAddressService;
 import groupJASS.ISA_2022.Service.Interfaces.IBloodDonorService;
 import groupJASS.ISA_2022.Utilities.MappingUtilities;
 import groupJASS.ISA_2022.Utilities.ObjectMapperUtils;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,6 +30,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("blood-donor")
+@SecurityRequirement(name = "Bearer Authentication")
 public class BloodDonorController {
 
     private final IBloodDonorService _bloodDonorService;
@@ -114,13 +114,20 @@ public class BloodDonorController {
         }
     }
 
-    //It is not GET because you can't send null parameter inside a path variable, and I need that case
-    //TODO Search only donors who visited certain center
-    @PostMapping("search-name-surname")
-    public ResponseEntity<List<BloodDonorInfoDto>> searchByNameAndSurname(@RequestBody BloodDonorSearchByNameAndSurnameDto dto) {
-        List<BloodDonorInfoDto> bloodDonors = _bloodDonorService.findBloodDonorByNameAAndSurname(dto.getName(), dto.getSurname());
-        var res = MappingUtilities.mapList(bloodDonors, BloodDonorInfoDto.class, _mapper);
-        return new ResponseEntity<>(res, HttpStatus.OK);
+    @PostMapping("get-by-name-surname")
+    @PreAuthorize("hasRole('ROLE_SYSTEM_ADMIN')")
+    public ResponseEntity<PageEntityDto<BloodDonorInfoDto>> getByNameAndSurname(@RequestBody BloodDonorGetByNameAndSurnameDto dto) {
+        PageEntityDto<List<BloodDonorInfoDto>> bloodDonors = _bloodDonorService.findBloodDonorByNameAndSurname(dto);
+        return new ResponseEntity(bloodDonors, HttpStatus.OK);
     }
 
+
+    @PostMapping("get-by-name-surname-for-center-and-status/{status}")
+    @PreAuthorize("hasRole('ROLE_STAFF')")
+    public ResponseEntity<PageEntityDto<BloodDonorInfoDto>> getByNameAndSurnameForCenter(@RequestBody BloodDonorGetByNameAndSurnameDto dto,
+                                                                                         @PathVariable("status") AppointmentSchedulingConfirmationStatus status ,
+                                                                                         Principal principal) {
+        PageEntityDto<List<BloodDonorInfoDto>> bloodDonors = _bloodDonorService.findBloodDonorByNameAndSurnameForCenterAndStatus(dto, status, principal);
+        return new ResponseEntity(bloodDonors, HttpStatus.OK);
+    }
 }

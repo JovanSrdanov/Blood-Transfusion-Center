@@ -8,7 +8,9 @@ import groupJASS.ISA_2022.Exceptions.BadRequestException;
 import groupJASS.ISA_2022.Exceptions.BloodCenterNotAssignedException;
 import groupJASS.ISA_2022.Exceptions.SortNotFoundException;
 import groupJASS.ISA_2022.Model.BloodCenter;
+import groupJASS.ISA_2022.Service.Interfaces.IAccountService;
 import groupJASS.ISA_2022.Service.Interfaces.IBloodCenterService;
+import groupJASS.ISA_2022.Service.Interfaces.IStaffService;
 import groupJASS.ISA_2022.Utilities.MappingUtilities;
 import groupJASS.ISA_2022.Utilities.ObjectMapperUtils;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -33,13 +35,17 @@ import java.util.UUID;
 public class BloodCenterController {
     private final IBloodCenterService _bloodCenterService;
 
+    private final IAccountService _accountService;
+    private final IStaffService _staffService;
 
     private final ModelMapper _mapper;
 
     @Autowired
-    public BloodCenterController(IBloodCenterService bloodCenterService, ModelMapper mapper) {
+    public BloodCenterController(IBloodCenterService bloodCenterService, ModelMapper mapper, IAccountService accountService, IStaffService staffService) {
         _bloodCenterService = bloodCenterService;
         _mapper = mapper;
+        _accountService = accountService;
+        _staffService = staffService;
     }
 
     @GetMapping
@@ -70,10 +76,10 @@ public class BloodCenterController {
     public ResponseEntity getRoundedWorkingHours(Principal principal) {
         try {
             WorkingHoursRoundedDto workingHoursRoundedDto = _bloodCenterService.getRoundedWorkingHours(principal);
-           return new ResponseEntity<WorkingHoursRoundedDto>(workingHoursRoundedDto, HttpStatus.OK);
+            return new ResponseEntity<WorkingHoursRoundedDto>(workingHoursRoundedDto, HttpStatus.OK);
         } catch (NotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }catch (BloodCenterNotAssignedException e) {
+        } catch (BloodCenterNotAssignedException e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
@@ -83,10 +89,10 @@ public class BloodCenterController {
     public ResponseEntity getIncomingAppointments(Principal principal) {
         try {
             var result = _bloodCenterService.getIncomingAppointments(principal);
-            return  new ResponseEntity<>(result, HttpStatus.OK);
+            return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (NotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }catch (BloodCenterNotAssignedException e) {
+        } catch (BloodCenterNotAssignedException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
@@ -126,6 +132,7 @@ public class BloodCenterController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_SYSTEM_ADMIN')")
     public ResponseEntity<String> registerBloodCenter(@Valid @RequestBody BloodCenterRegistrationDTO dto) {
         try {
             _bloodCenterService.save(_mapper.map(dto, BloodCenter.class));
@@ -154,4 +161,23 @@ public class BloodCenterController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @GetMapping("call-the-helicopter")
+    @PreAuthorize("hasRole('ROLE_STAFF')")
+    public ResponseEntity<?> callTheHelicopter(Principal account) {
+        try {
+            BloodCenter bloodCenter = _staffService.findById(_accountService.findAccountByEmail(account.getName()).getPersonId()).getBloodCenter();
+            if (bloodCenter == null) {
+                return new ResponseEntity<>("This staff member is not a member of any bloodcenter", HttpStatus.CONFLICT);
+            }
+            _bloodCenterService.callTheHelicopter(bloodCenter);
+
+
+            return new ResponseEntity<>("Succes", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
 }
