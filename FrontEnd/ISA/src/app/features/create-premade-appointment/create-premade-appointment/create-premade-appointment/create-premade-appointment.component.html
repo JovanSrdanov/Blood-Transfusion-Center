@@ -1,14 +1,14 @@
 <mat-stepper linear #stepper>
   <mat-step [stepControl]="freeSlotsForm" [editable]="isEditable">
     <form [formGroup]="freeSlotsForm">
-      <ng-template matStepLabel>Fill out your name</ng-template>
+      <ng-template matStepLabel>Choose date</ng-template>
       <input formControlName="date" type="date" id="start">
       <mat-form-field class="example-full-width">
         <mat-label>Duration</mat-label>
         <input matInput type="number" formControlName="selectedStaff" placeholder="duration in minutes" value="15">
       </mat-form-field>
       <mat-form-field appearance="fill">
-        <mat-label>Toppings</mat-label>
+        <mat-label>Staff</mat-label>
         <mat-select formControlName="selectedStaff" multiple #staffs>
           <mat-option *ngFor="let staff of staffList" [value]="staff.id">{{staff.name}} {{staff.surname}}</mat-option>
         </mat-select>

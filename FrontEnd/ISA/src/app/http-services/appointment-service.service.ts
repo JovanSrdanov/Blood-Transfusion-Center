@@ -8,6 +8,8 @@ import {AppointmentQrInformation} from '../model/appointment/appointment-qr-info
 import { PremadeFreeSlots } from '../model/appointment/premade-free-slots';
 import { FreeSlots } from '../model/appointment/free-slots';
 import { PremadeAppointment } from 'src/app/model/appointment/premade-appointment';
+import { TimeDto } from '../model/time';
+import { ScheduleCustom } from '../model/schedule-custom';
 
 @Injectable({
   providedIn: 'root'
@@ -42,5 +44,16 @@ export class AppointmentServiceService {
     return this.http.post(this.path + '/predefine', dto);
   }
 
+  availableCustom(time: TimeDto): Observable<any> {
+    return this.http.post<any>(this.path + "/custom-available", time);
+  }
+
+  availablePredefinedInTime(time: TimeDto): Observable<any> {
+    return this.http.post<any>(this.path + "/available-predefined-for-time", time);
+  }
+
+  scheduleCustom(dto: ScheduleCustom) {
+    return this.http.post(this.path + "/schedule-custom", dto);
+  }
 
 }

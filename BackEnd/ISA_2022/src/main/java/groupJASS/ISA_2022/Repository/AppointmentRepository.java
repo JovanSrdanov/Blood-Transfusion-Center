@@ -62,4 +62,10 @@ public interface AppointmentRepository extends JpaRepository<Appointment, UUID> 
                     "order by a.start_time ",
             nativeQuery = true)
     List<Appointment> findAvailableAppointmentsForDonorIncludingCustom(@Param("donor_id") UUID donor_id, @Param("center_id") UUID center_id);
+
+    @Query(value = "select * from " +
+            "appointment a left join appointment_scheduling_history h on a.id = h.appointment_id "+
+            "where h is null and a.start_time = :startTime",
+            nativeQuery = true)
+    List<Appointment> findAllByTimeStartTime(LocalDateTime startTime);
 }

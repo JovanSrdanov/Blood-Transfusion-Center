@@ -12,8 +12,8 @@ import groupJASS.ISA_2022.Model.DateRange;
 import groupJASS.ISA_2022.Service.Interfaces.IAccountService;
 import groupJASS.ISA_2022.Service.Interfaces.IAppointmentSchedulingHistoryService;
 import groupJASS.ISA_2022.Service.Interfaces.IAppointmentService;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import groupJASS.ISA_2022.Service.Interfaces.IQrCodeService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -23,9 +23,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.*;
 import java.security.Principal;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -104,9 +102,9 @@ public class AppointmentController {
 
     @PostMapping("/custom-available")
     @PreAuthorize("hasRole('BLOOD_DONOR')")
-    public ResponseEntity<?> findCustomAvailableAppointments(@RequestBody LocalDateTime time, Principal account) {
+    public ResponseEntity<?> findCustomAvailableAppointments(@RequestBody TimeDto time, Principal account) {
         Account a = _accountService.findAccountByEmail(account.getName());
-        var res = (List<AvailableCustomAppointmentsDto>) _appointmentService.findCustomAvailableAppointments(a.getPersonId(), time);
+        var res = (List<AvailableCustomAppointmentsDto>) _appointmentService.findCustomAvailableAppointments(a.getPersonId(), time.getTime());
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
@@ -155,6 +153,12 @@ public class AppointmentController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
 
+    }
+
+    @PostMapping(path = "/available-predefined-for-time")
+    @PreAuthorize("hasRole('BLOOD_DONOR')")
+    public ResponseEntity availablePredefined(@RequestBody TimeDto time) {
+        return new ResponseEntity<>(_appointmentService.findAllByTimeStartTime(time.getTime()), HttpStatus.OK);
     }
 
     @PostMapping(path = "/scan-qr",consumes = {MediaType.MULTIPART_FORM_DATA_VALUE} )
