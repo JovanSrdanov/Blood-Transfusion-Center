@@ -65,14 +65,20 @@ export class CreateAppointmentComponent implements OnInit {
 
     this.appointmentService.scheduleCustom(dto).subscribe(res => {
       console.log(res);
+    },error => {
+      alert(error.error);
     })
   }
 
   schedulepredefined() {
     let appId:string = this.form2.selectedPremade.value ?? 'bb';
     console.log(appId);
+
     this.appointmentService.schedule(appId).subscribe(res => {
       console.log(res);
+    },
+    error => {
+      alert(error.error);
     });
   }
 

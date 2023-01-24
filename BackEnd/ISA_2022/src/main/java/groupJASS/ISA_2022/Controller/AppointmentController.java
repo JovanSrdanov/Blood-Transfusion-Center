@@ -119,7 +119,7 @@ public class AppointmentController {
                     dto.getTime(),
                     dto.getStaffId());
             _appointmentService.sendScheduleConfirmation(res.getAppointment(), account.getName(), res.getId());
-        } catch (BadRequestException e) {
+        } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(res, HttpStatus.OK);
