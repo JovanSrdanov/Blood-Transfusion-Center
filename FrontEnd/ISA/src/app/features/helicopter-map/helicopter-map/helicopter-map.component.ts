@@ -27,8 +27,7 @@ export class HelicopterMapComponent implements OnInit {
   }
 
   initializeWebSocketConnection() {
-
-
+    // serverUrl je vrednost koju smo definisali u registerStompEndpoints() metodi na serveru
   }
 
 }
