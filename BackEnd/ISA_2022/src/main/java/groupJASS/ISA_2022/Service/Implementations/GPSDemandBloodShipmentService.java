@@ -77,7 +77,7 @@ public class GPSDemandBloodShipmentService implements IGPSDemandBloodShipmentSer
     }
 
     @RabbitListener(queues = "${demandBloodShipment}")
-    public void receiveBloodShippmentDemand(Message message) throws IOException {
+    public void receiveBloodShipmentDemand(Message message) throws IOException {
         try {
             System.out.println("Consumer: " + "demandBloodShipment" + " activated");
             byte[] body = message.getBody();
