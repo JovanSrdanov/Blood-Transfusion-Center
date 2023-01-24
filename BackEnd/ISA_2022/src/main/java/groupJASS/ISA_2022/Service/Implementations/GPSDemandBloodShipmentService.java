@@ -93,7 +93,6 @@ public class GPSDemandBloodShipmentService implements IGPSDemandBloodShipmentSer
             System.out.println("Consumer: " + "demandBloodShipment" + ": demandBloodShipmentDTO saved");
         } catch (Exception e) {
             System.out.println(e.getMessage());
-
         }
     }
 
