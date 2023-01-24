@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -18,4 +19,5 @@ public interface StaffRepository extends JpaRepository<Staff, UUID> {
             "where ac.email = :email")
     Staff findByEmail(@Param("email") String email);
     Optional<Staff> findById(UUID id);
+    List<Staff> getByBloodCenterId(UUID bloodCenterId);
 }

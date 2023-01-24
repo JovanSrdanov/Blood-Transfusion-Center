@@ -13,7 +13,8 @@ import { CreatePremadeAppointmentModule } from 'src/app/features/create-premade-
 import { AppQrScanModule } from 'src/app/features/app-qr-scan/app-qr-scan.module';
 import { BloodDonorListForCenterModule } from 'src/app/features/blood-donor-list-for-center/blood-donor-list-for-center.module';
 import { BloodDonorVisitedListForCenterModule } from 'src/app/features/blood-donor-visited-list-for-center/blood-donor-visited-list-for-center.module';
-
+import { ApproveShipmentsModule } from 'src/app/features/approve-shipments/approve-shipments.module';
+import { HelicopterMapModule } from 'src/app/features/helicopter-map/helicopter-map.module';
 
 @NgModule({
   declarations: [StaffPageComponent],
@@ -30,7 +31,9 @@ import { BloodDonorVisitedListForCenterModule } from 'src/app/features/blood-don
     CreatePremadeAppointmentModule,
     AppQrScanModule,
     BloodDonorListForCenterModule,
-    BloodDonorVisitedListForCenterModule
+    BloodDonorVisitedListForCenterModule,
+    ApproveShipmentsModule,
+    HelicopterMapModule
   ],
 })
 export class StaffPageModule { }

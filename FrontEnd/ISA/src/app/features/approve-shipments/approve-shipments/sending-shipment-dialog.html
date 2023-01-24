@@ -1,0 +1,52 @@
+<div>
+  <h1 mat-dialog-title>Shipment info:</h1>
+
+  <div>From hospital: {{data.PendingShipmentsDTO.serverPort}}</div>
+  <br />
+  <div>Longitude: {{data.PendingShipmentsDTO.longitude}}</div>
+  <br />
+  <div>Latitude: {{data.PendingShipmentsDTO.latitude}}</div>
+  <br />
+  <div>A POSTIVIE: {{data.PendingShipmentsDTO.a_pos}}</div>
+  <br />
+  <div>A NEGATIVE: {{data.PendingShipmentsDTO.a_neg}}</div>
+  <br />
+  <div>B POSITIVE: {{data.PendingShipmentsDTO.b_pos}}</div>
+  <br />
+  <div>B NEGATIVE: {{data.PendingShipmentsDTO.b_neg}}</div>
+  <br />
+  <div>O POSITIVE: {{data.PendingShipmentsDTO.o_pos}}</div>
+  <br />
+  <div>O NEGATIVE: {{data.PendingShipmentsDTO.o_neg}}</div>
+  <br />
+  <div>AB POSITIVE: {{data.PendingShipmentsDTO.ab_pos}}</div>
+  <br />
+  <div>AB NEGATIVE: {{data.PendingShipmentsDTO.ab_neg}}</div>
+  <br />
+
+  <form [formGroup]="secondsForm">
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Refresh rate in seconds</mat-label>
+      <input
+        type="number"
+        matInput
+        formControlName="seconds"
+        min="1"
+        max="180"
+        value="1"
+      />
+    </mat-form-field>
+
+    <div mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close>Close</button>
+      <button
+        mat-dialog-close
+        mat-raised-button
+        color="primary"
+        (click)="sendShipment(data.PendingShipmentsDTO)"
+      >
+        Send
+      </button>
+    </div>
+  </form>
+</div>

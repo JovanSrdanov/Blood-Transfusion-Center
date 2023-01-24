@@ -18,9 +18,9 @@ public class DemandBloodShipmentDTO {
     @NotEmpty
     private String serverPort;
     @NotEmpty
-    private float longitude;
+    private double longitude;
     @NotEmpty
-    private float latitude;
+    private double latitude;
     private int a_pos;
     private int a_neg;
     private int b_pos;

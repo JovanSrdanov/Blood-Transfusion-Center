@@ -171,9 +171,7 @@ public class BloodCenterController {
                 return new ResponseEntity<>("This staff member is not a member of any bloodcenter", HttpStatus.CONFLICT);
             }
             _bloodCenterService.callTheHelicopter(bloodCenter);
-
-
-            return new ResponseEntity<>("Succes", HttpStatus.OK);
+            return new ResponseEntity<>(true, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

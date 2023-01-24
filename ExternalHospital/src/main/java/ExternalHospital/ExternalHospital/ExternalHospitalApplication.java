@@ -5,6 +5,11 @@ import ExternalHospital.ExternalHospital.DeliveryContract.MainMenu;
 import ExternalHospital.ExternalHospital.GPS.DemandBloodShipmentDTO;
 import org.springframework.amqp.core.*;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.amqp.core.DirectExchange;
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -24,33 +29,24 @@ import java.util.UUID;
 @EnableAsync
 @EnableScheduling
 public class ExternalHospitalApplication {
+
+	@Value("${myexchange}")
+	String exchange;
+	@Value("${routingkey}")
+	String routingkey;
+	@Value("${demandBloodShipment}")
+	String demandBloodShipment;
+	@Value("${approvedBloodShipment}")
+	String approvedBloodShipment;
+	@Value("${bloodShipmentArrived}")
+	String bloodShipmentArrived;
+
 	public static void main(String[] args) {
 		SpringApplication.run(ExternalHospitalApplication.class, args);
 
 		System.out.println("--- EXTERNAL HOSPITAL ---");
 	}
 
-	@Value("${myqueue}")
-	String queue;
-
-	@Value("${myqueue2}")
-	String queue2;
-
-	@Value("${myexchange}")
-	String exchange;
-
-	@Value("${routingkey}")
-	String routingkey;
-
-	@Bean
-	Queue queue() {
-		return new Queue(queue, true);
-	}
-
-	@Bean
-	Queue queue2() {
-		return new Queue(queue2, true);
-	}
 
 	@Bean
 	DirectExchange exchange() {
@@ -58,8 +54,18 @@ public class ExternalHospitalApplication {
 	}
 
 	@Bean
-	Binding binding(Queue queue2, DirectExchange exchange) {
-		return BindingBuilder.bind(queue2).to(exchange).with(routingkey);
+	Queue demandBloodShipmentQueue() {
+		return new Queue(demandBloodShipment, true);
+	}
+
+	@Bean
+	Queue approvedBloodShipmentQueue() {
+		return new Queue(approvedBloodShipment, true);
+	}
+
+	@Bean
+	Queue bloodShipmentArrivedQueue() {
+		return new Queue(bloodShipmentArrived, true);
 	}
 
 	//region Delivery contract
@@ -79,5 +85,4 @@ public class ExternalHospitalApplication {
 	public ConnectionFactory connectionFactory() {
 		return new CachingConnectionFactory("localhost");
 	}
-
 }

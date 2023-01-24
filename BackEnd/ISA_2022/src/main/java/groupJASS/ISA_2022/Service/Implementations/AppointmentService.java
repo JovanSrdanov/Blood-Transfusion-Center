@@ -6,6 +6,7 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import groupJASS.ISA_2022.DTO.Appointment.AvailableCustomAppointmentsDto;
 import groupJASS.ISA_2022.DTO.Appointment.AvailablePredefinedDto;
+import groupJASS.ISA_2022.DTO.Appointment.PredefinedInCustomTimeDto;
 import groupJASS.ISA_2022.DTO.BloodCenter.BloodCenterBasicInfoDto;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
 import groupJASS.ISA_2022.Exceptions.SortNotFoundException;
@@ -52,11 +53,11 @@ public class AppointmentService implements IAppointmentService {
 
     @Autowired
     public AppointmentService(AppointmentRepository appointmentRepository,
-            IBloodDonorService bloodDonorService,
-            AppointmentSchedulingHistoryService appointmentSchedulingHistoryService,
-            StaffService staffService,
-            IBloodCenterService bloodBloodCenterService,
-            IAccountService accountService) {
+                              IBloodDonorService bloodDonorService,
+                              AppointmentSchedulingHistoryService appointmentSchedulingHistoryService,
+                              StaffService staffService,
+                              IBloodCenterService bloodBloodCenterService,
+                              IAccountService accountService) {
         this._appointmentRepository = appointmentRepository;
         this._bloodDonorService = bloodDonorService;
         this._appointmentSchedulingHistoryService = appointmentSchedulingHistoryService;
@@ -212,7 +213,7 @@ public class AppointmentService implements IAppointmentService {
 
     @Override
     public Page<Appointment> getPremadeAppointmentsForBloodCenter(UUID centerId, UUID donorId, int page, int pageSize,
-            String sort)
+                                                                  String sort)
             throws SortNotFoundException {
         Page<Appointment> currentPage;
         if (sort.isBlank()) {
@@ -299,7 +300,7 @@ public class AppointmentService implements IAppointmentService {
     }
 
     @Override
-    @Transactional(rollbackFor = { Exception.class })
+    @Transactional(rollbackFor = {Exception.class})
     public AppointmentSchedulingHistory scheduleCustomAppointmetn(UUID donorId, LocalDateTime time, UUID staffId)
             throws BadRequestException {
         DateRange dateRange = new DateRange(time, 20);
@@ -373,7 +374,7 @@ public class AppointmentService implements IAppointmentService {
 
     @Async
     public void sendScheduleConfirmation(Appointment appointment, String email, UUID ASHId) {
-        // Todo stavi mail od donora
+
         try {
             System.out.println("Email sending started.");
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
@@ -412,6 +413,11 @@ public class AppointmentService implements IAppointmentService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public List<PredefinedInCustomTimeDto> findAllByTimeStartTime(LocalDateTime startTime) {
+        List<Appointment> lista = _appointmentRepository.findAllByTimeStartTime(startTime);
+        return ObjectMapperUtils.mapAll(_appointmentRepository.findAllByTimeStartTime(startTime), PredefinedInCustomTimeDto.class);
     }
 
 }

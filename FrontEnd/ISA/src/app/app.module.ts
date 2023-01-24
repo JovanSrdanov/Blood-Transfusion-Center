@@ -52,4 +52,4 @@ import { GoogleMapsModalComponent } from './features/staff-profile/google-maps-m
   exports: [GoogleMapComponent],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
