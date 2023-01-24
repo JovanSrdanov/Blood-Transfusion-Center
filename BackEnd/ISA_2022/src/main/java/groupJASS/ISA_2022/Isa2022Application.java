@@ -42,6 +42,12 @@ public class Isa2022Application {
     @Value("${letterbox2}")
     String letterbox2;
 
+    @Value("${createContract}")
+    String createContract;
+
+    @Value("${deliveryResponse}")
+    String deliveryResponse;
+
 
     public static void main(String[] args) {
         SpringApplication.run(Isa2022Application.class, args);
@@ -86,6 +92,16 @@ public class Isa2022Application {
     @Bean
     Queue letterbox2Queue() {
         return new Queue(letterbox2, true);
+    }
+
+    @Bean
+    Queue deliveryResponseQueue() {
+        return new Queue(deliveryResponse, true);
+    }
+
+    @Bean
+    Queue createContractQueue() {
+        return new Queue(createContract, true);
     }
 
 
