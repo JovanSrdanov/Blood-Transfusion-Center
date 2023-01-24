@@ -28,6 +28,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
 
@@ -300,11 +301,11 @@ public class AppointmentService implements IAppointmentService {
     }
 
     @Override
-    @Transactional(rollbackFor = {Exception.class})
-    public AppointmentSchedulingHistory scheduleCustomAppointmetn(UUID donorId, LocalDateTime time, UUID staffId)
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public AppointmentSchedulingHistory scheduleCustomAppointment(UUID donorId, LocalDateTime time, UUID staffId)
             throws BadRequestException {
         DateRange dateRange = new DateRange(time, 20);
-        // Proveri da li moze ovaj app da se zakaze tj el postoji
+        // Proveri da li moze ovaj app da se zakaze tj el postoji slobodan slot u ovo vreme
         var availableAppointments = findCustomAvailableAppointments(donorId, time);
         boolean found = false;
         for (AvailableCustomAppointmentsDto apps : availableAppointments) {
@@ -315,6 +316,7 @@ public class AppointmentService implements IAppointmentService {
         }
 
         if (!found) {
+            //Ne postoji slobodan slot u ovo vreme
             throw new BadRequestException("Ne postoji ovaj custom app");
         }
 

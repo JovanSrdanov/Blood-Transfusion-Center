@@ -4,9 +4,13 @@ import groupJASS.ISA_2022.Model.Appointment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.repository.query.Param;
 
+import javax.persistence.LockModeType;
+import javax.persistence.QueryHint;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -68,4 +72,9 @@ public interface AppointmentRepository extends JpaRepository<Appointment, UUID> 
             "where h is null and a.start_time = :startTime",
             nativeQuery = true)
     List<Appointment> findAllByTimeStartTime(LocalDateTime startTime);
+
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    //Transaction doesn't wait for other transactions to commit, it just throws exception "CannotAcquireLockException"
+    @QueryHints({@QueryHint(name = "javax.persistence.lock.timeout", value ="0")})
+   Appointment save(Appointment appointment);
 }

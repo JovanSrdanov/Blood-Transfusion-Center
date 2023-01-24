@@ -161,7 +161,7 @@ public class AppointmentController {
         Account a = _accountService.findAccountByEmail(account.getName());
         AppointmentSchedulingHistory res = null;
         try {
-            res = _appointmentService.scheduleCustomAppointmetn(
+            res = _appointmentService.scheduleCustomAppointment(
                     a.getPersonId(),
                     dto.getTime(),
                     dto.getStaffId());
