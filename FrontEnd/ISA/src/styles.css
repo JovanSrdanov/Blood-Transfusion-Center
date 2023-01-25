@@ -1,6 +1,12 @@
 /* For calendar */
 @import "../node_modules/angular-calendar/css/angular-calendar.css";
 
+:root {
+  --text-b: #192830;
+  --text: #16c2d5;
+  --back: #2e4450;
+}
+
 body {
   background: #b22519;
   font-family: Verdana, Geneva, Tahoma, sans-serif;

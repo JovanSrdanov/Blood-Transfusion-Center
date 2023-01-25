@@ -33,7 +33,7 @@
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Done</ng-template>
-    <p>You are now done.</p>
+    <p>{{message}}</p>
     <div>
       <button mat-button matStepperPrevious (click)="getFreeSlots()">Back</button>
       <button mat-button (click)="stepper.reset()">Predefine new</button>

@@ -9,6 +9,7 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -20,6 +21,7 @@ import javax.validation.ValidatorFactory;
 @SpringBootApplication
 @EnableAsync
 @EnableScheduling
+@EnableCaching
 @OpenAPIDefinition(info = @Info(title = "Blood Bank", version = "0.1", description = "Projekat za ISU 22/23"))
 public class Isa2022Application {
 

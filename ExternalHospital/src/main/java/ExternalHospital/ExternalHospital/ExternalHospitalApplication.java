@@ -74,11 +74,19 @@ public class ExternalHospitalApplication {
 
 	@Value("${deliveryResponse}")
 	String deliveryResponseQueue;
+
+	@Value("${externalHospital}")
+	String externalHospital;
 	@Bean
 	Queue createContractQueue() { return new Queue(createContractQueue, true); }
 
 	@Bean
 	Queue deliveryResponseQueue() { return new Queue(deliveryResponseQueue, true); }
+
+	@Bean
+	Queue externalHospitalQueue() {
+		return new Queue(externalHospital, true);
+	}
 	//endregion
 
 	@Bean

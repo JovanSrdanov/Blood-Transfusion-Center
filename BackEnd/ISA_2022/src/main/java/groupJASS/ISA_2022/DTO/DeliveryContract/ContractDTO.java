@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -18,4 +17,5 @@ public class ContractDTO {
     BloodGroup bloodGroup;
     private int quantity;
     private int deliveryDay;
+    private String queueName;
 }
