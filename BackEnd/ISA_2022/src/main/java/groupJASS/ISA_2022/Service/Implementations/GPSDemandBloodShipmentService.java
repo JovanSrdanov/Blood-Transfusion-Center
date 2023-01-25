@@ -162,7 +162,6 @@ public class GPSDemandBloodShipmentService implements IGPSDemandBloodShipmentSer
         System.out.println(currentHelicopterPositionDTO);
 
         this.simpMessagingTemplate.convertAndSend("/socket-publisher", currentHelicopterPositionDTO);
-        //TODO jovan stavi na front
     }
 
 
@@ -172,7 +171,6 @@ public class GPSDemandBloodShipmentService implements IGPSDemandBloodShipmentSer
         byte[] body = message.getBody();
         ObjectMapper mapper = new ObjectMapper();
         CurrentHelicopterPositionDTO currentHelicopterPositionDTO = mapper.readValue(body, CurrentHelicopterPositionDTO.class);
-
         System.out.println(currentHelicopterPositionDTO);
 
         var shipment = findById(currentHelicopterPositionDTO.getShipmentID());
@@ -182,8 +180,9 @@ public class GPSDemandBloodShipmentService implements IGPSDemandBloodShipmentSer
         bloodcenter.setDeliveryInProgres(false);
         _bloodCenterService.save(bloodcenter);
 
+        this.simpMessagingTemplate.convertAndSend("/socket-publisher", "Arrived");
         this.rabbitTemplate.convertAndSend(bloodShipmentArrived, "Helicopter has arrived");
-        //TODO jovan stavi na front
+
     }
 
 

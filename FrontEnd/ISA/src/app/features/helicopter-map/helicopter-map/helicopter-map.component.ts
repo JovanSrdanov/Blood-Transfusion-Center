@@ -16,6 +16,7 @@ import VectorSource from 'ol/source/Vector';
 import { Icon, Style } from 'ol/style';
 import { Point } from 'ol/geom';
 import Feature from 'ol/Feature';
+import Group from 'ol/layer/Group';
 
 export interface LATLON {
   lat: number
@@ -66,6 +67,8 @@ export class HelicopterMapComponent implements OnInit {
   isLoaded: boolean = false;
   isCustomSocketOpened = false;
 
+  vectorLayerC: any;
+
   // nove
 
   public map!: Map
@@ -76,8 +79,8 @@ export class HelicopterMapComponent implements OnInit {
     this.initializeWebSocketConnection();
     this.gpsDemandBloodShipmentService.canViewDelivery().subscribe(res => {
     }, err => {
-      //  alert(err.error)
-      //   this.router.navigate(["staff/staff-profile"]);
+      alert(err.error)
+      this.router.navigate(["staff/staff-profile"]);
     })
 
 
@@ -119,10 +122,12 @@ export class HelicopterMapComponent implements OnInit {
   }
 
   handleResult(message: any) {
+    if (message.body == "Arrived") {
+      alert("The hellicopter has arrived")
+      this.router.navigate(["staff/staff-profile"]);
+    }
     if (message.body) {
       let HelicopterPosition = JSON.parse(message.body)
-
-
       this.curPos.lat = HelicopterPosition.curLatitude;
       this.curPos.lng = HelicopterPosition.curLongitude;
 
@@ -132,31 +137,25 @@ export class HelicopterMapComponent implements OnInit {
       this.desPos.lat = HelicopterPosition.destLatitude;
       this.desPos.lng = HelicopterPosition.destLongitude;
 
-      this.center.lat = HelicopterPosition.destLatitude;
-      this.center.lng = HelicopterPosition.destLongitude;
 
-      this.map.getLayers().forEach(layer => {
-        if (layer && layer.get('name') === 'vectorLayerC') {
-          this.map.removeLayer(layer);
-        }
-      });
-
+      this.map.removeLayer(this.vectorLayerC)
 
       const markerC = new Feature({
         geometry: new Point(fromLonLat([this.curPos.lng, this.curPos.lat]))
       });
       markerC.setStyle(new Style({
         image: new Icon({
-          color: 'rgba(255, 0, 0, 1.0)',
-          src: "https://openlayers.org/en/v4.6.5/examples/data/dot.png",
+
+          scale: 0.15,
+          src: "https://cdn-icons-png.flaticon.com/512/5225/5225195.png",
         }),
       }));
-      const vectorLayerC = new VectorLayer({
+      this.vectorLayerC = new VectorLayer({
         source: new VectorSource({
           features: [markerC]
         })
       });
-      this.map.addLayer(vectorLayerC)
+      this.map.addLayer(this.vectorLayerC)
 
 
       const markerS = new Feature({
@@ -164,8 +163,8 @@ export class HelicopterMapComponent implements OnInit {
       });
       markerS.setStyle(new Style({
         image: new Icon({
-          color: 'rgba(0, 255, 0, 1.0)',
-          src: "https://openlayers.org/en/v4.6.5/examples/data/dot.png",
+          scale: 0.1,
+          src: "https://cdn-icons-png.flaticon.com/512/205/205916.png",
         }),
       }));
 
@@ -182,8 +181,8 @@ export class HelicopterMapComponent implements OnInit {
 
       markerD.setStyle(new Style({
         image: new Icon({
-          color: 'rgba(0, 0, 255, 1.0)',
-          src: "https://openlayers.org/en/v4.6.5/examples/data/dot.png",
+          scale: 0.1,
+          src: "https://cdn-icons-png.flaticon.com/512/3309/3309748.png",
         }),
       }));
       const vectorLayerD = new VectorLayer({
@@ -193,7 +192,6 @@ export class HelicopterMapComponent implements OnInit {
       });
       this.map.addLayer(vectorLayerD)
 
-      console.log(this.curPos, this.srcPos, this.desPos)
     }
   }
 

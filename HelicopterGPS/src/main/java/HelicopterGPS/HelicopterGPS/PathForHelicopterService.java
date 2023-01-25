@@ -62,7 +62,7 @@ public class PathForHelicopterService implements IPathForHelicopterService{
         double distance = haversine(pathForHelicopter.getCurLatitude(), pathForHelicopter.getCurLongitude(), pathForHelicopter.getDestLatitude(), pathForHelicopter.getDestLongitude());
 
         double increment = pathForHelicopter.getSeconds();
-        int steps = (int) (distance  / increment); // convert distance to meters and divide by increment
+        int steps = Math.max((int) (distance *0.1 / increment),10); // convert distance to meters and divide by increment
         double latIncrement = (pathForHelicopter.getDestLatitude() - pathForHelicopter.getCurLatitude()) / steps;
         double lonIncrement = (pathForHelicopter.getDestLongitude() - pathForHelicopter.getCurLongitude()) / steps;
 
