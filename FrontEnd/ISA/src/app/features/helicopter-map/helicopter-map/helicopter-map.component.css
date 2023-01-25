@@ -1,8 +1,13 @@
-.map {
+.mapDiv {
   display: flex;
   margin: auto;
   justify-content: center;
   align-items: center;
   width: fit-content;
   border: solid 7px black;
+}
+
+.map {
+  width: 600px;
+  height: 600px;
 }

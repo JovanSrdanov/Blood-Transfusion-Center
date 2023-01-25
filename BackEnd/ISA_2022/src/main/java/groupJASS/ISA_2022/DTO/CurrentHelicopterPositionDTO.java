@@ -11,6 +11,7 @@ import java.util.UUID;
 @ToString
 public class CurrentHelicopterPositionDTO {
     private double srcLatitude;
+    private double srcLongitude;
     private double destLongitude;
     private double destLatitude;
     private UUID shipmentID;

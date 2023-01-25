@@ -17,6 +17,7 @@ import { StaffProfileModalComponent } from './features/staff-profile/staff-profi
 import { GoogleMapComponent } from './GoogleMaps/google-map/google-map.component';
 import { GoogleMapsModalComponent } from './features/staff-profile/google-maps-modal/google-maps-modal/google-maps-modal.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,6 +33,7 @@ import { GoogleMapsModalComponent } from './features/staff-profile/google-maps-m
     LoginPageModule,
     RegisterBloodDonorModule,
 
+
     //Pomocni moduli
     BrowserModule,
     AppRoutingModule,
@@ -39,6 +41,7 @@ import { GoogleMapsModalComponent } from './features/staff-profile/google-maps-m
     MaterialModule,
     HttpClientModule,
     GoogleMapsModule,
+
   ],
   providers: [
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },

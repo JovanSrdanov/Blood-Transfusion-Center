@@ -161,7 +161,7 @@ public class GPSDemandBloodShipmentService implements IGPSDemandBloodShipmentSer
         CurrentHelicopterPositionDTO currentHelicopterPositionDTO = mapper.readValue(body, CurrentHelicopterPositionDTO.class);
         System.out.println(currentHelicopterPositionDTO);
 
-        this.simpMessagingTemplate.convertAndSend("/socket-publisher/", "caooo");
+        this.simpMessagingTemplate.convertAndSend("/socket-publisher", currentHelicopterPositionDTO);
         //TODO jovan stavi na front
     }
 

@@ -4,7 +4,6 @@ import { HelicopterMapComponent } from './helicopter-map/helicopter-map.componen
 import { MaterialModule } from 'src/app/material/material.module';
 import { GoogleMapsModule } from '@angular/google-maps';
 
-
 @NgModule({
   declarations: [
     HelicopterMapComponent
@@ -12,7 +11,8 @@ import { GoogleMapsModule } from '@angular/google-maps';
   imports: [
     CommonModule,
     MaterialModule,
-    GoogleMapsModule
+    GoogleMapsModule,
+
 
   ]
 })
