@@ -18,4 +18,5 @@ public class ContractDTO {
     private BloodGroup bloodGroup;
     private int quantity;
     private int deliveryDay;
+    private String queueName;
 }

@@ -89,8 +89,17 @@ public class AppointmentController {
         Account a = _accountService.findAccountByEmail(account.getName());
         Appointment res = null;
         try {
-            res = _appointmentService.predefine(dto.getDateRange(), dto.getStaffIds(), a.getPersonId(), true);
-        } catch (BadRequestException e) {
+            try{ //Concurrency reasons
+                res = _appointmentService.predefine(dto.getDateRange(), dto.getStaffIds(), a.getPersonId(), true);
+            }
+            catch (JpaSystemException | CannotAcquireLockException e)
+            {
+                System.out.println("Resource locked, waiting 2 seconds...");
+                Thread.sleep(2000);
+                res = _appointmentService.predefine(dto.getDateRange(), dto.getStaffIds(), a.getPersonId(), true);
+                System.out.println("Appointment predefined");
+            }
+        } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(res, HttpStatus.OK);
@@ -183,6 +192,13 @@ public class AppointmentController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
+    private void retryCustomScheduling(ScheduleCustomAppointmentDto dto, Account account) throws InterruptedException, BadRequestException {
+        System.out.println("Resource locked, waiting 2 seconds...");
+        Thread.sleep(2000);
+        _appointmentService.scheduleCustomAppointment( account.getPersonId(), dto.getTime(), dto.getStaffId());
+        System.out.println("Appointment scheduled");
+    }
+
     @Operation(summary = "Finds premade appointments for center id pagable", description = "Finds premade appointments for center id pagable", method = "POST")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found premade appointments",
@@ -191,13 +207,6 @@ public class AppointmentController {
             @ApiResponse(responseCode = "400", description = "Something went wrong",
                     content = @Content)
     })
-    private void retryCustomScheduling(ScheduleCustomAppointmentDto dto, Account account) throws InterruptedException, BadRequestException {
-        System.out.println("Resource locked, waiting 2 seconds...");
-        Thread.sleep(2000);
-        _appointmentService.scheduleCustomAppointment( account.getPersonId(), dto.getTime(), dto.getStaffId());
-        System.out.println("Appointment scheduled");
-    }
-
     @GetMapping("/premadeAppointments/{centerId}")
     @PreAuthorize("hasRole('BLOOD_DONOR')")
     public ResponseEntity<?> bloodDonorAppointments(

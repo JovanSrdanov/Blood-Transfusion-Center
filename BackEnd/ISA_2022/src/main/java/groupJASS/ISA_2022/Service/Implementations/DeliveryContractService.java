@@ -100,12 +100,12 @@ public class DeliveryContractService implements IDeliveryContractService {
         for (var contract : allContracts) {
             if (isTwoDaysBefore(contract.getDeliveryDay())) {
                 if (!hasEnoughBlood(contract, false)) {
-                    sendNegativeResponse();
+                    sendNegativeResponse(contract.getQueueName());
                 }
             }
             else if(isDeliveryDay(contract)){
                 if(hasEnoughBlood(contract, true)) {
-                    sendPositiveResponse();
+                    sendPositiveResponse(contract.getQueueName());
                 }
             }
         }
@@ -135,13 +135,13 @@ public class DeliveryContractService implements IDeliveryContractService {
         return false;
     }
 
-    private void sendPositiveResponse() {
-        _template.convertAndSend("deliveryResponse",
+    private void sendPositiveResponse(String routingKey) {
+        _template.convertAndSend(routingKey,
                 "Scheduled delivery will be completed today.");
     }
 
-    private void sendNegativeResponse() {
-        _template.convertAndSend("deliveryResponse",
+    private void sendNegativeResponse(String routingKey) {
+        _template.convertAndSend(routingKey,
                 "Unfortunately, we do not have the sufficient blood quantity to finish " +
                         "the scheduled delivery. We sincerely apologize for the inconvenience");
     }

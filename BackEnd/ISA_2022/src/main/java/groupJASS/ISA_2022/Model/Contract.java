@@ -26,6 +26,4 @@ public class Contract {
 
     @Column(nullable = false)
     private LocalDate deliveryDate;
-
-    //TODO Hospital Id???
 }
