@@ -28,7 +28,7 @@ public interface IAppointmentService extends ICrudService<Appointment> {
 
     AppointmentSchedulingHistory scheduleAppointment(UUID donorId, UUID appointmentId);
 
-    AppointmentSchedulingHistory scheduleCustomAppointmetn(UUID donorId, LocalDateTime time, UUID staffId) throws BadRequestException;
+    AppointmentSchedulingHistory scheduleCustomAppointment(UUID donorId, LocalDateTime time, UUID staffId) throws BadRequestException;
 
     List<AvailableCustomAppointmentsDto> findCustomAvailableAppointments(UUID donorId, LocalDateTime time);
 

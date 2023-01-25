@@ -21,10 +21,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.CannotAcquireLockException;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -157,15 +159,24 @@ public class AppointmentController {
     })
     @PostMapping("/schedule-custom")
     @PreAuthorize("hasRole('BLOOD_DONOR')")
-    public ResponseEntity<?> scheduleAppointment(@RequestBody ScheduleCustomAppointmentDto dto, Principal account) {
-        Account a = _accountService.findAccountByEmail(account.getName());
+    public ResponseEntity<?> scheduleAppointment(@RequestBody ScheduleCustomAppointmentDto dto, Principal principal) {
+        Account account = _accountService.findAccountByEmail(principal.getName());
         AppointmentSchedulingHistory res = null;
         try {
-            res = _appointmentService.scheduleCustomAppointmetn(
-                    a.getPersonId(),
-                    dto.getTime(),
-                    dto.getStaffId());
-            _appointmentService.sendScheduleConfirmation(res.getAppointment(), account.getName(), res.getId());
+
+            try{ //Concurrency reasons
+                res = _appointmentService.scheduleCustomAppointment( account.getPersonId(), dto.getTime(), dto.getStaffId());
+            }
+            catch (JpaSystemException e)
+            {
+                retryCustomScheduling(dto, account);
+            }
+            catch (CannotAcquireLockException e)
+            {
+                retryCustomScheduling(dto, account);
+            }
+
+            _appointmentService.sendScheduleConfirmation(res.getAppointment(), principal.getName(), res.getId());
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -180,6 +191,13 @@ public class AppointmentController {
             @ApiResponse(responseCode = "400", description = "Something went wrong",
                     content = @Content)
     })
+    private void retryCustomScheduling(ScheduleCustomAppointmentDto dto, Account account) throws InterruptedException, BadRequestException {
+        System.out.println("Resource locked, waiting 2 seconds...");
+        Thread.sleep(2000);
+        _appointmentService.scheduleCustomAppointment( account.getPersonId(), dto.getTime(), dto.getStaffId());
+        System.out.println("Appointment scheduled");
+    }
+
     @GetMapping("/premadeAppointments/{centerId}")
     @PreAuthorize("hasRole('BLOOD_DONOR')")
     public ResponseEntity<?> bloodDonorAppointments(

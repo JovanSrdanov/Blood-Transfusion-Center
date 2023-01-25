@@ -6,6 +6,9 @@ import groupJASS.ISA_2022.Service.Interfaces.IAddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
 
 import java.util.List;
@@ -40,12 +43,14 @@ public class AddressService implements IAddressService {
     }
 
     @Override
+    @Transactional(isolation = Isolation.SERIALIZABLE, propagation = Propagation.REQUIRES_NEW)
     public Address save(Address entity) {
         if (entity.getId() == null) {
             entity.setId(UUID.randomUUID());
         }
 
-        return _addressRepository.save(entity);
+        var res =  _addressRepository.save(entity);
+        return res;
     }
 
 

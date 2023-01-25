@@ -5,12 +5,13 @@ import groupJASS.ISA_2022.Model.AppointmentSchedulingConfirmationStatus;
 import groupJASS.ISA_2022.Model.BloodDonor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 
+import javax.persistence.LockModeType;
+import javax.persistence.QueryHint;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface BloodDonorRepository extends JpaRepository<BloodDonor, UUID> {
@@ -55,6 +56,4 @@ public interface BloodDonorRepository extends JpaRepository<BloodDonor, UUID> {
     @Query("select bl from BloodDonor bl inner join fetch bl.appointmentSchedulingHistories a  left join fetch bl.questionnaire q " +
             "where bl.id=:id")
     BloodDonor fetchWithQuestionnaire(@Param("id") UUID id);
-
-
 }

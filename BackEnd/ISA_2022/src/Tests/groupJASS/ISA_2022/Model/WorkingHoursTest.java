@@ -16,7 +16,8 @@ class WorkingHoursTest {
         assertTrue(result);
     }
 
-    @Test void creates_invalid_working_hours(){
+    @Test
+    void creates_invalid_working_hours(){
         WorkingHours workingHours = new WorkingHours(8,70,50,30);
 
         boolean result = workingHours.isValid();
