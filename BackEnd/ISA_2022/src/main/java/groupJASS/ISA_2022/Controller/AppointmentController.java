@@ -133,20 +133,35 @@ public class AppointmentController {
     })
     @PostMapping("/schedulePredefine/{appid}")
     @PreAuthorize("hasRole('BLOOD_DONOR')")
-    @Transactional(isolation = Isolation.SERIALIZABLE, propagation = Propagation.REQUIRES_NEW)
     public ResponseEntity<?> scheduleAppointment(@PathVariable UUID appid,
                                                  Principal account) {
-
         try {
-
             Account a = _accountService.findAccountByEmail(account.getName());
-            var res = (AppointmentSchedulingHistory) _appointmentService.scheduleAppointment(a.getPersonId(), appid);
+            AppointmentSchedulingHistory res = null;
+
+            try {
+                res = _appointmentService.scheduleAppointment(a.getPersonId(), appid);
+            }
+            catch (JpaSystemException e) {
+                retryPredefinedScheduling(appid, a);
+            }
+            catch (CannotAcquireLockException e) {
+                retryPredefinedScheduling(appid, a);
+            }
+
             _appointmentService.sendScheduleConfirmation(res.getAppointment(), account.getName(), res.getId());
             return new ResponseEntity<>(true, HttpStatus.OK);
 
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
+    }
+
+    private void retryPredefinedScheduling(UUID appid, Account a) throws InterruptedException {
+        System.out.println("Resource locked, waiting 2 seconds...");
+        Thread.sleep(2000);
+        _appointmentService.scheduleAppointment(a.getPersonId(), appid);
+        System.out.println("Predefined appointment scheduled");
     }
 
     @Operation(summary = "Find available custom appointments", description = "Finds available custom appointments for given time", method = "POST")
