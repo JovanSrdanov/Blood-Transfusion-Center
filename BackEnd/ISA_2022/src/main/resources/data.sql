@@ -52,7 +52,7 @@ VALUES ('3eb50b45-9d6c-4f42-992d-4a2bb3c2e0b2', 'Olofström', 'Sweden', '56.2462
        ('b58dcc40-13f0-46ed-894c-23a66d6faefd', 'Nanterre', 'France', '48.8967143', '2.1955586', '73384', 'Kropf'),
        ('bac13983-1229-4308-8ffd-22e8c52235f8', 'Haguimit', 'Philippines', '7.0649018', '125.7230302', '2086', 'Esch'),
        ('1d0da8df-c565-49ea-aee5-e788789e3b70', 'Yonezawa', 'Japan', '37.2516991', '139.007103', '7', 'Victoria'),
-       ('8021c0fb-99a5-42f0-9d81-baa41265540e', 'Lisewo Malborskie', 'Poland', '43.32', '21.87', '36',
+       ('8021c0fb-99a5-42f0-9d81-baa41265540e', 'Lisewo Malborskie', 'Poland', '43.32165818574116', '21.91778946403978', '36',
         'Hanson'),
        ('adb7aab0-c6ff-49e4-a151-da471ef18f09', 'Longcang', 'China', '29.339476', '105.287612', '6', 'Continental'),
        ('0532cd76-52c8-4ac9-8306-d063f8f5e1d5', 'Matriz de Camaragibe', 'Brazil', '-9.0972502', '-35.5876697', '7890',
