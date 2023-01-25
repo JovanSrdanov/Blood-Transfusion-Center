@@ -27,7 +27,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
 
-import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -121,13 +120,17 @@ public class StaffService implements IStaffService {
     }
 
     @Override
-    public Staff findByEmail(Principal principal) throws NotFoundException {
-        Account account = _accountRepository.findByEmail(principal.getName());
-        Optional<Staff> staff = _staffRepository.findById(account.getPersonId());
+    public Staff findByEmail(UUID staffId) throws NotFoundException {
+
+
+
+        Optional<Staff> staff = _staffRepository.findById(staffId);
         if(!staff.isPresent())
         {
             throw new NotFoundException("Staff not found");
         }
+
+        System.out.println("--Find staff without cache-- " + staff.get().getName());
 
         return staff.get();
 
