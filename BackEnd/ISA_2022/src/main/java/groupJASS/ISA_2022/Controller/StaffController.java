@@ -1,11 +1,11 @@
 package groupJASS.ISA_2022.Controller;
 
 import groupJASS.ISA_2022.DTO.Account.PasswordDTO;
-import groupJASS.ISA_2022.DTO.BloodCenter.BloodCenterProfileDto;
 import groupJASS.ISA_2022.DTO.Staff.*;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
 import groupJASS.ISA_2022.Model.Account;
 import groupJASS.ISA_2022.Model.Staff;
+import groupJASS.ISA_2022.Repository.AccountRepository;
 import groupJASS.ISA_2022.Service.Interfaces.IAccountService;
 import groupJASS.ISA_2022.Service.Interfaces.IAddressService;
 import groupJASS.ISA_2022.Service.Interfaces.IStaffService;
@@ -31,14 +31,17 @@ public class StaffController {
     private final IStaffService _staffService;
     private final ModelMapper _mapper;
     private final IAccountService _accountService;
+
+    private final AccountRepository _accountRepository;
     private final IAddressService _addressService;
 
     @Autowired
     public StaffController(IStaffService staffService, ModelMapper mapper, IAccountService accountService,
-                           IAddressService addressService) {
+                           AccountRepository accountRepository, IAddressService addressService) {
         _staffService = staffService;
         _mapper = mapper;
         _accountService = accountService;
+        _accountRepository = accountRepository;
         _addressService = addressService;
     }
 
@@ -62,8 +65,9 @@ public class StaffController {
     @PreAuthorize("hasRole('ROLE_STAFF')")
     @GetMapping(path = "/logged-in")
     public ResponseEntity getLoggedInStaff(Principal principal) {
+        Account account = _accountRepository.findByEmail(principal.getName());
         try{
-            Staff staff = _staffService.findByEmail(principal);
+            Staff staff = _staffService.findByEmail(account.getPersonId());
             StaffProfileDTO dto = _mapper.map(staff, StaffProfileDTO.class);
 
             dto.setEmail(principal.getName());
