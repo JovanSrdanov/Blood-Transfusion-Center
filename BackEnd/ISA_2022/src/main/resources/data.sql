@@ -185,9 +185,11 @@ VALUES ('32763cf0-6a56-49f1-ad25-5a90561cd204', 'Doc1', '850-326-8246', '_',
        ('8180fea1-7623-4a5b-8717-5b34b2abe9d3', 'Doc5', '844-991-4460', '_',
         'f896b9e4-b639-43cc-882f-9d735597ef08', '417c9b36-251a-4483-bfbf-abd3df786d96'),
        ('e3bd5294-441f-4ae3-807d-d85314d91e50', 'Doc6', '844-991-4460', '_',
-        'f896b9e4-b639-43cc-882f-9d735597ef08', '5f29fc03-f6bd-49a6-9f41-c2ca229de403'),
-       ('e6dad8c3-1c14-4084-af7e-7aa653158cb2', 'Doc7', '844-991-4460', '_',
-        'f896b9e4-b639-43cc-882f-9d735597ef08', null);
+        'f896b9e4-b639-43cc-882f-9d735597ef08', '5f29fc03-f6bd-49a6-9f41-c2ca229de403');
+
+INSERT INTO "staff" ("id", "name", "phone_number", "surname", "address_id", "blood_center_id", "version")
+values  ('e6dad8c3-1c14-4084-af7e-7aa653158cb2', 'Doc7', '844-991-4460', '_',
+         'f896b9e4-b639-43cc-882f-9d735597ef08', null, 1);
 
 
 
