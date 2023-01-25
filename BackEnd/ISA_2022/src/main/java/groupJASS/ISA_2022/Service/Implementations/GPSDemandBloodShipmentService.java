@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
@@ -40,6 +41,9 @@ public class GPSDemandBloodShipmentService implements IGPSDemandBloodShipmentSer
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
+
+    @Autowired
+    private SimpMessagingTemplate simpMessagingTemplate;
 
     public GPSDemandBloodShipmentService(GPSDemandBloodShipmentRepository gpsDemandBloodShipmentRepository, ModelMapper modelMapper, IBloodCenterService bloodCenterService) {
         _gpsDemandBloodShipmentRepository = gpsDemandBloodShipmentRepository;
@@ -156,7 +160,7 @@ public class GPSDemandBloodShipmentService implements IGPSDemandBloodShipmentSer
         CurrentHelicopterPositionDTO currentHelicopterPositionDTO = mapper.readValue(body, CurrentHelicopterPositionDTO.class);
         System.out.println(currentHelicopterPositionDTO);
 
-        //TODO jovan stavi na front
+        this.simpMessagingTemplate.convertAndSend("/socket-publisher", currentHelicopterPositionDTO);
     }
 
 
@@ -166,7 +170,6 @@ public class GPSDemandBloodShipmentService implements IGPSDemandBloodShipmentSer
         byte[] body = message.getBody();
         ObjectMapper mapper = new ObjectMapper();
         CurrentHelicopterPositionDTO currentHelicopterPositionDTO = mapper.readValue(body, CurrentHelicopterPositionDTO.class);
-
         System.out.println(currentHelicopterPositionDTO);
 
         var shipment = findById(currentHelicopterPositionDTO.getShipmentID());
@@ -176,8 +179,9 @@ public class GPSDemandBloodShipmentService implements IGPSDemandBloodShipmentSer
         bloodcenter.setDeliveryInProgres(false);
         _bloodCenterService.save(bloodcenter);
 
+        this.simpMessagingTemplate.convertAndSend("/socket-publisher", "Arrived");
         this.rabbitTemplate.convertAndSend(bloodShipmentArrived, "Helicopter has arrived");
-        //TODO jovan stavi na front
+
     }
 
 
