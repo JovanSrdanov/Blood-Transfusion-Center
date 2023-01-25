@@ -1,0 +1,13 @@
+.mapDiv {
+  display: flex;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  border: solid 31px rgb(33, 38, 40);
+}
+
+.map {
+  width: 1000px;
+  height: 1000px;
+}
