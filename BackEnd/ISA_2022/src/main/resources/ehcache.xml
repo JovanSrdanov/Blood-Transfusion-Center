@@ -40,4 +40,12 @@
         </resources>
     </cache>
 
+    <cache alias="staffProfile" uses-template="default">
+        <key-type>java.util.UUID</key-type>
+        <value-type>groupJASS.ISA_2022.Model.Staff</value-type>
+        <resources>
+            <heap>2</heap>
+        </resources>
+    </cache>
+
 </config>
