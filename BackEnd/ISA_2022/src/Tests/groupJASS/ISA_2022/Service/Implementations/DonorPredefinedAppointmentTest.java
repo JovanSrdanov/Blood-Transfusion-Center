@@ -5,6 +5,7 @@ import groupJASS.ISA_2022.Model.Questionnaire;
 import groupJASS.ISA_2022.Service.Interfaces.IAppointmentService;
 import groupJASS.ISA_2022.Service.Interfaces.IQuestionnaireService;
 import lombok.SneakyThrows;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -37,6 +38,7 @@ class DonorPredefinedAppointmentTest {
         firstDonorId = UUID.fromString("07ce2e8b-d34b-4156-9dd4-f29ec4311675");
         secondDonorId = UUID.fromString("26d3381b-319d-425c-abd7-256f24f0a2e0");
         firstAppointmentId = UUID.fromString("dbf02dce-a9a1-4e20-aaf0-5fca92299407");
+        secondAppointmentId = UUID.fromString("9e16d8b0-a805-4ffb-a08b-d50e7fef6be0");
 
         Questionnaire firstQuestionnaire = new Questionnaire(
                 UUID.randomUUID(), false, false, false,
@@ -113,5 +115,59 @@ class DonorPredefinedAppointmentTest {
     }
 
     @Test
-    void
+    void second_schedule_request_fails_first_time_then_succeeds() throws Throwable {
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+
+        Future<?> thread1Result = executor.submit(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                System.out.println("Thread 1: Started");
+                try{
+                    _appointmentService.scheduleAppointment(secondDonorId, firstAppointmentId);
+                    System.out.println("Thread 1: Appointment scheduled");
+                }
+                catch (JpaSystemException |  CannotAcquireLockException e)
+                {
+                    System.out.println("Thread 1: resource locked, waiting 2 seconds...");
+                    Thread.sleep(2000);
+                    _appointmentService.scheduleAppointment(secondDonorId, firstAppointmentId);
+                    System.out.println("Thread 1: Appointment scheduled");
+                }
+            }
+        });
+
+        Future<?> thread2Result = executor.submit(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                System.out.println("Thread 2: Started");
+                try{
+                    _appointmentService.scheduleAppointment(secondDonorId, secondAppointmentId);
+                    System.out.println("Thread 2: Appointment scheduled");
+                }
+                catch (JpaSystemException | CannotAcquireLockException e)
+                {
+                    System.out.println("Thread 2: resource locked, waiting 2 seconds...");
+                    Thread.sleep(2000);
+                    _appointmentService.scheduleAppointment(secondDonorId, secondAppointmentId);
+                    System.out.println("Thread 2: Appointment scheduled");
+                }
+            }
+        });
+
+        try{
+            thread1Result.get();
+            thread2Result.get();
+        }
+        catch (ExecutionException e)
+        {
+            System.out.println("Exception from thread " + e.getCause().getClass());
+            System.out.println("Message: " + e.getCause().getMessage());
+            throw e.getCause();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        executor.shutdown();
+    }
 }

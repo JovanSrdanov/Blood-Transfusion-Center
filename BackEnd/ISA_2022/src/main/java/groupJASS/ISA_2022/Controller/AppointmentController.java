@@ -142,10 +142,7 @@ public class AppointmentController {
             try {
                 res = _appointmentService.scheduleAppointment(a.getPersonId(), appid);
             }
-            catch (JpaSystemException e) {
-                retryPredefinedScheduling(appid, a);
-            }
-            catch (CannotAcquireLockException e) {
+            catch (JpaSystemException | CannotAcquireLockException e) {
                 retryPredefinedScheduling(appid, a);
             }
 
