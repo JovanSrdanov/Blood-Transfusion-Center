@@ -185,7 +185,9 @@ VALUES ('32763cf0-6a56-49f1-ad25-5a90561cd204', 'Doc1', '850-326-8246', '_',
        ('8180fea1-7623-4a5b-8717-5b34b2abe9d3', 'Doc5', '844-991-4460', '_',
         'f896b9e4-b639-43cc-882f-9d735597ef08', '417c9b36-251a-4483-bfbf-abd3df786d96'),
        ('e3bd5294-441f-4ae3-807d-d85314d91e50', 'Doc6', '844-991-4460', '_',
-        'f896b9e4-b639-43cc-882f-9d735597ef08', '5f29fc03-f6bd-49a6-9f41-c2ca229de403');
+        'f896b9e4-b639-43cc-882f-9d735597ef08', '5f29fc03-f6bd-49a6-9f41-c2ca229de403'),
+       ('e6dad8c3-1c14-4084-af7e-7aa653158cb2', 'Doc7', '844-991-4460', '_',
+        'f896b9e4-b639-43cc-882f-9d735597ef08', null);
 
 
 
@@ -203,6 +205,11 @@ INSERT INTO "account" ("id", "email", "is_activated", "password", "person_id")
 VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec2', 'staffnopass@gmail.com', 'true',
         '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi',
         'b2fe1aff-bb8f-4fd1-b88e-aa39af8fc65c');
+
+INSERT INTO "account" ("id", "email", "is_activated", "password", "person_id")
+VALUES ('1cf5d56d-642a-4aad-9e91-d02453a9ae6b', 'staffunemployed@gmail.com', 'true',
+        '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi',
+        'e6dad8c3-1c14-4084-af7e-7aa653158cb2');
 
 INSERT INTO "account" ("id", "email", "is_activated", "password", "person_id")
 VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec3', 'staff@gmail.com', 'true',
@@ -236,6 +243,8 @@ INSERT INTO account_role (account_id, role_id)
 VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec4', 3);
 INSERT INTO account_role (account_id, role_id)
 VALUES ('90fc9983-d1d5-4723-8563-817b12036967', 2);
+INSERT INTO account_role (account_id, role_id)
+VALUES ('1cf5d56d-642a-4aad-9e91-d02453a9ae6b', 2);
 /*Aleksandar dodao */
 INSERT INTO account_role (account_id, role_id)
 VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec5', 2);

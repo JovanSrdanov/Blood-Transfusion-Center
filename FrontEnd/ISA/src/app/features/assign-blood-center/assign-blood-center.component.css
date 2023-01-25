@@ -1,9 +1,56 @@
-mat-grid-list
-{
-    width: 60%;
-    margin: 150px auto; 
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    height: 80%;
+    background-color: var(--text-b);
+    margin-top: 2%;
 }
-.select-list{
-    border: 1px solid white;
-    overflow:scroll;
+
+.lists {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--text-b);
+    border: 2px solid var(--text);;
+    max-height: 80%;
+    margin: auto;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--text-b);
+    max-height: 80%;
+    margin: auto;
+}
+
+mat-selection-list {
+    max-height: 100%;
+    overflow: auto;
+    color: var(--text);
+}
+
+.btn {
+    background-color: var(--text) !important;
+    color: var(--text-b) !important;
+}
+
+.btn:hover {
+    background-color: var(--text-b) !important;
+    color: var(--text) !important;
+    border: 1px solid var(--text);
+}
+
+::ng-deep .mat-list-base .mat-list-item .mat-list-text, .mat-list-base .mat-list-option .mat-list-text {
+    color: var(--text);
+}
+
+::ng-deep .mat-list-item:hover {
+    background-color: var(--back);
 }

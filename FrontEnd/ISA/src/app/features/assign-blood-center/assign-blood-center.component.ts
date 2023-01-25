@@ -43,6 +43,7 @@ export class AssignBloodCenterComponent implements OnInit {
   ngOnInit(): void {
     this.bloodCenterService.getAllBloodCenters().subscribe((response:BloodCenterBasicInfo[]) =>{
       this.bloodCenters = response;
+      console.table(response);
     })
 
     this.staffService.getUnemployedStaff().subscribe((response:StaffBasicInfo[]) => {

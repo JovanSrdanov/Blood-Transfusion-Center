@@ -81,7 +81,7 @@ public class AppointmentService implements IAppointmentService {
             return _appointmentRepository.findById(id).get();
         }
 
-        throw new NotFoundException("User not found");
+        throw new NotFoundException("Appointment not found");
     }
 
     @Override

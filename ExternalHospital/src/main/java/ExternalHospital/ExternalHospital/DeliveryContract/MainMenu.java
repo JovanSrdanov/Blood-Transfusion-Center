@@ -84,7 +84,7 @@ public class MainMenu implements CommandLineRunner {
                     deliveryDay >= LocalDate.now().getDayOfMonth());
 
             ContractDTO contract = new ContractDTO(
-                    UUID.fromString(hospitalId), bloodGroup, quantity, deliveryDay
+                    UUID.fromString(hospitalId), bloodGroup, quantity, deliveryDay, "externalHospital"
             );
 
             _producer.createContract(contract);
