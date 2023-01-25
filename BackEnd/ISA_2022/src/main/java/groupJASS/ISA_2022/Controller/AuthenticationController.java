@@ -6,6 +6,7 @@ import groupJASS.ISA_2022.DTO.Auth.JwtAuthenticationRequest;
 import groupJASS.ISA_2022.Model.Account;
 import groupJASS.ISA_2022.Service.Interfaces.IAccountService;
 import groupJASS.ISA_2022.Utilities.TokenUtils;
+import io.github.resilience4j.ratelimiter.RequestNotPermitted;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -85,7 +86,7 @@ public class AuthenticationController {
         }
     }
 
-    public ResponseEntity<String> loginRateLimiterFallbackMethod(Exception e) {
+    public ResponseEntity<String> loginRateLimiterFallbackMethod(RequestNotPermitted rqnp) {
         return new ResponseEntity<>("The servers are currently busy, please try again later",
                 HttpStatus.TOO_MANY_REQUESTS);
     }

@@ -5,6 +5,7 @@ import groupJASS.ISA_2022.Model.*;
 import groupJASS.ISA_2022.Service.Interfaces.IAppointmentReportService;
 import groupJASS.ISA_2022.Service.Interfaces.IAppointmentSchedulingHistoryService;
 import groupJASS.ISA_2022.Service.Interfaces.IEquipmentService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +39,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("appointment-report")
+@SecurityRequirement(name = "Bearer Authentication")
 public class AppointmentReportController {
     private final IAppointmentReportService _appointmentReportService;
     private final IEquipmentService _equipmentService;

@@ -239,6 +239,8 @@ public class AppointmentService implements IAppointmentService {
     }
 
     @Override
+    @Transactional(isolation = Isolation.SERIALIZABLE, propagation = Propagation.REQUIRES_NEW,
+            rollbackFor = Exception.class)
     public AppointmentSchedulingHistory scheduleAppointment(UUID donorId, UUID appointmentId) {
         if (_appointmentRepository.findById(appointmentId).isEmpty()) {
             throw new NotFoundException("Donor or appointment doesent exist");
