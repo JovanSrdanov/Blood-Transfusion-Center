@@ -3,6 +3,7 @@ package groupJASS.ISA_2022.Controller;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
 import groupJASS.ISA_2022.Model.Address;
 import groupJASS.ISA_2022.Service.Interfaces.IAddressService;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +23,14 @@ public class AddressController {
     }
 
     @GetMapping
+    @RateLimiter(name = "addressService", fallbackMethod = "addressRateLimiterFallback")
     public ResponseEntity<List<Address>> findAll() {
         return new ResponseEntity<>((List<Address>) this._addressService.findAll(), HttpStatus.OK);
+    }
+
+    public ResponseEntity<String> addressRateLimiterFallback(Exception e) {
+        return new ResponseEntity<>("The servers are busy, please try again later",
+                HttpStatus.TOO_MANY_REQUESTS);
     }
 
     @PostMapping

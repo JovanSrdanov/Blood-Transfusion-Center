@@ -62,14 +62,13 @@ public class AppointmentReportController {
             @RequestBody AppointmentReportCreate report
             ) {
         try {
-            //TODO AppointmentReportEquipmentQuantity uvezati
             AppointmentSchedulingHistory history =
                     _appointmentSchedulingHistoryService.findById(report.getAppointmentHistoryId());
             history.setStatus(AppointmentSchedulingConfirmationStatus.PROCESSED);
             AppointmentReport newReport = new AppointmentReport();
             newReport.setText(report.getText());
             newReport.setAppointmentSchedulingHistory(history);
-            //mozda nije dobro
+
             newReport.setUsedEquipment(new HashSet<AppointmentReportEquipmentQuantity>());
             _appointmentReportService.save(newReport);
 
