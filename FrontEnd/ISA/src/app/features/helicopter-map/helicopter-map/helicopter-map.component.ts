@@ -94,17 +94,7 @@ export class HelicopterMapComponent implements OnInit {
       }),
     });
 
-    const marker = new Feature({
-      geometry: new Point(fromLonLat([21, 44]))
-    });
 
-    const vectorLayer = new VectorLayer({
-      source: new VectorSource({
-        features: [marker]
-      })
-    });
-
-    this.map.addLayer(vectorLayer)
 
   }
 
@@ -131,6 +121,8 @@ export class HelicopterMapComponent implements OnInit {
   handleResult(message: any) {
     if (message.body) {
       let HelicopterPosition = JSON.parse(message.body)
+
+
       this.curPos.lat = HelicopterPosition.curLatitude;
       this.curPos.lng = HelicopterPosition.curLongitude;
 
@@ -143,11 +135,22 @@ export class HelicopterMapComponent implements OnInit {
       this.center.lat = HelicopterPosition.destLatitude;
       this.center.lng = HelicopterPosition.destLongitude;
 
+      this.map.getLayers().forEach(layer => {
+        if (layer && layer.get('name') === 'vectorLayerC') {
+          this.map.removeLayer(layer);
+        }
+      });
+
 
       const markerC = new Feature({
         geometry: new Point(fromLonLat([this.curPos.lng, this.curPos.lat]))
       });
-
+      markerC.setStyle(new Style({
+        image: new Icon({
+          color: 'rgba(255, 0, 0, 1.0)',
+          src: "https://openlayers.org/en/v4.6.5/examples/data/dot.png",
+        }),
+      }));
       const vectorLayerC = new VectorLayer({
         source: new VectorSource({
           features: [markerC]
@@ -159,6 +162,12 @@ export class HelicopterMapComponent implements OnInit {
       const markerS = new Feature({
         geometry: new Point(fromLonLat([this.srcPos.lng, this.srcPos.lat]))
       });
+      markerS.setStyle(new Style({
+        image: new Icon({
+          color: 'rgba(0, 255, 0, 1.0)',
+          src: "https://openlayers.org/en/v4.6.5/examples/data/dot.png",
+        }),
+      }));
 
       const vectorLayerS = new VectorLayer({
         source: new VectorSource({
@@ -171,6 +180,12 @@ export class HelicopterMapComponent implements OnInit {
         geometry: new Point(fromLonLat([this.desPos.lng, this.desPos.lat]))
       });
 
+      markerD.setStyle(new Style({
+        image: new Icon({
+          color: 'rgba(0, 0, 255, 1.0)',
+          src: "https://openlayers.org/en/v4.6.5/examples/data/dot.png",
+        }),
+      }));
       const vectorLayerD = new VectorLayer({
         source: new VectorSource({
           features: [markerD]
