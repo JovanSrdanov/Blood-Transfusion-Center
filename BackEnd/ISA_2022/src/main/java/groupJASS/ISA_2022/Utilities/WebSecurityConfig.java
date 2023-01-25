@@ -116,7 +116,7 @@ public class WebSecurityConfig {
                 .antMatchers(HttpMethod.POST, "/blood-donor/register", "/auth/activate-account")
 
                 // Ovim smo dozvolili pristup statickim resursima aplikacije
-                .antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "favicon.ico",
+                .antMatchers(HttpMethod.GET, "/", "/address" , "/webjars/**", "/*.html", "favicon.ico",
                         "/**/*.html", "/**/*.css", "/**/*.js", "/blood-center/sort", "/blood-center/all-basic-info",
                         "/swagger-ui/**", "/v3/**", "/socket/**");
 
