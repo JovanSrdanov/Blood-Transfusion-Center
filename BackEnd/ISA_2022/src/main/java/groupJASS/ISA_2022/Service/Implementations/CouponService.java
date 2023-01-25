@@ -7,6 +7,8 @@ import groupJASS.ISA_2022.Service.Interfaces.ICouponService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
 
 import java.util.UUID;
@@ -38,7 +40,7 @@ public class CouponService implements ICouponService {
     }
 
     @Override
-    public Coupon save(Coupon entity) throws BadRequestException {
+    public Coupon save(Coupon entity){
         return _couponRepository.save(entity);
     }
 

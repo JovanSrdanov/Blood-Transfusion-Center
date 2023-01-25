@@ -1,8 +1,8 @@
 package groupJASS.ISA_2022.Controller;
 
+import groupJASS.ISA_2022.DTO.BloodDonor.BloodDonorGetByNameAndSurnameDto;
 import groupJASS.ISA_2022.DTO.BloodDonor.BloodDonorInfoDto;
 import groupJASS.ISA_2022.DTO.BloodDonor.BloodDonorLazyDTO;
-import groupJASS.ISA_2022.DTO.BloodDonor.BloodDonorGetByNameAndSurnameDto;
 import groupJASS.ISA_2022.DTO.BloodDonor.RegisterBloodDonorDTO;
 import groupJASS.ISA_2022.DTO.PageEntityDto;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
@@ -13,6 +13,12 @@ import groupJASS.ISA_2022.Service.Interfaces.IAddressService;
 import groupJASS.ISA_2022.Service.Interfaces.IBloodDonorService;
 import groupJASS.ISA_2022.Utilities.MappingUtilities;
 import groupJASS.ISA_2022.Utilities.ObjectMapperUtils;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,16 +58,34 @@ public class BloodDonorController {
 
     }
 
+    @Operation(summary = "Get all blood donors", description = "Get all blood donors", method="GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "successful operation",
+                    content = @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = BloodDonor.class))))
+    })
     @GetMapping
     public ResponseEntity<List<BloodDonor>> findAllWithAddressAndQuestionnaire() {
         return new ResponseEntity<>(this._bloodDonorService.findAllWithAddressAndQuestionnaire(), HttpStatus.OK);
     }
 
+    @Operation(summary = "Get all blood donors lazy load", description = "Get all blood donors using lazy loading", method="GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "successful operation",
+                    content = @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = BloodDonorLazyDTO.class))))
+    })
     @GetMapping("lazy")
     public ResponseEntity<List<BloodDonorLazyDTO>> findAllLazy() {
         return new ResponseEntity<>(MappingUtilities.mapList((List<BloodDonor>) this._bloodDonorService.findAll(), BloodDonorLazyDTO.class, _mapper), HttpStatus.OK);
     }
 
+    @Operation(summary = "Get info for loggined in donor", description = "Get info for loggined in donor", method="GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "successful operation",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = BloodDonorInfoDto.class)))
+    })
     @GetMapping("my-info")
     @PreAuthorize("hasRole('BLOOD_DONOR')")
     public ResponseEntity<BloodDonorInfoDto> findById(Principal account) {
@@ -70,6 +94,12 @@ public class BloodDonorController {
         return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
 
+    @Operation(summary = "Save donor info", description = "Save or update donor info", method="POST")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "successful operation",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = BloodDonor.class)))
+    })
     @PostMapping
     public ResponseEntity<BloodDonor> save(@RequestBody BloodDonor entity) {
         try {
@@ -79,6 +109,14 @@ public class BloodDonorController {
         }
     }
 
+    @Operation(summary = "Update donor info", description = "Update donor info", method="PATCH")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Updated donor",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = BloodDonorInfoDto.class))),
+            @ApiResponse(responseCode = "400", description = "Something went wrong", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Donor not found", content = @Content)
+    })
     @PatchMapping("update")
     @PreAuthorize("hasRole('BLOOD_DONOR')")
     public ResponseEntity<BloodDonorInfoDto> update(@Valid @RequestBody BloodDonorInfoDto updatedUserDto) {
@@ -97,6 +135,15 @@ public class BloodDonorController {
         }
     }
 
+    @Operation(summary = "Register new donor", description = "Register new donor", method = "POST")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Created",
+                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = RegisterBloodDonorDTO.class)) }),
+            @ApiResponse(responseCode = "400", description = "Something went wrong",
+                    content = @Content),
+            @ApiResponse(responseCode = "409", description = "Something went wrong",
+                    content = @Content)
+    })
     @PostMapping("register")
     public ResponseEntity<?> Register(@Valid @RequestBody RegisterBloodDonorDTO dto)
             throws ConstraintViolationException {
@@ -114,6 +161,11 @@ public class BloodDonorController {
         }
     }
 
+    @Operation(summary = "Get donor by name or surname", description = "Get donor by name or surname", method = "POST")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Created",
+                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = RegisterBloodDonorDTO.class)) })
+    })
     @PostMapping("get-by-name-surname")
     @PreAuthorize("hasRole('ROLE_SYSTEM_ADMIN')")
     public ResponseEntity<PageEntityDto<BloodDonorInfoDto>> getByNameAndSurname(@RequestBody BloodDonorGetByNameAndSurnameDto dto) {
@@ -121,7 +173,12 @@ public class BloodDonorController {
         return new ResponseEntity(bloodDonors, HttpStatus.OK);
     }
 
-
+    @Operation(summary = "Get donor by search parameters", description = "Get donor by name, surname, center, status...", method = "POST")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found donors",
+                    content = @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = BloodDonorInfoDto.class))))
+    })
     @PostMapping("get-by-name-surname-for-center-and-status/{status}")
     @PreAuthorize("hasRole('ROLE_STAFF')")
     public ResponseEntity<PageEntityDto<BloodDonorInfoDto>> getByNameAndSurnameForCenter(@RequestBody BloodDonorGetByNameAndSurnameDto dto,

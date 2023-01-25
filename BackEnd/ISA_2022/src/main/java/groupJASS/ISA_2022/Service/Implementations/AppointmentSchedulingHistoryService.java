@@ -58,7 +58,7 @@ public class AppointmentSchedulingHistoryService implements IAppointmentScheduli
     }
 
     @Override
-    public AppointmentSchedulingHistory save(AppointmentSchedulingHistory entity) throws BadRequestException {
+    public AppointmentSchedulingHistory save(AppointmentSchedulingHistory entity){
         if (entity.getId() == null) {
             entity.setId(UUID.randomUUID());
         }
@@ -113,8 +113,7 @@ public class AppointmentSchedulingHistoryService implements IAppointmentScheduli
             throw new Exception("This blood donor has been processed and can not cancel the appoitnment.");
         }
 
-        System.out.println(LocalDateTime.now().plusDays(24));
-        if (ash.getAppointment().getTime().getStartTime().isBefore(LocalDateTime.now().plusDays(24))) {
+        if (ash.getAppointment().getTime().getStartTime().isBefore(LocalDateTime.now().plusDays(1))) {
             throw new Exception("The appointment can not be canceled 24 hours before it starts.");
         }
         ash.setStatus(AppointmentSchedulingConfirmationStatus.CANCELED);

@@ -1,10 +1,16 @@
 package groupJASS.ISA_2022.Service.Implementations;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import groupJASS.ISA_2022.DTO.Blood.RabbitTestDto;
 import groupJASS.ISA_2022.Exceptions.CenterOutOfBloodException;
 import groupJASS.ISA_2022.Model.BloodQuantity;
 import groupJASS.ISA_2022.Repository.BloodQuantityRepository;
 import groupJASS.ISA_2022.Service.Interfaces.IBloodQuantityService;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
@@ -13,6 +19,12 @@ import java.util.UUID;
 @Service
 public class BloodQuantityService implements IBloodQuantityService {
     private final BloodQuantityRepository _bloodQuantityRepository;
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+
+    @Value("${letterbox}")
+    String letterbox;
 
     @Autowired
     public BloodQuantityService(BloodQuantityRepository bloodQuantityRepository) {
@@ -70,5 +82,28 @@ public class BloodQuantityService implements IBloodQuantityService {
         }
 
         return save(updatedQantity);
+    }
+
+    @RabbitListener(queues = "${letterbox}")
+    public void rabbitTest(Message message) {
+        try {
+            //System.out.println("Consumer: " + "demandBloodShipment" + " activated");
+            byte[] body = message.getBody();
+            ObjectMapper mapper = new ObjectMapper();
+            RabbitTestDto dto = mapper.readValue(body, RabbitTestDto.class);
+
+            System.out.println("Poruka: " + dto.getName());
+
+            /*Jackson2JsonMessageConverter jsonConverter = new Jackson2JsonMessageConverter();
+            DefaultClassMapper classMapper = new DefaultClassMapper();
+            classMapper.setDefaultType(RabbitTestDto.class);
+            jsonConverter.setClassMapper(classMapper);
+            rabbitTemplate.setMessageConverter(jsonConverter);
+
+            this.rabbitTemplate.convertAndSend("letterbox2", new RabbitTestDto("Poruka sa isa strane"));
+            System.out.println("Poruka poslata:");*/
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

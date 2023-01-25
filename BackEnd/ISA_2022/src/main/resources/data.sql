@@ -603,3 +603,19 @@ INSERT INTO public.account (id,email,is_activated,last_password_update_date,"pas
   ('acc5196a-fb16-4394-a259-c5c81017cfac','isadonor+13@gmail.com',true,NULL,'$2a$10$P9XieoF311mu20jQIwSoMeNdqV3KBiIhTTZCM4QEITiSbksSsvCha','ac285f71-c0be-4a50-bf10-575a3364e6ab'),
   ('bcc5196a-fb16-4394-a259-c5c81017cfac','isadonor+14@gmail.com',true,NULL,'$2a$10$P9XieoF311mu20jQIwSoMeNdqV3KBiIhTTZCM4QEITiSbksSsvCha','bc285f71-c0be-4a50-bf10-575a3364e6ab'),
   ('ccc5196a-fb16-4394-a259-c5c81017cfac','isadonor+15@gmail.com',true,NULL,'$2a$10$P9XieoF311mu20jQIwSoMeNdqV3KBiIhTTZCM4QEITiSbksSsvCha','cc285f71-c0be-4a50-bf10-575a3364e6ab');
+
+INSERT INTO account_role (account_id, role_id) VALUES
+    ('0cc5196a-fb16-4394-a259-c5c81017cfac', 1),
+    ('1cc5196a-fb16-4394-a259-c5c81017cfac', 1),
+    ('2cc5196a-fb16-4394-a259-c5c81017cfac', 1),
+    ('3cc5196a-fb16-4394-a259-c5c81017cfac', 1),
+    ('4cc5196a-fb16-4394-a259-c5c81017cfac', 1),
+    ('5cc5196a-fb16-4394-a259-c5c81017cfac', 1),
+    ('6cc5196a-fb16-4394-a259-c5c81017cfac', 1),
+    ('7cc5196a-fb16-4394-a259-c5c81017cfac', 1),
+    ('8cc5196a-fb16-4394-a259-c5c81017cfac', 1),
+    ('9cc5196a-fb16-4394-a259-c5c81017cfac', 1),
+    ('acc5196a-fb16-4394-a259-c5c81017cfac', 1),
+    ('bcc5196a-fb16-4394-a259-c5c81017cfac', 1),
+    ('ccc5196a-fb16-4394-a259-c5c81017cfac', 1);
+

@@ -26,6 +26,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
 
@@ -76,7 +77,7 @@ public class BloodDonorService implements IBloodDonorService {
             return _bloodDonorRepository.findById(id).get();
         }
 
-        throw new NotFoundException("Blood donor found");
+        throw new NotFoundException("Blood donor not found");
     }
 
     @Override
