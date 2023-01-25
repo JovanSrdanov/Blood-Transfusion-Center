@@ -53,8 +53,7 @@ public class AccountService implements IAccountService {
     }
 
     @Override
-    public void updatePassword(String email, String newPassword)
-    {
+    public void updatePassword(String email, String newPassword) {
         String hashedNewPassword = _passwordEncoder.encode(newPassword);
         _accountRepository.updatePassword(email, hashedNewPassword, new Timestamp(System.currentTimeMillis()));
     }
@@ -75,11 +74,7 @@ public class AccountService implements IAccountService {
     public Account registerAccount(AccountDTO accountDto, String roleName, UUID personId) {
         List<Role> roles = _roleService.findByName(roleName);
 
-        boolean isActivated = false;
-        if(!roleName.equals("ROLE_BLOOD_DONOR"))
-        {
-            isActivated = true;
-        }
+        boolean isActivated = !roleName.equals("ROLE_BLOOD_DONOR");
 
         if (_accountRepository.existsAccountByEmail(accountDto.getEmail())) {
 
@@ -87,7 +82,7 @@ public class AccountService implements IAccountService {
         }
 
         String hashedPassword = _passwordEncoder.encode(accountDto.getPassword());
-        Account account = new Account(accountDto.getEmail(), hashedPassword, roles,personId, isActivated);
+        Account account = new Account(accountDto.getEmail(), hashedPassword, roles, personId, isActivated);
         return save(account);
     }
 
@@ -103,6 +98,7 @@ public class AccountService implements IAccountService {
 
     @Override
     public Account findAccountByEmail(String email) {
+        System.out.println("FIND WITHOUTH CACHE");
         return _accountRepository.findByEmail(email);
     }
 
