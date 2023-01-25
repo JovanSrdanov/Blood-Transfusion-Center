@@ -30,6 +30,7 @@ export class CreatePremadeAppointmentComponent implements OnInit {
   
   staffList: StaffFreeSlotsInfo[] = [];
   freeSlots: FreeSlots[] = [];
+  message: string = '';
 
   constructor(private readonly router: Router, private _formBuilder: FormBuilder,
     private readonly staffService: ProfileService,
@@ -81,6 +82,11 @@ export class CreatePremadeAppointmentComponent implements OnInit {
     console.log(premadeAppointmentDto);
     this.appointmentService.premadeAppointment(premadeAppointmentDto).subscribe(res => {
       console.log(res);
+      this.message = "Appointment predefined successfully";
+    },
+    error => {
+      alert(error.error);
+      this.message = "Something went wrong";
     });
   }
 

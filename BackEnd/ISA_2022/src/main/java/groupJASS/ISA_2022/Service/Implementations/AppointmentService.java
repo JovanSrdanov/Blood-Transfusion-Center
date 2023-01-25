@@ -167,7 +167,7 @@ public class AppointmentService implements IAppointmentService {
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional(isolation = Isolation.SERIALIZABLE ,propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
     public Appointment predefine(DateRange dateRange, List<UUID> staffIds, UUID staffAdminId, boolean isPredef)
             throws BadRequestException {
         // Provera da li je poslata prazna lista staff-ova
@@ -306,7 +306,7 @@ public class AppointmentService implements IAppointmentService {
     //Kada se zakazuje bilo koji od pregleda kreira se novi scheduling appointment history.
     //Da bi se pregled zakazao moraju se proci provere koje nadmasuju ogranicenja baze podataka.
     //Ni na koji drugi nacin ne moze da se zabrani insert novog reda u tabelu, sem da se podgine nivo izolacije na najvisi nivo
-    @Transactional(isolation = Isolation.SERIALIZABLE ,propagation = Propagation.REQUIRES_NEW)
+    @Transactional(isolation = Isolation.SERIALIZABLE ,propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
     public AppointmentSchedulingHistory scheduleCustomAppointment(UUID donorId, LocalDateTime time, UUID staffId)
             throws BadRequestException {
         DateRange dateRange = new DateRange(time, 20);
@@ -355,7 +355,7 @@ public class AppointmentService implements IAppointmentService {
             staffs.sort(new Comparator<Staff>() {
                 @Override
                 public int compare(Staff s1, Staff s2) {
-                    return s1.getId().compareTo(s2.getId());
+                    return s1.getName().compareTo(s2.getName());
                 }
             });
 
