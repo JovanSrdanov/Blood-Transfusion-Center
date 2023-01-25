@@ -28,6 +28,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -121,6 +124,7 @@ public class AppointmentController {
     })
     @PostMapping("/schedulePredefine/{appid}")
     @PreAuthorize("hasRole('BLOOD_DONOR')")
+    @Transactional(isolation = Isolation.SERIALIZABLE, propagation = Propagation.REQUIRES_NEW)
     public ResponseEntity<?> scheduleAppointment(@PathVariable UUID appid,
                                                  Principal account) {
 
