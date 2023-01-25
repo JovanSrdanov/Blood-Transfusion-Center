@@ -149,23 +149,31 @@ public class StaffService implements IStaffService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void assignBloodCenter(UUID bloodAdminId, UUID bloodCenterId) throws BadRequestException {
-        Optional<Staff> bloodAdmin = _staffRepository.findById(bloodAdminId);
-        if (bloodAdmin.isEmpty()) {
-            throw new NotFoundException("Blood admin not found");
+        Optional<Staff> staff = _staffRepository.findById(bloodAdminId);
+        if (staff.isEmpty()) {
+            throw new NotFoundException("Staff not found");
         }
 
-        if (bloodAdmin.get().getBloodCenter() != null) {
-            throw new BadRequestException("Blood admin already has assigned blood center");
+        if (staff.get().getBloodCenter() != null) {
+            throw new BadRequestException("Staff already has assigned blood center");
         }
 
         Optional<BloodCenter> bloodCenter = _bloodCenterRepository.findById(bloodCenterId);
         if (bloodCenter.isEmpty()) {
             throw new NotFoundException("Blood center not found");
         }
-        Staff b = bloodAdmin.get();
+        Staff b = staff.get();
         b.setBloodCenter(bloodCenter.get());
-        _staffRepository.save(b);
+
+        try {
+            _staffRepository.save(b);
+        }
+        catch (Exception e) {
+            throw new BadRequestException("Neko je vec promenio ovog staff-a (optimistic lock)");
+        }
+
     }
 
     @Override

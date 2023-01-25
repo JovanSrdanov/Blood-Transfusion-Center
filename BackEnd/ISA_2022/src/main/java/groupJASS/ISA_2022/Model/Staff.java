@@ -22,4 +22,7 @@ public class Staff extends Person {
 
     @ManyToOne
     private BloodCenter bloodCenter;
+
+    @Version
+    Integer version;
 }
