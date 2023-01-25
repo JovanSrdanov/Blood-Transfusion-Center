@@ -69,12 +69,9 @@ public interface AppointmentRepository extends JpaRepository<Appointment, UUID> 
 
     @Query(value = "select * from " +
             "appointment a left join appointment_scheduling_history h on a.id = h.appointment_id "+
-            "where h is null and a.start_time = :startTime",
+            "where (h is null or h.status = 3) and a.start_time = :startTime",
             nativeQuery = true)
     List<Appointment> findAllByTimeStartTime(LocalDateTime startTime);
 
-    @Lock(LockModeType.PESSIMISTIC_WRITE)
-    //Transaction doesn't wait for other transactions to commit, it just throws exception "CannotAcquireLockException"
-    @QueryHints({@QueryHint(name = "javax.persistence.lock.timeout", value ="0")})
    Appointment save(Appointment appointment);
 }
