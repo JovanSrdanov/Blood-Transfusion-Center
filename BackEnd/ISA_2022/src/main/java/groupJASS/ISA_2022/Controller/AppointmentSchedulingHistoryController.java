@@ -45,7 +45,6 @@ public class AppointmentSchedulingHistoryController {
         _appointmentSchedulingHistoryService = appointmentSchedulingHistoryRepository;
     }
 
-    //TODO SAMO SAM NAMESTIO DA SE COMPILE, MOZDA NE RADI FRONT JER SAM SWAPOVAO DTO(NAPRAVIO SAM TI NOVI SKROZ)
     @GetMapping("fullname/{ashId}")
     @PreAuthorize("hasRole('STAFF')")
     public ResponseEntity<?> getDonorFullname(

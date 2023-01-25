@@ -38,7 +38,7 @@ public class ActivateAccountService implements IActivateAccountService {
     }
 
     @Override
-    public ActivateAccount save(ActivateAccount entity) throws BadRequestException {
+    public ActivateAccount save(ActivateAccount entity){
         if (entity.getId() == null) {
             entity.setId(UUID.randomUUID());
         }

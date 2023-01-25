@@ -1,4 +1,10 @@
 package ExternalHospital.ExternalHospital;
+import ExternalHospital.ExternalHospital.DeliveryContract.ContractDTO;
+import ExternalHospital.ExternalHospital.DeliveryContract.ContractProducer;
+import ExternalHospital.ExternalHospital.DeliveryContract.MainMenu;
+import ExternalHospital.ExternalHospital.GPS.DemandBloodShipmentDTO;
+import org.springframework.amqp.core.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Queue;
@@ -10,6 +16,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Scanner;
+import java.util.UUID;
 
 
 @SpringBootApplication
@@ -30,6 +43,7 @@ public class ExternalHospitalApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ExternalHospitalApplication.class, args);
+
 		System.out.println("--- EXTERNAL HOSPITAL ---");
 	}
 
@@ -38,7 +52,6 @@ public class ExternalHospitalApplication {
 	DirectExchange exchange() {
 		return new DirectExchange(exchange);
 	}
-
 
 	@Bean
 	Queue demandBloodShipmentQueue() {
@@ -55,10 +68,21 @@ public class ExternalHospitalApplication {
 		return new Queue(bloodShipmentArrived, true);
 	}
 
+	//region Delivery contract
+	@Value("${createContract}")
+	String createContractQueue;
+
+	@Value("${deliveryResponse}")
+	String deliveryResponseQueue;
+	@Bean
+	Queue createContractQueue() { return new Queue(createContractQueue, true); }
+
+	@Bean
+	Queue deliveryResponseQueue() { return new Queue(deliveryResponseQueue, true); }
+	//endregion
+
 	@Bean
 	public ConnectionFactory connectionFactory() {
-		CachingConnectionFactory connectionFactory = new CachingConnectionFactory("localhost");
-		return connectionFactory;
+		return new CachingConnectionFactory("localhost");
 	}
-
 }

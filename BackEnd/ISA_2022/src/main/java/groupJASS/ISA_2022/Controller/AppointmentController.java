@@ -13,12 +13,20 @@ import groupJASS.ISA_2022.Service.Interfaces.IAccountService;
 import groupJASS.ISA_2022.Service.Interfaces.IAppointmentSchedulingHistoryService;
 import groupJASS.ISA_2022.Service.Interfaces.IAppointmentService;
 import groupJASS.ISA_2022.Service.Interfaces.IQrCodeService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.CannotAcquireLockException;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -46,6 +54,14 @@ public class AppointmentController {
         _appointmentSchedulingHistoryService = appointmentSchedulingHistoryService;
     }
 
+    @Operation(summary = "Available free slots for predefine", description = "Finds free slots for given date and staffIds", method = "POST")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found slots succesfully",
+                    content = @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = DateRange.class)))),
+            @ApiResponse(responseCode = "400", description = "Something went wrong",
+                    content = @Content)
+    })
     @PostMapping("/available-admin")
     @PreAuthorize("hasRole('STAFF')")
     public ResponseEntity<?> findAll(@RequestBody AvailableSlotsDto dto, Principal account) {
@@ -60,6 +76,13 @@ public class AppointmentController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
+    @Operation(summary = "Predefine appointment", description = "Predefine appointment fro given date and saffIds", method = "POST")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Created",
+                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Appointment.class)) }),
+            @ApiResponse(responseCode = "400", description = "Something went wrong",
+                    content = @Content)
+    })
     @PostMapping("/predefine")
     @PreAuthorize("hasRole('STAFF')")
     public ResponseEntity<?> predefine(@RequestBody PredefineAppointmentDto dto, Principal account) {
@@ -73,6 +96,12 @@ public class AppointmentController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
+    @Operation(summary = "Find available predefined appointments", description = "Find available predefined appointments for center id", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found predefined",
+                    content = @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = AvailablePredefinedDto.class))))
+    })
     @GetMapping("/available-donor/{cid}")
     @PreAuthorize("hasRole('BLOOD_DONOR')")
     public ResponseEntity<List<AvailablePredefinedDto>> findAvailableAppointmentsForDonor(@PathVariable UUID cid,
@@ -83,6 +112,13 @@ public class AppointmentController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
+    @Operation(summary = "Schedule predefined appointment", description = "Schedule predefined appointment for given appointment id", method = "POST")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Created",
+                    content = { @Content(mediaType = "application/json") }),
+            @ApiResponse(responseCode = "400", description = "Something went wrong",
+                    content = @Content)
+    })
     @PostMapping("/schedulePredefine/{appid}")
     @PreAuthorize("hasRole('BLOOD_DONOR')")
     public ResponseEntity<?> scheduleAppointment(@PathVariable UUID appid,
@@ -100,6 +136,12 @@ public class AppointmentController {
         }
     }
 
+    @Operation(summary = "Find available custom appointments", description = "Finds available custom appointments for given time", method = "POST")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Created",
+                    content = @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = AvailableCustomAppointmentsDto.class))))
+    })
     @PostMapping("/custom-available")
     @PreAuthorize("hasRole('BLOOD_DONOR')")
     public ResponseEntity<?> findCustomAvailableAppointments(@RequestBody TimeDto time, Principal account) {
@@ -108,21 +150,52 @@ public class AppointmentController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
+    @Operation(summary = "Schedule custom appointment", description = "Schedule custom appointment for given time and saff id", method = "POST")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Created",
+                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Appointment.class)) }),
+            @ApiResponse(responseCode = "400", description = "Something went wrong",
+                    content = @Content)
+    })
     @PostMapping("/schedule-custom")
     @PreAuthorize("hasRole('BLOOD_DONOR')")
-    public ResponseEntity<?> scheduleAppointment(@RequestBody ScheduleCustomAppointmentDto dto, Principal account) {
-        Account a = _accountService.findAccountByEmail(account.getName());
+    public ResponseEntity<?> scheduleAppointment(@RequestBody ScheduleCustomAppointmentDto dto, Principal principal) {
+        Account account = _accountService.findAccountByEmail(principal.getName());
         AppointmentSchedulingHistory res = null;
         try {
-            res = _appointmentService.scheduleCustomAppointmetn(
-                    a.getPersonId(),
-                    dto.getTime(),
-                    dto.getStaffId());
-            _appointmentService.sendScheduleConfirmation(res.getAppointment(), account.getName(), res.getId());
+
+            try{ //Concurrency reasons
+                res = _appointmentService.scheduleCustomAppointment( account.getPersonId(), dto.getTime(), dto.getStaffId());
+            }
+            catch (JpaSystemException e)
+            {
+                retryCustomScheduling(dto, account);
+            }
+            catch (CannotAcquireLockException e)
+            {
+                retryCustomScheduling(dto, account);
+            }
+
+            _appointmentService.sendScheduleConfirmation(res.getAppointment(), principal.getName(), res.getId());
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Finds premade appointments for center id pagable", description = "Finds premade appointments for center id pagable", method = "POST")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found premade appointments",
+                    content = @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = PremadeAppointmentDTO.class)))),
+            @ApiResponse(responseCode = "400", description = "Something went wrong",
+                    content = @Content)
+    })
+    private void retryCustomScheduling(ScheduleCustomAppointmentDto dto, Account account) throws InterruptedException, BadRequestException {
+        System.out.println("Resource locked, waiting 2 seconds...");
+        Thread.sleep(2000);
+        _appointmentService.scheduleCustomAppointment( account.getPersonId(), dto.getTime(), dto.getStaffId());
+        System.out.println("Appointment scheduled");
     }
 
     @GetMapping("/premadeAppointments/{centerId}")
@@ -155,12 +228,24 @@ public class AppointmentController {
 
     }
 
+    @Operation(summary = "Find available predefined in all centers by start time", description = "Find available predefined in all centers by start time", method = "POST")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Created",
+                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PredefinedInCustomTimeDto.class)) })
+    })
     @PostMapping(path = "/available-predefined-for-time")
     @PreAuthorize("hasRole('BLOOD_DONOR')")
     public ResponseEntity availablePredefined(@RequestBody TimeDto time) {
         return new ResponseEntity<>(_appointmentService.findAllByTimeStartTime(time.getTime()), HttpStatus.OK);
     }
 
+    @Operation(summary = "Scan QR code", description = "Allows for scanning of QR code", method = "POST")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Created",
+                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AppointmentQrInformationDto.class)) }),
+            @ApiResponse(responseCode = "400", description = "Something went wrong",
+                    content = @Content)
+    })
     @PostMapping(path = "/scan-qr",consumes = {MediaType.MULTIPART_FORM_DATA_VALUE} )
     @PreAuthorize("hasRole('ROLE_STAFF')")
     public ResponseEntity scanQRCode(@RequestParam MultipartFile qrCode, Principal principal)
