@@ -7,15 +7,16 @@ import groupJASS.ISA_2022.DTO.Staff.StaffProfileDTO;
 import groupJASS.ISA_2022.DTO.Staff.StaffRegistrationDTO;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
 import groupJASS.ISA_2022.Model.Staff;
+import org.springframework.cache.annotation.Cacheable;
 import org.webjars.NotFoundException;
 
-import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
 
 public interface IStaffService extends ICrudService<Staff> {
 
-    Staff findByEmail(Principal principal) throws NotFoundException;
+    @Cacheable("staffProfile")
+    Staff findByEmail(UUID staffId) throws NotFoundException;
 
     void assignBloodCenter(UUID bloodAdminId, UUID bloodCenterId) throws BadRequestException;
 

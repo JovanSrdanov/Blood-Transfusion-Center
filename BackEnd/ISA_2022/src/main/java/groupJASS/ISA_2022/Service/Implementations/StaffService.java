@@ -7,7 +7,10 @@ import groupJASS.ISA_2022.DTO.Staff.StaffFreeSlotsInfo;
 import groupJASS.ISA_2022.DTO.Staff.StaffProfileDTO;
 import groupJASS.ISA_2022.DTO.Staff.StaffRegistrationDTO;
 import groupJASS.ISA_2022.Exceptions.BadRequestException;
-import groupJASS.ISA_2022.Model.*;
+import groupJASS.ISA_2022.Model.Account;
+import groupJASS.ISA_2022.Model.Address;
+import groupJASS.ISA_2022.Model.BloodCenter;
+import groupJASS.ISA_2022.Model.Staff;
 import groupJASS.ISA_2022.Repository.AccountRepository;
 import groupJASS.ISA_2022.Repository.BloodCenterRepository;
 import groupJASS.ISA_2022.Repository.StaffRepository;
@@ -20,12 +23,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
 
-import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -38,7 +39,7 @@ public class StaffService implements IStaffService {
     private final StaffRepository _staffRepository;
     private final BloodCenterRepository _bloodCenterRepository;
     private final ModelMapper _mapper;
-    private IRoleService _roleService;
+    private final IRoleService _roleService;
     private final IAccountService _accountService;
     private final AccountRepository _accountRepository;
 
@@ -119,13 +120,17 @@ public class StaffService implements IStaffService {
     }
 
     @Override
-    public Staff findByEmail(Principal principal) throws NotFoundException {
-        Account account = _accountRepository.findByEmail(principal.getName());
-        Optional<Staff> staff = _staffRepository.findById(account.getPersonId());
+    public Staff findByEmail(UUID staffId) throws NotFoundException {
+
+
+
+        Optional<Staff> staff = _staffRepository.findById(staffId);
         if(!staff.isPresent())
         {
             throw new NotFoundException("Staff not found");
         }
+
+        System.out.println("--Find staff without cache-- " + staff.get().getName());
 
         return staff.get();
 
