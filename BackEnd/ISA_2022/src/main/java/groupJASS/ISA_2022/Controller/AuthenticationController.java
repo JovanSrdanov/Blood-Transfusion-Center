@@ -6,6 +6,7 @@ import groupJASS.ISA_2022.DTO.Auth.JwtAuthenticationRequest;
 import groupJASS.ISA_2022.Model.Account;
 import groupJASS.ISA_2022.Service.Interfaces.IAccountService;
 import groupJASS.ISA_2022.Utilities.TokenUtils;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -54,6 +55,7 @@ public class AuthenticationController {
                     content = @Content)
     })
     @PostMapping("/login")
+    @RateLimiter(name = "loginService", fallbackMethod = "loginRateLimiterFallbackMethod")
     public ResponseEntity<?> createAuthenticationToken(
             @RequestBody JwtAuthenticationRequest authenticationRequest, HttpServletResponse response) {
 
@@ -83,11 +85,17 @@ public class AuthenticationController {
         }
     }
 
+    public ResponseEntity<String> loginRateLimiterFallbackMethod(Exception e) {
+        return new ResponseEntity<>("The servers are currently busy, please try again later",
+                HttpStatus.TOO_MANY_REQUESTS);
+    }
+
     @Operation(summary = "Activates account", description = "Activates account for given activation code and account id", method="POST")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Account activated",
                     content = @Content(mediaType = "application/json"))
     })
+
     @PostMapping("/activate-account")
     public ResponseEntity<?> activateAccount(@RequestBody ActivateAccountDTO activateAccountDTO) {
         try {
@@ -97,8 +105,6 @@ public class AuthenticationController {
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-
-
     }
 }
 
