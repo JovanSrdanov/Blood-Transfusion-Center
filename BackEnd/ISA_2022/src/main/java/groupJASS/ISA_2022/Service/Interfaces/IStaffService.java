@@ -27,4 +27,6 @@ public interface IStaffService extends ICrudService<Staff> {
     void register(StaffRegistrationDTO dto);
 
     List<StaffFreeSlotsInfo> getByBloodCenterId(UUID bloodCenterId);
+
+    Staff updateStaff(Staff updatedStaff, UUID staffId);
 }

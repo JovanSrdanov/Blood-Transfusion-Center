@@ -78,11 +78,14 @@ public class StaffController {
         }
     }
 
+    @PreAuthorize("hasRole('ROLE_STAFF')")
     @PutMapping(path = "updateBloodAdmin/{id}")
-    ResponseEntity<?> updateStaff(@PathVariable("id") UUID adminId, @Valid @RequestBody StaffProfileDTO dto) {
+    ResponseEntity<?> updateStaff(Principal principal, @PathVariable("id") UUID adminId, @Valid @RequestBody StaffProfileDTO dto) {
         try {
             //Staff oldAdmin = _staffService.findById(adminId);
-            Staff staff = _mapper.map(dto, Staff.class);
+            Staff updatedStaff = _mapper.map(dto, Staff.class);
+            Account account = _accountRepository.findByEmail(principal.getName());
+            _staffService.updateStaff(updatedStaff, account.getPersonId());
             //var address = staff.getAddress();
             //_addressService.save(address);
 
@@ -90,7 +93,7 @@ public class StaffController {
             //var tempCenter = oldAdmin.getBloodCenter();
             //newAdmin.setBloodCenter(tempCenter);
 
-            return new ResponseEntity<>(_staffService.save(staff), HttpStatus.OK);
+            return new ResponseEntity<>("Staff updated", HttpStatus.OK);
         }
         catch (NotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

@@ -25,4 +25,10 @@ public class Staff extends Person {
 
     @Version
     Integer version;
+
+    public void update(Staff updatedStaff) {
+        this.name = updatedStaff.getName();
+        this.surname = updatedStaff.getSurname();
+        this.phoneNumber = updatedStaff.getPhoneNumber();
+    }
 }

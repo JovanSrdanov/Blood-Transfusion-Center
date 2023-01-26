@@ -206,4 +206,14 @@ public class StaffService implements IStaffService {
     public List<StaffFreeSlotsInfo> getByBloodCenterId(UUID bloodCenterId) {
         return ObjectMapperUtils.mapAll(_staffRepository.getByBloodCenterId(bloodCenterId), StaffFreeSlotsInfo.class);
     }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Staff updateStaff(Staff updatedStaff, UUID staffId) {
+        Staff oldStaff = this.findById(staffId);
+
+        oldStaff.update(updatedStaff);
+        save(oldStaff);
+        return oldStaff;
+    }
 }
