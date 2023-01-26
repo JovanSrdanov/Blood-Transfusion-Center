@@ -33,12 +33,12 @@ class DonorPredefinedAppointmentTest {
     private UUID firstAppointmentId;
     private UUID secondAppointmentId;
 
-    @BeforeEach
+    @BeforeEach//002c3ba4-3c55-421d-9222-b473dd4af087   d29d8157-bc1c-4723-84cc-1743a224099b
     void setUp() throws BadRequestException {
-        firstDonorId = UUID.fromString("07ce2e8b-d34b-4156-9dd4-f29ec4311675");
-        secondDonorId = UUID.fromString("26d3381b-319d-425c-abd7-256f24f0a2e0");
-        firstAppointmentId = UUID.fromString("dbf02dce-a9a1-4e20-aaf0-5fca92299407");
-        secondAppointmentId = UUID.fromString("9e16d8b0-a805-4ffb-a08b-d50e7fef6be0");
+        firstDonorId = UUID.fromString("e23e75a8-6815-4931-92e0-6611c8ee3d21");
+        secondDonorId = UUID.fromString("00b898e5-36a8-4b2e-a3b9-e6bc86c24c8f");
+        firstAppointmentId = UUID.fromString("dd2bdc29-9cd1-46eb-8dce-efb8ae7d6e57");
+        secondAppointmentId = UUID.fromString("812db0cc-f899-405e-bb0c-66a1d1658616");
 
         Questionnaire firstQuestionnaire = new Questionnaire(
                 UUID.randomUUID(), false, false, false,
