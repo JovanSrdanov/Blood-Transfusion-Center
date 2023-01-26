@@ -164,56 +164,56 @@ export class StaffProfileComponent implements OnInit {
       bloodAmount: new FormGroup({
         A_POS: new FormControl(
           {
-            value: this.centerInfo.bloodQuantities[0].quantity,
+            value: this.getBloodGroupQuantity('A_POS'),
             disabled: true,
           },
           [Validators.required]
         ),
         A_NEG: new FormControl(
           {
-            value: this.centerInfo.bloodQuantities[1].quantity,
+            value: this.getBloodGroupQuantity('A_NEG'),
             disabled: true,
           },
           [Validators.required]
         ),
         B_POS: new FormControl(
           {
-            value: this.centerInfo.bloodQuantities[2].quantity,
+            value: this.getBloodGroupQuantity('B_POS'),
             disabled: true,
           },
           [Validators.required]
         ),
         B_NEG: new FormControl(
           {
-            value: this.centerInfo.bloodQuantities[3].quantity,
+            value: this.getBloodGroupQuantity('B_NEG'),
             disabled: true,
           },
           [Validators.required]
         ),
         O_POS: new FormControl(
           {
-            value: this.centerInfo.bloodQuantities[4].quantity,
+            value: this.getBloodGroupQuantity('O_POS'),
             disabled: true,
           },
           [Validators.required]
         ),
         O_NEG: new FormControl(
           {
-            value: this.centerInfo.bloodQuantities[5].quantity,
+            value: this.getBloodGroupQuantity('O_NEG'),
             disabled: true,
           },
           [Validators.required]
         ),
         AB_POS: new FormControl(
           {
-            value: this.centerInfo.bloodQuantities[6].quantity,
+            value: this.getBloodGroupQuantity('AB_POS'),
             disabled: true,
           },
           [Validators.required]
         ),
         AB_NEG: new FormControl(
           {
-            value: this.centerInfo.bloodQuantities[7].quantity,
+            value: this.getBloodGroupQuantity('AB_NEG'),
             disabled: true,
           },
           [Validators.required]
@@ -328,6 +328,14 @@ export class StaffProfileComponent implements OnInit {
   }
 
   //CENTAR
+  getBloodGroupQuantity(group: string) {
+    for (let quantity of this.centerInfo.bloodQuantities) {
+      if (quantity['bloodGroup'] == group) {
+        return quantity.quantity;
+      }
+    }
+  }
+
   enableChangeCenter(event: Event) {
     event.preventDefault();
 
