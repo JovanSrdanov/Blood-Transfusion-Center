@@ -265,7 +265,7 @@ public class AppointmentService implements IAppointmentService {
         // Zakazi appointment, kreiraj history
         try {
             BloodDonor donor = _bloodDonorService.findById(donorId);
-            checkIfDonorCanSchedule(donor);
+            checkIfDonorCanSchedule(donor, appointment);
 
             var ash = _appointmentSchedulingHistoryService.save(new AppointmentSchedulingHistory(
                     null,
@@ -284,7 +284,7 @@ public class AppointmentService implements IAppointmentService {
         }
     }
 
-    private void checkIfDonorCanSchedule(BloodDonor donor) throws Exception {
+    private void checkIfDonorCanSchedule(BloodDonor donor, Appointment appointment) throws Exception {
 
         if (donor.getQuestionnaire() == null) {
             throw new Exception("Donor can not donate blood becouse he has not filled his questionnaire");
@@ -297,7 +297,7 @@ public class AppointmentService implements IAppointmentService {
         }
         for (var ash : donor.getAppointmentSchedulingHistories()) {
             if (ash.getStatus() == AppointmentSchedulingConfirmationStatus.PROCESSED
-                    && ash.getAppointment().getTime().getStartTime().isAfter(LocalDateTime.now().minusMonths(6))) {
+                    && ash.getAppointment().getTime().getStartTime().isAfter(appointment.getTime().getStartTime().minusMonths(6))) {
                 throw new Exception("You have donated blood recently");
             }
         }
