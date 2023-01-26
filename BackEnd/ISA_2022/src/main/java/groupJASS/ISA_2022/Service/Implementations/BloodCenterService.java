@@ -176,8 +176,6 @@ public class BloodCenterService implements IBloodCenterService {
     @Override
     public void DonateBloodToHospital(BloodCenter bloodCenter, GPSDemandBloodShipment shipment) {
         for (var BQ : bloodCenter.getBloodQuantities()) {
-            System.out.println(BQ.getBloodGroup() + " " + BQ.getQuantity());
-
             switch (BQ.getBloodGroup()) {
                 case A_POS -> {
                     BQ.setQuantity(Math.max(BQ.getQuantity() - Math.max(shipment.getA_pos(), 0), 0));
@@ -204,7 +202,6 @@ public class BloodCenterService implements IBloodCenterService {
                     BQ.setQuantity(Math.max(BQ.getQuantity() - Math.max(shipment.getAb_neg(), 0), 0));
                 }
             }
-            System.out.println(BQ.getBloodGroup() + " " + BQ.getQuantity());
             _bloodQuantityRepository.save(BQ);
         }
 
