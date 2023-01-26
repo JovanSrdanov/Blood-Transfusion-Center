@@ -1,5 +1,3 @@
--- noinspection SqlNoDataSourceInspectionForFile
-
 INSERT INTO ROLE (name)
 VALUES ('ROLE_BLOOD_DONOR');
 INSERT INTO ROLE (name)
@@ -7,644 +5,442 @@ VALUES ('ROLE_STAFF');
 INSERT INTO ROLE (name)
 VALUES ('ROLE_SYSTEM_ADMIN');
 
---- Sifra za sve korinsike je "password", kad se pravi novi korisnik nek se kopira hesovana sifra sto vec stoji ovde
---- Hesovana sifra  -  $2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi
+INSERT INTO "address" ("id", "city", "country", "latitude", "longitude", "number", "street") VALUES
+('2bd51846-02bd-4a36-9978-8cdc2222ee92', 'Paris 15', 'France', '48.8466523', '2.2582125', '604', 'Sutteridge'),
+('45556283-1fa8-4416-843c-47dafc982bfb', 'Piippola', 'Finland', '64.1775401', '25.9658805', '8', 'Vera'),
+('86e56295-3ec3-49c5-b72f-5d95edab0e08', 'Puerto Barrios', 'Guatemala', '15.7318052', '-88.5847779', '24', 'Jana'),
+('17d8d015-a3c3-4e76-8210-e362e366b0b2', 'Tobias Barreto', 'Brazil', '-11.1851883', '-38.0005207', '7', 'Rusk'),
+('2d4b0a51-7542-4be1-a57a-f14b465451a4', 'Pledo', 'Indonesia', '-8.2764084', '123.309328', '95', 'Truax'),
+('939efe38-a1be-4112-b34b-128491d6f5dd', 'Nowe Brzesko', 'Poland', '50.1552166', '20.397498', '3117', 'Village Green'),
+('4d1da588-b13f-4716-9533-640aae9c0a60', 'Zhangdian', 'China', '36.806669', '118.017938', '0', 'Chive'),
+('5d25dcf7-b211-4c9c-8c90-f82f9d39ad95', 'Lobuk', 'Indonesia', '-8.650979', '116.3249438', '2', 'Crowley'),
+('aa3948bd-ec40-4a29-9ab9-158cd04cf4f9', 'Meadow Lake', 'Canada', '54.1212091', '-108.4295552', '26', 'Gulseth'),
+('3fcb98c0-7178-4dc7-81c7-8da35870ee4c', 'Jiekou', 'China', '23.544678', '113.591349', '48', 'Upham'),
+('35b8dd36-4193-447b-8a66-558340748aef', 'Karangpapak', 'Indonesia', '-6.9467616', '106.4729811', '247', 'Melby'),
+('074a6e8f-7a5b-418f-9e23-4b8b2221869b', 'Xingzhen', 'China', '34.931466', '109.449831', '34795', 'Meadow Valley'),
+('45518f4a-92f1-4956-bda6-d46148a69ca6', 'Pasirlaja', 'Indonesia', '-6.5472126', '106.8384873', '20409', 'Main'),
+('19d269c6-e116-4c95-bde9-c3b2e2194b94', 'Barra Cheia', 'Portugal', '38.6134405', '-9.0019336', '086', 'Gina'),
+('3830191f-1e64-4276-8a70-3628ad82a976', 'Gaur', 'Nepal', '26.7831243', '85.2774207', '20', 'Killdeer'),
+('8916609a-8c06-41af-8cdd-fc4fa99bb6a2', 'Sumbersewu', 'Indonesia', '-8.4031608', '114.3371145', '1148', 'Talmadge'),
+('1153209c-4ab6-4387-879c-dc8bea855998', 'La Soledad', 'Mexico', '17.0635121', '-96.7300158', '0', 'Kim'),
+('e8080da8-22c2-49c5-913f-70b442507f0d', 'As Samawah', 'Iraq', '31.3188393', '45.2806177', '7', 'Crownhardt'),
+('d1297c82-e2ee-4318-ae5c-5e1b3e00db02', 'Đạ Tẻh', 'Vietnam', '11.5705176', '107.5268471', '07', 'Katie'),
+('ee7bd09e-e5ae-4ccb-940d-fc672bf7c3f2', 'Sumalig', 'Philippines', '7.998611', '123.6602783', '925', 'Redwing'),
+('1dec3be1-2ea0-4019-aafc-5edf5fe79be7', 'Río Grande', 'Dominican Republic', '18.9120012', '-70.7490939', '62861', 'Dunning'),
+('0d20b511-80fc-4672-83a4-b4a1c1615025', 'Jianshan', 'China', '46.64635', '131.158416', '078', 'Melvin'),
+('6cdd3c67-fc13-4786-8556-293bbcaabdc8', 'Samut Prakan', 'Thailand', '13.60864', '100.611156', '189', 'Mayer'),
+('6ad92962-6497-4755-8071-e61272d41e8b', 'Xingfu', 'China', '37.031485', '118.254644', '68', 'Darwin'),
+('e2e38e2c-7aff-41ac-8a0c-2b798d2bc8ae', 'Daluo', 'China', '23.348395', '111.023398', '9', 'Karstens'),
+('dc604781-d387-4b09-bf34-d0535bae4716', 'Ipatinga', 'Brazil', '-19.4746347', '-42.5264409', '0253', 'Cody'),
+('96514b97-2d66-45b4-8993-c767e6dd957a', 'Bitkine', 'Chad', '11.9781075', '18.2110626', '8', 'Gulseth'),
+('3dc29f34-0f5d-441e-bb68-372d6506e335', 'Zengjia', 'China', '30.411429', '118.390218', '5743', 'Springs'),
+('da3f349a-bb59-4a24-a960-007becd5142f', 'Jinjiang', 'China', '24.781681', '118.552365', '09', 'Thierer'),
+('0537cd68-3419-4a6b-874e-c5e8cc2af595', 'Mahanoro', 'Madagascar', '-19.894468', '48.8070527', '73', 'Di Loreto'),
+('9ccbc1d4-3fe0-4b53-afbf-634ab6a973a9', 'Nepomuceno', 'Brazil', '-21.2335652', '-45.2325476', '0862', 'Mendota'),
+('450b3ace-9d5c-494e-bd81-482334333502', 'Vredenburg', 'South Africa', '-32.9127799', '17.9946667', '833', 'Mccormick'),
+('dcc298d3-315a-456b-912a-0dc4e6836c29', 'Bailadores', 'Venezuela', '8.2563795', '-71.8260021', '70391', 'Lukken'),
+('771c7269-d7de-4751-ad88-7c3f0047eec8', 'Arţās', 'Palestinian Territory', '31.689957', '35.188236', '406', 'Sachtjen'),
+('7fac89b4-0e9b-47dd-a44b-7e7c7ea2f299', 'Topchikha', 'Russia', '52.824354', '83.119824', '98', 'American'),
+('6c53ea13-bb35-43ef-9dd3-5235c1cfafe0', 'Carora', 'Venezuela', '10.1814384', '-70.073769', '249', 'Arkansas'),
+('68d2d018-87e6-4df8-ad4c-2a34f388173a', 'Huangchuan', 'China', '32.131522', '115.051908', '9', 'Jay'),
+('875b0472-8e6b-465b-b468-bc9ef415cd4d', 'Cheongju-si', 'South Korea', '36.6424341', '127.4890319', '7172', 'Eagan'),
+('cee53ee3-63a0-44aa-99fc-32704854163d', 'Poroshkovo', 'Ukraine', '48.6688151', '22.7524961', '213', 'East'),
+('950cc186-a0b1-46ed-9f9b-09590f3ae809', 'Teberda', 'Russia', '43.4265165', '41.7374739', '14', 'Marquette'),
+('b36458c9-b8e9-4b9a-aa7a-b9171dd4e6b5', 'Tadou', 'China', '26.3705389', '118.2323381', '2251', 'Dawn'),
+('3316eddc-33c0-46b3-8ebf-63903b13500c', 'Barbacena', 'Brazil', '-21.2399347', '-43.7764925', '7605', 'Spenser'),
+('4d85b56c-bdb8-4a6c-906d-b17fddd0b8a3', 'Buenaventura', 'Colombia', '3.2572094', '-77.2864879', '33', 'Dorton'),
+('0c3972ae-4e3b-45b3-9c3b-2f6326fcd4af', 'Kalilangan', 'Philippines', '7.7019624', '124.7496736', '7', 'Fremont'),
+('f2ee7fe8-5b56-4a33-aa18-e77a64ff0052', 'Saḩab', 'Yemen', '15.60223', '44.0242', '804', 'Crescent Oaks'),
+('3794f06f-8865-4242-9a38-c57cd2af899b', 'Borok', 'Russia', '58.1494235', '38.2144331', '2083', 'Kings'),
+('6e70e8fa-9a38-49ab-a14e-47fb2f92a0bf', 'Gayamdesa', 'Indonesia', '-7.1929741', '111.7197315', '2', 'Green Ridge'),
+('8a6c3e42-7e6b-4310-b9f5-4a3b307a0791', 'Nossa Senhora da Glória', 'Brazil', '-10.2156554', '-37.4212807', '6', 'Independence'),
+('ab3214cd-4956-4c9b-8628-6cca4712ac7f', 'Salaš Crnobarski', 'Serbia', '44.8209481', '19.3850911', '8', 'Badeau'),
+('bc658e6d-e4dd-4f8c-b10f-30855e27fcd6', 'Malamig', 'Philippines', '14.6458474', '121.0543553', '740', 'Westport'),
+('293c95e3-5fee-488c-bf47-e37a7de586f9', 'Rosso', 'Mauritania', '16.5163413', '-15.802612', '28358', 'Stuart'),
+('1cba0266-51ea-4ebc-8e29-57da4fcb2bc1', 'Nis', 'Serbia', '43.32', '21.89', '11', 'Pariske komune'),
+('3e0d3fc9-9048-4136-bb36-406142fd4e87', 'Tanggulangin', 'Indonesia', '-7.5145399', '112.7330892', '26', '2nd'),
+('2efc2e9b-74ac-4e59-9225-6e2fe012568d', 'Honolulu', 'United States', '21.3488387', '-157.9435603', '066', 'Lawn'),
+('8cbbc17c-191b-448f-b766-9217bcfdcec6', 'Sertolovo', 'Russia', '60.1444151', '30.1938428', '96025', 'Onsgard'),
+('6e5bf454-9ac5-4a64-87fe-5b6fb2725e67', 'Wanghu', 'China', '30.661419', '116.244678', '09584', 'Service'),
+('f36cf4ce-86ea-4f08-b064-b2bd152e8a7b', 'Santa Eulalia', 'Peru', '-11.9019296', '-76.6658165', '702', 'Morning'),
+('df185d48-a8bf-4732-b76d-16e02419f36c', 'Baishan', 'China', '41.933917', '126.422806', '9056', 'Pine View'),
+('39557e13-66ae-4cec-b5eb-f33a5478de5d', 'Zipaquirá', 'Colombia', '5.021476', '-73.990955', '56', 'Muir'),
+('17e8049f-eedd-4cf1-b28c-3b4b4dc1e44f', 'Weligama', 'Sri Lanka', '5.973323', '80.437663', '44', 'Jackson'),
+('03d4b440-ff6f-400e-bf06-ba9492995831', 'Daguo', 'China', '38.070311', '114.411459', '47341', 'Grayhawk'),
+('53d3189d-9076-4812-a531-af0c36435398', 'Huancabamba', 'Peru', '-5.3860856', '-79.4703885', '9', 'Bunker Hill'),
+('409562ff-332d-401d-b1e6-82ffbf55f3b4', 'Tambak', 'Philippines', '13.9743478', '121.6910432', '7071', 'Duke'),
+('13ab1360-e8ad-4bcf-bd46-a4546a844b69', 'Lidingö', 'Sweden', '59.37407', '18.1203419', '29193', 'Shelley'),
+('4a08c375-5d2a-40c4-abea-d60747250183', 'Buray', 'Philippines', '12.6679167', '123.9881642', '238', 'Becker'),
+('757c810d-985c-4b0f-8797-4d1f4fd3eafa', 'Mengcheng Chengguanzhen', 'China', '33.267964', '116.557663', '3', 'Maple Wood'),
+('5f4b6c86-455f-4bc2-b7a4-3e8757597742', 'Płock', 'Poland', '52.5363656', '19.7751366', '623', 'Londonderry'),
+('c7757be4-4ab0-4447-8229-08b02eca0f28', 'Ystad', 'Sweden', '55.4254871', '13.7952433', '9480', 'Shopko'),
+('c9432347-588b-44ba-be57-d3995fb8bbf0', 'Mosjøen', 'Norway', '65.836924', '13.1934011', '8', 'Declaration'),
+('198cd840-4683-4f57-b002-6d2bc3a1e595', 'Kstovo', 'Russia', '56.0978911', '44.2206243', '6391', 'Fuller'),
+('a8b83bef-d33e-4381-9c0f-e94c84e5c64b', 'Cuyotenango', 'Guatemala', '14.540627', '-91.570932', '6', 'Mcbride'),
+('0b1a6c77-c606-4a1b-a19f-18f3e7c503c8', 'Krasnaye', 'Belarus', '52.8874021', '30.0360311', '22', '5th'),
+('94074702-e22b-4267-b89d-95be15b7e1e4', 'Unión', 'Argentina', '-32.8916404', '-60.7039167', '11', 'Kensington'),
+('763e600a-8188-418e-a8b3-6a89f573f85a', 'Bucu Lor', 'Indonesia', '-6.5397069', '110.8463512', '41', 'Tennessee'),
+('97b9d25a-ee65-4642-88cb-a28321350044', 'Chinchero', 'Peru', '-13.3964033', '-72.0514291', '450', 'Del Sol'),
+('91d0d32d-bd5d-4228-954b-34bcb5408e5e', 'Raškovice', 'Czech Republic', '49.6197452', '18.4728742', '61', 'East'),
+('40d0b0f0-b42f-482d-81ac-2aacfdcf3281', 'Amagasaki', 'Japan', '35.1844489', '136.7959808', '06', 'Anhalt'),
+('0d889855-30b2-4138-a2fd-b0a49a5afad1', 'Guaratuba', 'Brazil', '-25.8804742', '-48.5737662', '84609', 'Jenifer'),
+('d15bdb45-7aed-4b80-9a8f-418bc0d87f15', 'Wutumeiren', 'China', '36.909074', '93.163273', '1', 'Mcguire'),
+('18232c6d-23ee-451b-aa38-4e914d9ae932', 'Calachuchi', 'Philippines', '14.5180441', '121.0350642', '023', 'Golden Leaf'),
+('64386a8e-e685-49d1-80d7-b2d7e382624e', 'Kut Chum', 'Thailand', '16.0206637', '104.3381361', '551', 'Knutson'),
+('c4075b74-7388-44ab-8acf-f96fbda87109', 'Maroa', 'Venezuela', '2.7005604', '-66.8081979', '5612', 'Ohio'),
+('e6d8e0f8-f856-4a4f-a722-daa30b339913', 'Firmat', 'Argentina', '-33.453544', '-61.486922', '146', 'Evergreen'),
+('85c650ab-6391-4394-b792-4ff3cbffed21', 'Barisan', 'Indonesia', '-6.8448925', '108.7883125', '29049', 'Heffernan'),
+('4353e4f6-07b5-4c4d-8399-ff6d26293080', 'Lemery', 'Philippines', '14.5665991', '121.0022623', '5040', 'Cottonwood'),
+('4378cad3-9245-42dc-8b08-54f3399c783d', 'Heping', 'China', '24.44218', '114.938684', '37', 'Amoth'),
+('b315fdb9-b702-41c5-92f7-d3f00a28c86f', 'Hongxingqiao', 'China', '34.007974', '119.839212', '5', 'School'),
+('983b4737-25a8-4bac-abb2-8fe397e0011e', 'Proptisht', 'Albania', '40.9817461', '20.5073937', '0', 'Lunder'),
+('3111e03f-3242-42ea-b45d-6ce523a0b70a', 'Chaoyang', 'China', '41.57365', '120.4493879', '5898', 'Comanche'),
+('a5cb0a1e-0ec4-4a7c-b05f-186dc5a554a0', 'Colonia Mauricio José Troche', 'Paraguay', '-25.6177713', '-56.2817585', '3909', 'Pleasure'),
+('69714ee4-d9c3-499b-9038-71ec7b66dad0', 'Kungsbacka', 'Sweden', '57.50622', '12.057449', '08', 'Welch'),
+('6b8b7f69-b321-4ddc-9933-1974b5097c70', 'Besançon', 'France', '47.2215999', '5.9675963', '4', 'Helena'),
+('e8e07946-eb58-4e5e-989d-efe4d70efb3b', 'Phùng', 'Vietnam', '21.0877573', '105.6603149', '860', 'Di Loreto'),
+('23a30326-b810-4828-8bec-b6a85730f71e', 'Songkan', 'China', '28.534704', '106.864861', '68854', 'Roth'),
+('b4c566a7-15dc-4aeb-9107-0a5bbedf1549', 'Mabusag', 'Philippines', '17.9333', '120.467', '33582', 'Carpenter'),
+('2d387278-ecc6-49f7-b30c-329ff5c46273', 'Malilipot', 'Philippines', '13.29664', '123.756628', '75', 'Amoth'),
+('84824b92-d9df-4a4b-8184-417a30f5f189', 'San Agustín Acasaguastlán', 'Guatemala', '14.9446785', '-89.9692791', '705', 'Everett'),
+('efaa218a-0d2d-48bd-8e5d-dce802de23e4', 'Praia da Tocha', 'Portugal', '40.323749', '-8.7980385', '79742', 'Fremont'),
+('666ec817-9d96-4d62-a1cb-5e4538a656d0', 'Plaisir', 'France', '48.8179158', '1.967221', '19', 'Manley'),
+('5438ae91-a1ff-490e-8ae3-fda72c543fa6', 'Benito Juarez', 'Mexico', '22.2016816', '-97.8367954', '22399', 'Carey');
 
+INSERT INTO "blood_center" ("id", "description", "is_delivery_in_progres", "is_helicopter_here", "name", "rating", "end_hours", "end_minutes", "start_hours", "start_minutes", "address_id") VALUES
+('8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2', 'This is a blood center for donating blood', 'false', 'false', 'Will-Wiza', '4', '20', '0', '6', '0', '1cba0266-51ea-4ebc-8e29-57da4fcb2bc1'),
+('4cec86a6-f6a9-4dcd-8106-26348e919396', 'This is a blood center for donating blood', 'false', 'false', '"Kessler, Bins and Goyette"', '2', '20', '0', '6', '0', '8916609a-8c06-41af-8cdd-fc4fa99bb6a2'),
+('db28a77c-61e0-4cf3-b063-462e443c24f6', 'This is a blood center for donating blood', 'false', 'false', 'Parker Inc', '4', '20', '0', '6', '0', 'c7757be4-4ab0-4447-8229-08b02eca0f28'),
+('030d4489-0fb8-49a2-83bf-1ac52ee74f7a', 'This is a blood center for donating blood', 'false', 'false', 'Dickens-Okuneva', '3', '20', '0', '6', '0', '97b9d25a-ee65-4642-88cb-a28321350044'),
+('bf1d61b6-aa80-4b98-ba0f-d3885d444bb9', 'This is a blood center for donating blood', 'false', 'false', 'Bechtelar-Hermann', '2', '20', '0', '6', '0', '8916609a-8c06-41af-8cdd-fc4fa99bb6a2'),
+('e0af597b-ea79-43a2-a009-e252d55df377', 'This is a blood center for donating blood', 'false', 'false', 'Greenfelder-Hintz', '2', '20', '0', '6', '0', 'd15bdb45-7aed-4b80-9a8f-418bc0d87f15'),
+('082d6432-e75c-4d72-b8db-0f529f1395fa', 'This is a blood center for donating blood', 'false', 'false', '"White, Harris and Lubowitz"', '1', '20', '0', '6', '0', '23a30326-b810-4828-8bec-b6a85730f71e'),
+('53bf3453-cd1a-4498-9eef-176cd443d47e', 'This is a blood center for donating blood', 'false', 'false', '"Abernathy, Abshire and Smith"', '4', '20', '0', '6', '0', 'a5cb0a1e-0ec4-4a7c-b05f-186dc5a554a0'),
+('d5c151f6-e969-4615-b586-1ee2b317d0c6', 'This is a blood center for donating blood', 'false', 'false', 'Harber Group', '2', '20', '0', '6', '0', '3fcb98c0-7178-4dc7-81c7-8da35870ee4c'),
+('120a7657-e855-4fce-9128-66b0b4698f7d', 'This is a blood center for donating blood', 'false', 'false', 'Cruickshank and Sons', '3', '20', '0', '6', '0', '0c3972ae-4e3b-45b3-9c3b-2f6326fcd4af');
 
-INSERT INTO "address" ("id", "city", "country", "latitude", "longitude", "number", "street")
-VALUES ('3eb50b45-9d6c-4f42-992d-4a2bb3c2e0b2', 'Olofström', 'Sweden', '56.2462038', '14.6265298', '250', 'Harbort'),
-       ('59575fe2-19b1-474a-a63a-db4b02ab0b0c', 'Šventoji', 'Lithuania', '55.2474741', '24.7743055', '980', 'Melby'),
-       ('b9fd203d-9620-4dd1-9f43-e874e3593edc', 'Idritsa', 'Russia', '56.3360497', '28.8883279', '266', 'East'),
-       ('5c8cb3b3-4c48-4614-8db2-620f21872785', 'Évreux', 'France', '49.0261841', '1.1518478', '3', 'Meadow Valley'),
-       ('288936ca-16f3-4908-b37c-6fc7b8736bde', 'Zeleneč', 'Czech Republic', '50.1336212', '14.6607051', '99',
-        'Moland'),
-       ('5c3b169a-c50c-4b90-939d-ee3fca1459ea', 'Warungtanjung', 'Indonesia', '3.5053306', '98.6783333', '94652',
-        'Sunfield'),
-       ('f131fbc0-343e-4b61-9542-a384e4882ba5', 'Smyga', 'Ukraine', '50.2414199', '25.7622611', '4', 'Roxbury'),
-       ('5c6ae6d9-966d-40b5-9ba2-8f0198df0e89', 'Sarankhola', 'Bangladesh', '22.0952234', '89.8130356', '391',
-        'Sheridan'),
-       ('59b007ac-5940-49dd-a19c-a81f1d67c9d3', 'Tevriz', 'Russia', '57.512722', '72.40078', '7', 'Westport'),
-       ('b1b2dbfc-4b92-4cb6-931f-7c136e86f80b', 'Dubai', 'United Arab Emirates', '25.2048493', '55.2707828', '7',
-        'Ronald Regan'),
-       ('e4b6ce9d-5094-4a64-a958-3b919770d870', 'Gharyan', 'Libya', '32.1717952', '13.0184123', '4415', 'Vermont'),
-       ('a0cd0598-30f7-430d-8cc5-ef309d31ffb7', 'Kroya', 'Indonesia', '-7.6331351', '109.2474701', '420', 'Oriole'),
-       ('59902151-934b-49ce-bd22-a698234a01dd', 'Chicoana', 'Argentina', '-25.1042007', '-65.5381671', '08', 'Corscot'),
-       ('bc130695-fcef-47ad-8d97-0e032be574c9', 'Kirzhach', 'Russia', '56.0488224', '39.0652818', '75018', 'Everett'),
-       ('c9f0b999-abfa-4ac1-8809-aad34e2cd0c6', 'Bairro', 'Portugal', '41.2828507', '-8.2869478', '648', 'Bonner'),
-       ('dc0bbae7-4fa1-47ca-a092-dde2f9efe046', 'Belfast', 'Canada', '46.08341', '-62.88197', '1414', 'Charing Cross'),
-       ('553414e2-857e-49b0-85c8-e08f9edc9ae3', 'Ar Rubū‘', 'Yemen', '13.78024', '43.86901', '30', 'Riverside'),
-       ('c89aee55-f73f-4bb1-accf-73bad65c36ff', 'Corujeira', 'Portugal', '40.3829273', '-8.7241528', '4', 'Dwight'),
-       ('1870b7fd-be6b-43b9-ac6d-d4ca0b9ac416', 'Carcassonne', 'France', '44.346784', '5.8855505', '2775', 'Fallview'),
-       ('e307e5e7-f8f6-41d4-a61c-befad5b75ffc', 'Kraskino', 'Russia', '42.7109791', '130.7842448', '48', 'Helena'),
-       ('1744ff0b-90dd-4649-9439-da2bd62918ad', 'Liren', 'China', '34.2456501', '108.9877602', '829', 'Canary'),
-       ('2d128330-e662-4fda-b55f-7fb5593b8f4f', 'Al Buq‘ah', 'Palestinian Territory', '31.5344951', '35.1245284', '52',
-        'Sugar'),
-       ('551082eb-b45a-4b6b-8ccd-2cae2b8cb20c', 'Uji', 'Japan', '35.3434929', '132.9039749', '643', 'Northland'),
-       ('aa826b84-29aa-4167-a7ee-97e02587aea1', 'Xingtai', 'China', '37.070834', '114.504677', '4082', 'Forest Dale'),
-       ('e8475b09-a100-42fa-8a17-7a040924c500', 'Banjar Baleagung', 'Indonesia', '-8.3797336', '115.1681911', '1732',
-        'Judy'),
-       ('d795331e-5d59-4221-a318-9a4045251c0f', 'Keren', 'Eritrea', '15.7800173', '38.4534461', '7535', 'Judy'),
-       ('46876b56-3b9b-41de-8dc9-0925d44089c5', 'Aveleda', 'Portugal', '41.1150364', '-8.2958281', '88', 'Sutteridge'),
-       ('f896b9e4-b639-43cc-882f-9d735597ef08', 'Odivelas', 'Portugal', '38.1678374', '-8.1496483', '540', 'Havey'),
-       ('640e93ad-460b-40aa-84be-5673a091e2b5', 'Monte Aprazível', 'Brazil', '-20.7736517', '-49.7107263', '62',
-        'Mayfield'),
-       ('e1fcc078-445b-4243-af17-2e25f86ab352', 'Peteranec', 'Croatia', '46.1743441', '16.9184542', '30712', 'Stuart'),
-       ('b58dcc40-13f0-46ed-894c-23a66d6faefd', 'Nanterre', 'France', '48.8967143', '2.1955586', '73384', 'Kropf'),
-       ('bac13983-1229-4308-8ffd-22e8c52235f8', 'Haguimit', 'Philippines', '7.0649018', '125.7230302', '2086', 'Esch'),
-       ('1d0da8df-c565-49ea-aee5-e788789e3b70', 'Yonezawa', 'Japan', '37.2516991', '139.007103', '7', 'Victoria'),
-       ('8021c0fb-99a5-42f0-9d81-baa41265540e', 'Lisewo Malborskie', 'Poland', '43.32165818574116', '21.91778946403978', '36',
-        'Hanson'),
-       ('adb7aab0-c6ff-49e4-a151-da471ef18f09', 'Longcang', 'China', '29.339476', '105.287612', '6', 'Continental'),
-       ('0532cd76-52c8-4ac9-8306-d063f8f5e1d5', 'Matriz de Camaragibe', 'Brazil', '-9.0972502', '-35.5876697', '7890',
-        'La Follette'),
-       ('4d7006f5-d219-4871-ab66-e66d54eab457', 'Bungur', 'Indonesia', '-6.1718076', '106.8488128', '21775', 'Banding'),
-       ('ea32e111-54e5-4e19-82a9-3098e7d1612b', 'Huangqiang', 'China', '22.2304314', '113.5411611', '4', 'Kropf'),
-       ('1e1dd683-41ff-469f-b8a7-a413d64e694b', 'Saint Ann’s Bay', 'Jamaica', '18.4329473', '-77.1973997', '7',
-        'Hintze'),
-       ('24152c65-435d-4340-939a-42ba9947912b', 'Komprachcice', 'Poland', '50.6375507', '17.8149641', '35', 'Carioca');
+INSERT INTO "questionnaire" ("id", "feels_bad", "high_or_low_presure", "onmc", "on_therapy", "pricing_or_surgical_interventions_or_blood_transfusion", "recent_dentist", "skin_changes", "under50kg") VALUES
+('d1ee4345-2a74-41bb-a281-6f47e0432976', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false'),
+('9821bf9c-4ceb-4256-a832-2f8a7b06437c', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false'),
+('077e683d-c2bf-4499-98e3-324b8d98646b', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false'),
+('41a290d6-4024-4f23-b3b7-39fb2da893d5', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false'),
+('6345f89c-668b-4cba-a464-1fc02d6c6c98', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false'),
+('d417332a-e235-4c3c-b008-8e320ce50c7f', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false'),
+('071949b0-2a46-436e-9028-5ed182b91bf8', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false'),
+('9bfe6588-f551-4cad-b47b-e4ff016baf52', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false'),
+('eafb3437-fc97-4d30-9cba-64cc10f07e7a', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false'),
+('53b87454-30b4-4ce9-a199-6007102d4eca', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false'),
+('0a506dd6-d45d-4843-ad1b-79bf0f4d0ced', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false'),
+('fd065b45-5b99-4213-ae30-7ac8c7c02126', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false'),
+('bbfc0376-461e-4b56-87cd-b4025156b21d', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false'),
+('70bf6c46-1856-40df-9e30-1c1444581b42', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false'),
+('d8e8f288-7d99-43f5-ac40-e8ead442ac1e', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false');
+
+INSERT INTO "blood_donor" ("id", "name", "phone_number", "surname", "gender", "institution", "jmbg", "occupation", "penalties", "points", "address_id", "questionnaire_id") VALUES
+('e23e75a8-6815-4931-92e0-6611c8ee3d21', 'Hilary', '776-447-2954', 'Crome', '0', 'Skilith', '3321474551101', 'Compensation Analyst', '1', '224', 'b4c566a7-15dc-4aeb-9107-0a5bbedf1549', 'd1ee4345-2a74-41bb-a281-6f47e0432976'),
+('00b898e5-36a8-4b2e-a3b9-e6bc86c24c8f', 'Serge', '319-957-9022', 'Boaler', '0', 'Quamba', '6527055610646', 'Graphic Designer', '1', '119', '6e5bf454-9ac5-4a64-87fe-5b6fb2725e67', '9821bf9c-4ceb-4256-a832-2f8a7b06437c'),
+('cb811d9f-5044-4024-8b5e-ee107f2c80cc', 'Marshall', '124-607-6484', 'Gounel', '1', 'Tazzy', '8494464339086', 'Research Assistant IV', '1', '434', '6e5bf454-9ac5-4a64-87fe-5b6fb2725e67', '077e683d-c2bf-4499-98e3-324b8d98646b'),
+('556eaca5-d396-49ce-a81e-1ce96bd7869e', 'Junette', '465-589-9988', 'Cutbirth', '1', 'Shufflebeat', '7116264942348', 'Staff Accountant IV', '1', '238', '9ccbc1d4-3fe0-4b53-afbf-634ab6a973a9', '41a290d6-4024-4f23-b3b7-39fb2da893d5'),
+('7c29825b-adcb-417b-b778-a2f53723ea9b', 'Gracia', '841-599-4048', 'Robertz', '1', 'Viva', '6875651926550', 'Software Test Engineer IV', '1', '110', '7fac89b4-0e9b-47dd-a44b-7e7c7ea2f299', '6345f89c-668b-4cba-a464-1fc02d6c6c98'),
+('c7704efb-50e5-4c28-98cb-9ea78cb989f7', 'Rawley', '145-916-1350', 'Huckerby', '0', 'Lazzy', '8020584855632', 'Librarian', '1', '199', '8a6c3e42-7e6b-4310-b9f5-4a3b307a0791', 'd417332a-e235-4c3c-b008-8e320ce50c7f'),
+('6621bf6f-8209-482e-bc4f-10f096d7c9e7', 'Bud', '499-518-1464', 'Tschierasche', '1', 'Topicware', '4816063836594', 'Marketing Assistant', '1', '31', '074a6e8f-7a5b-418f-9e23-4b8b2221869b', '071949b0-2a46-436e-9028-5ed182b91bf8'),
+('d0bd8f7c-b51f-46b1-a7d7-bfc984d9fa31', 'Burlie', '269-111-4487', 'Hiner', '0', 'Quimba', '2468285696663', 'Technical Writer', '1', '484', 'b36458c9-b8e9-4b9a-aa7a-b9171dd4e6b5', '9bfe6588-f551-4cad-b47b-e4ff016baf52'),
+('8f093254-376e-407a-9cb7-85c28ec31962', 'Em', '171-428-5351', 'Pratte', '1', 'Babblestorm', '5630351640647', 'Geological Engineer', '1', '117', 'd1297c82-e2ee-4318-ae5c-5e1b3e00db02', 'eafb3437-fc97-4d30-9cba-64cc10f07e7a'),
+('fdc478ca-0d28-46fb-925b-69b495c5fd6f', 'Jeffie', '769-701-5236', 'Woodruffe', '0', 'Skalith', '2985202144485', 'Programmer Analyst III', '1', '66', '4378cad3-9245-42dc-8b08-54f3399c783d', '53b87454-30b4-4ce9-a199-6007102d4eca'),
+('2d006891-a145-474c-8d08-5aadbf567c1e', 'Frederigo', '763-568-5723', 'Blore', '1', 'Kaymbo', '1108671189695', 'Chemical Engineer', '1', '489', 'a8b83bef-d33e-4381-9c0f-e94c84e5c64b', '0a506dd6-d45d-4843-ad1b-79bf0f4d0ced'),
+('b1193ef6-cdc3-4285-a38d-7b8eef0cad73', 'Annalee', '300-296-3689', 'Kenna', '0', 'Centizu', '4408752648339', 'Software Engineer II', '1', '283', '4d85b56c-bdb8-4a6c-906d-b17fddd0b8a3', 'fd065b45-5b99-4213-ae30-7ac8c7c02126'),
+('17524be2-9f22-4729-955a-62f1228a6c87', 'Faina', '335-248-1970', 'Denton', '0', 'Minyx', '3961529617565', 'Technical Writer', '1', '77', '4a08c375-5d2a-40c4-abea-d60747250183', 'bbfc0376-461e-4b56-87cd-b4025156b21d'),
+('6d3138bc-ef03-453e-a66e-59f0f65e548e', 'Rog', '710-400-7603', 'Grissett', '0', 'Agivu', '4801568874597', 'Structural Engineer', '1', '497', '666ec817-9d96-4d62-a1cb-5e4538a656d0', '70bf6c46-1856-40df-9e30-1c1444581b42'),
+('99eac575-bd12-442f-b7b4-05d7498e0d7a', 'Felipe', '828-422-0991', 'Plinck', '1', 'Abatz', '1414607125211', 'Computer Systems Analyst I', '1', '462', '53d3189d-9076-4812-a531-af0c36435398', 'd8e8f288-7d99-43f5-ac40-e8ead442ac1e');
+
+INSERT INTO "staff" ("id", "name", "phone_number", "surname", "version", "address_id", "blood_center_id") VALUES
+('e6bfe80e-9403-4533-9a46-5b5e88a75e16', 'Nicholle', '621-679-4875', 'Burree', '1', '13ab1360-e8ad-4bcf-bd46-a4546a844b69', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
+('4b3d3597-5de9-4890-9d46-93fa3c1a746a', 'Franklin', '981-896-2105', 'Sulley', '1', '17e8049f-eedd-4cf1-b28c-3b4b4dc1e44f', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
+('a449487b-5159-403c-be14-4bac6da9e477', 'Thibaut', '314-814-6868', 'Treby', '1', '85c650ab-6391-4394-b792-4ff3cbffed21', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
+('c7f815ad-f42f-4c93-9136-41efc620441c', 'Sutton', '872-148-8610', 'Yakunkin', '1', '1dec3be1-2ea0-4019-aafc-5edf5fe79be7', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
+('35deb1f1-f083-4fbd-9445-7133a1f0910f', 'Sophie', '722-111-7076', 'Burnes', '1', '763e600a-8188-418e-a8b3-6a89f573f85a', '030d4489-0fb8-49a2-83bf-1ac52ee74f7a'),
+('3e9a60c6-e678-48cd-af8f-a97babace608', 'Carolina', '671-458-3784', 'Koeppke', '1', '69714ee4-d9c3-499b-9038-71ec7b66dad0', 'db28a77c-61e0-4cf3-b063-462e443c24f6'),
+('46b8beeb-0a67-416d-a6fb-e17e5d0140d2', 'Susana', '846-993-4058', 'Gauden', '1', 'dc604781-d387-4b09-bf34-d0535bae4716', '120a7657-e855-4fce-9128-66b0b4698f7d'),
+('567e707d-9454-457e-8c47-dc1aad02a212', 'Ky', '512-304-5475', 'Ech', '1', '7fac89b4-0e9b-47dd-a44b-7e7c7ea2f299', 'e0af597b-ea79-43a2-a009-e252d55df377'),
+('f6510778-a22e-42e7-a2f4-a230e9a66ec8', 'Wendi', '404-101-5386', 'Wedderburn', '1', '94074702-e22b-4267-b89d-95be15b7e1e4', '53bf3453-cd1a-4498-9eef-176cd443d47e'),
+('b6f5873e-97ff-46b8-babf-990b5886cf88', 'Edward', '364-139-9620', 'Wavell', '1', '763e600a-8188-418e-a8b3-6a89f573f85a', 'd5c151f6-e969-4615-b586-1ee2b317d0c6'),
+('6d1ca535-3bd4-4d2d-a374-44a39cf7caef', 'Deidre', '899-523-5824', 'Pitrasso', '1', 'e8e07946-eb58-4e5e-989d-efe4d70efb3b', '082d6432-e75c-4d72-b8db-0f529f1395fa'),
+('1d07c96c-fb7d-4fd5-8494-200b4a39af0c', 'Ted', '944-813-4140', 'Ridolfi', '1', '13ab1360-e8ad-4bcf-bd46-a4546a844b69', '082d6432-e75c-4d72-b8db-0f529f1395fa'),
+('28f02dc7-b5d6-400e-b77f-ed5cf3412baa', 'Vernon', '722-915-8930', 'Couroy', '1', '39557e13-66ae-4cec-b5eb-f33a5478de5d', '082d6432-e75c-4d72-b8db-0f529f1395fa'),
+('2d045a45-7d6e-476c-9bbb-af100e2fb598', 'Devin', '676-666-2385', 'Lyford', '1', '666ec817-9d96-4d62-a1cb-5e4538a656d0', '53bf3453-cd1a-4498-9eef-176cd443d47e'),
+('59beb697-bd54-4a50-ac61-da1f4b962ace', 'Agnesse', '466-218-2804', 'Hamberstone', '1', '757c810d-985c-4b0f-8797-4d1f4fd3eafa', 'd5c151f6-e969-4615-b586-1ee2b317d0c6'),
+('5008d4ea-da3a-4bcd-86d1-219a930a1cd3', 'Fay', '833-499-3345', 'Grane', '1', 'f36cf4ce-86ea-4f08-b064-b2bd152e8a7b', '082d6432-e75c-4d72-b8db-0f529f1395fa'),
+('7a1ce58f-4451-44d1-b60d-1bd3fe441201', 'Agnes', '527-227-2312', 'Matteacci', '1', '2bd51846-02bd-4a36-9978-8cdc2222ee92', '4cec86a6-f6a9-4dcd-8106-26348e919396'),
+('62924f68-a36e-4026-a0d5-216c6a503f4f', 'Marika', '174-178-5477', 'Eppson', '1', '6ad92962-6497-4755-8071-e61272d41e8b', '4cec86a6-f6a9-4dcd-8106-26348e919396'),
+('72007511-2ba0-4cad-8b47-46da5ea0cc91', 'Guss', '906-896-9748', 'Vernay', '1', '1cba0266-51ea-4ebc-8e29-57da4fcb2bc1', null),
+('943c5327-e31c-4c18-9c6a-ed8c26a2c336', 'Kev', '152-911-4583', 'Scoone', '1', '757c810d-985c-4b0f-8797-4d1f4fd3eafa', null);
+
+INSERT INTO "account" ("id", "email", "is_activated", "last_password_update_date", "password", "person_id") VALUES
+('1af4670f-807f-4147-8fd3-c86453ef7673', 'isadonor+1@gmail.com', 'true', null, '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi', 'e23e75a8-6815-4931-92e0-6611c8ee3d21'),
+('c7202a7b-0f80-40f4-84f9-dd905da4f7f2', 'isadonor+2@gmail.com', 'true', null, '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi', '00b898e5-36a8-4b2e-a3b9-e6bc86c24c8f'),
+('e666244a-afc1-4381-b14a-5cdb0b5f8242', 'isadonor+3@gmail.com', 'true', null, '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi', 'cb811d9f-5044-4024-8b5e-ee107f2c80cc'),
+('822a78fd-be18-44a5-b10a-f5d37517a8bc', 'isadonor+4@gmail.com', 'true', null, '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi', '556eaca5-d396-49ce-a81e-1ce96bd7869e'),
+('ea7d9c15-57e7-48cf-ad5d-36c9925862e1', 'isadonor+5@gmail.com', 'true', null, '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi', '7c29825b-adcb-417b-b778-a2f53723ea9b'),
+('f001f9c9-ed11-4622-beaf-f2d5a55fc19e', 'isadonor+6@gmail.com', 'true', null, '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi', 'c7704efb-50e5-4c28-98cb-9ea78cb989f7'),
+('9c807ecc-d165-458b-ad0d-5a8d4bdbcd8d', 'isadonor+7@gmail.com', 'true', null, '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi', '6621bf6f-8209-482e-bc4f-10f096d7c9e7'),
+('53b17316-b004-4f79-ac56-4ae02a2a8a6f', 'isadonor+8@gmail.com', 'true', null, '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi', 'd0bd8f7c-b51f-46b1-a7d7-bfc984d9fa31'),
+('6afc107f-bd52-4b14-8a03-a2ef4fb7a9d4', 'isadonor+9@gmail.com', 'true', null, '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi', '8f093254-376e-407a-9cb7-85c28ec31962'),
+('9fc4a043-bde7-47ad-9df5-62698fff10c6', 'isadonor+10@gmail.com', 'true', null, '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi', 'fdc478ca-0d28-46fb-925b-69b495c5fd6f'),
+('567f0f9a-a49b-4f50-a6d2-c8d14fdacb8c', 'isadonor+11@gmail.com', 'true', null, '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi', '2d006891-a145-474c-8d08-5aadbf567c1e'),
+('fffa7cad-64f0-4dba-970f-57e4510f7a7e', 'isadonor+12@gmail.com', 'true', null, '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi', 'b1193ef6-cdc3-4285-a38d-7b8eef0cad73'),
+('b1658589-6ace-4444-809b-54868f9b5e9a', 'isadonor+13@gmail.com', 'true', null, '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi', '17524be2-9f22-4729-955a-62f1228a6c87'),
+('0a45c5fa-4975-418a-91db-515ed7105879', 'isadonor+14@gmail.com', 'true', null, '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi', '6d3138bc-ef03-453e-a66e-59f0f65e548e'),
+('a72761e3-fbfd-414f-9089-948d254e9897', 'isadonor+15@gmail.com', 'true', null, '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi', '99eac575-bd12-442f-b7b4-05d7498e0d7a');
+
+INSERT INTO "account" ("id", "email", "is_activated", "last_password_update_date", "password", "person_id") VALUES
+('fa084eed-2a66-41df-a6bf-ac45d2e79ea6', 'isadonor+staff1@gmail.com', 'true', null, '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi', 'e6bfe80e-9403-4533-9a46-5b5e88a75e16'),
+('5f7ff8b1-d1e4-4844-a4ad-a598a51f0664', 'isadonor+staff2@gmail.com', 'true', null, '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi', '4b3d3597-5de9-4890-9d46-93fa3c1a746a'),
+('956ef955-d89f-4567-8461-c28acc9e411d', 'isadonor+staff3@gmail.com', 'true', null, '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi', 'a449487b-5159-403c-be14-4bac6da9e477'),
+('0d5c86cf-f2d1-49c6-b7b2-fbe50ae766fc', 'isadonor+staff4@gmail.com', 'true', null, '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi', 'c7f815ad-f42f-4c93-9136-41efc620441c'),
+('c1e45f97-6bde-4e24-a438-34cf916f12ef', 'isadonor+staff5@gmail.com', 'true', null, '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi', '35deb1f1-f083-4fbd-9445-7133a1f0910f'),
+('05fe998e-276d-4c5e-a70e-ecdcc549409c', 'isadonor+staff6@gmail.com', 'true', null, '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi', '3e9a60c6-e678-48cd-af8f-a97babace608'),
+('7d33cccc-79eb-4910-9cda-635cdafd65e7', 'isadonor+staff7@gmail.com', 'true', null, '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi', '46b8beeb-0a67-416d-a6fb-e17e5d0140d2'),
+('8e01ed29-766d-45c2-8f9e-28c93c78a10f', 'isadonor+staff8@gmail.com', 'true', null, '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi', '567e707d-9454-457e-8c47-dc1aad02a212'),
+('af9b055a-e283-4c23-b597-e34f1e73d95b', 'isadonor+staff9@gmail.com', 'true', null, '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi', 'f6510778-a22e-42e7-a2f4-a230e9a66ec8'),
+('12dfb056-b6e0-4765-8c23-0f19ca96ccc2', 'isadonor+staff10@gmail.com', 'true', null, '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi', 'b6f5873e-97ff-46b8-babf-990b5886cf88'),
+('65ab6048-0f68-42be-b627-aeaa2ac0cf07', 'isadonor+staff11@gmail.com', 'true', null, '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi', '6d1ca535-3bd4-4d2d-a374-44a39cf7caef'),
+('d1bc9427-7422-4fa8-aa23-3cbf43e93839', 'isadonor+staff12@gmail.com', 'true', null, '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi', '1d07c96c-fb7d-4fd5-8494-200b4a39af0c'),
+('86279d98-725b-4489-acaf-955e0f779a0a', 'isadonor+staff13@gmail.com', 'true', null, '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi', '28f02dc7-b5d6-400e-b77f-ed5cf3412baa'),
+('5357c551-d4a9-4b3c-adc8-6b63cc6616b7', 'isadonor+staff14@gmail.com', 'true', null, '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi', '2d045a45-7d6e-476c-9bbb-af100e2fb598'),
+('8215e466-d73c-4cc9-b4fd-418a2de79b94', 'isadonor+staff15@gmail.com', 'true', null, '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi', '59beb697-bd54-4a50-ac61-da1f4b962ace'),
+('8c5340db-0144-4937-bfd0-5e7195a3f06c', 'isadonor+staff16@gmail.com', 'true', null, '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi', '5008d4ea-da3a-4bcd-86d1-219a930a1cd3'),
+('da16537b-9ffa-4872-b580-c2d59d42bc63', 'isadonor+staff17@gmail.com', 'true', null, '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi', '7a1ce58f-4451-44d1-b60d-1bd3fe441201'),
+('7b49d814-9d9b-4ead-8756-25edffddb1db', 'isadonor+staff18@gmail.com', 'true', null, '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi', '62924f68-a36e-4026-a0d5-216c6a503f4f'),
+('b02475fd-26bf-4cae-a2a4-5d0acd99f9b2', 'isadonor+staff19@gmail.com', 'true', null, '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi', '72007511-2ba0-4cad-8b47-46da5ea0cc91'),
+('d097ccd7-b2cf-4b88-835c-9b62e19a845d', 'isadonor+staff20@gmail.com', 'true', null, '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi', '943c5327-e31c-4c18-9c6a-ed8c26a2c336'),
+('d94a02c8-17ff-4acc-87bb-3e9973ed8385', 'isadonor+admin1@gmail.com', 'true', '2023-01-26 00:00:00', '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi', null);
+
+INSERT INTO "account_role" ("account_id", "role_id") VALUES
+('1af4670f-807f-4147-8fd3-c86453ef7673', '1'),
+('c7202a7b-0f80-40f4-84f9-dd905da4f7f2', '1'),
+('e666244a-afc1-4381-b14a-5cdb0b5f8242', '1'),
+('822a78fd-be18-44a5-b10a-f5d37517a8bc', '1'),
+('ea7d9c15-57e7-48cf-ad5d-36c9925862e1', '1'),
+('f001f9c9-ed11-4622-beaf-f2d5a55fc19e', '1'),
+('9c807ecc-d165-458b-ad0d-5a8d4bdbcd8d', '1'),
+('53b17316-b004-4f79-ac56-4ae02a2a8a6f', '1'),
+('6afc107f-bd52-4b14-8a03-a2ef4fb7a9d4', '1'),
+('9fc4a043-bde7-47ad-9df5-62698fff10c6', '1'),
+('567f0f9a-a49b-4f50-a6d2-c8d14fdacb8c', '1'),
+('fffa7cad-64f0-4dba-970f-57e4510f7a7e', '1'),
+('b1658589-6ace-4444-809b-54868f9b5e9a', '1'),
+('0a45c5fa-4975-418a-91db-515ed7105879', '1'),
+('a72761e3-fbfd-414f-9089-948d254e9897', '1');
+
+INSERT INTO "account_role" ("account_id", "role_id") VALUES
+('fa084eed-2a66-41df-a6bf-ac45d2e79ea6', '2'),
+('5f7ff8b1-d1e4-4844-a4ad-a598a51f0664', '2'),
+('956ef955-d89f-4567-8461-c28acc9e411d', '2'),
+('0d5c86cf-f2d1-49c6-b7b2-fbe50ae766fc', '2'),
+('c1e45f97-6bde-4e24-a438-34cf916f12ef', '2'),
+('05fe998e-276d-4c5e-a70e-ecdcc549409c', '2'),
+('7d33cccc-79eb-4910-9cda-635cdafd65e7', '2'),
+('8e01ed29-766d-45c2-8f9e-28c93c78a10f', '2'),
+('af9b055a-e283-4c23-b597-e34f1e73d95b', '2'),
+('12dfb056-b6e0-4765-8c23-0f19ca96ccc2', '2'),
+('65ab6048-0f68-42be-b627-aeaa2ac0cf07', '2'),
+('d1bc9427-7422-4fa8-aa23-3cbf43e93839', '2'),
+('86279d98-725b-4489-acaf-955e0f779a0a', '2'),
+('5357c551-d4a9-4b3c-adc8-6b63cc6616b7', '2'),
+('8215e466-d73c-4cc9-b4fd-418a2de79b94', '2'),
+('8c5340db-0144-4937-bfd0-5e7195a3f06c', '2'),
+('da16537b-9ffa-4872-b580-c2d59d42bc63', '2'),
+('7b49d814-9d9b-4ead-8756-25edffddb1db', '2'),
+('b02475fd-26bf-4cae-a2a4-5d0acd99f9b2', '2'),
+('d097ccd7-b2cf-4b88-835c-9b62e19a845d', '2'),
+('d94a02c8-17ff-4acc-87bb-3e9973ed8385', '3');
+
+INSERT INTO "blood_quantity" ("id", "blood_group", "quantity", "blood_center_id") VALUES
+('ff94a9b0-bc2a-4f22-a34b-04e70fca2de8', '4', '138', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
+('198a0e9b-ed3a-4c42-aead-0747c7eeb18d', '4', '190', '4cec86a6-f6a9-4dcd-8106-26348e919396'),
+('e1d55c19-7332-457d-92b6-6b842d4cac52', '4', '174', 'db28a77c-61e0-4cf3-b063-462e443c24f6'),
+('3c6b73af-5fa2-4772-be4e-07861a12575b', '4', '66', '030d4489-0fb8-49a2-83bf-1ac52ee74f7a'),
+('fe277347-99f4-48e6-a656-d24f4c79be83', '4', '69', 'bf1d61b6-aa80-4b98-ba0f-d3885d444bb9'),
+('88ae712b-33d7-415d-bd22-a502d31b5251', '4', '161', 'e0af597b-ea79-43a2-a009-e252d55df377'),
+('463c86d3-074d-4d20-bd94-c239e1cb2937', '4', '8', '082d6432-e75c-4d72-b8db-0f529f1395fa'),
+('bc4b8e56-e413-4581-b188-b501e6855c0f', '4', '47', '53bf3453-cd1a-4498-9eef-176cd443d47e'),
+('45c324c4-c385-4862-84f5-dbddaa581f11', '4', '78', 'd5c151f6-e969-4615-b586-1ee2b317d0c6'),
+('9f16b88c-7e76-4ad9-b134-4f8e99845349', '4', '21', '120a7657-e855-4fce-9128-66b0b4698f7d'),
+('92cd8e29-3b07-488d-b207-55905de89169', '7', '26', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
+('965b4c2b-052f-47bc-b74f-b62ee896031d', '7', '155', '4cec86a6-f6a9-4dcd-8106-26348e919396'),
+('f5013a79-ced5-43a4-9218-344c8fd4d90b', '7', '137', 'db28a77c-61e0-4cf3-b063-462e443c24f6'),
+('0530c115-72a6-4ca5-a768-0553222b1f38', '7', '155', '030d4489-0fb8-49a2-83bf-1ac52ee74f7a'),
+('5be3be6c-848f-4ca4-8a42-2e548071042a', '7', '98', 'bf1d61b6-aa80-4b98-ba0f-d3885d444bb9'),
+('40ede432-6656-4f4e-9bf4-3fa6d86f6149', '7', '160', 'e0af597b-ea79-43a2-a009-e252d55df377'),
+('c325bea6-9a1e-4323-b4ea-5b7dcfd922dc', '7', '85', '082d6432-e75c-4d72-b8db-0f529f1395fa'),
+('b15d85a5-a5a5-48d8-bc37-a6b501cb89df', '7', '74', '53bf3453-cd1a-4498-9eef-176cd443d47e'),
+('d1b1ab83-4d5e-45ac-ab9c-f59ad8fcfd23', '7', '163', 'd5c151f6-e969-4615-b586-1ee2b317d0c6'),
+('5806d770-615a-44b9-9970-982990022fbc', '7', '159', '120a7657-e855-4fce-9128-66b0b4698f7d'),
+('ad5236cb-dee9-4e58-841a-53edd31b9d5d', '0', '84', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
+('e3b04fba-68b7-4ecc-9eaf-25fb5061418b', '0', '2', '4cec86a6-f6a9-4dcd-8106-26348e919396'),
+('ef3aaf85-535a-4ebe-8f1a-a09ecbacaaa1', '0', '46', 'db28a77c-61e0-4cf3-b063-462e443c24f6'),
+('308fe04f-b78e-44a4-97ae-f1211f2446fb', '0', '21', '030d4489-0fb8-49a2-83bf-1ac52ee74f7a'),
+('b5d5b632-ea8c-44ec-b03b-d181d3a0f846', '0', '169', 'bf1d61b6-aa80-4b98-ba0f-d3885d444bb9'),
+('818b3ac3-fd8a-4c9a-8002-e9b818c0f66d', '0', '173', 'e0af597b-ea79-43a2-a009-e252d55df377'),
+('28caad99-573a-4e68-96f4-f9690b346239', '0', '5', '082d6432-e75c-4d72-b8db-0f529f1395fa'),
+('8dd4739b-e00b-4695-ae9e-9f67b3466e51', '0', '78', '53bf3453-cd1a-4498-9eef-176cd443d47e'),
+('e38c6335-7933-4d56-ab1d-9ee1b86f46f4', '0', '18', 'd5c151f6-e969-4615-b586-1ee2b317d0c6'),
+('0d345b62-0da3-49b4-ad33-a1fd2474df11', '0', '151', '120a7657-e855-4fce-9128-66b0b4698f7d'),
+('d313c55d-2972-4280-9ed6-02339d6caf3f', '1', '94', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
+('a53172bb-1005-4da8-89cf-8b2a088d45a8', '1', '98', '4cec86a6-f6a9-4dcd-8106-26348e919396'),
+('5299fb85-e079-4f74-b1ca-4175c166b526', '1', '150', 'db28a77c-61e0-4cf3-b063-462e443c24f6'),
+('52177bb8-e15d-4448-ba8e-92085396c470', '1', '184', '030d4489-0fb8-49a2-83bf-1ac52ee74f7a'),
+('d42d45eb-a272-4cef-96dd-71ef61f9fe80', '1', '166', 'bf1d61b6-aa80-4b98-ba0f-d3885d444bb9'),
+('2c0306a1-dd7a-4d7d-b423-49e7c3b89eb0', '1', '138', 'e0af597b-ea79-43a2-a009-e252d55df377'),
+('b2dc4bb5-b9d8-4918-a3e0-09dcb64997a0', '1', '40', '082d6432-e75c-4d72-b8db-0f529f1395fa'),
+('8c3387aa-4645-44d8-8b67-5ac34f6d348b', '1', '135', '53bf3453-cd1a-4498-9eef-176cd443d47e'),
+('0304bb02-085b-4ff5-856e-d584ca46c664', '1', '19', 'd5c151f6-e969-4615-b586-1ee2b317d0c6'),
+('d87a9cfb-dde8-4479-aafb-011b510443a7', '1', '139', '120a7657-e855-4fce-9128-66b0b4698f7d'),
+('5450c950-ca70-442d-8a67-ae580c4f801c', '2', '105', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
+('405584f7-a189-4979-86a8-395c5ca1d9d8', '2', '81', '4cec86a6-f6a9-4dcd-8106-26348e919396'),
+('39065f64-d97a-434a-a3cb-253df3eeda1c', '2', '38', 'db28a77c-61e0-4cf3-b063-462e443c24f6'),
+('15cf28eb-6842-42d2-a6ad-df53b81b70a3', '2', '176', '030d4489-0fb8-49a2-83bf-1ac52ee74f7a'),
+('c3130b67-a2e0-485c-ab71-df748b866d4c', '2', '57', 'bf1d61b6-aa80-4b98-ba0f-d3885d444bb9'),
+('210f9dd0-24d2-4ad5-bbb2-85a60635cdaf', '2', '4', 'e0af597b-ea79-43a2-a009-e252d55df377'),
+('a5ebc0ea-fc69-4d2c-8c46-bcb2bbdba023', '2', '191', '082d6432-e75c-4d72-b8db-0f529f1395fa'),
+('c9a2e59e-b536-4607-8569-adf508e4e53f', '2', '179', '53bf3453-cd1a-4498-9eef-176cd443d47e'),
+('d8c3ab3f-d6e9-4c84-8f82-25366d0a9a70', '2', '118', 'd5c151f6-e969-4615-b586-1ee2b317d0c6'),
+('c1f2d8e4-4853-48aa-a047-6c3e9bf50dfc', '2', '148', '120a7657-e855-4fce-9128-66b0b4698f7d'),
+('24ac53bc-3177-4587-9983-1313ccf7c662', '3', '167', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
+('f232f39d-593e-4374-bf75-9511e0e32dca', '3', '179', '4cec86a6-f6a9-4dcd-8106-26348e919396'),
+('87de8f04-de9c-47ff-8191-5d507b3894a5', '3', '128', 'db28a77c-61e0-4cf3-b063-462e443c24f6'),
+('1dc0222f-1ece-4934-9d38-79d6ff2f15bb', '3', '144', '030d4489-0fb8-49a2-83bf-1ac52ee74f7a'),
+('f5dafa62-0214-4879-97cd-967c34cb8576', '3', '175', 'bf1d61b6-aa80-4b98-ba0f-d3885d444bb9'),
+('fc3da6ba-a89b-4935-b5e4-806b850d1fca', '3', '1', 'e0af597b-ea79-43a2-a009-e252d55df377'),
+('33a3b28a-60c5-4976-b94e-c1d40e23c073', '3', '174', '082d6432-e75c-4d72-b8db-0f529f1395fa'),
+('71b6d198-d512-4b09-ac55-ddfa28ab8711', '3', '74', '53bf3453-cd1a-4498-9eef-176cd443d47e'),
+('bda911b9-9e2a-4415-b5a1-61381bce6f83', '3', '84', 'd5c151f6-e969-4615-b586-1ee2b317d0c6'),
+('889fc1c3-e875-4cc4-93c8-b9681d13155d', '3', '105', '120a7657-e855-4fce-9128-66b0b4698f7d'),
+('4c82dba0-3b2a-49f1-b643-5bacfc5ba96d', '5', '87', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
+('c7758a76-6583-43ab-8ef6-146f355671d0', '5', '176', '4cec86a6-f6a9-4dcd-8106-26348e919396'),
+('3075c2e9-f1b7-45bf-9ecc-cf46351d3991', '5', '115', 'db28a77c-61e0-4cf3-b063-462e443c24f6'),
+('ea152827-ad06-4027-bc5e-df768fa04fe1', '5', '147', '030d4489-0fb8-49a2-83bf-1ac52ee74f7a'),
+('9944d08b-963c-449b-8832-d57cad40b97c', '5', '86', 'bf1d61b6-aa80-4b98-ba0f-d3885d444bb9'),
+('4cf3f15e-7b19-4d6d-942c-4c8bd84fedaa', '5', '42', 'e0af597b-ea79-43a2-a009-e252d55df377'),
+('bc4fcad1-ec31-4abb-a575-9f9f0f6c4aa1', '5', '186', '082d6432-e75c-4d72-b8db-0f529f1395fa'),
+('421c16c9-7038-43ea-adfc-ff0380506c4a', '5', '23', '53bf3453-cd1a-4498-9eef-176cd443d47e'),
+('f4e53661-42fa-41e6-b892-4f193e713546', '5', '46', 'd5c151f6-e969-4615-b586-1ee2b317d0c6'),
+('88ec26fa-747e-4627-b167-2e0cba054786', '5', '122', '120a7657-e855-4fce-9128-66b0b4698f7d'),
+('4160ba23-49f8-43de-8621-9e9c8a0d0e7a', '6', '168', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
+('66e01b76-e355-477b-8ef9-51fbf2f41134', '6', '127', '4cec86a6-f6a9-4dcd-8106-26348e919396'),
+('7aae8896-247d-4373-b7a0-79a0eb736399', '6', '121', 'db28a77c-61e0-4cf3-b063-462e443c24f6'),
+('d9d683df-3143-4e41-aeae-2af986bb4c0e', '6', '194', '030d4489-0fb8-49a2-83bf-1ac52ee74f7a'),
+('35de9343-9862-4ee1-b6ea-b465dcf8d954', '6', '198', 'bf1d61b6-aa80-4b98-ba0f-d3885d444bb9'),
+('7f7e6032-b4d4-4074-9ce1-37fb23288a97', '6', '96', 'e0af597b-ea79-43a2-a009-e252d55df377'),
+('181421ce-99c6-4125-89c3-9b04e7f86e7f', '6', '145', '082d6432-e75c-4d72-b8db-0f529f1395fa'),
+('a23deb16-3bc6-433f-8000-5eff31e7a3a6', '6', '35', '53bf3453-cd1a-4498-9eef-176cd443d47e'),
+('3111c55e-4e07-4b8e-b208-bcb16f7b6647', '6', '150', 'd5c151f6-e969-4615-b586-1ee2b317d0c6'),
+('196960d7-a586-4759-9c52-87138075fec1', '6', '100', '120a7657-e855-4fce-9128-66b0b4698f7d');
+
+INSERT INTO "appointment" ("id", "is_premade", "end_time", "start_time", "blood_center_id") VALUES
+('d29d8157-bc1c-4723-84cc-1743a224099b', 'true', '2023-02-02 06:20:00', '2023-02-02 06:00:00', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
+('002c3ba4-3c55-421d-9222-b473dd4af087', 'true', '2023-02-02 06:40:00', '2023-02-02 06:30:00', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
+('bd7c763a-a78d-499c-bee0-90ac1ef1f007', 'true', '2023-02-02 08:00:00', '2023-02-02 07:00:00', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
+('59dac971-6361-4aec-9875-4af3dc60af0d', 'true', '2023-02-02 08:40:00', '2023-02-02 08:00:00', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
+('a3b1c8af-ce66-4c83-ae50-1455b55e8f56', 'true', '2023-02-02 09:20:00', '2023-02-02 09:00:00', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
+('5419d77b-3f57-4292-a005-5cb0d854a1a3', 'true', '2023-02-02 12:30:00', '2023-02-02 12:00:00', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
+('a585027d-6db6-4684-be21-91a53a4bdf71', 'true', '2023-02-02 14:00:00', '2023-02-02 13:00:00', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
+('41ce6b19-6413-4e13-bb03-d44b6de0f2c3', 'true', '2023-02-02 17:00:00', '2023-02-02 16:00:00', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
+('d9c1a75c-1057-443e-81da-64b461095388', 'true', '2023-02-02 17:20:00', '2023-02-02 17:00:00', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
+('f27097dd-8cb1-460d-8881-2ca24c9eb9e8', 'true', '2023-02-02 19:10:00', '2023-02-02 19:00:00', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
+
+('60b35b11-ae4e-46be-a096-43efc043b93c', 'true', '2023-02-02 17:40:00', '2023-02-02 17:30:00', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
+('06c2aa70-bc92-4644-a590-a6dce9106dd1', 'true', '2023-02-02 17:50:00', '2023-02-02 17:40:00', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
+('6dabb45e-927f-41b9-8ee4-2bfac4b85775', 'true', '2023-02-02 18:20:00', '2023-02-02 18:00:00', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
+('b15ce8b4-656e-4e29-8e28-f22739f58749', 'true', '2023-02-03 08:20:00', '2023-02-03 08:00:00', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
+('cc374489-ec49-4117-9d82-fde1fdf00ec3', 'true', '2023-02-03 09:20:00', '2023-02-03 09:00:00', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
+('1c9765d5-e168-42d0-bb09-ff53cf599342', 'true', '2023-02-03 10:30:00', '2023-02-03 10:00:00', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
+('0b53356b-f00e-41d8-bb36-88aaa9ed5e52', 'true', '2023-02-03 11:30:00', '2023-02-03 11:00:00', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
+('1e73a4b5-37ad-4ea4-9297-4987d00b0933', 'true', '2023-02-03 12:30:00', '2023-02-03 12:00:00', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
+('dd2bdc29-9cd1-46eb-8dce-efb8ae7d6e57', 'true', '2023-02-03 13:30:00', '2023-02-03 13:00:00', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
+('812db0cc-f899-405e-bb0c-66a1d1658616', 'true', '2023-02-03 17:15:00', '2023-02-03 17:00:00', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2');
+
+INSERT INTO "appointment_scheduling_history" ("id", "qrcode", "issuing_date", "status", "appointment_id", "blood_donor_id") VALUES
+('1f570622-26ac-41b7-9067-7b9613cba956', 'QR', '2023-01-26 00:00:00', '0', 'd29d8157-bc1c-4723-84cc-1743a224099b', 'e23e75a8-6815-4931-92e0-6611c8ee3d21'),
+('284be7da-c8b0-4307-9442-f716d66d24e2', 'QR', '2023-01-26 00:00:00', '0', '002c3ba4-3c55-421d-9222-b473dd4af087', '00b898e5-36a8-4b2e-a3b9-e6bc86c24c8f'),
+('751e0bc6-04c7-4bde-aa81-16866df73f87', 'QR', '2023-01-26 00:00:00', '0', 'bd7c763a-a78d-499c-bee0-90ac1ef1f007', 'cb811d9f-5044-4024-8b5e-ee107f2c80cc'),
+('aa200ea8-446f-4855-a8d9-b24763ff7e46', 'QR', '2023-01-26 00:00:00', '0', '59dac971-6361-4aec-9875-4af3dc60af0d', '556eaca5-d396-49ce-a81e-1ce96bd7869e'),
+('6298a201-9501-43cb-8392-b7e87ccfba06', 'QR', '2023-01-26 00:00:00', '0', 'a3b1c8af-ce66-4c83-ae50-1455b55e8f56', '7c29825b-adcb-417b-b778-a2f53723ea9b'),
+('ae55babf-258e-4b1f-b810-6c2aee518dbd', 'QR', '2023-01-26 00:00:00', '0', '5419d77b-3f57-4292-a005-5cb0d854a1a3', 'c7704efb-50e5-4c28-98cb-9ea78cb989f7'),
+('7f47edde-a977-4e59-a0ab-46d48eee2382', 'QR', '2023-01-26 00:00:00', '0', 'a585027d-6db6-4684-be21-91a53a4bdf71', '6621bf6f-8209-482e-bc4f-10f096d7c9e7'),
+('b7eaf211-6370-4b7f-a368-a4977ea12da6', 'QR', '2023-01-26 00:00:00', '0', '41ce6b19-6413-4e13-bb03-d44b6de0f2c3', 'd0bd8f7c-b51f-46b1-a7d7-bfc984d9fa31'),
+('3b895595-43da-40ff-a363-61bb5cc0001c', 'QR', '2023-01-26 00:00:00', '0', 'd9c1a75c-1057-443e-81da-64b461095388', '8f093254-376e-407a-9cb7-85c28ec31962'),
+('e8fb0b1d-cdfc-4da7-8379-02ada2f8bee1', 'QR', '2023-01-26 00:00:00', '0', 'f27097dd-8cb1-460d-8881-2ca24c9eb9e8', 'fdc478ca-0d28-46fb-925b-69b495c5fd6f');
+
+INSERT INTO "appointment_staff" ("appointment_id", "staff_id") VALUES
+('d29d8157-bc1c-4723-84cc-1743a224099b', 'e6bfe80e-9403-4533-9a46-5b5e88a75e16'),
+('002c3ba4-3c55-421d-9222-b473dd4af087', 'e6bfe80e-9403-4533-9a46-5b5e88a75e16'),
+('bd7c763a-a78d-499c-bee0-90ac1ef1f007', 'e6bfe80e-9403-4533-9a46-5b5e88a75e16'),
+('59dac971-6361-4aec-9875-4af3dc60af0d', 'e6bfe80e-9403-4533-9a46-5b5e88a75e16'),
+('a3b1c8af-ce66-4c83-ae50-1455b55e8f56', 'e6bfe80e-9403-4533-9a46-5b5e88a75e16'),
+('5419d77b-3f57-4292-a005-5cb0d854a1a3', 'e6bfe80e-9403-4533-9a46-5b5e88a75e16'),
+('a585027d-6db6-4684-be21-91a53a4bdf71', 'e6bfe80e-9403-4533-9a46-5b5e88a75e16'),
+('41ce6b19-6413-4e13-bb03-d44b6de0f2c3', 'e6bfe80e-9403-4533-9a46-5b5e88a75e16'),
+('d9c1a75c-1057-443e-81da-64b461095388', 'e6bfe80e-9403-4533-9a46-5b5e88a75e16'),
+('f27097dd-8cb1-460d-8881-2ca24c9eb9e8', 'e6bfe80e-9403-4533-9a46-5b5e88a75e16'),
+('60b35b11-ae4e-46be-a096-43efc043b93c', 'e6bfe80e-9403-4533-9a46-5b5e88a75e16'),
+('06c2aa70-bc92-4644-a590-a6dce9106dd1', 'e6bfe80e-9403-4533-9a46-5b5e88a75e16'),
+('6dabb45e-927f-41b9-8ee4-2bfac4b85775', 'e6bfe80e-9403-4533-9a46-5b5e88a75e16'),
+('b15ce8b4-656e-4e29-8e28-f22739f58749', 'e6bfe80e-9403-4533-9a46-5b5e88a75e16'),
+('cc374489-ec49-4117-9d82-fde1fdf00ec3', 'e6bfe80e-9403-4533-9a46-5b5e88a75e16'),
+('1c9765d5-e168-42d0-bb09-ff53cf599342', 'e6bfe80e-9403-4533-9a46-5b5e88a75e16'),
+('0b53356b-f00e-41d8-bb36-88aaa9ed5e52', 'e6bfe80e-9403-4533-9a46-5b5e88a75e16'),
+('1e73a4b5-37ad-4ea4-9297-4987d00b0933', 'e6bfe80e-9403-4533-9a46-5b5e88a75e16'),
+('dd2bdc29-9cd1-46eb-8dce-efb8ae7d6e57', 'e6bfe80e-9403-4533-9a46-5b5e88a75e16'),
+('812db0cc-f899-405e-bb0c-66a1d1658616', 'e6bfe80e-9403-4533-9a46-5b5e88a75e16');
 
 
 INSERT INTO "coupon" ("id", "description", "discount")
 VALUES ('d43bc35e-bc4b-4566-b076-320f5c669c52', 'Livepath', '52'),
-       ('ee9ad85a-a270-484d-8f46-54334b56cd68', 'Thoughtblab', '68'),
-       ('ba777665-42c9-4a59-a6e9-f695ce1cba7a', 'Browsebug', '10'),
-       ('9888438d-3f98-426f-a153-0f369f2b5cf8', 'Skibox', '13'),
-       ('fa6bab80-8e2a-437e-98cc-a0190ec3f653', 'Skilith', '12'),
-       ('9a1c03ff-af50-42f2-b302-2bb8bf396ca7', 'Fanoodle', '30'),
-       ('7fd27d29-2c9a-4026-9c79-4d3f8c795853', 'Pixope', '30'),
-       ('0a3a1559-feda-4032-a8df-77a4e507711c', 'Livefish', '29'),
-       ('78c30545-bc32-4156-929a-e18619739961', 'Voolia', '31'),
-       ('aeca40e3-030a-4f04-9385-ce6df9f400fd', 'Jaloo', '36'),
-       ('2cf0b333-d4bd-405d-9354-53bddbd006b5', 'Browsezoom', '23'),
-       ('5acc00bf-dd11-48d4-a10d-5197fee6d489', 'Jabberstorm', '66'),
-       ('9dd5ff96-fff2-4f3c-9063-4c0e61293423', 'Divavu', '53'),
-       ('33b0443f-6e70-4462-b0f2-2d7cd751b119', 'Meedoo', '55'),
-       ('86f0fe75-6e7c-45e4-a6c8-0d0fc50936fd', 'Divavu', '66'),
-       ('c87a9520-a413-482a-8f2c-889ac919c046', 'Yombu', '61'),
-       ('d57c25ce-aa52-46f1-afc2-933bdf2a525b', 'Tagtune', '44'),
-       ('0af16889-d20a-4afd-88c5-e02e8482ba4a', 'Rhynyx', '46'),
-       ('0211da39-481f-4a64-a317-4d1a8a6cd00c', 'Leenti', '21'),
-       ('9a75c6c5-a9ae-456f-bbdf-b1cb24fc4a94', 'Dynazzy', '65');
+('ee9ad85a-a270-484d-8f46-54334b56cd68', 'Thoughtblab', '68'),
+('ba777665-42c9-4a59-a6e9-f695ce1cba7a', 'Browsebug', '10'),
+('9888438d-3f98-426f-a153-0f369f2b5cf8', 'Skibox', '13'),
+('fa6bab80-8e2a-437e-98cc-a0190ec3f653', 'Skilith', '12'),
+('9a1c03ff-af50-42f2-b302-2bb8bf396ca7', 'Fanoodle', '30'),
+('7fd27d29-2c9a-4026-9c79-4d3f8c795853', 'Pixope', '30'),
+('0a3a1559-feda-4032-a8df-77a4e507711c', 'Livefish', '29'),
+('78c30545-bc32-4156-929a-e18619739961', 'Voolia', '31'),
+('aeca40e3-030a-4f04-9385-ce6df9f400fd', 'Jaloo', '36'),
+('2cf0b333-d4bd-405d-9354-53bddbd006b5', 'Browsezoom', '23'),
+('5acc00bf-dd11-48d4-a10d-5197fee6d489', 'Jabberstorm', '66'),
+('9dd5ff96-fff2-4f3c-9063-4c0e61293423', 'Divavu', '53'),
+('33b0443f-6e70-4462-b0f2-2d7cd751b119', 'Meedoo', '55'),
+('86f0fe75-6e7c-45e4-a6c8-0d0fc50936fd', 'Divavu', '66'),
+('c87a9520-a413-482a-8f2c-889ac919c046', 'Yombu', '61'),
+('d57c25ce-aa52-46f1-afc2-933bdf2a525b', 'Tagtune', '44'),
+('0af16889-d20a-4afd-88c5-e02e8482ba4a', 'Rhynyx', '46'),
+('0211da39-481f-4a64-a317-4d1a8a6cd00c', 'Leenti', '21'),
+('9a75c6c5-a9ae-456f-bbdf-b1cb24fc4a94', 'Dynazzy', '65');
 
 INSERT INTO "loyalty_type" ("id", "category_name", "points_req")
 VALUES ('d546d803-e4fe-4ba6-b8e0-6e482ad48e58', 'No Loyalty', '0'),
-       ('31144a9f-b305-4e1e-90cc-299fbd33ca5d', 'Bronze', '100'),
-       ('3c113733-4fa9-475c-8e0d-fb58bff8041e', 'Silver', '200'),
-       ('09779dc7-8c6c-47bb-b68d-aa67c63af8f8', 'Gold', '300');
+('31144a9f-b305-4e1e-90cc-299fbd33ca5d', 'Bronze', '100'),
+('3c113733-4fa9-475c-8e0d-fb58bff8041e', 'Silver', '200'),
+('09779dc7-8c6c-47bb-b68d-aa67c63af8f8', 'Gold', '300');
 
 INSERT INTO "loyalty_coupons" ("loyalty_id", "coupon_id")
 VALUES ('d546d803-e4fe-4ba6-b8e0-6e482ad48e58', 'd43bc35e-bc4b-4566-b076-320f5c669c52'),
-       ('31144a9f-b305-4e1e-90cc-299fbd33ca5d', 'ee9ad85a-a270-484d-8f46-54334b56cd68'),
-       ('3c113733-4fa9-475c-8e0d-fb58bff8041e', 'ba777665-42c9-4a59-a6e9-f695ce1cba7a'),
-       ('09779dc7-8c6c-47bb-b68d-aa67c63af8f8', '9888438d-3f98-426f-a153-0f369f2b5cf8'),
-       ('d546d803-e4fe-4ba6-b8e0-6e482ad48e58', 'fa6bab80-8e2a-437e-98cc-a0190ec3f653'),
-       ('31144a9f-b305-4e1e-90cc-299fbd33ca5d', '9a1c03ff-af50-42f2-b302-2bb8bf396ca7'),
-       ('3c113733-4fa9-475c-8e0d-fb58bff8041e', '7fd27d29-2c9a-4026-9c79-4d3f8c795853'),
-       ('09779dc7-8c6c-47bb-b68d-aa67c63af8f8', '0a3a1559-feda-4032-a8df-77a4e507711c'),
-       ('d546d803-e4fe-4ba6-b8e0-6e482ad48e58', '78c30545-bc32-4156-929a-e18619739961'),
-       ('31144a9f-b305-4e1e-90cc-299fbd33ca5d', 'aeca40e3-030a-4f04-9385-ce6df9f400fd'),
-       ('3c113733-4fa9-475c-8e0d-fb58bff8041e', '2cf0b333-d4bd-405d-9354-53bddbd006b5'),
-       ('09779dc7-8c6c-47bb-b68d-aa67c63af8f8', '5acc00bf-dd11-48d4-a10d-5197fee6d489'),
-       ('d546d803-e4fe-4ba6-b8e0-6e482ad48e58', '9dd5ff96-fff2-4f3c-9063-4c0e61293423'),
-       ('31144a9f-b305-4e1e-90cc-299fbd33ca5d', '33b0443f-6e70-4462-b0f2-2d7cd751b119'),
-       ('3c113733-4fa9-475c-8e0d-fb58bff8041e', '86f0fe75-6e7c-45e4-a6c8-0d0fc50936fd'),
-       ('09779dc7-8c6c-47bb-b68d-aa67c63af8f8', 'c87a9520-a413-482a-8f2c-889ac919c046'),
-       ('d546d803-e4fe-4ba6-b8e0-6e482ad48e58', 'd57c25ce-aa52-46f1-afc2-933bdf2a525b'),
-       ('31144a9f-b305-4e1e-90cc-299fbd33ca5d', '0af16889-d20a-4afd-88c5-e02e8482ba4a'),
-       ('3c113733-4fa9-475c-8e0d-fb58bff8041e', '0211da39-481f-4a64-a317-4d1a8a6cd00c'),
-       ('09779dc7-8c6c-47bb-b68d-aa67c63af8f8', '9a75c6c5-a9ae-456f-bbdf-b1cb24fc4a94');
-
-/* Aleksandrov bc je poslednji */
-INSERT INTO "blood_center" ("id", "description", "name", "rating", "end_hours", "end_minutes", "start_hours",
-                            "start_minutes", "address_id")
-VALUES ('417c9b36-251a-4483-bfbf-abd3df786d96', 'LUMENE OY', 'Will-Wiza', '3', '11', '30', '5', '0',
-        '8021c0fb-99a5-42f0-9d81-baa41265540e'),
-       ('aa116b1b-c59c-403b-b64f-db201d9375d2', '"Lannett Company, Inc."', '"Grimes, Kautzer and Lebsack"', '2', '17',
-        '0', '6', '0', '553414e2-857e-49b0-85c8-e08f9edc9ae3'),
-       ('206b28a3-4953-4cce-a077-c7d9fcdd599c', 'Mondel?z Global LLC', '"Tillman, Robel and DuBuque"', '4', '15', '30',
-        '7', '30', '5c3b169a-c50c-4b90-939d-ee3fca1459ea'),
-       ('29e5ab72-265a-483b-84fc-6a7abbf5a6ab', 'Accord Healthcare Inc.', 'Vandervort-Gleason', '2', '15', '30', '9',
-        '0', '640e93ad-460b-40aa-84be-5673a091e2b5'),
-       ('f7aaaba3-db07-46e8-8976-8e7c6b83ee4d', 'Uriel Pharmacy Inc.', 'Marvin-Stehr', '4', '14', '0', '9', '30',
-        'dc0bbae7-4fa1-47ca-a092-dde2f9efe046'),
-       ('c5380ac1-b5cb-4c3e-a5f7-5b1cd25c91f2', 'Pharmacia and Upjohn Company', 'Effertz and Sons', '3', '18', '0', '7',
-        '0', 'e4b6ce9d-5094-4a64-a958-3b919770d870'),
-       ('bd701425-588c-4d16-ab96-e71be2979a75', '"Preferred Pharmaceuticals, Inc."',
-        '"Baumbach, Hartmann and Predovic"', '5', '19', '0', '7', '0', '0532cd76-52c8-4ac9-8306-d063f8f5e1d5'),
-       ('e8b6ca12-6a54-4d61-9cda-5a314094968e', 'A-S Medication Solutions LLC', 'Torphy-Fritsch', '4', '18', '30', '8',
-        '0', 'e4b6ce9d-5094-4a64-a958-3b919770d870'),
-       ('00b4e355-20be-48a6-a192-cfab2f48f012', 'TYA Pharmaceuticals', '"Mosciski, Haley and Denesik"', '5', '16', '0',
-        '10', '0', 'c89aee55-f73f-4bb1-accf-73bad65c36ff'),
-       ('00f5108f-5ac3-48ed-8b5e-be609d3b4137', 'Rimmel Inc.', '"Runte, Bradtke and Bruen"', '1', '15', '30', '10',
-        '30', 'f131fbc0-343e-4b61-9542-a384e4882ba5'),
-       ('e642b333-182b-405d-a5b6-038fb518a3db', 'Teva Pharmaceuticals USA Inc', 'Labadie LLC', '4', '18', '0', '10',
-        '0', 'bac13983-1229-4308-8ffd-22e8c52235f8'),
-       ('63bd71a5-dfdd-4db3-ac00-0b61e6183735', 'Purminerals', 'Hilll-Upton', '1', '15', '30', '8', '30',
-        'dc0bbae7-4fa1-47ca-a092-dde2f9efe046'),
-       ('2c8956aa-b596-45a1-9713-388c254119fd', '"Dispensing Solutions, Inc."', '"Berge, Cassin and Feil"', '4', '19',
-        '0', '9', '0', '1744ff0b-90dd-4649-9439-da2bd62918ad'),
-       ('725e573d-e9bd-4658-9da1-d54b72a1d333', 'Kaiser Foundations Hospitals', '"Zulauf, Nolan and Luettgen"', '3',
-        '17', '0', '9', '0', '1e1dd683-41ff-469f-b8a7-a413d64e694b'),
-       ('65587605-ef93-4beb-a46a-ba141a21ffd7', '"General Injectables & Vaccines, Inc"', '"Gottlieb, Kozey and Metz"',
-        '1', '16', '0', '10', '30', '288936ca-16f3-4908-b37c-6fc7b8736bde'),
-       ('564661ad-20f3-4aba-841b-34d7ac33217f', '"Aphena Pharma Solutions - Tennessee, LLC"',
-        '"Doyle, Padberg and Kon"', '3', '19', '30', '10', '0', '551082eb-b45a-4b6b-8ccd-2cae2b8cb20c'),
-       ('d08dd731-d59f-43c8-b2ff-785245f6048b', 'Kroger Company', '"Cummings, Kutch and Huel"', '2', '18', '0', '7',
-        '0', 'b1b2dbfc-4b92-4cb6-931f-7c136e86f80b'),
-       ('1dc2e158-9faa-4940-9373-879fbe8ceada', 'Teva Pharmaceuticals USA Inc', 'Hara Group', '3', '18', '0', '7', '0',
-        'dc0bbae7-4fa1-47ca-a092-dde2f9efe046'),
-       ('73548b7b-3695-4e37-989c-e2ba7a0130d0', 'sanofi-aventis U.S. LLC', '"Schmeler, Fahey and Koelpin"', '5', '14',
-        '0', '8', '0', '46876b56-3b9b-41de-8dc9-0925d44089c5'),
-       ('5f29fc03-f6bd-49a6-9f41-c2ca229de403', '"Energique,
-        Inc."', 'Brekke and Sons', '5', '15', '30', '7', '0', '553414e2-857e-49b0-85c8-e08f9edc9ae3');
-
-INSERT INTO "blood_donor" ("id", "name", "phone_number", "surname", "gender", "institution", "jmbg", "penalties",
-                           "points", "address_id", "occupation")
-VALUES ('07ce2e8b-d34b-4156-9dd4-f29ec4311675', 'Jovan', '140-486-9131', 'Srdanov', '0', 'Valve', '8541087715936',
-        '0',
-        '0', 'a0cd0598-30f7-430d-8cc5-ef309d31ffb7', 'Shadow Scrum Master');
-
-INSERT INTO "blood_donor" ("id", "name", "phone_number", "surname", "gender", "institution", "jmbg", "penalties",
-                           "points", "address_id", "occupation")
-VALUES ('26d3381b-319d-425c-abd7-256f24f0a2e0', 'Dubravka', '22140-486-9131', 'Gligorijevic', '1', 'Valve2',
-        '8541087515936',
-        '2',
-        '0', 'a0cd0598-30f7-430d-8cc5-ef309d31ffb7', 'Shadow Scrum Master2');
-
-
-/* Aleksandrov staff je ovaj na kraju */
-INSERT INTO "staff" ("id", "name", "phone_number", "surname", "address_id", "blood_center_id")
-VALUES ('32763cf0-6a56-49f1-ad25-5a90561cd204', 'Doc1', '850-326-8246', '_',
-        'dc0bbae7-4fa1-47ca-a092-dde2f9efe046', '417c9b36-251a-4483-bfbf-abd3df786d96'),
-       ('883f13cc-25c8-4b60-b0e5-5ac938ad2594', 'Doc2', '844-991-4460', '_',
-        'f896b9e4-b639-43cc-882f-9d735597ef08', '417c9b36-251a-4483-bfbf-abd3df786d96'),
-       ('1e2df797-37b7-4241-a2b0-99e262a20912', 'Doc3', '844-991-4460', '_',
-        'f896b9e4-b639-43cc-882f-9d735597ef08', '417c9b36-251a-4483-bfbf-abd3df786d96'),
-       ('fa41a439-0f90-46a8-96af-16bc1068d50c', 'Doc4', '844-991-4460', '_',
-        'f896b9e4-b639-43cc-882f-9d735597ef08', '417c9b36-251a-4483-bfbf-abd3df786d96'),
-       ('8180fea1-7623-4a5b-8717-5b34b2abe9d3', 'Doc5', '844-991-4460', '_',
-        'f896b9e4-b639-43cc-882f-9d735597ef08', '417c9b36-251a-4483-bfbf-abd3df786d96'),
-       ('e3bd5294-441f-4ae3-807d-d85314d91e50', 'Doc6', '844-991-4460', '_',
-        'f896b9e4-b639-43cc-882f-9d735597ef08', '5f29fc03-f6bd-49a6-9f41-c2ca229de403');
-
-INSERT INTO "staff" ("id", "name", "phone_number", "surname", "address_id", "blood_center_id", "version")
-values  ('e6dad8c3-1c14-4084-af7e-7aa653158cb2', 'Doc7', '844-991-4460', '_',
-         'f896b9e4-b639-43cc-882f-9d735597ef08', null, 1);
-
-
-
-INSERT INTO "account" ("id", "email", "is_activated", "password", "person_id")
-VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec1', 'isadonor+1@gmail.com', 'true',
-        '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi',
-        '07ce2e8b-d34b-4156-9dd4-f29ec4311675');
-
-INSERT INTO "account" ("id", "email", "is_activated", "password", "person_id")
-VALUES ('fbf7d96c-0bac-4081-bc8d-0d33e2ab0ec1', 'isadonor+2@gmail.com', 'true',
-        '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi',
-        '26d3381b-319d-425c-abd7-256f24f0a2e0');
-
-INSERT INTO "account" ("id", "email", "is_activated", "password", "person_id")
-VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec2', 'staffnopass@gmail.com', 'true',
-        '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi',
-        'b2fe1aff-bb8f-4fd1-b88e-aa39af8fc65c');
-
-INSERT INTO "account" ("id", "email", "is_activated", "password", "person_id")
-VALUES ('1cf5d56d-642a-4aad-9e91-d02453a9ae6b', 'staffunemployed@gmail.com', 'true',
-        '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi',
-        'e6dad8c3-1c14-4084-af7e-7aa653158cb2');
-
-INSERT INTO "account" ("id", "email", "is_activated", "password", "person_id")
-VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec3', 'staff@gmail.com', 'true',
-        '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi',
-        '32763cf0-6a56-49f1-ad25-5a90561cd204'),
-       ('90fc9983-d1d5-4723-8563-817b12036967', 'staff2@gmail.com', 'true',
-        '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi',
-        '883f13cc-25c8-4b60-b0e5-5ac938ad2594');
-
-/* Aleksandrov staff id je poslednja cifra povecana */
-INSERT INTO "account" ("id", "email", "is_activated", "password", "person_id")
-VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec5', 'staffadm@gmail.com', 'true',
-        '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi',
-        'e3bd5294-441f-4ae3-807d-d85314d91e50');
-
-
-INSERT INTO "account" ("id", "email", "is_activated", "password")
-VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec4', 'sysadmin@gmail.com', 'true',
-        '$2y$10$49qXN7cAPT7IanIsSk.3Be8GFLskf6eL.mcNQQAW6w0RRHCymHyBi');
-
-
-INSERT INTO account_role (account_id, role_id)
-VALUES ('fbf7d96c-0bac-4081-bc8d-0d33e2ab0ec1', 1);
-INSERT INTO account_role (account_id, role_id)
-VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec1', 1);
-INSERT INTO account_role (account_id, role_id)
-VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec2', 2);
-INSERT INTO account_role (account_id, role_id)
-VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec3', 2);
-INSERT INTO account_role (account_id, role_id)
-VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec4', 3);
-INSERT INTO account_role (account_id, role_id)
-VALUES ('90fc9983-d1d5-4723-8563-817b12036967', 2);
-INSERT INTO account_role (account_id, role_id)
-VALUES ('1cf5d56d-642a-4aad-9e91-d02453a9ae6b', 2);
-/*Aleksandar dodao */
-INSERT INTO account_role (account_id, role_id)
-VALUES ('fbf7d96c-0bac-4081-bc8d-0d32e2ab0ec5', 2);
-
-
-
-INSERT INTO "blood_quantity" ("id", "quantity", "blood_group", "blood_center_id")
-VALUES ('96ea2710-8c48-458b-b5d3-6256d087f257', '79', '0', '417c9b36-251a-4483-bfbf-abd3df786d96'),
-       ('ae16c5e9-5d37-4eb1-bbbf-bd56ea2f7588', '88', '0', 'aa116b1b-c59c-403b-b64f-db201d9375d2'),
-       ('1e0bbb68-48f8-4576-ab04-affe0c06806e', '91', '0', '206b28a3-4953-4cce-a077-c7d9fcdd599c'),
-       ('d44e74e8-2ca9-4998-bcff-4003bf021b23', '28', '0', '29e5ab72-265a-483b-84fc-6a7abbf5a6ab'),
-       ('79476721-c1ae-4f27-998c-8e72e9629cac', '27', '0', 'f7aaaba3-db07-46e8-8976-8e7c6b83ee4d'),
-       ('63b0e366-03a5-4e5f-82f8-175b5bf89e5b', '9', '0', 'c5380ac1-b5cb-4c3e-a5f7-5b1cd25c91f2'),
-       ('b6b157bf-5060-4b46-8973-f112b8871058', '66', '0', 'bd701425-588c-4d16-ab96-e71be2979a75'),
-       ('d3892d9a-659d-43be-a574-0867560f59cf', '89', '0', 'e8b6ca12-6a54-4d61-9cda-5a314094968e'),
-       ('837a0b74-e9e4-4f79-bd78-9286d89ca1fc', '70', '0', '00b4e355-20be-48a6-a192-cfab2f48f012'),
-       ('267f3094-dd62-4d2f-a69a-7a496549c202', '56', '0', '00f5108f-5ac3-48ed-8b5e-be609d3b4137'),
-       ('3e7cab68-e2fc-43c7-ae72-9335d65941f3', '100', '0', 'e642b333-182b-405d-a5b6-038fb518a3db'),
-       ('8d48565e-8285-488a-bdb1-dd965d3b23e0', '8', '0', '63bd71a5-dfdd-4db3-ac00-0b61e6183735'),
-       ('6ce69a34-1135-4961-96c8-b0f8a60b0db2', '40', '0', '2c8956aa-b596-45a1-9713-388c254119fd'),
-       ('9a5bb378-d415-4439-94a4-5b734426fbaa', '52', '0', '725e573d-e9bd-4658-9da1-d54b72a1d333'),
-       ('11af67b8-da00-44cf-b506-ea5e50b56858', '66', '0', '65587605-ef93-4beb-a46a-ba141a21ffd7'),
-       ('ca7539eb-d97b-4a94-b5bd-501d343130d3', '67', '0', '564661ad-20f3-4aba-841b-34d7ac33217f'),
-       ('8694d736-9826-4c3c-bfe9-7c28972fde8b', '22', '0', 'd08dd731-d59f-43c8-b2ff-785245f6048b'),
-       ('5ebc38b1-1394-4113-a1ab-354cf8d4d2c9', '28', '0', '1dc2e158-9faa-4940-9373-879fbe8ceada'),
-       ('7c70cc0b-49e7-413f-a74e-0cb780732cf5', '30', '0', '73548b7b-3695-4e37-989c-e2ba7a0130d0'),
-       ('f6ce18d1-c6a6-423b-b6f8-aba98046798a', '37', '0', '5f29fc03-f6bd-49a6-9f41-c2ca229de403'),
-       ('e5308475-a341-4930-829c-5c08bbeac7db', '77', '1', '417c9b36-251a-4483-bfbf-abd3df786d96'),
-       ('c9e2dad3-f17c-4eea-932b-d50708fbedbc', '53', '1', 'aa116b1b-c59c-403b-b64f-db201d9375d2'),
-       ('15538d98-0a8d-4d9b-93d5-ad92a5207cf3', '40', '1', '206b28a3-4953-4cce-a077-c7d9fcdd599c'),
-       ('e611a795-fa11-4289-b20b-cd2dd7c76d1b', '95', '1', '29e5ab72-265a-483b-84fc-6a7abbf5a6ab'),
-       ('6d2012b6-c6f6-4ab8-8559-a31ac4294374', '73', '1', 'f7aaaba3-db07-46e8-8976-8e7c6b83ee4d'),
-       ('713acd59-1eb1-4fa1-953c-3e5cc3ed308e', '51', '1', 'c5380ac1-b5cb-4c3e-a5f7-5b1cd25c91f2'),
-       ('4571fbe0-4e14-44b9-a3bb-09c2881f92e8', '18', '1', 'bd701425-588c-4d16-ab96-e71be2979a75'),
-       ('7e74b501-f452-43e5-8813-ad7b52192702', '14', '1', 'e8b6ca12-6a54-4d61-9cda-5a314094968e'),
-       ('e63e63fb-dda0-4624-8753-f78d439a3b31', '1', '1', '00b4e355-20be-48a6-a192-cfab2f48f012'),
-       ('74d11441-c9cb-40e7-acea-80c25afd2350', '23', '1', '00f5108f-5ac3-48ed-8b5e-be609d3b4137'),
-       ('76f8f34b-2b42-4b88-a478-ad39fe9c6a11', '25', '1', 'e642b333-182b-405d-a5b6-038fb518a3db'),
-       ('1b755d83-d2b3-4994-b7bd-875e7de4e92e', '31', '1', '63bd71a5-dfdd-4db3-ac00-0b61e6183735'),
-       ('c85474e1-9227-45f5-86a2-37722142fdb9', '58', '1', '2c8956aa-b596-45a1-9713-388c254119fd'),
-       ('ac42cafb-440b-49d8-8896-c58d0ce95464', '29', '1', '725e573d-e9bd-4658-9da1-d54b72a1d333'),
-       ('f8270f9f-92d5-4d9a-b248-2e1c98d40820', '36', '1', '65587605-ef93-4beb-a46a-ba141a21ffd7'),
-       ('4a296867-c0cc-4ae9-99ce-43427307bdee', '65', '1', '564661ad-20f3-4aba-841b-34d7ac33217f'),
-       ('8842e1b6-6550-402b-9ec8-fc06913f92c5', '3', '1', 'd08dd731-d59f-43c8-b2ff-785245f6048b'),
-       ('3e7cfeee-ab78-4ca3-8434-2d849a1c724f', '99', '1', '1dc2e158-9faa-4940-9373-879fbe8ceada'),
-       ('74432031-d393-4a40-a085-90d14dec0a85', '59', '1', '73548b7b-3695-4e37-989c-e2ba7a0130d0'),
-       ('7fb81ae6-88c4-4a6d-a7df-3e6346b1fea8', '47', '1', '5f29fc03-f6bd-49a6-9f41-c2ca229de403'),
-       ('79e80bd4-d428-40bf-8205-a9712391f605', '100', '2', '417c9b36-251a-4483-bfbf-abd3df786d96'),
-       ('ce02b08a-58c9-4476-88bc-31a3a8e82b00', '23', '2', 'aa116b1b-c59c-403b-b64f-db201d9375d2'),
-       ('ad5f0d1e-e418-48d9-b92c-6f35a56f364b', '64', '2', '206b28a3-4953-4cce-a077-c7d9fcdd599c'),
-       ('7bc81936-4638-43a6-8783-a16042dfc5eb', '88', '2', '29e5ab72-265a-483b-84fc-6a7abbf5a6ab'),
-       ('f81cb350-3659-4f18-a0fb-380c62408a68', '9', '2', 'f7aaaba3-db07-46e8-8976-8e7c6b83ee4d'),
-       ('ef6174c5-6ec7-45f5-ac32-3809d757f6a1', '17', '2', 'c5380ac1-b5cb-4c3e-a5f7-5b1cd25c91f2'),
-       ('634651df-a600-412c-87c6-a8ce32f2ac4b', '68', '2', 'bd701425-588c-4d16-ab96-e71be2979a75'),
-       ('93defe77-fe49-441a-9005-905c19775862', '56', '2', 'e8b6ca12-6a54-4d61-9cda-5a314094968e'),
-       ('95b66d5d-e499-4c8b-87d1-f6d3c3e0ba88', '93', '2', '00b4e355-20be-48a6-a192-cfab2f48f012'),
-       ('bae0714c-f2cd-459f-8299-a4a3457951fb', '31', '2', '00f5108f-5ac3-48ed-8b5e-be609d3b4137'),
-       ('1330dfc5-aca9-4f0d-be1f-84f3b6739ef1', '6', '2', 'e642b333-182b-405d-a5b6-038fb518a3db'),
-       ('888364a1-a6d5-4cad-8f25-7b6dbb139598', '46', '2', '63bd71a5-dfdd-4db3-ac00-0b61e6183735'),
-       ('74a039a8-43b2-4f5b-ab7e-091ed4ac5f17', '80', '2', '2c8956aa-b596-45a1-9713-388c254119fd'),
-       ('72c2a07e-be3a-40d6-855b-112aa79f3ce2', '62', '2', '725e573d-e9bd-4658-9da1-d54b72a1d333'),
-       ('9b2decbb-f7d2-49f7-bc2d-9e4e2517c973', '43', '2', '65587605-ef93-4beb-a46a-ba141a21ffd7'),
-       ('fd7da503-4a47-460c-ac3d-980767820b6b', '54', '2', '564661ad-20f3-4aba-841b-34d7ac33217f'),
-       ('923aaa72-47c8-4cb2-af93-6e60345b2a49', '39', '2', 'd08dd731-d59f-43c8-b2ff-785245f6048b'),
-       ('0c36e625-9740-448b-88a8-c1d86241643d', '73', '2', '1dc2e158-9faa-4940-9373-879fbe8ceada'),
-       ('52607246-c903-4114-bbdf-f855e41ef055', '13', '2', '73548b7b-3695-4e37-989c-e2ba7a0130d0'),
-       ('406d5f81-e8c8-4919-813a-e96e531f5b8a', '65', '2', '5f29fc03-f6bd-49a6-9f41-c2ca229de403'),
-       ('6980b5a5-36af-46c5-aa35-edff210c8e7d', '61', '3', '417c9b36-251a-4483-bfbf-abd3df786d96'),
-       ('a0240893-e27b-42f0-9904-a4e1a03be109', '80', '3', 'aa116b1b-c59c-403b-b64f-db201d9375d2'),
-       ('2cc451d6-1dca-4425-9fa0-2ce4eaf5435f', '35', '3', '206b28a3-4953-4cce-a077-c7d9fcdd599c'),
-       ('f0ef3525-09a8-4eeb-af9c-fcb79f6b8a75', '38', '3', '29e5ab72-265a-483b-84fc-6a7abbf5a6ab'),
-       ('0ef1e0a2-cc42-4ea0-aa6c-d4f7bed3b795', '45', '3', 'f7aaaba3-db07-46e8-8976-8e7c6b83ee4d'),
-       ('39370079-9a49-4804-85c4-7cabe7ebd2b3', '64', '3', 'c5380ac1-b5cb-4c3e-a5f7-5b1cd25c91f2'),
-       ('cb25ffc7-4c29-441f-a64e-84b75fe6bb13', '22', '3', 'bd701425-588c-4d16-ab96-e71be2979a75'),
-       ('c6692083-e827-493c-b989-18068f80501a', '71', '3', 'e8b6ca12-6a54-4d61-9cda-5a314094968e'),
-       ('704f7704-4751-4c64-95d5-d959a2943124', '13', '3', '00b4e355-20be-48a6-a192-cfab2f48f012'),
-       ('6bff9bf9-4ff6-44d3-ba52-94a599382b74', '3', '3', '00f5108f-5ac3-48ed-8b5e-be609d3b4137'),
-       ('51aa70cf-94ce-4ce6-9a07-9b57f2d7c043', '83', '3', 'e642b333-182b-405d-a5b6-038fb518a3db'),
-       ('a3326945-974d-4d03-b4a5-8437e8223e97', '56', '3', '63bd71a5-dfdd-4db3-ac00-0b61e6183735'),
-       ('6c518742-580c-4876-b8f5-0df8a2a97c6c', '29', '3', '2c8956aa-b596-45a1-9713-388c254119fd'),
-       ('894fb38e-a9ba-4c21-a095-e9b6080f6988', '58', '3', '725e573d-e9bd-4658-9da1-d54b72a1d333'),
-       ('51814d4c-935b-4413-aa92-24d45edcfa7e', '88', '3', '65587605-ef93-4beb-a46a-ba141a21ffd7'),
-       ('253d36a1-07e3-44ef-aae5-b2056060e95b', '11', '3', '564661ad-20f3-4aba-841b-34d7ac33217f'),
-       ('8e51da01-1d54-4083-b2fa-e290e10a7aca', '7', '3', 'd08dd731-d59f-43c8-b2ff-785245f6048b'),
-       ('ef0c5b02-87a5-45df-98ec-55807b55d56e', '13', '3', '1dc2e158-9faa-4940-9373-879fbe8ceada'),
-       ('07f210e9-e03c-4902-8ebc-d95d9b2ec877', '33', '3', '73548b7b-3695-4e37-989c-e2ba7a0130d0'),
-       ('e94b334e-c5d2-4ee9-a06d-cc649a69350b', '37', '3', '5f29fc03-f6bd-49a6-9f41-c2ca229de403'),
-       ('d898e8dd-8266-4d29-af97-3be2de344500', '76', '4', '417c9b36-251a-4483-bfbf-abd3df786d96'),
-       ('507290f5-c15f-46fd-908d-2db8e409d429', '22', '4', 'aa116b1b-c59c-403b-b64f-db201d9375d2'),
-       ('4534aac7-e10b-4b88-8967-d0cd6405a8f6', '68', '4', '206b28a3-4953-4cce-a077-c7d9fcdd599c'),
-       ('0ece2542-5caf-43ba-930e-8cb0546581d7', '11', '4', '29e5ab72-265a-483b-84fc-6a7abbf5a6ab'),
-       ('41ea586f-1f6b-4752-b3ca-5867646f1aa2', '20', '4', 'f7aaaba3-db07-46e8-8976-8e7c6b83ee4d'),
-       ('62cc676d-2959-4e5c-a933-de917df6e2e3', '78', '4', 'c5380ac1-b5cb-4c3e-a5f7-5b1cd25c91f2'),
-       ('bb4b6d5d-c62b-47f3-8b82-c95efb4f809f', '7', '4', 'bd701425-588c-4d16-ab96-e71be2979a75'),
-       ('4864c257-bab3-4a0e-82be-6168f9de79f8', '29', '4', 'e8b6ca12-6a54-4d61-9cda-5a314094968e'),
-       ('c3eede10-ae16-4238-b6d3-570145f74e9e', '37', '4', '00b4e355-20be-48a6-a192-cfab2f48f012'),
-       ('c4cb04a6-4b96-4b9e-aab1-6b5d799a9042', '10', '4', '00f5108f-5ac3-48ed-8b5e-be609d3b4137'),
-       ('223a276e-1da1-4fa6-96c1-91f16b21363e', '73', '4', 'e642b333-182b-405d-a5b6-038fb518a3db'),
-       ('40bd0595-05d4-47bb-8c55-23f66c1acde1', '79', '4', '63bd71a5-dfdd-4db3-ac00-0b61e6183735'),
-       ('a44b1be6-1cfa-446b-9005-af24a16a1847', '55', '4', '2c8956aa-b596-45a1-9713-388c254119fd'),
-       ('1abfd78a-01d5-470b-83c6-c0b5b837cd22', '55', '4', '725e573d-e9bd-4658-9da1-d54b72a1d333'),
-       ('aef6892e-a13f-47b7-93b0-ab284414599a', '66', '4', '65587605-ef93-4beb-a46a-ba141a21ffd7'),
-       ('a115fdf5-aef4-42ce-970a-d72ae60456e1', '72', '4', '564661ad-20f3-4aba-841b-34d7ac33217f'),
-       ('d55fed8a-a141-4239-9403-9c2930bbd008', '59', '4', 'd08dd731-d59f-43c8-b2ff-785245f6048b'),
-       ('c305f136-581a-43dd-b8fb-1c55b2252d8c', '26', '4', '1dc2e158-9faa-4940-9373-879fbe8ceada'),
-       ('0f875da7-9d13-4324-a09d-ffb756027084', '66', '4', '73548b7b-3695-4e37-989c-e2ba7a0130d0'),
-       ('beeafe29-6455-4665-9bca-5a07f1ea0cc4', '2', '4', '5f29fc03-f6bd-49a6-9f41-c2ca229de403'),
-       ('73fcefb8-24a5-4280-b680-b8a6ba9fb3de', '26', '5', '417c9b36-251a-4483-bfbf-abd3df786d96'),
-       ('4bb4e660-0245-44b7-b7e6-f4e3f331f8c8', '96', '5', 'aa116b1b-c59c-403b-b64f-db201d9375d2'),
-       ('6bea1db6-386e-4b02-b9cb-87798cfc5897', '79', '5', '206b28a3-4953-4cce-a077-c7d9fcdd599c'),
-       ('55539cf5-6159-44b6-a8f7-5ca01d06b4ac', '60', '5', '29e5ab72-265a-483b-84fc-6a7abbf5a6ab'),
-       ('7d1f7683-73cb-49d1-ba05-5de7e1dcc44e', '86', '5', 'f7aaaba3-db07-46e8-8976-8e7c6b83ee4d'),
-       ('74b96bf5-fa6a-4386-a5c0-f6eb8952abed', '94', '5', 'c5380ac1-b5cb-4c3e-a5f7-5b1cd25c91f2'),
-       ('243fb6b9-2a6c-495e-93c7-6c679c292d6a', '54', '5', 'bd701425-588c-4d16-ab96-e71be2979a75'),
-       ('9f279241-2549-472b-993e-dab275687d59', '55', '5', 'e8b6ca12-6a54-4d61-9cda-5a314094968e'),
-       ('20262e80-57c5-4a4d-b399-95b0a578b7bd', '72', '5', '00b4e355-20be-48a6-a192-cfab2f48f012'),
-       ('49c9fbfc-df64-40e9-881f-8160c0534785', '45', '5', '00f5108f-5ac3-48ed-8b5e-be609d3b4137'),
-       ('e6478d4a-b853-4123-a4a2-9c62bebc2d3c', '37', '5', 'e642b333-182b-405d-a5b6-038fb518a3db'),
-       ('b945b007-8e43-4326-b80d-3b242f716bab', '2', '5', '63bd71a5-dfdd-4db3-ac00-0b61e6183735'),
-       ('a330fdf0-0b4e-4c32-a3fe-24bb4b6590c4', '7', '5', '2c8956aa-b596-45a1-9713-388c254119fd'),
-       ('a9467d1a-1a3c-4b17-a213-88627be0d705', '99', '5', '725e573d-e9bd-4658-9da1-d54b72a1d333'),
-       ('60fd86c5-1d93-4e76-89d4-7a475afa16d5', '32', '5', '65587605-ef93-4beb-a46a-ba141a21ffd7'),
-       ('37398148-3281-4133-a8ab-96b74f78c3a7', '23', '5', '564661ad-20f3-4aba-841b-34d7ac33217f'),
-       ('11ba5a3e-b7fa-41f5-ad6e-de15c25fd551', '26', '5', 'd08dd731-d59f-43c8-b2ff-785245f6048b'),
-       ('7444735e-22f7-45d3-8977-76a90ef0afce', '50', '5', '1dc2e158-9faa-4940-9373-879fbe8ceada'),
-       ('c7990064-011b-4f36-881f-0ecc81e8db43', '56', '5', '73548b7b-3695-4e37-989c-e2ba7a0130d0'),
-       ('da071a0b-c154-4ca8-9fa6-0d9c5159a2f4', '33', '5', '5f29fc03-f6bd-49a6-9f41-c2ca229de403'),
-       ('52522ba3-a7dd-489c-bed5-42e2e8a9b9b3', '72', '6', '417c9b36-251a-4483-bfbf-abd3df786d96'),
-       ('cc0cc602-25da-49b7-88a2-75d48b63b5e8', '21', '6', 'aa116b1b-c59c-403b-b64f-db201d9375d2'),
-       ('df67e36f-a883-4c74-aec5-17898fe3e747', '55', '6', '206b28a3-4953-4cce-a077-c7d9fcdd599c'),
-       ('bfbd32f8-330b-4334-b47b-21c12d00b52b', '22', '6', '29e5ab72-265a-483b-84fc-6a7abbf5a6ab'),
-       ('7d096509-b329-418a-998d-244d4d6dd39c', '52', '6', 'f7aaaba3-db07-46e8-8976-8e7c6b83ee4d'),
-       ('1a014d77-75d6-4ac1-991c-4d0ab5523790', '44', '6', 'c5380ac1-b5cb-4c3e-a5f7-5b1cd25c91f2'),
-       ('81b8248b-2d74-4dc1-b269-8dd4743a153a', '74', '6', 'bd701425-588c-4d16-ab96-e71be2979a75'),
-       ('859bf271-0b29-4eac-876b-4e6dfbe3a2b4', '62', '6', 'e8b6ca12-6a54-4d61-9cda-5a314094968e'),
-       ('475d7063-92b3-438f-813e-1d56d0e0d7a6', '100', '6', '00b4e355-20be-48a6-a192-cfab2f48f012'),
-       ('7d087370-fb70-4560-a2aa-166ce8532085', '48', '6', '00f5108f-5ac3-48ed-8b5e-be609d3b4137'),
-       ('1f0e65fc-770b-4082-9921-886cba6a4427', '94', '6', 'e642b333-182b-405d-a5b6-038fb518a3db'),
-       ('5695a2b0-9d7c-4d86-b440-6cd7d12c3292', '95', '6', '63bd71a5-dfdd-4db3-ac00-0b61e6183735'),
-       ('265b4a45-44a0-4467-a43e-32d718c38a05', '71', '6', '2c8956aa-b596-45a1-9713-388c254119fd'),
-       ('bd000260-cf30-4e7e-adcc-a1acc18720ba', '54', '6', '725e573d-e9bd-4658-9da1-d54b72a1d333'),
-       ('74e607e8-daa7-4c79-831f-42ed574b7b9a', '5', '6', '65587605-ef93-4beb-a46a-ba141a21ffd7'),
-       ('0f1fcfc4-a7d5-4dae-81e5-c593fac1fc05', '15', '6', '564661ad-20f3-4aba-841b-34d7ac33217f'),
-       ('2815863d-b4a9-4c6f-ac15-3f2acea2718b', '53', '6', 'd08dd731-d59f-43c8-b2ff-785245f6048b'),
-       ('41c8589f-3fe0-46a8-84a6-2aef5cdb2441', '59', '6', '1dc2e158-9faa-4940-9373-879fbe8ceada'),
-       ('63c46cd3-7af2-4420-931b-83f6946774fc', '81', '6', '73548b7b-3695-4e37-989c-e2ba7a0130d0'),
-       ('d5dac8a6-8f79-4811-aeed-3d6ccc24fb5c', '100', '6', '5f29fc03-f6bd-49a6-9f41-c2ca229de403'),
-       ('993d6e37-9f43-4228-8ff2-e29e328dcdb8', '8', '7', '417c9b36-251a-4483-bfbf-abd3df786d96'),
-       ('1dd65494-4449-47b4-8b0a-061faf08a739', '72', '7', 'aa116b1b-c59c-403b-b64f-db201d9375d2'),
-       ('72a6965c-a493-4637-8d1b-2f74c7503cd4', '74', '7', '206b28a3-4953-4cce-a077-c7d9fcdd599c'),
-       ('bcfdac6c-5ea7-4108-8c90-ec2811338be8', '81', '7', '29e5ab72-265a-483b-84fc-6a7abbf5a6ab'),
-       ('7f221c5a-4daf-4cdf-945d-24870712729a', '77', '7', 'f7aaaba3-db07-46e8-8976-8e7c6b83ee4d'),
-       ('053b5f75-0d7d-4756-816a-d64677dfb2d1', '75', '7', 'c5380ac1-b5cb-4c3e-a5f7-5b1cd25c91f2'),
-       ('db1ffd6f-9549-43f8-9023-9d3aa0483447', '15', '7', 'bd701425-588c-4d16-ab96-e71be2979a75'),
-       ('2abbbc6c-ad3d-4b73-b191-4c9aa35fafb0', '2', '7', 'e8b6ca12-6a54-4d61-9cda-5a314094968e'),
-       ('1ede6535-0fd9-4d67-8973-1ec39386f07d', '89', '7', '00b4e355-20be-48a6-a192-cfab2f48f012'),
-       ('94755950-3402-425e-be3d-13cac55846d0', '48', '7', '00f5108f-5ac3-48ed-8b5e-be609d3b4137'),
-       ('ff88f446-1b2e-402e-beb5-d924a9018171', '16', '7', 'e642b333-182b-405d-a5b6-038fb518a3db'),
-       ('a309069e-e2be-4bf6-aa50-312ec1b4fdd1', '51', '7', '63bd71a5-dfdd-4db3-ac00-0b61e6183735'),
-       ('fccc02a2-2e49-48bd-8540-5f757285841d', '56', '7', '2c8956aa-b596-45a1-9713-388c254119fd'),
-       ('645b0b1f-c479-4806-8afe-94a2204ac27c', '33', '7', '725e573d-e9bd-4658-9da1-d54b72a1d333'),
-       ('02f1e4dc-3179-41fb-86cc-d085e7c43b6a', '78', '7', '65587605-ef93-4beb-a46a-ba141a21ffd7'),
-       ('d1a3bc3e-85af-46da-b6e3-2a7ff7325ce8', '70', '7', '564661ad-20f3-4aba-841b-34d7ac33217f'),
-       ('f7f41d17-cb25-4d3c-a92f-abc793caa3b2', '58', '7', 'd08dd731-d59f-43c8-b2ff-785245f6048b'),
-       ('24705880-47de-436c-b2df-5fc4c371c0ba', '18', '7', '1dc2e158-9faa-4940-9373-879fbe8ceada'),
-       ('ec0cf96b-fc68-4493-9a44-1af5a3a5a310', '31', '7', '73548b7b-3695-4e37-989c-e2ba7a0130d0'),
-       ('be7709e8-f53f-4c0e-b21b-6e38bb458ed1', '95', '7', '5f29fc03-f6bd-49a6-9f41-c2ca229de403');
-
-INSERT INTO appointment (id, start_time, end_time, blood_center_id, is_premade)
-VALUES ('dbf02dce-a9a1-4e20-aaf0-5fca92299407', '2020-12-21 05:00:00.000', '2020-12-21 05:30:00.000',
-        '417c9b36-251a-4483-bfbf-abd3df786d96', true),
-       ('9e16d8b0-a805-4ffb-a08b-d50e7fef6be0', '2020-12-21 06:30:00.000', '2020-12-21 07:00:00.000',
-        '417c9b36-251a-4483-bfbf-abd3df786d96', true),
-       ('f9854a8d-9dfb-49f5-abf4-d993fac9aac3', '2020-12-21 08:30:00.000', '2020-12-21 09:30:00.000',
-        '417c9b36-251a-4483-bfbf-abd3df786d96', false),
-       ('c41a832e-b94c-4c6a-b3fa-e743d5f954b4', '2020-12-21 09:30:00.000', '2020-12-21 10:30:00.000',
-        '417c9b36-251a-4483-bfbf-abd3df786d96', true),
-
-       ('da9734c6-d91c-47b3-9944-816f51957405', '2020-12-21 05:00:00.000', '2020-12-21 06:00:00.000',
-        '417c9b36-251a-4483-bfbf-abd3df786d96', true),
-       ('61156c70-936a-428f-91c5-04a9926dd8dc', '2020-12-21 07:30:00.000', '2020-12-21 09:00:00.000',
-        '417c9b36-251a-4483-bfbf-abd3df786d96', true),
-       ('0a738526-aae9-43f3-b81a-7f2caf792825', '2020-12-21 09:30:00.000', '2020-12-21 11:00:00.000',
-        '417c9b36-251a-4483-bfbf-abd3df786d96', true),
-
-       ('69b72768-92df-4bd5-ad0a-47bef7cec66e', '2020-12-21 08:30:00.000', '2020-12-21 10:00:00.000',
-        '417c9b36-251a-4483-bfbf-abd3df786d96', true),
-
-       ('be1bc87b-c7b5-4c6d-8149-b3078e3cc479', '2020-12-21 06:00:00.000', '2020-12-21 07:00:00.000',
-        '417c9b36-251a-4483-bfbf-abd3df786d96', true),
-       ('c166c577-e870-438f-bca8-0b441f348317', '2020-12-21 09:00:00.000', '2020-12-21 09:30:00.000',
-        '417c9b36-251a-4483-bfbf-abd3df786d96', true),
-       ('c1f74508-c3a1-4beb-b0d3-fe3399040071', '2020-12-21 09:30:00.000', '2020-12-21 10:30:00.000',
-        '417c9b36-251a-4483-bfbf-abd3df786d96', true),
-       ('9bdaeb58-381a-4586-919c-f923df6bdd39', '2020-12-21 11:15:00.000', '2020-12-21 11:30:00.000',
-        '417c9b36-251a-4483-bfbf-abd3df786d96', true),
-
-       ('9bdaeb58-381a-4586-917c-f923df6bdd39', '2020-12-21 11:15:00.000', '2020-12-21 11:30:00.000',
-        '417c9b36-251a-4483-bfbf-abd3df786d96', true),
-
-/* Aleksandrovi appointmenti*/
-
-       ('23e7e896-f37d-4e2d-8bf8-8800c1739028', '2023-01-30 11:15:00.000', '2023-01-30 11:30:00.000',
-        '417c9b36-251a-4483-bfbf-abd3df786d96', true),
-
-       ('5958ab52-5097-41b8-9b5c-c33a130a939d', '2020-12-23 11:15:00.000', '2020-12-23 11:50:00.000',
-        '5f29fc03-f6bd-49a6-9f41-c2ca229de403', true),
-
-       ('1e564ae0-73df-47fa-8ea7-b17e8e3e4551', '2020-12-24 13:15:00.000', '2020-12-24 14:00:00.000',
-        '5f29fc03-f6bd-49a6-9f41-c2ca229de403', true),
-
-       ('bf6ecac0-72d4-4e5a-96a2-422b5c0f6db8', '2020-12-23 14:15:00.000', '2020-12-23 14:30:00.000',
-        '5f29fc03-f6bd-49a6-9f41-c2ca229de403', true),
-
-       ('6843ec41-fc00-4f18-b891-715d9a897f81', '2020-12-28 15:15:00.000', '2020-12-28 15:45:00.000',
-        '5f29fc03-f6bd-49a6-9f41-c2ca229de403', true);
-
-
-INSERT INTO appointment_staff (appointment_id, staff_id)
-VALUES ('dbf02dce-a9a1-4e20-aaf0-5fca92299407', '32763cf0-6a56-49f1-ad25-5a90561cd204'),
-       ('9e16d8b0-a805-4ffb-a08b-d50e7fef6be0', '32763cf0-6a56-49f1-ad25-5a90561cd204'),
-       ('f9854a8d-9dfb-49f5-abf4-d993fac9aac3', '32763cf0-6a56-49f1-ad25-5a90561cd204'),
-       ('c41a832e-b94c-4c6a-b3fa-e743d5f954b4', '32763cf0-6a56-49f1-ad25-5a90561cd204'),
-
-       ('da9734c6-d91c-47b3-9944-816f51957405', '883f13cc-25c8-4b60-b0e5-5ac938ad2594'),
-       ('61156c70-936a-428f-91c5-04a9926dd8dc', '883f13cc-25c8-4b60-b0e5-5ac938ad2594'),
-       ('0a738526-aae9-43f3-b81a-7f2caf792825', '883f13cc-25c8-4b60-b0e5-5ac938ad2594'),
-
-       ('9e16d8b0-a805-4ffb-a08b-d50e7fef6be0', '1e2df797-37b7-4241-a2b0-99e262a20912'),
-       ('69b72768-92df-4bd5-ad0a-47bef7cec66e', '1e2df797-37b7-4241-a2b0-99e262a20912'),
-
-       ('be1bc87b-c7b5-4c6d-8149-b3078e3cc479', 'fa41a439-0f90-46a8-96af-16bc1068d50c'),
-       ('c166c577-e870-438f-bca8-0b441f348317', 'fa41a439-0f90-46a8-96af-16bc1068d50c'),
-       ('c1f74508-c3a1-4beb-b0d3-fe3399040071', 'fa41a439-0f90-46a8-96af-16bc1068d50c'),
-       ('9bdaeb58-381a-4586-919c-f923df6bdd39', 'fa41a439-0f90-46a8-96af-16bc1068d50c'),
-       ('9bdaeb58-381a-4586-917c-f923df6bdd39', 'fa41a439-0f90-46a8-96af-16bc1068d50c'),
-
-/* Aleksandrovi appointmenti */
-
-       ('23e7e896-f37d-4e2d-8bf8-8800c1739028', 'e3bd5294-441f-4ae3-807d-d85314d91e50'),
-       ('5958ab52-5097-41b8-9b5c-c33a130a939d', 'e3bd5294-441f-4ae3-807d-d85314d91e50'),
-       ('1e564ae0-73df-47fa-8ea7-b17e8e3e4551', 'e3bd5294-441f-4ae3-807d-d85314d91e50'),
-       ('bf6ecac0-72d4-4e5a-96a2-422b5c0f6db8', 'e3bd5294-441f-4ae3-807d-d85314d91e50'),
-       ('6843ec41-fc00-4f18-b891-715d9a897f81', 'e3bd5294-441f-4ae3-807d-d85314d91e50');
-
-
----Jovanovo za visiting history
-INSERT INTO appointment (id, start_time, end_time, blood_center_id, is_premade)
-VALUES ('14bbd68b-7465-47fa-ae6b-cc389b4d1405', '2020-12-21 05:00:00.000', '2020-12-21 05:30:00.000',
-        '417c9b36-251a-4483-bfbf-abd3df786d96', true);
-
-INSERT INTO appointment (id, start_time, end_time, blood_center_id, is_premade)
-VALUES ('ce4891a5-2dc5-4251-907e-926db0007fb9', '2020-12-21 05:00:00.000', '2020-12-21 05:30:00.000',
-        '417c9b36-251a-4483-bfbf-abd3df786d96', true);
-
-INSERT INTO appointment_staff (appointment_id, staff_id)
-VALUES ('14bbd68b-7465-47fa-ae6b-cc389b4d1405', '32763cf0-6a56-49f1-ad25-5a90561cd204');
-
-INSERT INTO appointment_staff (appointment_id, staff_id)
-VALUES ('ce4891a5-2dc5-4251-907e-926db0007fb9', '32763cf0-6a56-49f1-ad25-5a90561cd204');
-
-INSERT INTO appointment_scheduling_history(id, qrcode, issuing_date, status, appointment_id, blood_donor_id)
-VALUES ('7af0b527-5209-4c33-b7fb-2d0df7214728', 'QR', '2020-12-21 11:15:00.000', 3,
-        '9e16d8b0-a805-4ffb-a08b-d50e7fef6be0', '07ce2e8b-d34b-4156-9dd4-f29ec4311675'),
-       ('759415d9-b4d1-45ee-9067-f53b7f945f16', 'QR', '2022-12-21 11:15:00.000', 1, --Needed one for visited
-        'f9854a8d-9dfb-49f5-abf4-d993fac9aac3', '26d3381b-319d-425c-abd7-256f24f0a2e0'),
-       ('95fcdcbe-3b7e-40cf-9494-e0215593d025', 'QR', '2020-12-21 11:15:00.000', 3,
-        'f9854a8d-9dfb-49f5-abf4-d993fac9aac3', '07ce2e8b-d34b-4156-9dd4-f29ec4311675'),
-
-/* Aleksandrov history*/
-
-       ('76b8e99c-bad5-4ea5-9810-cdb4bb70b2a0', 'QR', '2020-12-22 11:15:00.000', 0,
-        '23e7e896-f37d-4e2d-8bf8-8800c1739028', '07ce2e8b-d34b-4156-9dd4-f29ec4311675'),
-
-       ('4d735d88-680a-4ead-bf98-51cc399c9d61', 'QR', '2022-12-22 11:15:00.000', 0,
-        '5958ab52-5097-41b8-9b5c-c33a130a939d', '26d3381b-319d-425c-abd7-256f24f0a2e0'),
-
-       ('bea68ca3-9fb9-4e0c-b94f-c2d0774c3f39', 'QR', '2020-12-22 11:15:00.000', 0,
-        '1e564ae0-73df-47fa-8ea7-b17e8e3e4551', '07ce2e8b-d34b-4156-9dd4-f29ec4311675'),
-
-       ('73be90cd-aa95-43ad-84d0-cb5baa6e0b59', 'QR', '2022-12-22 11:15:00.000', 0,
-        'bf6ecac0-72d4-4e5a-96a2-422b5c0f6db8', '26d3381b-319d-425c-abd7-256f24f0a2e0'),
-
-       ('062bd33b-d578-4e65-b4dc-fecf5b9fc668', 'QR', '2022-12-22 11:15:00.000', 0,
-        '6843ec41-fc00-4f18-b891-715d9a897f81', '26d3381b-319d-425c-abd7-256f24f0a2e0');
-
-
-
-INSERT INTO appointment_scheduling_history
-    (id, qrcode, issuing_date, status, appointment_id, blood_donor_id)
-VALUES ('3a098534-2565-4f33-b44f-429b0f74cfa7', 'QR', '2020-12-21 11:15:00.000', 1,
-        '14bbd68b-7465-47fa-ae6b-cc389b4d1405', '07ce2e8b-d34b-4156-9dd4-f29ec4311675');
-
-INSERT INTO appointment_scheduling_history
-    (id, qrcode, issuing_date, status, appointment_id, blood_donor_id)
-VALUES ('ce10170c-e043-4beb-a059-2b799e263d77', 'QR', '2020-12-21 11:15:00.000', 1,
-        'ce4891a5-2dc5-4251-907e-926db0007fb9', '07ce2e8b-d34b-4156-9dd4-f29ec4311675');
-
-
-
-INSERT INTO appointment_report
-    (id, text, appointment_scheduling_history_id)
-VALUES ('342c7203-deae-4118-b330-f90be9ef649b', 'OVDE SE BAS MNOGO TOGA DESILO gas gas ',
-        '3a098534-2565-4f33-b44f-429b0f74cfa7');
-
-INSERT INTO appointment_report
-    (id, text, appointment_scheduling_history_id)
-VALUES ('28e4189f-7c59-4d48-b357-9eee5612b842', 'OVDE SE BAS MNOGOaa a a a a aa  TOGA DESILO gas gas ',
-        'ce10170c-e043-4beb-a059-2b799e263d77');
-
-/* Stefanov equipment*/
-INSERT INTO equipment (id, name, quantity, blood_center_id)
-VALUES ('BDE5B263-37D3-427A-A377-BA167AF88858', 'Lopate', '100', '5f29fc03-f6bd-49a6-9f41-c2ca229de403'),
-       ('0ED7565A-ABFE-4520-80A6-E7720ABC879C', 'Sekire', '100', '5f29fc03-f6bd-49a6-9f41-c2ca229de403'),
-       ('2BCCF1DD-E9F6-469C-BEE0-F119A9C0E55D', 'Kasike', '100', '5f29fc03-f6bd-49a6-9f41-c2ca229de403'),
-       ('B82DCB56-7A00-48AA-8132-4CAA98D03205', 'Viljuske', '100', '5f29fc03-f6bd-49a6-9f41-c2ca229de403'),
-       ('8A5637D6-B290-4CCD-9A15-01E82762A286', 'Asovi', '10', '417c9b36-251a-4483-bfbf-abd3df786d96'),
-       ('45E9B102-E3A1-4738-8288-7F0AA85F3E6F', 'Traktori', '10', '417c9b36-251a-4483-bfbf-abd3df786d96'),
-       ('87A49DA5-17B0-497E-9155-2D3EA53FC631', 'Kosilice', '10', '417c9b36-251a-4483-bfbf-abd3df786d96'),
-       ('0AABB354-8592-4FBB-B8A0-CEE8F0A7C56F', 'Nozevi', '10', '417c9b36-251a-4483-bfbf-abd3df786d96');
-/*dodao poslednja 4*/
-
--- Blood donor adresses first digit is changing
-INSERT INTO public.address (id, city, country, latitude, longitude, "number", street)
-VALUES ('05886e19-2c10-41fd-8d1f-32af32b80b99', 'A', 'asdf', 0.0, 0.0, 'a', 'asdf'),
-       ('15886e19-2c10-41fd-8d1f-32af32b80b99', 'B', 'asdf', 0.0, 0.0, 'a', 'asdf'),
-       ('25886e19-2c10-41fd-8d1f-32af32b80b99', 'C', 'asdf', 0.0, 0.0, 'a', 'asdf'),
-       ('35886e19-2c10-41fd-8d1f-32af32b80b99', 'D', 'asdf', 0.0, 0.0, 'a', 'asdf'),
-       ('45886e19-2c10-41fd-8d1f-32af32b80b99', 'E', 'asdf', 0.0, 0.0, 'a', 'asdf'),
-       ('55886e19-2c10-41fd-8d1f-32af32b80b99', 'F', 'asdf', 0.0, 0.0, 'a', 'asdf'),
-       ('65886e19-2c10-41fd-8d1f-32af32b80b99', 'G', 'asdf', 0.0, 0.0, 'a', 'asdf'),
-       ('75886e19-2c10-41fd-8d1f-32af32b80b99', 'H', 'asdf', 0.0, 0.0, 'a', 'asdf'),
-       ('85886e19-2c10-41fd-8d1f-32af32b80b99', 'H', 'asdf', 0.0, 0.0, 'a', 'asdf'),
-       ('95886e19-2c10-41fd-8d1f-32af32b80b99', 'I', 'asdf', 0.0, 0.0, 'a', 'asdf'),
-       ('a5886e19-2c10-41fd-8d1f-32af32b80b99', 'J', 'asdf', 0.0, 0.0, 'a', 'asdf'),
-       ('b5886e19-2c10-41fd-8d1f-32af32b80b99', 'K', 'asdf', 0.0, 0.0, 'a', 'asdf'),
-       ('c5886e19-2c10-41fd-8d1f-32af32b80b99', 'L', 'asdf', 0.0, 0.0, 'a', 'asdf');
-
-
--- Blood donors first digit is changing for id and second and third  from the end for jmbg
-INSERT INTO public.blood_donor (id, name, phone_number, surname, gender, institution, jmbg, occupation, penalties,
-                                points, address_id, questionnaire_id)
-VALUES ('0c285f71-c0be-4a50-bf10-575a3364e6ab', 'Stefan', '231243', 'Matkovic', 0, 'asdfa', '1234567890003', 'asdfa', 0,
-        0, '05886e19-2c10-41fd-8d1f-32af32b80b99', NULL),
-       ('1c285f71-c0be-4a50-bf10-575a3364e6ab', 'Filip', '231243', 'Mrdjanovic', 0, 'asdfa', '1234567890013', 'asdfa',
-        0, 0, '05886e19-2c10-41fd-8d1f-32af32b80b99', NULL),
-       ('2c285f71-c0be-4a50-bf10-575a3364e6ab', 'Jovana', '231243', 'Nedeljkovic', 1, 'asdfa', '1234567890023', 'asdfa',
-        0, 0, '05886e19-2c10-41fd-8d1f-32af32b80b99', NULL),
-       ('3c285f71-c0be-4a50-bf10-575a3364e6ab', 'Dane', '231243', 'Misic', 0, 'asdfa', '1234567890033', 'asdfa', 0, 0,
-        '05886e19-2c10-41fd-8d1f-32af32b80b99', NULL),
-       ('4c285f71-c0be-4a50-bf10-575a3364e6ab', 'Dejan', '231243', 'Barcal', 0, 'asdfa', '1234567890043', 'asdfa', 0, 0,
-        '05886e19-2c10-41fd-8d1f-32af32b80b99', NULL),
-       ('5c285f71-c0be-4a50-bf10-575a3364e6ab', 'Sergej', '231243', 'Madic', 0, 'asdfa', '1234567890053', 'asdfa', 0, 0,
-        '05886e19-2c10-41fd-8d1f-32af32b80b99', NULL),
-       ('6c285f71-c0be-4a50-bf10-575a3364e6ab', 'Nikola', '231243', 'Vukic', 0, 'asdfa', '1234567890063', 'asdfa', 0, 0,
-        '05886e19-2c10-41fd-8d1f-32af32b80b99', NULL),
-       ('7c285f71-c0be-4a50-bf10-575a3364e6ab', 'Uros', '231243', 'Spasenic', 0, 'asdfa', '1234567890073', 'asdfa', 0,
-        0, '05886e19-2c10-41fd-8d1f-32af32b80b99', NULL),
-       ('8c285f71-c0be-4a50-bf10-575a3364e6ab', 'Srdjan', '231243', 'Tosic', 0, 'asdfa', '1234567890083', 'asdfa', 0, 0,
-        '05886e19-2c10-41fd-8d1f-32af32b80b99', NULL),
-       ('9c285f71-c0be-4a50-bf10-575a3364e6ab', 'Stefan', '231243', 'Kalicanin', 0, 'asdfa', '1234567890093', 'asdfa',
-        0, 0, '05886e19-2c10-41fd-8d1f-32af32b80b99', NULL),
-       ('ac285f71-c0be-4a50-bf10-575a3364e6ab', 'Andrea', '231243', 'Lojpur', 1, 'asdfa', '1234567890103', 'asdfa', 0,
-        0, '05886e19-2c10-41fd-8d1f-32af32b80b99', NULL),
-       ('bc285f71-c0be-4a50-bf10-575a3364e6ab', 'Milan', '231243', 'Vracar', 0, 'asdfa', '1234567890113', 'asdfa', 0, 0,
-        '05886e19-2c10-41fd-8d1f-32af32b80b99', NULL),
-       ('cc285f71-c0be-4a50-bf10-575a3364e6ab', 'Ilija', '231243', 'Cvetkovic', 0, 'asdfa', '1234567890123', 'asdfa', 0,
-        0, '05886e19-2c10-41fd-8d1f-32af32b80b99', NULL);
-
-
--- Blood donor accounts first digit is changing for id, mail is incrementing also
-INSERT INTO public.account (id,email,is_activated,last_password_update_date,"password",person_id) VALUES
-  ('0cc5196a-fb16-4394-a259-c5c81017cfac','isadonor+3@gmail.com',true,NULL,'$2a$10$P9XieoF311mu20jQIwSoMeNdqV3KBiIhTTZCM4QEITiSbksSsvCha','0c285f71-c0be-4a50-bf10-575a3364e6ab'),
-  ('1cc5196a-fb16-4394-a259-c5c81017cfac','isadonor+4@gmail.com',true,NULL,'$2a$10$P9XieoF311mu20jQIwSoMeNdqV3KBiIhTTZCM4QEITiSbksSsvCha','1c285f71-c0be-4a50-bf10-575a3364e6ab'),
-  ('2cc5196a-fb16-4394-a259-c5c81017cfac','isadonor+5@gmail.com',true,NULL,'$2a$10$P9XieoF311mu20jQIwSoMeNdqV3KBiIhTTZCM4QEITiSbksSsvCha','2c285f71-c0be-4a50-bf10-575a3364e6ab'),
-  ('3cc5196a-fb16-4394-a259-c5c81017cfac','isadonor+6@gmail.com',true,NULL,'$2a$10$P9XieoF311mu20jQIwSoMeNdqV3KBiIhTTZCM4QEITiSbksSsvCha','3c285f71-c0be-4a50-bf10-575a3364e6ab'),
-  ('4cc5196a-fb16-4394-a259-c5c81017cfac','isadonor+7@gmail.com',true,NULL,'$2a$10$P9XieoF311mu20jQIwSoMeNdqV3KBiIhTTZCM4QEITiSbksSsvCha','4c285f71-c0be-4a50-bf10-575a3364e6ab'),
-  ('5cc5196a-fb16-4394-a259-c5c81017cfac','isadonor+8@gmail.com',true,NULL,'$2a$10$P9XieoF311mu20jQIwSoMeNdqV3KBiIhTTZCM4QEITiSbksSsvCha','5c285f71-c0be-4a50-bf10-575a3364e6ab'),
-  ('6cc5196a-fb16-4394-a259-c5c81017cfac','isadonor+9@gmail.com',true,NULL,'$2a$10$P9XieoF311mu20jQIwSoMeNdqV3KBiIhTTZCM4QEITiSbksSsvCha','6c285f71-c0be-4a50-bf10-575a3364e6ab'),
-  ('7cc5196a-fb16-4394-a259-c5c81017cfac','isadonor+10@gmail.com',true,NULL,'$2a$10$P9XieoF311mu20jQIwSoMeNdqV3KBiIhTTZCM4QEITiSbksSsvCha','7c285f71-c0be-4a50-bf10-575a3364e6ab'),
-  ('8cc5196a-fb16-4394-a259-c5c81017cfac','isadonor+11@gmail.com',true,NULL,'$2a$10$P9XieoF311mu20jQIwSoMeNdqV3KBiIhTTZCM4QEITiSbksSsvCha','8c285f71-c0be-4a50-bf10-575a3364e6ab'),
-  ('9cc5196a-fb16-4394-a259-c5c81017cfac','isadonor+12@gmail.com',true,NULL,'$2a$10$P9XieoF311mu20jQIwSoMeNdqV3KBiIhTTZCM4QEITiSbksSsvCha','9c285f71-c0be-4a50-bf10-575a3364e6ab'),
-  ('acc5196a-fb16-4394-a259-c5c81017cfac','isadonor+13@gmail.com',true,NULL,'$2a$10$P9XieoF311mu20jQIwSoMeNdqV3KBiIhTTZCM4QEITiSbksSsvCha','ac285f71-c0be-4a50-bf10-575a3364e6ab'),
-  ('bcc5196a-fb16-4394-a259-c5c81017cfac','isadonor+14@gmail.com',true,NULL,'$2a$10$P9XieoF311mu20jQIwSoMeNdqV3KBiIhTTZCM4QEITiSbksSsvCha','bc285f71-c0be-4a50-bf10-575a3364e6ab'),
-  ('ccc5196a-fb16-4394-a259-c5c81017cfac','isadonor+15@gmail.com',true,NULL,'$2a$10$P9XieoF311mu20jQIwSoMeNdqV3KBiIhTTZCM4QEITiSbksSsvCha','cc285f71-c0be-4a50-bf10-575a3364e6ab');
-
-INSERT INTO account_role (account_id, role_id) VALUES
-    ('0cc5196a-fb16-4394-a259-c5c81017cfac', 1),
-    ('1cc5196a-fb16-4394-a259-c5c81017cfac', 1),
-    ('2cc5196a-fb16-4394-a259-c5c81017cfac', 1),
-    ('3cc5196a-fb16-4394-a259-c5c81017cfac', 1),
-    ('4cc5196a-fb16-4394-a259-c5c81017cfac', 1),
-    ('5cc5196a-fb16-4394-a259-c5c81017cfac', 1),
-    ('6cc5196a-fb16-4394-a259-c5c81017cfac', 1),
-    ('7cc5196a-fb16-4394-a259-c5c81017cfac', 1),
-    ('8cc5196a-fb16-4394-a259-c5c81017cfac', 1),
-    ('9cc5196a-fb16-4394-a259-c5c81017cfac', 1),
-    ('acc5196a-fb16-4394-a259-c5c81017cfac', 1),
-    ('bcc5196a-fb16-4394-a259-c5c81017cfac', 1),
-    ('ccc5196a-fb16-4394-a259-c5c81017cfac', 1);
-
+('31144a9f-b305-4e1e-90cc-299fbd33ca5d', 'ee9ad85a-a270-484d-8f46-54334b56cd68'),
+('3c113733-4fa9-475c-8e0d-fb58bff8041e', 'ba777665-42c9-4a59-a6e9-f695ce1cba7a'),
+('09779dc7-8c6c-47bb-b68d-aa67c63af8f8', '9888438d-3f98-426f-a153-0f369f2b5cf8'),
+('d546d803-e4fe-4ba6-b8e0-6e482ad48e58', 'fa6bab80-8e2a-437e-98cc-a0190ec3f653'),
+('31144a9f-b305-4e1e-90cc-299fbd33ca5d', '9a1c03ff-af50-42f2-b302-2bb8bf396ca7'),
+('3c113733-4fa9-475c-8e0d-fb58bff8041e', '7fd27d29-2c9a-4026-9c79-4d3f8c795853'),
+('09779dc7-8c6c-47bb-b68d-aa67c63af8f8', '0a3a1559-feda-4032-a8df-77a4e507711c'),
+('d546d803-e4fe-4ba6-b8e0-6e482ad48e58', '78c30545-bc32-4156-929a-e18619739961'),
+('31144a9f-b305-4e1e-90cc-299fbd33ca5d', 'aeca40e3-030a-4f04-9385-ce6df9f400fd'),
+('3c113733-4fa9-475c-8e0d-fb58bff8041e', '2cf0b333-d4bd-405d-9354-53bddbd006b5'),
+('09779dc7-8c6c-47bb-b68d-aa67c63af8f8', '5acc00bf-dd11-48d4-a10d-5197fee6d489'),
+('d546d803-e4fe-4ba6-b8e0-6e482ad48e58', '9dd5ff96-fff2-4f3c-9063-4c0e61293423'),
+('31144a9f-b305-4e1e-90cc-299fbd33ca5d', '33b0443f-6e70-4462-b0f2-2d7cd751b119'),
+('3c113733-4fa9-475c-8e0d-fb58bff8041e', '86f0fe75-6e7c-45e4-a6c8-0d0fc50936fd'),
+('09779dc7-8c6c-47bb-b68d-aa67c63af8f8', 'c87a9520-a413-482a-8f2c-889ac919c046'),
+('d546d803-e4fe-4ba6-b8e0-6e482ad48e58', 'd57c25ce-aa52-46f1-afc2-933bdf2a525b'),
+('31144a9f-b305-4e1e-90cc-299fbd33ca5d', '0af16889-d20a-4afd-88c5-e02e8482ba4a'),
+('3c113733-4fa9-475c-8e0d-fb58bff8041e', '0211da39-481f-4a64-a317-4d1a8a6cd00c'),
+('09779dc7-8c6c-47bb-b68d-aa67c63af8f8', '9a75c6c5-a9ae-456f-bbdf-b1cb24fc4a94');

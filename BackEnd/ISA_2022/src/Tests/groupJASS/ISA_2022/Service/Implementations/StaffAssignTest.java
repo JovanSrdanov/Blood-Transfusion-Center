@@ -25,9 +25,9 @@ public class StaffAssignTest {
     @BeforeEach
     void setUp() {
         //Arrange
-        staffId = UUID.fromString("e6dad8c3-1c14-4084-af7e-7aa653158cb2") ;
-        centerId1 = UUID.fromString("417c9b36-251a-4483-bfbf-abd3df786d96") ;
-        centerId2 = UUID.fromString("aa116b1b-c59c-403b-b64f-db201d9375d2") ;
+        staffId = UUID.fromString("72007511-2ba0-4cad-8b47-46da5ea0cc91") ;
+        centerId1 = UUID.fromString("d5c151f6-e969-4615-b586-1ee2b317d0c6") ;
+        centerId2 = UUID.fromString("120a7657-e855-4fce-9128-66b0b4698f7d") ;
     }
 
     @Test

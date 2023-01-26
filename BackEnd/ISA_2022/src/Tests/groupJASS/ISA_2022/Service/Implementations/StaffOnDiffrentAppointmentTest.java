@@ -38,9 +38,9 @@ public class StaffOnDiffrentAppointmentTest {
 
     @BeforeEach
     void setUp() throws BadRequestException {
-        adminId1 = UUID.fromString("32763cf0-6a56-49f1-ad25-5a90561cd204"); //Doc1
-        adminId2 = UUID.fromString("883f13cc-25c8-4b60-b0e5-5ac938ad2594"); //Doc2
-        donorId = UUID.fromString("07ce2e8b-d34b-4156-9dd4-f29ec4311675"); //Donor
+        adminId1 = UUID.fromString("4b3d3597-5de9-4890-9d46-93fa3c1a746a"); //Doc1
+        adminId2 = UUID.fromString("e6bfe80e-9403-4533-9a46-5b5e88a75e16"); //Doc2
+        donorId = UUID.fromString("e23e75a8-6815-4931-92e0-6611c8ee3d21"); //Donor
 
         staffIds = new ArrayList<>();
         staffIds.add(adminId1);
