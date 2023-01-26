@@ -28,9 +28,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -46,7 +43,7 @@ public class AppointmentController {
     private final IAppointmentService _appointmentService;
     private final IAccountService _accountService;
     private final IQrCodeService _qrCodeService;
-    private  final IAppointmentSchedulingHistoryService _appointmentSchedulingHistoryService;
+    private final IAppointmentSchedulingHistoryService _appointmentSchedulingHistoryService;
 
     @Autowired
     public AppointmentController(IAppointmentService appointmentService, IAccountService accountService,
@@ -82,7 +79,7 @@ public class AppointmentController {
     @Operation(summary = "Predefine appointment", description = "Predefine appointment fro given date and saffIds", method = "POST")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Created",
-                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Appointment.class)) }),
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Appointment.class))}),
             @ApiResponse(responseCode = "400", description = "Something went wrong",
                     content = @Content)
     })
@@ -92,11 +89,9 @@ public class AppointmentController {
         Account a = _accountService.findAccountByEmail(account.getName());
         Appointment res = null;
         try {
-            try{ //Concurrency reasons
+            try { //Concurrency reasons
                 res = _appointmentService.predefine(dto.getDateRange(), dto.getStaffIds(), a.getPersonId(), true);
-            }
-            catch (JpaSystemException | CannotAcquireLockException e)
-            {
+            } catch (JpaSystemException | CannotAcquireLockException e) {
                 System.out.println("Resource locked, waiting 2 seconds...");
                 Thread.sleep(2000);
                 res = _appointmentService.predefine(dto.getDateRange(), dto.getStaffIds(), a.getPersonId(), true);
@@ -127,7 +122,7 @@ public class AppointmentController {
     @Operation(summary = "Schedule predefined appointment", description = "Schedule predefined appointment for given appointment id", method = "POST")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Created",
-                    content = { @Content(mediaType = "application/json") }),
+                    content = {@Content(mediaType = "application/json")}),
             @ApiResponse(responseCode = "400", description = "Something went wrong",
                     content = @Content)
     })
@@ -141,8 +136,7 @@ public class AppointmentController {
 
             try {
                 res = _appointmentService.scheduleAppointment(a.getPersonId(), appid);
-            }
-            catch (JpaSystemException | CannotAcquireLockException e) {
+            } catch (JpaSystemException | CannotAcquireLockException e) {
                 retryPredefinedScheduling(appid, a);
             }
 
@@ -178,7 +172,7 @@ public class AppointmentController {
     @Operation(summary = "Schedule custom appointment", description = "Schedule custom appointment for given time and saff id", method = "POST")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Created",
-                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Appointment.class)) }),
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Appointment.class))}),
             @ApiResponse(responseCode = "400", description = "Something went wrong",
                     content = @Content)
     })
@@ -189,15 +183,11 @@ public class AppointmentController {
         AppointmentSchedulingHistory res = null;
         try {
 
-            try{ //Concurrency reasons
-                res = _appointmentService.scheduleCustomAppointment( account.getPersonId(), dto.getTime(), dto.getStaffId());
-            }
-            catch (JpaSystemException e)
-            {
+            try { //Concurrency reasons
+                res = _appointmentService.scheduleCustomAppointment(account.getPersonId(), dto.getTime(), dto.getStaffId());
+            } catch (JpaSystemException e) {
                 retryCustomScheduling(dto, account);
-            }
-            catch (CannotAcquireLockException e)
-            {
+            } catch (CannotAcquireLockException e) {
                 retryCustomScheduling(dto, account);
             }
 
@@ -205,13 +195,13 @@ public class AppointmentController {
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(res, HttpStatus.OK);
+        return new ResponseEntity<>("", HttpStatus.OK);
     }
 
     private void retryCustomScheduling(ScheduleCustomAppointmentDto dto, Account account) throws InterruptedException, BadRequestException {
         System.out.println("Resource locked, waiting 2 seconds...");
         Thread.sleep(2000);
-        _appointmentService.scheduleCustomAppointment( account.getPersonId(), dto.getTime(), dto.getStaffId());
+        _appointmentService.scheduleCustomAppointment(account.getPersonId(), dto.getTime(), dto.getStaffId());
         System.out.println("Appointment scheduled");
     }
 
@@ -256,7 +246,7 @@ public class AppointmentController {
     @Operation(summary = "Find available predefined in all centers by start time", description = "Find available predefined in all centers by start time", method = "POST")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Created",
-                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PredefinedInCustomTimeDto.class)) })
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = PredefinedInCustomTimeDto.class))})
     })
     @PostMapping(path = "/available-predefined-for-time")
     @PreAuthorize("hasRole('BLOOD_DONOR')")
@@ -267,35 +257,30 @@ public class AppointmentController {
     @Operation(summary = "Scan QR code", description = "Allows for scanning of QR code", method = "POST")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Created",
-                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AppointmentQrInformationDto.class)) }),
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = AppointmentQrInformationDto.class))}),
             @ApiResponse(responseCode = "400", description = "Something went wrong",
                     content = @Content)
     })
-    @PostMapping(path = "/scan-qr",consumes = {MediaType.MULTIPART_FORM_DATA_VALUE} )
+    @PostMapping(path = "/scan-qr", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     @PreAuthorize("hasRole('ROLE_STAFF')")
-    public ResponseEntity scanQRCode(@RequestParam MultipartFile qrCode, Principal principal)
-    {
-        try
-        {
+    public ResponseEntity scanQRCode(@RequestParam MultipartFile qrCode, Principal principal) {
+        try {
             UUID appointmentId = _qrCodeService.readAppointmentCode(qrCode);
 
-            if(!_appointmentSchedulingHistoryService.exists(appointmentId))
-            {
-                return  new ResponseEntity<>("There is no appointment with given code", HttpStatus.NOT_FOUND);
+            if (!_appointmentSchedulingHistoryService.exists(appointmentId)) {
+                return new ResponseEntity<>("There is no appointment with given code", HttpStatus.NOT_FOUND);
             }
 
             //Checks if patient came at right blood center
             var correctBloodCenterName = _appointmentSchedulingHistoryService.takesPlaceAtBloodCenter(appointmentId, principal);
-            if(correctBloodCenterName.isPresent())
-            {
-                return  new ResponseEntity<>("Appointment is scheduled in: " + correctBloodCenterName.get(), HttpStatus.BAD_REQUEST);
+            if (correctBloodCenterName.isPresent()) {
+                return new ResponseEntity<>("Appointment is scheduled in: " + correctBloodCenterName.get(), HttpStatus.BAD_REQUEST);
             }
 
             AppointmentQrInformationDto dto = new AppointmentQrInformationDto(appointmentId);
-            return  new ResponseEntity<>(dto, HttpStatus.OK);
-        }
-        catch (QrCodeReadingException e){
-            return  new ResponseEntity<>("QR code couldn't be read", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(dto, HttpStatus.OK);
+        } catch (QrCodeReadingException e) {
+            return new ResponseEntity<>("QR code couldn't be read", HttpStatus.BAD_REQUEST);
         }
     }
 }
