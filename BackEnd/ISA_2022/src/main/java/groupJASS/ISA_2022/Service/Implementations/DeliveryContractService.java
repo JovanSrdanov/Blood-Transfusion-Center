@@ -92,7 +92,9 @@ public class DeliveryContractService implements IDeliveryContractService {
 
 
     //trenutno podeseno da se okida na svakih 15 sekundi, TODO promeniti u dane
-    @Scheduled(cron = "*/15 * * * * *")
+//    @Scheduled(cron = "*/15 * * * * *")
+    //Everyday at 05:00
+    @Scheduled(cron = "0 0 5 * * *")
     public void sendDelivery() {
         System.out.println("Producer queue: " + "deliveryResponse" + " activated");
 

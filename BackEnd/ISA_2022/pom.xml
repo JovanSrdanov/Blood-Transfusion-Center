@@ -147,6 +147,13 @@
         </dependency>
         <!--Rate limiter-->
 
+
+        <!--Connection pool-->
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>${hikaricp.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

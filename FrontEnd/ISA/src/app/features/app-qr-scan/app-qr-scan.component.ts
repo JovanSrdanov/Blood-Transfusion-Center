@@ -109,8 +109,8 @@ captureImage = () => {
     
     //Screenshots video
     const ctx = canvas.getContext('2d');
-    canvas.width = 400;
-    canvas.height = 400;
+    canvas.width = 600;
+    canvas.height = 500;
     ctx?.drawImage(video as CanvasImageSource, 0, 0, canvas.width, canvas.height);
     
     // get the image data from the canvas
