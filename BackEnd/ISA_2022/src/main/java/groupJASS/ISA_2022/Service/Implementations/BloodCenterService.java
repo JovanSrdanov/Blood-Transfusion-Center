@@ -172,4 +172,41 @@ public class BloodCenterService implements IBloodCenterService {
         save(bloodCenter);
 
     }
+
+    @Override
+    public void DonateBloodToHospital(BloodCenter bloodCenter, GPSDemandBloodShipment shipment) {
+        for (var BQ : bloodCenter.getBloodQuantities()) {
+            System.out.println(BQ.getBloodGroup() + " " + BQ.getQuantity());
+
+            switch (BQ.getBloodGroup()) {
+                case A_POS -> {
+                    BQ.setQuantity(Math.max(BQ.getQuantity() - Math.max(shipment.getA_pos(), 0), 0));
+                }
+                case A_NEG -> {
+                    BQ.setQuantity(Math.max(BQ.getQuantity() - Math.max(shipment.getA_neg(), 0), 0));
+                }
+                case B_POS -> {
+                    BQ.setQuantity(Math.max(BQ.getQuantity() - Math.max(shipment.getB_pos(), 0), 0));
+                }
+                case B_NEG -> {
+                    BQ.setQuantity(Math.max(BQ.getQuantity() - Math.max(shipment.getB_neg(), 0), 0));
+                }
+                case O_POS -> {
+                    BQ.setQuantity(Math.max(BQ.getQuantity() - Math.max(shipment.getO_pos(), 0), 0));
+                }
+                case O_NEG -> {
+                    BQ.setQuantity(Math.max(BQ.getQuantity() - Math.max(shipment.getO_neg(), 0), 0));
+                }
+                case AB_POS -> {
+                    BQ.setQuantity(Math.max(BQ.getQuantity() - Math.max(shipment.getAb_pos(), 0), 0));
+                }
+                case AB_NEG -> {
+                    BQ.setQuantity(Math.max(BQ.getQuantity() - Math.max(shipment.getAb_neg(), 0), 0));
+                }
+            }
+            System.out.println(BQ.getBloodGroup() + " " + BQ.getQuantity());
+            _bloodQuantityRepository.save(BQ);
+        }
+
+    }
 }

@@ -167,12 +167,12 @@ public class AppointmentService implements IAppointmentService {
     }
 
     @Override
-    @Transactional(isolation = Isolation.SERIALIZABLE ,propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
+    @Transactional(isolation = Isolation.SERIALIZABLE, propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
     public Appointment predefine(DateRange dateRange, List<UUID> staffIds, UUID staffAdminId, boolean isPredef)
             throws BadRequestException {
         // Provera da li je poslata prazna lista staff-ova
         if (staffIds.size() == 0) {
-            throw new BadRequestException("Nema staff ids");
+            throw new BadRequestException("There are no staffs");
         }
 
         // Provera da li su svi poslati staff iz istog bloodCentra
@@ -195,7 +195,7 @@ public class AppointmentService implements IAppointmentService {
             }
         }
         if (!found) {
-            throw new BadRequestException("Ne, ovaj termin nije slobodan");
+            throw new BadRequestException("No this time slot is not free");
         }
 
         // Predefinis appointment, kreiraj Appointment
@@ -308,7 +308,7 @@ public class AppointmentService implements IAppointmentService {
     //Kada se zakazuje bilo koji od pregleda kreira se novi scheduling appointment history.
     //Da bi se pregled zakazao moraju se proci provere koje nadmasuju ogranicenja baze podataka.
     //Ni na koji drugi nacin ne moze da se zabrani insert novog reda u tabelu, sem da se podgine nivo izolacije na najvisi nivo
-    @Transactional(isolation = Isolation.SERIALIZABLE ,propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
+    @Transactional(isolation = Isolation.SERIALIZABLE, propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
     public AppointmentSchedulingHistory scheduleCustomAppointment(UUID donorId, LocalDateTime time, UUID staffId)
             throws BadRequestException {
         DateRange dateRange = new DateRange(time, 20);
