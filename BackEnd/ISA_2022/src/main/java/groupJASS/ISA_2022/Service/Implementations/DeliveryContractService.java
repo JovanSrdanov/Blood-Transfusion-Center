@@ -94,7 +94,8 @@ public class DeliveryContractService implements IDeliveryContractService {
     //trenutno podeseno da se okida na svakih 15 sekundi, TODO promeniti u dane
 //    @Scheduled(cron = "*/15 * * * * *")
     //Everyday at 05:00
-    @Scheduled(cron = "0 0 5 * * *")
+    //@Scheduled(cron = "0 0 5 * * *")
+    @Scheduled(cron = "*/15 * * * * *")
     public void sendDelivery() {
         System.out.println("Producer queue: " + "deliveryResponse" + " activated");
 
@@ -126,7 +127,7 @@ public class DeliveryContractService implements IDeliveryContractService {
 
         for (var quantity: allQuantities) {
             if (quantity.getBloodGroup() == contract.getBloodGroup()
-                    && quantity.getQuantity() - contract.getQuantity() >= 0) {
+                    && quantity.getQuantity() + contract.getQuantity() >= 0) {
                 if (isDeliveryDay) {
                     quantity.setQuantity(quantity.getQuantity() - contract.getQuantity());
                     _bloodQuantityRepository.save(quantity);

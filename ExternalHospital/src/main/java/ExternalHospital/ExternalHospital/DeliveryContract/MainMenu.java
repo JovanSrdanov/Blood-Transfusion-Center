@@ -80,8 +80,9 @@ public class MainMenu implements CommandLineRunner {
 
                 deliveryDay = sc.nextInt();
             }
-            while(deliveryDay - LocalDate.now().getDayOfMonth() <= 2 &&
-                    deliveryDay >= LocalDate.now().getDayOfMonth());
+//            while(deliveryDay - LocalDate.now().getDayOfMonth() <= 2 &&
+//                    deliveryDay >= LocalDate.now().getDayOfMonth());
+            while(false);   //da bih mogao da posaljem ovog dana
 
             ContractDTO contract = new ContractDTO(
                     UUID.fromString(hospitalId), bloodGroup, quantity, deliveryDay, "externalHospital"
