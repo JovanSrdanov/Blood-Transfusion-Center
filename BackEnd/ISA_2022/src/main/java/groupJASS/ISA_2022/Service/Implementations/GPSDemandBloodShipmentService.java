@@ -120,8 +120,9 @@ public class GPSDemandBloodShipmentService implements IGPSDemandBloodShipmentSer
         if (!bloodCenter.isHelicopterHere()) {
             throw new Exception("Helicopter is not here!");
         }
-        //TODO jovan uradi smanjivanje krvi
+
         CoordinatesForGPSDTO coordinatesForGPSDTO = new CoordinatesForGPSDTO(bloodCenter.getAddress().getLongitude(), bloodCenter.getAddress().getLatitude(), shipment.getLongitude(), shipment.getLatitude(), shipmentId, seconds);
+        _bloodCenterService.DonateBloodToHospital(bloodCenter, shipment);
         bloodCenter.setDeliveryInProgres(true);
         bloodCenter.setHelicopterHere(false);
         _bloodCenterService.save(bloodCenter);

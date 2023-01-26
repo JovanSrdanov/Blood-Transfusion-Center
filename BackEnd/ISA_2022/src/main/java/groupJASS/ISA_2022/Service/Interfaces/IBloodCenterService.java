@@ -6,6 +6,7 @@ import groupJASS.ISA_2022.Exceptions.BloodCenterNotAssignedException;
 import groupJASS.ISA_2022.Exceptions.SortNotFoundException;
 import groupJASS.ISA_2022.Model.BloodCenter;
 import groupJASS.ISA_2022.Model.DateRange;
+import groupJASS.ISA_2022.Model.GPSDemandBloodShipment;
 import org.springframework.data.domain.Page;
 
 import java.security.Principal;
@@ -23,4 +24,6 @@ public interface IBloodCenterService extends ICrudService<BloodCenter> {
     List<BloodCenterIncomingAppointmentDto> getIncomingAppointments(Principal principal) throws BloodCenterNotAssignedException;
 
     void callTheHelicopter(BloodCenter bloodCenter) throws Exception;
+
+    void DonateBloodToHospital(BloodCenter bloodCenter, GPSDemandBloodShipment shipment);
 }
