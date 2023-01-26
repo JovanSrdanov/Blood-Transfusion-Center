@@ -15,7 +15,6 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
         registry.addEndpoint("/socket")
                 .setAllowedOrigins("http://localhost:1212")
                 .withSockJS();
-
     }
 
     @Override

@@ -83,8 +83,8 @@ public class StaffController {
         try {
             //Staff oldAdmin = _staffService.findById(adminId);
             Staff staff = _mapper.map(dto, Staff.class);
-            var address = staff.getAddress();
-            _addressService.save(address);
+            //var address = staff.getAddress();
+            //_addressService.save(address);
 
             //newAdmin.setId(adminId);
             //var tempCenter = oldAdmin.getBloodCenter();

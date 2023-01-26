@@ -76,10 +76,7 @@ public class BloodQuantityService implements IBloodQuantityService {
             throw new NotFoundException("Blood not found");
         }
 
-        updatedQantity.setQuantity(updatedQantity.getQuantity() - quantity);
-        if (updatedQantity.getQuantity() < 0) {
-            throw new CenterOutOfBloodException("Out of blood");
-        }
+        updatedQantity.setQuantity(updatedQantity.getQuantity() + quantity);
 
         return save(updatedQantity);
     }
