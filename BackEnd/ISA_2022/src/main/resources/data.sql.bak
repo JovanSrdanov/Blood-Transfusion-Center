@@ -122,16 +122,16 @@
     ('120a7657-e855-4fce-9128-66b0b4698f7d', 'This is a blood center for donating blood', 'false', 'false', 'Cruickshank and Sons', '3', '20', '0', '6', '0', '0c3972ae-4e3b-45b3-9c3b-2f6326fcd4af');
 
     INSERT INTO "equipment" ("id", "name", "quantity", "blood_center_id") VALUES
-    ('a792473d-7f07-44c4-aa71-c032c6ed80fd', 'Scalpel', '73', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
-    ('33b0fa26-c60b-42ea-bced-23129b3083a4', 'Bandage', '64', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
-    ('37be29ce-2ebf-4595-8d61-2b67f667ea13', 'Brufen', '65', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
-    ('d5ff4070-08ab-49d6-be46-5c7cfd181d31', 'Scissoors', '75', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
-    ('5ae7753d-8a78-473f-9a83-e0368f73a548', 'Needle', '76', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
-    ('6aab61b0-fe0c-4164-95ea-23efb635b707', 'Gauze', '17', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
-    ('3fbdad62-abd2-4b9a-8897-768dd9223cdc', 'Cotton wool', '16', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
-    ('885de074-aac8-499b-b6bb-de8324adc6db', 'Alcohol', '27', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
-    ('e8478c14-3b0d-4236-8093-5485482d6f2a', 'Hydrogen', '22', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
-    ('db81c6b1-87e2-4e8b-9660-f3704cfdc634', 'Spoon', '60', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2');
+    ('a792473d-7f07-44c4-aa71-c032c6ed80fd', 'Kids', '73', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
+    ('33b0fa26-c60b-42ea-bced-23129b3083a4', 'Industrial', '64', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
+    ('37be29ce-2ebf-4595-8d61-2b67f667ea13', 'Music', '65', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
+    ('d5ff4070-08ab-49d6-be46-5c7cfd181d31', 'Jewelry', '75', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
+    ('5ae7753d-8a78-473f-9a83-e0368f73a548', 'Computers', '76', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
+    ('6aab61b0-fe0c-4164-95ea-23efb635b707', 'Movies', '17', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
+    ('3fbdad62-abd2-4b9a-8897-768dd9223cdc', 'Garden', '16', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
+    ('885de074-aac8-499b-b6bb-de8324adc6db', 'Beauty', '27', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
+    ('e8478c14-3b0d-4236-8093-5485482d6f2a', 'Shoes', '22', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2'),
+    ('db81c6b1-87e2-4e8b-9660-f3704cfdc634', 'Health', '60', '8ff9a8e5-8dad-4eb8-a56e-4b02c34fbcc2');
 
     INSERT INTO "questionnaire" ("id", "feels_bad", "high_or_low_presure", "onmc", "on_therapy", "pricing_or_surgical_interventions_or_blood_transfusion", "recent_dentist", "skin_changes", "under50kg") VALUES
     ('d1ee4345-2a74-41bb-a281-6f47e0432976', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false'),
