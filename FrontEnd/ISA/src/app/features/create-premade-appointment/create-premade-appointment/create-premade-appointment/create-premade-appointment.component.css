@@ -1,4 +1,14 @@
 .mat-form-field {
-  background-color: beige;
   margin: 25px;
+}
+
+.StepperWrapper {
+  width: 50%;
+  margin: auto;
+  margin-top: 20px;
+}
+
+.list {
+  height: 600px;
+  overflow-y: scroll;
 }

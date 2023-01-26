@@ -35,8 +35,8 @@ class AppointmentServiceTest {
     @BeforeEach
     void setUp() throws BadRequestException {
         //Arrange
-         donorId = UUID.fromString("07ce2e8b-d34b-4156-9dd4-f29ec4311675") ;
-         staffId = UUID.fromString("8180fea1-7623-4a5b-8717-5b34b2abe9d3") ;
+         donorId = UUID.fromString("e23e75a8-6815-4931-92e0-6611c8ee3d21") ;
+         staffId = UUID.fromString("4b3d3597-5de9-4890-9d46-93fa3c1a746a") ;
 
         Questionnaire questionnaire = new Questionnaire(UUID.randomUUID(), false, false, false, false, false, false, false, false);
         _questionnaireService.fillQuestionnaire(questionnaire, donorId);
@@ -46,8 +46,8 @@ class AppointmentServiceTest {
     void second_schedule_request_fails() throws Throwable {
         Assertions.assertThrows(BadRequestException.class, () -> {
 
-            LocalDateTime time1 = LocalDateTime.of(2023, 1, 27, 10, 0);
-            LocalDateTime time2 = LocalDateTime.of(2023, 1, 27, 10, 0);
+            LocalDateTime time1 = LocalDateTime.of(2023, 2, 16, 10, 0);
+            LocalDateTime time2 = LocalDateTime.of(2023, 2, 16, 10, 0);
 
             ExecutorService executor = Executors.newFixedThreadPool(2);
 
@@ -65,6 +65,14 @@ class AppointmentServiceTest {
                         System.out.println("Thread 1: resource locked, waiting 2 seconds...");
                         Thread.sleep(2000);
                         _appointmentService.scheduleCustomAppointment(donorId, time1, staffId);
+                        System.out.println("Thread 1: Appointment scheduled");
+                    }
+                    catch (RuntimeException e)
+                    {
+                        System.out.println("Thread 1: resource locked, waiting 2 seconds...");
+                        Thread.sleep(2000);
+                        _appointmentService.scheduleCustomAppointment(donorId, time2, staffId);
+                        System.out.println("Thread 1: Appointment scheduled");
                     }
                 }
             });
@@ -79,6 +87,13 @@ class AppointmentServiceTest {
                         System.out.println("Thread 2: Appointment scheduled");
                     }
                     catch (JpaSystemException | CannotAcquireLockException e)
+                    {
+                        System.out.println("Thread 2: resource locked, waiting 2 seconds...");
+                        Thread.sleep(2000);
+                        _appointmentService.scheduleCustomAppointment(donorId, time2, staffId);
+                        System.out.println("Thread 2: Appointment scheduled");
+                    }
+                    catch (RuntimeException e)
                     {
                         System.out.println("Thread 2: resource locked, waiting 2 seconds...");
                         Thread.sleep(2000);
@@ -109,8 +124,8 @@ class AppointmentServiceTest {
 
     @Test
     void second_schedule_request_fails_first_time_then_succeeds() throws Throwable {
-            LocalDateTime time1 = LocalDateTime.of(2023, 1, 27, 10, 0);
-            LocalDateTime time2 = LocalDateTime.of(2023, 1, 27, 11, 0);
+            LocalDateTime time1 = LocalDateTime.of(2023, 2, 17, 10, 0);
+            LocalDateTime time2 = LocalDateTime.of(2023, 2, 17, 11, 0);
 
 
             ExecutorService executor = Executors.newFixedThreadPool(2);
@@ -124,18 +139,18 @@ class AppointmentServiceTest {
                         _appointmentService.scheduleCustomAppointment(donorId, time1, staffId);
                         System.out.println("Thread 1: Appointment scheduled");
                     }
-                    catch (JpaSystemException e)
+                    catch (JpaSystemException | CannotAcquireLockException e)
                     {
                         System.out.println("Thread 1: resource locked, waiting 2 seconds...");
                         Thread.sleep(2000);
                         _appointmentService.scheduleCustomAppointment(donorId, time1, staffId);
                         System.out.println("Thread 1: Appointment scheduled");
                     }
-                    catch (CannotAcquireLockException e)
+                    catch (RuntimeException e)
                     {
                         System.out.println("Thread 1: resource locked, waiting 2 seconds...");
                         Thread.sleep(2000);
-                        _appointmentService.scheduleCustomAppointment(donorId, time1, staffId);
+                        _appointmentService.scheduleCustomAppointment(donorId, time2, staffId);
                         System.out.println("Thread 1: Appointment scheduled");
                     }
                 }
@@ -150,14 +165,14 @@ class AppointmentServiceTest {
                         _appointmentService.scheduleCustomAppointment(donorId, time2, staffId);
                         System.out.println("Thread 2: Appointment scheduled");
                     }
-                    catch (JpaSystemException e)
+                    catch (JpaSystemException | CannotAcquireLockException e)
                     {
                         System.out.println("Thread 2: resource locked, waiting 2 seconds...");
                         Thread.sleep(2000);
                         _appointmentService.scheduleCustomAppointment(donorId, time2, staffId);
                         System.out.println("Thread 2: Appointment scheduled");
                     }
-                    catch (CannotAcquireLockException e)
+                    catch (RuntimeException e)
                     {
                         System.out.println("Thread 2: resource locked, waiting 2 seconds...");
                         Thread.sleep(2000);

@@ -118,7 +118,7 @@ public class WebSecurityConfig {
                 // Ovim smo dozvolili pristup statickim resursima aplikacije
                 .antMatchers(HttpMethod.GET, "/", "/address" , "/webjars/**", "/*.html", "favicon.ico",
                         "/**/*.html", "/**/*.css", "/**/*.js", "/blood-center/sort", "/blood-center/all-basic-info",
-                        "/swagger-ui/**", "/v3/**", "/socket/**");
+                        "/swagger-ui/**", "/v3/**", "/socket/**", "/no-auth-test");
 
     }
 

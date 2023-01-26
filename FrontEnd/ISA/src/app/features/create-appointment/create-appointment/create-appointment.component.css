@@ -1,3 +1,9 @@
 .lista1 {
-    background-color: aqua;
+  background-color: lightgray;
+}
+
+.StepperWrapper {
+  width: 40%;
+  margin: auto;
+  margin-top: 20px;
 }
