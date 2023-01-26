@@ -127,7 +127,7 @@ public class DeliveryContractService implements IDeliveryContractService {
 
         for (var quantity: allQuantities) {
             if (quantity.getBloodGroup() == contract.getBloodGroup()
-                    && quantity.getQuantity() + contract.getQuantity() >= 0) {
+                    && quantity.getQuantity() - contract.getQuantity() >= 0) {
                 if (isDeliveryDay) {
                     quantity.setQuantity(quantity.getQuantity() - contract.getQuantity());
                     _bloodQuantityRepository.save(quantity);
