@@ -49,6 +49,6 @@ Right-click on the project -> Run as -> Java Application / Spring Boot app (if t
 ### Logging into the application:
 * The password is the same for everyone and it is "password" (the actual value is hashed in the database)
 The data.sql file contains user emails and their roles, which are listed in the Account table. The roles are enumerated as follows:
-1: BLOOD_DONOR
-2: STAFF
-3: SYSTEM_ADMIN
+  - BLOOD_DONOR
+  - STAFF
+  - SYSTEM_ADMIN
