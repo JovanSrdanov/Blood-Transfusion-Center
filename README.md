@@ -1,54 +1,54 @@
-# ISA Godina 2022-2023 FTN E2 PRNII  
-## Centralizovani informacioni sistem centra za transfuziju krvi   
-Projekat iz predmeta Internet Softverske Arhitekture  
-Fakultet tehničkih nauka  
-Računarstvo i automatika  
-Primenjene računarske nauke i informatika  
+# ISA Year 2022-2023 FTN E2 PRNII
+## Centralized Information System for Blood Transfusion Center
+Project for the subject Internet Software Architectures
+Faculty of Technical Sciences
+Computer Science and Automation
+Applied Computer Science and Informatics
 
-* Student 1: RA 145/2019 - Jovan Srdanov  
-* Student 2: RA 152/2019 - Strahinja Eraković   
-* Student 3: RA 143/2019 - Stefan Apostolović  
-* Student 4: RA 149/2019 - Aleksandar Stojanović  
+* Student 1: RA 145/2019 - Jovan Srdanov
+* Student 2: RA 152/2019 - Strahinja Eraković
+* Student 3: RA 143/2019 - Stefan Apostolović
+* Student 4: RA 149/2019 - Aleksandar Stojanović
 
-### Tehnologije:   
-* Front-end: Angular  (npm)  
-* Back-end: Java Spring Boot (Maven)   
-* Database: PostgreSQL  
+### Technologies:
+* Front-end: Angular (npm)
+* Back-end: Java Spring Boot (Maven)
+* Database: PostgreSQL
 * Message Queue: RabbitMQ
 
-###  Alati korišćeni prilikom izrade aplikacije:   
-* Visual Studio Code - razvijanje frontend aplikacije  
-* IntelliJ IDEA - razvijanje backend aplikacije  
-* DBeaver - rad sa bazom podataka  
-* pgAdmin - rad sa bazom podataka  
+### Tools used during application development:
+* Visual Studio Code - frontend application development
+* IntelliJ IDEA - backend application development
+* DBeaver - working with the database
+* pgAdmin - working with the database
 
-### Pokretanje aplikacije:  
-* [Preduslov za Angular](https://angular.io/guide/setup-local#prerequisites)  
-* Pokretanje Angular aplikacije: preko komandne linije pozicionirati se u folder ISA_2022_2023/FrontEnd/ISA/ i kucati naredbu: npm install --force, zatim ng serve  
+### Running the application:
+* [Prerequisite for Angular](https://angular.io/guide/setup-local#prerequisites)
+* Running the Angular application: Navigate to the ISA_2022_2023/FrontEnd/ISA/ folder through the command line and run the command: `npm install --force`, then `ng serve`
 
-* [Instalacija i pokretanje RabbitMQ](https://www.youtube.com/watch?v=V9DWKbalbWQ) 
+* [Installation and running RabbitMQ](https://www.youtube.com/watch?v=V9DWKbalbWQ)
 
-* Potrebno je instalirati i PostgreSql, napraviti dve baze podataka : bloodbank i gps  
-postgresql://localhost:5432/bloodbank  
-postgresql://localhost:5432/gps  
-Za obe:   
-username=postgres    
-password=password  
-Obe baze podataka rade po principu create-drop  
+* PostgreSQL needs to be installed, and two databases need to be created: bloodbank and gps
+postgresql://localhost:5432/bloodbank
+postgresql://localhost:5432/gps
+For both:
+username=postgres
+password=password
+Both databases work on the create-drop principle
 
-* Pokretanje Java Spring Boot aplikacije (IntelliJ IDEA):  
-Projects -> Open -> (3 projekta trebaju da se pokrenu: ExternalHospital, HelicopterGPS, BackEnd/ISA_2022)  
-instalirati sve dependency-je iz pom.xml  
-Run -> Run "Naziv projekta"  
+* Running the Java Spring Boot application (IntelliJ IDEA):
+Projects -> Open -> (3 projects need to be run: ExternalHospital, HelicopterGPS, BackEnd/ISA_2022)
+Install all the dependencies from the pom.xml file
+Run -> Run "Project Name"
 
-* Pokretanje Spring aplikacije (Eclipse) 
-importovati projekat u workspace: Import -> Maven -> Existing Maven Project  
-instalirati sve dependency-je iz pom.xml  
-desni klik na projekat -> Run as -> Java Application / Spring Boot app (ako je instaliran STS plugin sa Eclipse marketplace)  
+* Running the Spring application (Eclipse):
+Import the project into the workspace: Import -> Maven -> Existing Maven Project
+Install all the dependencies from the pom.xml file
+Right-click on the project -> Run as -> Java Application / Spring Boot app (if the STS plugin is installed from the Eclipse Marketplace)
 
-### Logovanje na aplikacij:  
-* Svima je isti password i to je password (sifra je hesirana pa se ne vidi tacna vrednost u bazi)  
-U datoteci data.sql se nalaze emailovi od korisnika i koja su rola, to je tabela Account, role su enumerisanne na sledeci nacin  
-1: BLOOD_DONOR  
-2: STAFF  
-3: SYSTEM_ADMIN  
+### Logging into the application:
+* The password is the same for everyone and it is "password" (the actual value is hashed in the database)
+The data.sql file contains user emails and their roles, which are listed in the Account table. The roles are enumerated as follows:
+1: BLOOD_DONOR
+2: STAFF
+3: SYSTEM_ADMIN
