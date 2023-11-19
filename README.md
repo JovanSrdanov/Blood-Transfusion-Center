@@ -1,9 +1,9 @@
 # ISA Year 2022-2023 FTN E2 PRNII
 ## Centralized Information System for Blood Transfusion Center
-Project for the subject Internet Software Architectures
-Faculty of Technical Sciences
-Computer Science and Automation
-Applied Computer Science and Informatics
+Project for the subject Internet Software Architectures  
+Faculty of Technical Sciences  
+Computer Science and Automation  
+Applied Computer Science and Informatics  
 
 * Student 1: RA 145/2019 - Jovan Srdanov
 * Student 2: RA 152/2019 - Strahinja Eraković
